@@ -1,1 +1,3 @@
-NERVA is supposed to be an intelligent biped platform specifically programmed and trained to display behaviour pertaining to emotions usually displayed by living organisms. The design will also be kept in mind such that the platform inherits the ability to interact with humans socially.
+# Overview
+## NERVA is an inteligent bipedal robotic platform designed to exhibit behaviour patterns analogous to emotional expressins observed in biological organisms while also maintaining dynamic locomotive abilities and balance.
+

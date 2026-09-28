@@ -240,7 +240,7 @@ pillow==12.3.0
     # via brax
 playground==0.0.4
     # via -r cloud/requirements-train.txt
-protobuf==3.20.3
+protobuf==5.29.6
     # via
     #   onnx
     #   onnxruntime

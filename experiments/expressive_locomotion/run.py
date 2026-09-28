@@ -62,14 +62,14 @@ def git_rev(path: Path) -> str:
         return "unknown"
 
 
-def make_sim(style: float, seed: int) -> OpenDuckSim:
+def make_sim(style: float, seed: int, vx: float = COMMAND_VX) -> OpenDuckSim:
     sim = OpenDuckSim(raw_accel=True, init_joint_noise=INIT_NOISE, obs_noise=True, seed=seed)
-    sim.set_behaviour(BehaviourCommand(vx=COMMAND_VX, style=ExpressiveStyle(style)))
+    sim.set_behaviour(BehaviourCommand(vx=vx, style=ExpressiveStyle(style)))
     return sim
 
 
-def gait_trial(style: float, seed: int) -> dict:
-    sim = make_sim(style, seed)
+def gait_trial(style: float, seed: int, vx: float = COMMAND_VX) -> dict:
+    sim = make_sim(style, seed, vx)
     log = sim.run(GAIT_SECONDS)
     full = to_arrays(log)
     metrics = gm.summarise(to_arrays(log, int(GAIT_WINDOW_START_S / CTRL_DT)), CTRL_DT,
@@ -78,8 +78,9 @@ def gait_trial(style: float, seed: int) -> dict:
     return {"style": style, "phase_factor": sim.phase_factor, "seed": seed, **metrics}
 
 
-def push_trial(style: float, magnitude: float, direction_deg: float, seed: int) -> dict:
-    sim = make_sim(style, seed=seed)
+def push_trial(style: float, magnitude: float, direction_deg: float, seed: int,
+               vx: float = COMMAND_VX) -> dict:
+    sim = make_sim(style, seed=seed, vx=vx)
     d = np.radians(direction_deg)
     log = sim.run(PUSH_SECONDS, pushes={int(PUSH_AT_S / CTRL_DT): (magnitude * np.cos(d), magnitude * np.sin(d))})
     tilt = gm.tilt_deg(to_arrays(log)["base_quat"])

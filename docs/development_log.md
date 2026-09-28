@@ -4,6 +4,60 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — RQ1b: speed-matched expressive locomotion
+
+**Question:** does the gait-clock style change *how* the robot walks once measured speed is equal?
+
+### Changed
+- `experiments/expressive_locomotion/run.py`: added an optional `vx` parameter. The defaults are unchanged. **Verified:** rerunning the original RQ1 reproduced both original CSVs byte for byte.
+- New `speed_matched.py`:
+  - calibration sweep: 11 commands × 3 seeds × 3 styles
+  - interpolation plus secant refinement
+  - paired evaluation on seeds 0–9
+  - a speed-sensitivity control
+  - pushes
+- New `same_command_check.py` (the command-confound control).
+- Full write-up in `experiments/expressive_locomotion/README.md`.
+
+### Run
+- `results/speed_matched-20260928-192454`, from clean commit `3cf1fa1`, 254 s.
+- The first run of the same code reproduced all three CSVs byte for byte.
+- It was generated with uncommitted edits in the working tree, so it was discarded in favour of the clean run.
+
+### Measured
+- **Command dead zone:** below about 0.08 commanded vx, no style walks forward. Neutral and Style +1 jump to 0.05–0.07 m/s just above it.
+- **Shared speed band:** only about 0.045–0.056 m/s, because Style −1 is at most 0.056 m/s inside the trained command range.
+- **At 0.045 m/s** the styles matched at 0.0424 / 0.0443 / 0.0461 m/s (tolerance ±0.005). Differences remain, 10/10 paired seeds for nearly all metrics:
+
+  | | Style −1 | Neutral | Style +1 |
+  |---|---|---|---|
+  | cadence (steps/s) | 2.60 | 3.70 | 4.82 |
+  | stride (m) | 0.033 | 0.024 | 0.019 |
+  | foot lift L (mm) | 9.7 | 7.5 | 6.3 |
+  | joint range RMS (rad) | 0.198 | 0.168 | 0.134 |
+  | torso pitch (°) | 4.1 | 1.4 | 1.0 |
+  | roll std (°) | 2.7 | 2.1 | 1.8 |
+  | power (W) | 5.4 | 7.1 | 5.8 |
+  | falls | 0 | 0 | 0 |
+
+- The leftover speed mismatch predicts much smaller effects, often of the opposite sign.
+- **Command confound:** at identical commands, pitch is 3.4–4.5° / 1.4–1.8° / 0.7–1.2° for the three styles, while the command alone moves Neutral's pitch only 1.43° → 1.81°. **So pitch is a clock effect.** Style −1's larger lift, range and sway appear only at matched speed.
+- **0.025 m/s target: not matched** (negative result). Style +1 stalled in 4 of 10 seeds (0.010 ± 0.011 m/s), and Neutral ranged 0.007–0.033 m/s per seed. The policy walks stop-and-go near the dead zone.
+- **Pushes at 0.045 m/s:** 2/2/1 and 4/6/6 falls of 8. No detectable difference.
+
+### Interpretation
+- **Observation:** the RQ1 differences are not just speed effects. Speed matching also turns RQ1's non-monotonic stride and lift into monotonic trends.
+- **Interpretation:**
+  - The variable is one *coupled* axis: tempo goes up while stride and amplitude go down and the torso becomes more upright.
+  - At fixed speed, cadence and stride are one degree of freedom (stride = v / f).
+  - Posture cannot be set independently of tempo.
+- **No emotional labels are claimed.**
+
+### Mistakes caught during write-up
+The first draft of the README claimed "10/10 in every row" and "speed mismatch explains at most about 10%". Both were checked against `summary.md` and corrected: Style +1's max tilt is 9/10, and the largest speed-predicted ratio is about 28%, of opposite sign.
+
+---
+
 ## 2026-09-28 — Affect model v0: synthetic events → appraisal → emotions → PAD
 
 The user asked to start the emotional-state system after researching it properly. It is **simulation only and not connected to movement**.

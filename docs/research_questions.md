@@ -4,7 +4,13 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
 
 ## RQ1 (active): expressive conditioning of locomotion
 
-**Status (2026-09-28):** first answer with method A (gait-clock rate) is yes. Measurable, consistent differences with no walking falls; see `experiments/expressive_locomotion/README.md`. Open issue: style is confounded with speed, so a speed-matched comparison is next.
+**Status (2026-09-28), method A (gait-clock rate):**
+- **RQ1, same command: yes.** There are measurable, consistent differences and no walking falls.
+- **RQ1b, speed matched at 0.045 m/s: the differences remain.** The command confound is ruled out for the main effect (pitch).
+- **But the effects are a coupled bundle, not independent.** Tempo goes up while stride, amplitude and forward pitch go down, all together along one axis.
+- **Only a narrow speed band (about 0.045–0.056 m/s) can be matched at all,** because of the policy's command dead zone.
+- Details: `experiments/expressive_locomotion/README.md`.
+- **Open:** is one coupled scalar an adequate style representation? See RQ1c.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 
@@ -30,6 +36,17 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
 **Success means:** at least one quantity differs between Style −1 and Style +1 consistently and by more than run-to-run variation, *and* no condition falls or loses stability compared with Neutral.
 
 **Not claimed by RQ1:** that any style *looks* hesitant or confident. That needs human evaluation (RQ4).
+
+## RQ1c (next decision): what should the style representation be?
+
+> Is one scalar adequate, or is a small style vector needed? If a vector, which dimensions, justified by measurement and by expressive-motion research?
+
+- **Evidence so far (RQ1b):** the gait-clock scalar moves tempo, amplitude and posture together. It cannot set them independently, and it only covers a narrow speed band.
+- **What the literature says observers use to read emotion from gait:**
+  - overall speed, *and* posture/limb flexion plus dynamic cues, typically involving a few joints (Roether et al. 2009)
+  - speed, stride length, heavy-footedness and arm swing (Montepare et al. 1987)
+  - Laban Effort qualities: time, weight, space and flow (applied to robots by Knight & Simmons 2014)
+- **Hypothesis to test next:** a small vector (tempo, step amplitude, torso posture, possibly smoothness) captures more of the expressive space than one scalar. Each component must be independently controllable, which the current policy cannot provide for posture or amplitude.
 
 ## Later questions (not active)
 

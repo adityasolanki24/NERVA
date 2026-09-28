@@ -123,7 +123,7 @@ def cmd_launch(a):
         create.append("--provisioning-model=SPOT")
     print(f"Launch plan: job={job} run={run_id} code={sha[:10]} machine={MACHINES[a.hw]} "
           f"zone={a.zone} hard cap={a.max_hours} h {'SPOT' if a.spot else 'on-demand'}")
-    print("  1. upload committed code snapshot:  git archive HEAD → "
+    print("  1. upload committed code snapshot:  git archive HEAD -> "
           f"gs://{BUCKET}/code/{sha}.tar.gz")
     print("  2. " + "gcloud " + " ".join(create[1:]))
     confirm(a.yes, "start this VM (it costs money until it deletes itself or hits the cap)")

@@ -26,7 +26,7 @@ Newest entry first. Each entry records what was done, what was actually run, and
 - **Upstream quirk found and replicated deliberately:** `joystick.py` computes joint-noise indices on the 10-joint no-head list but applies them to the 14-actuator vector. Head joints get leg noise; right hip roll/pitch, knee and ankle get none. `training_obs_noise_scale()` reproduces this, and a test recomputes it from upstream `constants`.
 - **Methodology correction during the run:** the first smoke test showed trials differing only in initial pose converge to the same limit cycle (std about 1e-4), which would make any "consistent in N/N trials" claim vacuous. Added training-level observation noise as the source of variation.
 
-### Result (`experiments/expressive_locomotion/results/20260928-184012`, 107 s wall time)
+### Result (`experiments/expressive_locomotion/results/20260928-184504`, generated from clean commit d41d8b5; about 100 s wall time; two further reruns reproduced both CSVs byte for byte)
 - 10 paired trials per style, forward command 0.15 m/s.
 - **No falls while walking.**
 

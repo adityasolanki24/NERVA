@@ -19,9 +19,9 @@
 ```
 It takes about 2 minutes on the development laptop and writes `results/<timestamp>/`.
 
-## Results (run `results/20260928-184012`)
+## Results (run `results/20260928-184504`)
 
-Full table: `results/20260928-184012/summary.md`. Mean ± std over 10 trials. "10/10" means every paired seed differed from Neutral in the same direction.
+Full table: `results/20260928-184504/summary.md`. Mean ± std over 10 trials. "10/10" means every paired seed differed from Neutral in the same direction.
 
 | metric | Style −1 | Neutral | Style +1 |
 |---|---|---|---|

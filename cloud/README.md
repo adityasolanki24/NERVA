@@ -10,6 +10,8 @@ $env:NERVA_GCP_PROJECT = "<your-project-id>"
 # $env:NERVA_GCP_ZONE = "us-central1-a"
 # $env:NERVA_GCP_BUCKET = "<your-results-bucket>"
 # $env:NERVA_GCP_SERVICE_ACCOUNT = "nerva-runner"
+# $env:NERVA_GCP_ROUTER = "nerva-router"
+# $env:NERVA_GCP_NAT = "nerva-nat"
 ```
 
 **Every job runs on its own VM,** which:
@@ -21,16 +23,19 @@ $env:NERVA_GCP_PROJECT = "<your-project-id>"
 **Cost protection:**
 - **Hard cap:** `--max-run-duration` with `--instance-termination-action=DELETE`, enforced by Google even if the job hangs.
 - **Self-deletion:** the VM deletes itself at the end of the job (`vm_startup.sh`).
+- **Private networking:** VMs have no public IP. Temporary Cloud NAT provides outbound package downloads and should be removed after the jobs finish.
 - **Backstop:** the budget alert "nerva" ($150). It's an alert only; Google's spend caps don't cover Compute Engine.
 
 ## Commands (run from the NERVA repo root)
 
 ```bash
 python cloud/launch.py setup            # one-time: bucket + VM service account (shows plan; add --yes)
+python cloud/launch.py network-up --yes # temporary egress for private VMs (small hourly/data charge)
 python cloud/launch.py launch --job smoke --max-hours 1          # shows plan; add --yes to start
 python cloud/launch.py status [RUN]     # running VMs; with RUN, tail of that run's log
 python cloud/launch.py fetch RUN        # results → experiments/cloud_runs/RUN/ (git-ignored)
 python cloud/launch.py kill RUN --yes   # delete a VM immediately
+python cloud/launch.py network-down --yes # after all NERVA VMs are gone
 ```
 
 Check nothing is left running:

@@ -3,6 +3,8 @@
 Subcommands (anything that spends money or changes permissions prints its plan and
 requires --yes):
   setup            one-time: results bucket + a dedicated VM service account
+  network-up       create temporary Cloud NAT for private training VMs
+  network-down     remove Cloud NAT when no training VMs are running
   launch --job J   upload the committed code snapshot, start a VM that runs cloud/jobs/J.sh
   status [RUN]     list NERVA VMs; with RUN, show the tail of that run's log
   fetch RUN        download a run's results to experiments/cloud_runs/RUN/
@@ -32,6 +34,8 @@ DEFAULT_ZONE = os.environ.get("NERVA_GCP_ZONE", f"{REGION}-a").strip()
 BUCKET = os.environ.get("NERVA_GCP_BUCKET", f"{PROJECT}-runs" if PROJECT else "").strip()
 SERVICE_ACCOUNT_NAME = os.environ.get("NERVA_GCP_SERVICE_ACCOUNT", "nerva-runner").strip()
 SERVICE_ACCOUNT = (f"{SERVICE_ACCOUNT_NAME}@{PROJECT}.iam.gserviceaccount.com" if PROJECT else "")
+ROUTER = os.environ.get("NERVA_GCP_ROUTER", "nerva-router").strip()
+NAT = os.environ.get("NERVA_GCP_NAT", "nerva-nat").strip()
 UPSTREAM_SHA = "b9be205ac64488c23504ca42e5ec790337adeec3"  # Open_Duck_Playground (docs/development_log.md)
 IMAGE_FAMILY = "common-cu129-ubuntu-2204-nvidia-580"
 IMAGE_PROJECT = "deeplearning-platform-release"
@@ -69,6 +73,10 @@ def require_cloud_config() -> None:
         sys.exit("Set NERVA_GCP_PROJECT to your Google Cloud project ID before using cloud commands.")
 
 
+def gcloud_succeeds(args: list[str]) -> bool:
+    return subprocess.run(args, text=True, capture_output=True).returncode == 0
+
+
 # ── subcommands ──────────────────────────────────────────────────────────────
 
 def cmd_setup(a):
@@ -94,6 +102,63 @@ def cmd_setup(a):
         run(p, check=False)
 
 
+def cmd_network_up(a):
+    """Create the temporary egress path required by private, no-public-IP VMs."""
+    require_cloud_config()
+    g = gcloud()
+    router_exists = gcloud_succeeds([
+        g, "compute", "routers", "describe", ROUTER, f"--project={PROJECT}", f"--region={REGION}"
+    ])
+    nat_exists = router_exists and gcloud_succeeds([
+        g, "compute", "routers", "nats", "describe", NAT, f"--router={ROUTER}",
+        f"--project={PROJECT}", f"--region={REGION}"
+    ])
+    if nat_exists:
+        print(f"Cloud NAT {NAT} on router {ROUTER} already exists.")
+        return
+    print("Network plan: create temporary Cloud NAT so private VMs can install dependencies.\n"
+          "Cloud NAT has hourly IP/gateway and data-processing charges; run network-down after jobs finish.")
+    if not router_exists:
+        print(f"  gcloud compute routers create {ROUTER} --network=default --region={REGION}")
+    print(f"  gcloud compute routers nats create {NAT} --router={ROUTER} --region={REGION} "
+          "--auto-allocate-nat-external-ips --nat-all-subnet-ip-ranges")
+    confirm(a.yes, "create the temporary Cloud NAT")
+    if not router_exists:
+        run([g, "compute", "routers", "create", ROUTER, f"--project={PROJECT}",
+             "--network=default", f"--region={REGION}"])
+    run([g, "compute", "routers", "nats", "create", NAT, f"--router={ROUTER}",
+         f"--project={PROJECT}", f"--region={REGION}", "--auto-allocate-nat-external-ips",
+         "--nat-all-subnet-ip-ranges"])
+
+
+def cmd_network_down(a):
+    """Remove the temporary NAT and its otherwise-unused router."""
+    require_cloud_config()
+    g = gcloud()
+    instances = run([
+        g, "compute", "instances", "list", f"--project={PROJECT}", "--filter=labels.nerva=1",
+        "--format=value(name)"
+    ], capture=True)
+    if instances:
+        sys.exit("NERVA VM(s) are still present; stop or let them finish before removing Cloud NAT:\n" + instances)
+    print(f"Network cleanup plan: delete NAT {NAT} and router {ROUTER} in {REGION}.")
+    confirm(a.yes, "remove the temporary Cloud NAT")
+    nat_exists = gcloud_succeeds([
+        g, "compute", "routers", "nats", "describe", NAT, f"--router={ROUTER}",
+        f"--project={PROJECT}", f"--region={REGION}"
+    ])
+    if nat_exists:
+        run([g, "compute", "routers", "nats", "delete", NAT, f"--router={ROUTER}",
+             f"--project={PROJECT}", f"--region={REGION}", "--quiet"])
+    router_exists = gcloud_succeeds([
+        g, "compute", "routers", "describe", ROUTER, f"--project={PROJECT}", f"--region={REGION}"
+    ])
+    if router_exists:
+        run([g, "compute", "routers", "delete", ROUTER, f"--project={PROJECT}",
+             f"--region={REGION}", "--quiet"])
+    print("Temporary Cloud NAT removed.")
+
+
 def cmd_launch(a):
     require_cloud_config()
     if git("status", "--porcelain"):
@@ -102,6 +167,11 @@ def cmd_launch(a):
     job = a.job
     if not (REPO / "cloud" / "jobs" / f"{job}.sh").exists():
         sys.exit(f"unknown job {job}")
+    if not gcloud_succeeds([
+        gcloud(), "compute", "routers", "nats", "describe", NAT, f"--router={ROUTER}",
+        f"--project={PROJECT}", f"--region={REGION}"
+    ]):
+        sys.exit("Cloud NAT is not ready. Run: python cloud/launch.py network-up --yes")
     run_id = f"{job}-{time.strftime('%Y%m%d-%H%M%S')}"
     name = f"nerva-{run_id}".lower()
     g = gcloud()
@@ -109,7 +179,7 @@ def cmd_launch(a):
         g, "compute", "instances", "create", name, f"--project={PROJECT}", f"--zone={a.zone}",
         f"--machine-type={MACHINES[a.hw]}",
         f"--image-family={IMAGE_FAMILY}", f"--image-project={IMAGE_PROJECT}",
-        "--boot-disk-size=100GB", "--maintenance-policy=TERMINATE",
+        "--boot-disk-size=100GB", "--maintenance-policy=TERMINATE", "--no-address",
         f"--service-account={SERVICE_ACCOUNT}", "--scopes=cloud-platform",
         f"--max-run-duration={a.max_hours}h", "--instance-termination-action=DELETE",
         f"--labels=nerva=1,job={job.replace('_', '-')}",
@@ -167,6 +237,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
     s = sub.add_parser("setup"); s.add_argument("--yes", action="store_true"); s.set_defaults(f=cmd_setup)
+    s = sub.add_parser("network-up"); s.add_argument("--yes", action="store_true")
+    s.set_defaults(f=cmd_network_up)
+    s = sub.add_parser("network-down"); s.add_argument("--yes", action="store_true")
+    s.set_defaults(f=cmd_network_down)
     s = sub.add_parser("launch")
     s.add_argument("--job", required=True)
     s.add_argument("--hw", choices=sorted(MACHINES), default="l4")

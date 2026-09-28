@@ -48,7 +48,7 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 
 | job | what | hardware | typical cap |
 |---|---|---|---|
-| `smoke` | upstream runner, 2 M steps: checks GPU, JAX, training, ONNX export, sync and self-delete | L4 | 1 h |
+| `smoke` | upstream environment/PPO path, one 200k-step batch with initial/final export: checks GPU, JAX, training, ONNX, sync and self-delete; not a scientific result | L4 | 1 h |
 | `b0_baseline` | upstream baseline, unchanged, 300 M steps on `flat_terrain_backlash` (README's "current win") | L4 | to be set from smoke timing |
 | `r0_references` | regenerate the neutral reference set with the upstream generator; time the generation | CPU or L4 | to be set |
 | `session1` | R0 in the background plus B0 | L4 | to be set |

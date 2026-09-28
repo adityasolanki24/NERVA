@@ -47,6 +47,11 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
   - speed, stride length, heavy-footedness and arm swing (Montepare et al. 1987)
   - Laban Effort qualities: time, weight, space and flow (applied to robots by Knight & Simmons 2014)
 - **Hypothesis to test next:** a small vector (tempo, step amplitude, torso posture, possibly smoothness) captures more of the expressive space than one scalar. Each component must be independently controllable, which the current policy cannot provide for posture or amplitude.
+- **Head-posture feasibility (2026-09-28): negative for runtime modulation.**
+  - Head posture changes as intended, but it reduces walking speed by up to 84% and reshapes the gait.
+  - The effect comes from the physical head movement, not from the observed command.
+  - So independent posture dimensions need a policy trained with them varying.
+  - See `experiments/expressive_locomotion/README.md` (RQ1c).
 
 ## Later questions (not active)
 

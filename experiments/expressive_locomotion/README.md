@@ -176,3 +176,48 @@ The run took about 4 minutes. `results/speed_matched-20260928-192454` was genera
 - **The usable speed-matched range is very narrow,** about 0.045–0.056 m/s, and only one speed was validly matched.
 - The command dead zone and the steep command→speed curve make matching sensitive. Refinement needed up to 4 iterations.
 - Same single policy, flat ground, simulation, and sensor-noise-only variability as RQ1.
+
+---
+
+# RQ1c feasibility: head posture as a second expressive channel (`head_posture.py`)
+
+**Question.** Can head posture be a style dimension that is *independent* of the gait-clock tempo, applied at runtime without retraining?
+
+## Method
+- **Head posture h ∈ [−1, 1]** (+1 = head up) is a head_pitch offset on top of the policy's head target: −0.5·h rad for head up and −0.3·h for head down. Negative head_pitch raises the head, which was verified by rendering.
+- **The offset is applied exactly as the Open Duck hardware runtime applies gamepad head commands** (`v2_rl_walk_mujoco.py:310`): it is written into the observation's command slots and added to the head motor targets after the speed limit. In simulation this is `OpenDuckSim.set_head_offset`, which defaults to zero; the upstream-equivalence test still passes.
+- **Grid:** 5 head values × 3 tempo styles × 10 paired seeds, commanded forward at 0.15 m/s, with the same simulator settings as RQ1.
+- **Pushes** at style 0.
+- **Diagnostic:** head offset observed only, moved only, or both.
+- **Run:** `results/head_posture-20260928-201958`, clean commit `24ec0bb`, 161 s. It reproduces an earlier run's printed values exactly.
+
+## Results [measured]
+
+**The intended effect works.** The head joint follows h, independently of tempo style: +0.32 / +0.15 / −0.03 / −0.31 / −0.57 rad for h = −1 … +1.
+
+**But the walk is not independent of it.** Forward speed at style 0 (m/s):
+
+| h | −1 | −0.5 | 0 | +0.5 | +1 |
+|---|---|---|---|---|---|
+| speed | 0.053 | 0.091 | **0.107** | 0.082 | **0.017** |
+
+- Every nonzero h loses speed, 10/10 paired seeds, in every tempo style.
+- Stride and foot lift shrink.
+- The torso pitch compensates: about +4° (forward) with the head down, about −0.4° with the head up.
+- Cadence is unchanged, because it stays locked to the clock.
+- No walking falls. Push falls at 0.6 / 0.9 m/s are 1/6, 2/6 and 3/7 of 8 for h = −1, 0, +1: no clear difference.
+
+**Diagnostic** (style 0, 10 seeds):
+
+| h | observed + moved | observed only | moved only |
+|---|---|---|---|
+| −1 | 0.053 | **0.107** | 0.052 |
+| +1 | 0.017 | **0.107** | 0.020 |
+
+- **The policy ignores the head command in its observation.** In training, head commands were observed but never applied: the line applying them in `joystick.py` is commented out.
+- **The whole effect comes from physically moving the head.** That is a dynamics change the policy was never trained for.
+
+## What this shows
+- **Head posture cannot be added as an independent runtime channel** to this policy. It works as a posture change, but it costs up to 84% of walking speed and reshapes the gait. That's a negative result for "runtime modulation as a style vector".
+- **Getting head posture, and by the same reasoning torso posture and step amplitude, as independent style dimensions requires a policy trained with them varying:** option C, a style-conditioned policy, possibly with reference motions (D).
+- **No emotional reading is claimed.**

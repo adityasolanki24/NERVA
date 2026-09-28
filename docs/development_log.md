@@ -4,6 +4,21 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — RQ1c: head posture as a second channel (user-requested test)
+
+- **Added:** `OpenDuckSim.set_head_offset`, which follows the hardware-runtime convention. The offset goes into the observation's command slots 3:7 and is added to head targets 5:9 after the speed limit. It defaults to zero, and the equivalence test still passes.
+- **Direction check:** rendering showed that negative head_pitch raises the head. The first render attempt showed black frames because several renderers were left open at once; they are now closed after use.
+- **Experiment:** `head_posture.py`, 5 head values × 3 tempo styles × 10 seeds, plus pushes and an observation-vs-actuation diagnostic.
+  - The results are from clean commit `24ec0bb`.
+  - An earlier run was made while `pyproject.toml` was being edited, so it was marked dirty. It was deleted before its CSVs were compared, which was a slip. Its printed v_fwd and push tables match the clean run exactly.
+- **Result:**
+  - The head angle follows the offset, independent of tempo.
+  - **Walking speed drops with any offset:** 0.107 → 0.017 m/s head-up, → 0.053 head-down. Stride and lift shrink, and the torso compensates. No falls.
+- **Diagnostic:** an observed-only offset has no effect (0.107 m/s); an actuated-only offset reproduces the whole loss. So the policy ignores head commands, as trained, and the loss is caused by head dynamics it never experienced.
+- **Implication:** independent posture channels require retraining (option C). Runtime head posture is not an independent style dimension for this policy.
+
+---
+
 ## 2026-09-28 — Affect model v0.1 and documentation cleanup
 
 ### Affect v0.1 (decisions by the user)

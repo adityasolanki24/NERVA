@@ -16,6 +16,9 @@ Questions:
   1. Does h change the achieved head angle (the intended effect)?
   2. Does h leave the walk unchanged (speed, cadence, torso pitch, sway, stability)?
   3. Does h combine with the tempo style without interacting?
+  4. Diagnostic: is any effect caused by the head command in the OBSERVATION
+     (in training, head commands were observed but never applied) or by the
+     physical head ACTUATION? Style 0, h = ±1, three modes.
 
 Usage:  <venv>/Scripts/python experiments/expressive_locomotion/head_posture.py
 """
@@ -94,6 +97,23 @@ def main():
                 push.append({"head": h, "magnitude": mag, "direction_deg": deg, "fell": r["fell"],
                              "max_tilt_deg": r["max_tilt_deg"]})
 
+    diag = []
+    for h in (-1.0, 1.0):
+        for mode in ("both", "obs_only", "act_only"):
+            for seed in SEEDS:
+                sim = base.make_sim(0.0, seed)
+                if mode in ("both", "act_only"):
+                    sim.set_head_offset(head_pitch=head_pitch_offset(h))
+                if mode == "act_only":
+                    sim.inf.commands[3:7] = [0.0] * 4  # moved, not observed
+                if mode == "obs_only":
+                    sim.inf.commands[4] = head_pitch_offset(h)  # observed, not moved (as in training)
+                log = sim.run(base.GAIT_SECONDS)
+                w = to_arrays(log, int(base.GAIT_WINDOW_START_S / base.CTRL_DT))
+                diag.append({"head": h, "mode": mode, "seed": seed,
+                             "v_fwd": gm.summarise(w, base.CTRL_DT, mass=float(sim.model.body_subtreemass[1]))["v_fwd"],
+                             "head_joint_rad": float(w["joint_pos"][:, HEAD_PITCH_JOINT].mean())})
+
     lines = [f"# RQ1c head-posture feasibility — {stamp}", "",
              "Mean over 10 paired seeds. Δ = paired difference vs head 0 at the same style and seed "
              "(mean, and n/N seeds with that sign).", ""]
@@ -115,6 +135,14 @@ def main():
                     dm, _, sign = paired_delta(rows, m, s, h)
                     cells.append(f"{v:.4g} (Δ{dm:+.3g}, {sign})")
             lines.append(f"| {s:+g} | " + " | ".join(cells) + " |")
+    v0 = np.mean([r["v_fwd"] for r in rows if r["style"] == 0.0 and r["head"] == 0.0])
+    lines += ["", f"## Diagnostic: observation vs actuation (style 0; no-offset v_fwd = {v0:.4f})", "",
+              "| head | mode | v_fwd (mean ± sd) | head joint (rad) |", "|---|---|---|---|"]
+    for h in (-1.0, 1.0):
+        for mode in ("both", "obs_only", "act_only"):
+            rs = [r for r in diag if r["head"] == h and r["mode"] == mode]
+            lines.append(f"| {h:+g} | {mode} | {np.mean([r['v_fwd'] for r in rs]):.4f} ± "
+                         f"{np.std([r['v_fwd'] for r in rs], ddof=1):.4f} | {np.mean([r['head_joint_rad'] for r in rs]):+.3f} |")
     lines += ["", "## Push robustness, style 0 (falls / 8 directions)", "",
               "| magnitude | " + " | ".join(f"head {h:+g}" for h in PUSH_HEADS) + " |", "|---" * (len(PUSH_HEADS) + 1) + "|"]
     for mag in PUSH_MAGNITUDES:
@@ -126,7 +154,7 @@ def main():
             "seeds": list(SEEDS), "command_vx": base.COMMAND_VX, "push_heads": list(PUSH_HEADS),
             "push_magnitudes": list(PUSH_MAGNITUDES), "nerva_rev": base.git_rev(here)}
     lines += ["", "## Metadata", "", "```json", json.dumps(meta, indent=2), "```", ""]
-    for name, data in (("trials.csv", rows), ("push_trials.csv", push)):
+    for name, data in (("trials.csv", rows), ("push_trials.csv", push), ("diagnostic_trials.csv", diag)):
         with (out / name).open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(data[0]))
             w.writeheader()

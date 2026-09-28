@@ -11,7 +11,7 @@ NERVA is built **on top of** [Open Duck Mini v2](https://github.com/apirrone/Ope
 | 1 | Run the Open Duck baseline in MuJoCo | done (see `docs/development_log.md`) |
 | 2 | Document how the baseline works | done (see `docs/open_duck_baseline.md`) |
 | 3–4 | NERVA package and layer interfaces | done (`nerva/interfaces.py`, `docs/architecture.md`) |
-| 5 | First expressive-locomotion experiment | method being chosen |
+| 5 | First expressive-locomotion experiment | first result: `experiments/expressive_locomotion/README.md` |
 
 Appraisal/affect (EMA-inspired appraisal, PAD) comes after the locomotion experiments work. It is not implemented.
 
@@ -51,6 +51,10 @@ docs/open_duck_baseline.md       how the Open Duck baseline works (obs, actions,
 docs/papers/                     reference papers
 env/open_duck_inference.lock.txt exact package versions
 nerva/interfaces.py              data types passed between layers (no logic yet)
+nerva/style.py                   style → gait-clock rate (Phase 5, method A)
+nerva/open_duck_sim.py           headless Open Duck sim driven by BehaviourCommand (only module importing Open Duck)
+nerva/gait_metrics.py            gait measurements (speed, cadence, stride, posture, effort, stability)
+experiments/expressive_locomotion/ RQ1 protocol, results and write-up
 tests/                           pytest suite
 docs/architecture.md             layers, Open Duck/NERVA boundary, safety rule
 docs/research_questions.md       RQ1 (active) and later questions

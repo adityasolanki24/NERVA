@@ -4,6 +4,8 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
 
 ## RQ1 (active): expressive conditioning of locomotion
 
+**Status (2026-09-28):** first answer with method A (gait-clock rate) is yes. Measurable, consistent differences with no walking falls; see `experiments/expressive_locomotion/README.md`. Open issue: style is confounded with speed, so a speed-matched comparison is next.
+
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 
 **Protocol outline (details fixed in Phase 5):**

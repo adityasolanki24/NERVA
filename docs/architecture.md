@@ -16,8 +16,9 @@ The types between layers are defined in `nerva/interfaces.py`. A layer may only 
 |---|---|---|
 | Robot, simulation, low-level control | **Open Duck Mini v2, upstream, unmodified** | `C:\Users\24adi\dev\open_duck\` (see `open_duck_baseline.md`) |
 | Locomotion policy | **Open Duck `BEST_WALK_ONNX_2.onnx`**, 50 Hz, velocity-commanded | upstream |
-| Behaviour → locomotion adapter | not yet (Phase 5) | |
-| ExpressiveStyle | interface only | `nerva/interfaces.py` |
+| Behaviour → locomotion adapter | **`OpenDuckSim.set_behaviour`**: clips velocities to the trained range, style → phase-clock rate | `nerva/open_duck_sim.py`, `nerva/style.py` |
+| ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/style.py` |
+| Gait measurement | pure-NumPy metrics, unit-tested | `nerva/gait_metrics.py` |
 | Behaviour selection | interface only (`BehaviourCommand`) | `nerva/interfaces.py` |
 | Affect (PAD dynamics) | interface only (`PADState`) | `nerva/interfaces.py` |
 | Appraisal | interface only (`AppraisalState`) | `nerva/interfaces.py` |
@@ -29,7 +30,7 @@ Build order: locomotion style experiment (Phase 5) first, then a simulation-only
 
 - **Open Duck owns** the robot model, the physics, the actuator model, the trained walking policy and its observation/action conventions.
 - **NERVA owns** everything above the locomotion command: style, behaviour, affect, appraisal, perception, and the experiments and evaluation.
-- The `nerva` package itself does not import Open Duck, MuJoCo or JAX. Code that drives Open Duck lives in `scripts/` today. It will move into one adapter module when a second user of it appears.
+- Only one module, `nerva/open_duck_sim.py`, imports Open Duck and MuJoCo, and only when a simulator object is created. Everything else in `nerva` (interfaces, style mapping, metrics) is dependency-free apart from NumPy for metrics. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
 - Upstream code is never edited. Where we need different behaviour (for example the accelerometer offset in `open_duck_baseline.md` §10), we override it from NERVA code and document why.
 
 ## Safety rule (non-negotiable)

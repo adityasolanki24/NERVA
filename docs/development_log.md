@@ -4,6 +4,60 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Phase 5: first expressive-locomotion experiment (method A)
+
+**Decision** (with the user): method A. `style` sets the gait-phase clock rate, `1 + 0.3·style`, with no retraining. B (style as a policy input) and C (style-conditioned reference motions) need GPU retraining and are deferred.
+
+### Built
+- `nerva/style.py`: the style → phase-factor mapping.
+- `nerva/open_duck_sim.py`: a headless simulator. It reuses upstream `MjInfer` (model, obs, policy, action scaling, speed limit) and replaces only its viewer loop. Options:
+  - raw accelerometer
+  - seeded initial joint noise
+  - training-level observation noise
+  - pushes
+  - `set_behaviour(BehaviourCommand)`, which clips velocities to the trained range
+- `nerva/gait_metrics.py`: pure-NumPy metrics.
+- `experiments/expressive_locomotion/run.py`: the protocol runner, and its `README.md`.
+
+### Verified
+- **pytest: 34 passed.** Key tests:
+  - **Exact equivalence:** after 3 s of walking, our loop's state is bit-identical to upstream `run()` at style 0 and +1. A positive control asserts the robot walked more than 0.1 m, and a negative control asserts a 1% clock change is detected.
+  - The metrics recover known values from synthetic signals.
+- **Upstream quirk found and replicated deliberately:** `joystick.py` computes joint-noise indices on the 10-joint no-head list but applies them to the 14-actuator vector. Head joints get leg noise; right hip roll/pitch, knee and ankle get none. `training_obs_noise_scale()` reproduces this, and a test recomputes it from upstream `constants`.
+- **Methodology correction during the run:** the first smoke test showed trials differing only in initial pose converge to the same limit cycle (std about 1e-4), which would make any "consistent in N/N trials" claim vacuous. Added training-level observation noise as the source of variation.
+
+### Result (`experiments/expressive_locomotion/results/20260928-184012`, 107 s wall time)
+- 10 paired trials per style, forward command 0.15 m/s.
+- **No falls while walking.**
+
+| | Style −1 | Neutral | Style +1 |
+|---|---|---|---|
+| speed | 0.055 m/s | 0.107 | 0.124 |
+| cadence | 2.60 steps/s | 3.70 | 4.82 |
+| stride | 0.042 m | 0.058 | 0.051 |
+| foot lift L | 12.2 mm | 14.1 | 11.4 |
+| torso pitch | 4.5° | 1.8° | 1.1° |
+| roll std | 3.0° | 2.6° | 1.9° |
+| power | 5.9 W | 10.5 | 10.0 |
+| cost of transport | 5.2 | 4.7 | 3.9 |
+
+- All of these differed from Neutral in the same direction in 10/10 paired trials.
+- **Pushes:** falls at 0.6 m/s are 1 / 2 / 2 of 8, and at 0.9 m/s 4 / 6 / 6 of 8. Not distinguishable (Fisher exact p ≈ 0.5).
+
+### Interpretation (measured vs not)
+- **Measured:**
+  - One variable changes the gait consistently and stays stable.
+  - Stride and lift peak at Neutral, the trained clock, and fall off in both directions, so style is not a single "bigger/smaller" axis.
+  - Speed is strongly coupled to style.
+- **Not established:**
+  - Any emotional reading. That needs human evaluation.
+  - That the differences are style rather than speed effects.
+
+### Next smallest step (proposed)
+Speed-matched comparison. For each style, adjust the commanded vx so the **measured** speed matches a common target, then compare posture, sway, lift and effort. This separates "how" from "how fast".
+
+---
+
 ## 2026-09-28 — Phases 3–4: NERVA package and layer interfaces; Phase 5 probe
 
 ### Structure (Phase 3)

@@ -4,6 +4,28 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Demo video: closed loop events → appraisal → PAD → behaviour → robot (user request)
+
+- **What it is.** `experiments/demo_video/`: MuJoCo render beside emotion, PAD and behaviour panels revealed over time, with an event caption and a status line. The output is `results/nerva_affect_demo.mp4` (66 s, 1280×650, 25 fps, about 10 MB).
+- **Labelled as a demo, not a result.** The PAD → behaviour mapping is hand-designed:
+  - arousal → tempo style
+  - valence + dominance → head posture, limited to ±0.5 because of RQ1c
+  - stop when blocked, pause while arousal > 0.2
+  WHAT and HOW stay separate, and PAD never drives joints.
+- **The near_fall event includes a real 0.6 m/s sideways push.** Tilt peaks at 13.4° and the robot recovers. With the same seed, 0.75 m/s makes it fall.
+- **Problems hit and fixed:**
+  1. The first renders were black: several renderers were open at once. They are now closed.
+  2. The camera framed the feet; it now follows the trunk with a raised look-at point.
+  3. The Windows console couldn't print "→" (terminal output switched to ASCII).
+  4. The model's offscreen buffer was 480 px, raised at runtime as upstream `base.py` does.
+  5. The chart's "future" was only faded; it is now a true progressive reveal (background-only plus full chart).
+- **Verified:**
+  - The MP4 reads back as 1650 frames at 25 fps, 66 s.
+  - The frames change over time (walking, stumble, head posture).
+  - The README's event table was checked against `timeline.csv` (resume at 35.8 s and 46.0 s; minimum V −0.39, D −0.25).
+
+---
+
 ## 2026-09-28 — RQ1c: head posture as a second channel (user-requested test)
 
 - **Added:** `OpenDuckSim.set_head_offset`, which follows the hardware-runtime convention. The offset goes into the observation's command slots 3:7 and is added to head targets 5:9 after the speed limit. It defaults to zero, and the equivalence test still passes.

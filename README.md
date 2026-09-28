@@ -62,6 +62,7 @@ nerva/appraisal.py               synthetic events → EMA appraisal variables (N
 nerva/affect.py                  affect model v0.1 (Model A): appraisal → emotions → PAD anchors → persistent PAD
 docs/affect_model.md             affect model design, sources, and open design questions
 experiments/affect_prototype/    scripted event timeline → PAD plot (results per model version)
+experiments/demo_video/          DEMO video: events → appraisal → PAD → behaviour → walking robot (hand-designed mapping)
 tests/                           pytest suite
 docs/architecture.md             layers, Open Duck/NERVA boundary, safety rule
 docs/research_questions.md       RQ1 (active) and later questions

@@ -26,8 +26,8 @@ Newest entry first. Each entry records what was done, what was actually run, and
 ## 2026-09-28 — GPU compute set up; style-conditioned policy designed
 
 ### Compute
-- **Google Cloud project** `nerva-adityapersonal`, in the prxptn.com organisation. It is linked to the billing account holding Perception's Google for Startups credits (about $22k, valid to June 2028), with the user's agreement.
-- **Access:** 24adityasolanki24@gmail.com is Owner and Compute Admin.
+- **Google Cloud project:** a dedicated research project was created and linked to an approved billing account. Project identifiers, account addresses, credit balances and organisation details are intentionally kept out of the public repository.
+- **Access:** the research account was granted the roles required to operate the project.
 - **Budget "nerva":** $150, alerts only. Google's spend caps do not support Compute Engine.
 - **Quota:** GPUs (all regions) 360; L4 in us-central1 8 on-demand and 8 preemptible. No requests were needed.
 - **`gcloud` 586.0.0** was installed locally via winget and the user logged in. Read-only checks confirmed:
@@ -373,7 +373,7 @@ The phase clock `[cos φ, sin φ]` is the only trace of the reference motion at 
 **Consequence:** Open Duck *training* uses JAX + MJX on CUDA (`jax[cuda12]` in the Playground `pyproject.toml`). CUDA JAX does not exist for native Windows and this machine has no NVIDIA GPU, so training cannot run here. Inference (running a trained ONNX policy in CPU MuJoCo) works fine. Training will need a Linux + NVIDIA machine (cloud, lab PC or Colab). That decision is deferred until we actually need to train.
 
 ### Upstream code used (unmodified)
-Cloned to `C:\Users\24adi\dev\open_duck\`, outside OneDrive (OneDrive sync interferes with git repos, LFS meshes and venvs).
+Cloned under `<OPEN_DUCK_ROOT>`, outside OneDrive (OneDrive sync interferes with git repos, LFS meshes and venvs).
 
 | Repo | Branch (default) | Commit |
 |---|---|---|
@@ -387,13 +387,13 @@ Cloned to `C:\Users\24adi\dev\open_duck\`, outside OneDrive (OneDrive sync inter
 - `git status` in all upstream repos is clean.
 
 ### Environment
-Venv: `C:\Users\24adi\dev\open_duck\.venv` (Python 3.12). Exact versions: `env/open_duck_inference.lock.txt`.
+Venv: `<OPEN_DUCK_ROOT>/.venv` (Python 3.12). Exact versions: `env/open_duck_inference.lock.txt`.
 
 Setup steps, reproducible:
 ```bash
-py -3.12 -m venv C:/Users/24adi/dev/open_duck/.venv
-C:/Users/24adi/dev/open_duck/.venv/Scripts/python -m pip install -r env/open_duck_inference.lock.txt
-C:/Users/24adi/dev/open_duck/.venv/Scripts/python -m pip install -e C:/Users/24adi/dev/open_duck/Open_Duck_Playground --no-deps
+py -3.12 -m venv <OPEN_DUCK_ROOT>/.venv
+<OPEN_DUCK_ROOT>/.venv/Scripts/python -m pip install -r env/open_duck_inference.lock.txt
+<OPEN_DUCK_ROOT>/.venv/Scripts/python -m pip install -e <OPEN_DUCK_ROOT>/Open_Duck_Playground --no-deps
 ```
 
 Decisions and why:
@@ -410,7 +410,7 @@ Decisions and why:
 ### What ran
 1. **GUI (upstream, unmodified):**
    ```bash
-   cd C:/Users/24adi/dev/open_duck/Open_Duck_Playground
+   cd <OPEN_DUCK_ROOT>/Open_Duck_Playground
    ../.venv/Scripts/python playground/open_duck_mini_v2/mujoco_infer.py -o ../Open_Duck_Mini/BEST_WALK_ONNX_2.onnx
    ```
    The MuJoCo viewer opened and rendered the duck standing on flat ground (screenshot checked). Keys in `key_callback` (`mujoco_infer.py`): arrows for forward/back/lateral, `Q`/`E` to turn, `H` to toggle head-control mode, `P`/`;` to raise/lower the gait phase frequency. These are GLFW keycodes 81/69/72/80/59. The upstream comments say "a" and "m" because the author uses an AZERTY keyboard; on QWERTY the keys are Q and ;. A keypress latches the command; it doesn't reset on release.

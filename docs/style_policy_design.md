@@ -1,6 +1,6 @@
 # Design: style-conditioned imitation policy π(s, c, e) — experiment S1
 
-**Status:** design only, for review before any code or cloud spend. It follows from RQ1b/RQ1c (`experiments/expressive_locomotion/README.md`) and is roadmap stages 9–11.
+**Status:** training environment and cloud runner implemented and tested locally; no cloud job has run and no cloud compute has been billed. It follows from RQ1b/RQ1c (`experiments/expressive_locomotion/README.md`) and is roadmap stages 9–11.
 
 **Claim labels:**
 - **[fact]** verified in code or by running
@@ -87,7 +87,7 @@ They are also chosen because the upstream reference generator already exposes a 
 
 ## 6. Compute and cost controls [design, facts verified 2026-09-28]
 
-- **Project `nerva-adityapersonal`,** us-central1:
+- **A dedicated Google Cloud project,** configured locally rather than committed; us-central1:
   - NVIDIA L4 quota: 8 on-demand, 8 preemptible **[fact]**
   - L4 is offered in zones a, b and c **[fact]**
 - **Image:** `common-cu129-ubuntu-2204-nvidia-580`, the Deep Learning VM (CUDA 12.9, driver 580) **[fact: image family exists]**. The training environment uses the **same pins as the local lockfile** (playground 0.0.4, mujoco 3.3.0, jax 0.5.3), with `jax[cuda12]` plus tensorflow/tf2onnx for ONNX export.

@@ -30,7 +30,7 @@ Long-term stages and comparisons: `roadmap.md`.
 
 | Layer | Status | Where |
 |---|---|---|
-| Robot, simulation, low-level control | **Open Duck Mini v2, upstream, unmodified** | `C:\Users\24adi\dev\open_duck\` (see `open_duck_baseline.md`) |
+| Robot, simulation, low-level control | **Open Duck Mini v2, upstream, unmodified** | external checkout under `OPEN_DUCK_ROOT` (see `open_duck_baseline.md`) |
 | Locomotion policy | **Open Duck `BEST_WALK_ONNX_2.onnx`**, 50 Hz, velocity-commanded | upstream |
 | Behaviour → locomotion adapter | **`OpenDuckSim.set_behaviour`**: clips velocities to the trained range, style → phase-clock rate | `nerva/open_duck_sim.py`, `nerva/style.py` |
 | ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/style.py` |

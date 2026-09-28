@@ -42,7 +42,7 @@ Headless check (stability and velocity tracking for five commands; add `--raw-ac
 ```bash
 .venv/Scripts/python <NERVA>/scripts/check_open_duck_baseline.py
 ```
-Set `OPEN_DUCK_ROOT` if the upstream repos are not in `C:\Users\24adi\dev\open_duck`.
+Set `OPEN_DUCK_ROOT` if the upstream repos are not in `<user-profile>/dev/open_duck`.
 
 ## Layout
 

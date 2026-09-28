@@ -1,0 +1,3 @@
+# Cloud scripts execute on Linux. Keep their shebangs usable when contributors
+# work on Windows with core.autocrlf enabled.
+*.sh text eol=lf

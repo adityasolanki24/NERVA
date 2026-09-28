@@ -34,7 +34,7 @@ import numpy as np
 from nerva.interfaces import BehaviourCommand
 from nerva.style import style_to_phase_factor
 
-OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", r"C:\Users\24adi\dev\open_duck"))
+OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", Path.home() / "dev" / "open_duck"))
 PLAYGROUND = OPEN_DUCK_ROOT / "Open_Duck_Playground" / "playground" / "open_duck_mini_v2"
 SCENE = PLAYGROUND / "xmls" / "scene_flat_terrain.xml"
 REFERENCE = PLAYGROUND / "data" / "polynomial_coefficients.pkl"

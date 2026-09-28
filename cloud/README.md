@@ -1,9 +1,21 @@
-# Cloud training (Google Cloud, project `nerva-adityapersonal`)
+# Cloud training (Google Cloud)
+
+Cloud project, bucket and account identifiers are deliberately not committed.
+Before using the launcher, configure them in your shell. For PowerShell:
+
+```powershell
+$env:NERVA_GCP_PROJECT = "<your-project-id>"
+# Optional overrides:
+# $env:NERVA_GCP_REGION = "us-central1"
+# $env:NERVA_GCP_ZONE = "us-central1-a"
+# $env:NERVA_GCP_BUCKET = "<your-results-bucket>"
+# $env:NERVA_GCP_SERVICE_ACCOUNT = "nerva-runner"
+```
 
 **Every job runs on its own VM,** which:
 - runs **committed** code only (a `git archive` of HEAD is uploaded to Cloud Storage)
 - builds the environment from `requirements-train.lock.txt`
-- runs `jobs/<job>.sh` and syncs `/work/out` to `gs://nerva-adityapersonal-runs/runs/<run>/out` every 10 min
+- runs `jobs/<job>.sh` and syncs `/work/out` to the configured private results bucket every 10 min
 - **deletes itself** when the job ends
 
 **Cost protection:**
@@ -23,8 +35,8 @@ python cloud/launch.py kill RUN --yes   # delete a VM immediately
 
 Check nothing is left running:
 
-```bash
-gcloud compute instances list --project nerva-adityapersonal
+```powershell
+gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 ```
 
 ## Jobs

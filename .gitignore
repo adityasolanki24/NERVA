@@ -17,3 +17,18 @@ open_duck/
 # Cloud run outputs (large; summaries are copied into experiment folders)
 experiments/cloud_runs/
 .nerva-code-*.tar.gz
+
+# Local configuration and credentials must never be committed
+.env
+.env.*
+!.env.example
+cloud/config.local.*
+application_default_credentials.json
+*service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Keep third-party papers as local research material unless redistribution is licensed
+docs/papers/*.pdf

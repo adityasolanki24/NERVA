@@ -6,7 +6,7 @@ that records the base pose after every physics step and stops after a fixed
 simulated duration. Nothing in the upstream control loop is reimplemented here.
 
 Usage (from anywhere):
-    C:/Users/24adi/dev/open_duck/.venv/Scripts/python scripts/check_open_duck_baseline.py
+    <OPEN_DUCK_ROOT>/.venv/Scripts/python scripts/check_open_duck_baseline.py
 """
 
 import argparse
@@ -17,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 
-OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", r"C:\Users\24adi\dev\open_duck"))
+OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", Path.home() / "dev" / "open_duck"))
 PLAYGROUND = OPEN_DUCK_ROOT / "Open_Duck_Playground"
 
 # `playground` is the Open Duck package, installed editable into the venv

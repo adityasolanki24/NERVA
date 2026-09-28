@@ -23,11 +23,15 @@ import sys
 import time
 from pathlib import Path
 
-PROJECT = "nerva-adityapersonal"
-REGION = "us-central1"
-DEFAULT_ZONE = "us-central1-a"
-BUCKET = f"{PROJECT}-runs"
-SERVICE_ACCOUNT = f"nerva-runner@{PROJECT}.iam.gserviceaccount.com"
+# Deployment identifiers are local configuration, not repository content.
+# Set NERVA_GCP_PROJECT before using any subcommand. The other values have
+# non-sensitive defaults and may be overridden when needed.
+PROJECT = os.environ.get("NERVA_GCP_PROJECT", "").strip()
+REGION = os.environ.get("NERVA_GCP_REGION", "us-central1").strip()
+DEFAULT_ZONE = os.environ.get("NERVA_GCP_ZONE", f"{REGION}-a").strip()
+BUCKET = os.environ.get("NERVA_GCP_BUCKET", f"{PROJECT}-runs" if PROJECT else "").strip()
+SERVICE_ACCOUNT_NAME = os.environ.get("NERVA_GCP_SERVICE_ACCOUNT", "nerva-runner").strip()
+SERVICE_ACCOUNT = (f"{SERVICE_ACCOUNT_NAME}@{PROJECT}.iam.gserviceaccount.com" if PROJECT else "")
 UPSTREAM_SHA = "b9be205ac64488c23504ca42e5ec790337adeec3"  # Open_Duck_Playground (docs/development_log.md)
 IMAGE_FAMILY = "common-cu129-ubuntu-2204-nvidia-580"
 IMAGE_PROJECT = "deeplearning-platform-release"
@@ -60,14 +64,20 @@ def confirm(yes: bool, what: str) -> None:
         sys.exit(f"\nNot executed. Re-run with --yes to {what}.")
 
 
+def require_cloud_config() -> None:
+    if not PROJECT:
+        sys.exit("Set NERVA_GCP_PROJECT to your Google Cloud project ID before using cloud commands.")
+
+
 # ── subcommands ──────────────────────────────────────────────────────────────
 
 def cmd_setup(a):
+    require_cloud_config()
     g = gcloud()
     plan = [
         [g, "storage", "buckets", "create", f"gs://{BUCKET}", f"--project={PROJECT}", f"--location={REGION}",
          "--uniform-bucket-level-access"],
-        [g, "iam", "service-accounts", "create", "nerva-runner", f"--project={PROJECT}",
+        [g, "iam", "service-accounts", "create", SERVICE_ACCOUNT_NAME, f"--project={PROJECT}",
          "--display-name=NERVA training VMs"],
         [g, "storage", "buckets", "add-iam-policy-binding", f"gs://{BUCKET}",
          f"--member=serviceAccount:{SERVICE_ACCOUNT}", "--role=roles/storage.objectAdmin"],
@@ -85,6 +95,7 @@ def cmd_setup(a):
 
 
 def cmd_launch(a):
+    require_cloud_config()
     if git("status", "--porcelain"):
         sys.exit("Uncommitted changes: commit first so the run is tied to an exact commit.")
     sha = git("rev-parse", "HEAD")
@@ -127,6 +138,7 @@ def cmd_launch(a):
 
 
 def cmd_status(a):
+    require_cloud_config()
     g = gcloud()
     run([g, "compute", "instances", "list", f"--project={PROJECT}", "--filter=labels.nerva=1",
          "--format=table(name,zone.basename(),status,creationTimestamp)"], check=False)
@@ -136,6 +148,7 @@ def cmd_status(a):
 
 
 def cmd_fetch(a):
+    require_cloud_config()
     dest = REPO / "experiments" / "cloud_runs" / a.run
     dest.mkdir(parents=True, exist_ok=True)
     run([gcloud(), "storage", "rsync", "--recursive", f"gs://{BUCKET}/runs/{a.run}/out", str(dest)])
@@ -143,6 +156,7 @@ def cmd_fetch(a):
 
 
 def cmd_kill(a):
+    require_cloud_config()
     name = f"nerva-{a.run}".lower()
     print(f"Delete VM {name} in {a.zone} now.")
     confirm(a.yes, "delete it")

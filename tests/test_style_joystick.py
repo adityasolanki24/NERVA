@@ -72,7 +72,7 @@ def test_mismatched_grids_are_rejected(tmp_path):
 
 # ── slow: full env on CPU MJX ────────────────────────────────────────────────
 
-PLAYGROUND = Path(os.environ.get("OPEN_DUCK_ROOT", r"C:\Users\24adi\dev\open_duck")) / "Open_Duck_Playground"
+PLAYGROUND = Path(os.environ.get("OPEN_DUCK_ROOT", Path.home() / "dev" / "open_duck")) / "Open_Duck_Playground"
 UPSTREAM_PKL = str(PLAYGROUND / "playground/open_duck_mini_v2/data/polynomial_coefficients.pkl")
 N_STEPS = 8
 

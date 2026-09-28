@@ -9,7 +9,7 @@ NERVA is built **on top of** [Open Duck Mini v2](https://github.com/apirrone/Ope
 | Phase | Goal | State |
 |---|---|---|
 | 1 | Run the Open Duck baseline in MuJoCo | done (see `docs/development_log.md`) |
-| 2 | Document how the baseline works | in progress |
+| 2 | Document how the baseline works | done (see `docs/open_duck_baseline.md`) |
 | 3–5 | NERVA project layer, interfaces, first expressive-locomotion experiment | not started |
 
 Appraisal/affect (EMA-inspired appraisal, PAD) comes after the locomotion experiments work. It is not implemented.
@@ -35,7 +35,7 @@ cd Open_Duck_Playground
 
 On Windows, enable long-path support first; a transitive dependency has paths longer than 260 characters.
 
-Headless check (stability and velocity tracking for five commands):
+Headless check (stability and velocity tracking for five commands; add `--raw-accel` to feed the policy the raw accelerometer, matching training and hardware):
 ```bash
 .venv/Scripts/python <NERVA>/scripts/check_open_duck_baseline.py
 ```
@@ -46,6 +46,7 @@ Set `OPEN_DUCK_ROOT` if the upstream repos are not in `C:\Users\24adi\dev\open_d
 ```
 docs/overview.md                 project intent
 docs/development_log.md          what was done, what ran, what is unverified
+docs/open_duck_baseline.md       how the Open Duck baseline works (obs, actions, control, training, sim vs hardware)
 docs/papers/                     reference papers
 env/open_duck_inference.lock.txt exact package versions
 scripts/                         NERVA tooling around the baseline

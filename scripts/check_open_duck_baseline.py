@@ -64,8 +64,19 @@ class RecordingViewer:
             raise KeyboardInterrupt  # upstream run() catches this and exits cleanly
 
 
-def run_scenario(command, seconds):
+def run_scenario(command, seconds, raw_accel=False):
     m = mujoco_infer.MjInfer(str(SCENE), str(REFERENCE), str(POLICY), standing=False)
+    if raw_accel:
+        # Upstream get_obs() adds +1.3 to accelerometer x. Training (joystick.py) and the
+        # hardware runtime do not, so pre-subtract it here to feed the policy the raw value.
+        get_acc = m.get_accelerometer
+
+        def raw(data):
+            a = np.array(get_acc(data), copy=True)
+            a[0] -= 1.3
+            return a
+
+        m.get_accelerometer = raw
     m.commands = list(command) + [0.0] * 4
     n_steps = int(seconds / m.sim_dt)
     holder = {}
@@ -100,12 +111,16 @@ def summarise(name, command, log, seconds):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--seconds", type=float, default=20.0)
+    ap.add_argument("--raw-accel", action="store_true",
+                    help="cancel the +1.3 accelerometer-x offset that only mujoco_infer.py adds")
     args = ap.parse_args()
     os.chdir(Path(__file__).resolve().parent)  # upstream run() writes mujoco_saved_obs.pkl to cwd
-    print(f"policy={POLICY.name}  scene={SCENE.name}  duration={args.seconds}s per scenario\n")
+    offset = "none (raw)" if args.raw_accel else "+1.3 (as upstream mujoco_infer.py)"
+    print(f"policy={POLICY.name}  scene={SCENE.name}  duration={args.seconds}s per scenario  "
+          f"accel_x_offset={offset}\n")
     any_fell = False
     for name, cmd in SCENARIOS.items():
-        log, _ = run_scenario(cmd, args.seconds)
+        log, _ = run_scenario(cmd, args.seconds, args.raw_accel)
         any_fell |= summarise(name, cmd, log, args.seconds)
     Path("mujoco_saved_obs.pkl").unlink(missing_ok=True)
     print("\nRESULT:", "at least one fall" if any_fell else "no falls in any scenario")

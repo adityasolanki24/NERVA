@@ -4,6 +4,37 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Phase 2: understanding the baseline
+
+Wrote `docs/open_duck_baseline.md` from the upstream source code, the compiled MuJoCo model and the ONNX file. Nothing upstream was modified.
+
+### What was checked directly (not just read)
+- **Effective actuator parameters come from the compiled model:** kp 13.37, ±3.23 N·m, damping 0.56. `xmls/joints_properties.xml` (kp 17.8) is not included by any model and is stale.
+- **The ONNX graph** has `onnx` installed to a scratch folder only, not the project venv. The network is 101→512→256→128→28 with swish activation, normalisation built into the graph, and `tanh` on the means. That matches the Berkeley Humanoid PPO config the runner uses.
+- **Reference-motion pickle:** 240 gaits on a 6×4×10 grid (vx, vy, ωz), 40 signals each, degree-15 polynomials, period 0.54 s (27 policy steps), nearest-neighbour lookup.
+- **Reference-motion speeds:** the reference gaits' own forward speed matches their command (0.155 m/s for the 0.148 gait), so the reference is not why the policy under-tracks forward.
+
+### Finding: accelerometer offset mismatch
+- `joystick.py:502` (training) intends to add 1.3 to accelerometer x, but uses `.at[0].set()` without assigning the result. In JAX that's a no-op, so training used the raw value.
+- The hardware runtime also uses the raw value (`tare_x()` is disabled).
+- Only `mujoco_infer.py:74` adds +1.3.
+- Added `--raw-accel` to `scripts/check_open_duck_baseline.py` to cancel it (upstream untouched). Result, 20 s per command:
+  - forward 0.097 → **0.112 m/s**
+  - lateral 0.093 → 0.102
+  - backward and turn unchanged
+  - no falls
+- Conclusion: a real but minor effect. **NERVA experiments will use the raw accelerometer.**
+
+### Command tracking, current understanding
+- **Lateral:** explained. The reward's 0.1 m/s dead-band plus a reference grid limited to ±0.111 m/s means about 0.10 m/s earns full reward.
+- **Forward vs turning:** a likely explanation is that the absolute `tracking_sigma = 0.01` enforces m/s errors much more weakly than rad/s errors. That's inferred, not tested.
+- **Backward:** about 21%, unexplained.
+
+### For Phase 5 (noted, not acted on)
+The phase clock `[cos φ, sin φ]` is the only trace of the reference motion at runtime. Its rate is already adjustable (`P`/`;` in sim; LB and a per-robot offset on hardware). That's a zero-retraining candidate for option A (gait-parameter modulation), but its effect on the gait hasn't been measured yet.
+
+---
+
 ## 2026-09-28 — Phase 1: Open Duck Mini v2 baseline running in MuJoCo
 
 ### Machine

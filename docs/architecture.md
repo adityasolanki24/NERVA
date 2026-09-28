@@ -20,8 +20,8 @@ The types between layers are defined in `nerva/interfaces.py`. A layer may only 
 | ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/style.py` |
 | Gait measurement | pure-NumPy metrics, unit-tested | `nerva/gait_metrics.py` |
 | Behaviour selection | interface only (`BehaviourCommand`) | `nerva/interfaces.py` |
-| Affect (PAD dynamics) | interface only (`PADState`) | `nerva/interfaces.py` |
-| Appraisal | interface only (`AppraisalState`) | `nerva/interfaces.py` |
+| Affect (PAD dynamics) | **v0 prototype, simulation only**: EMA emotion rules → ALMA PAD points → decaying pull + return to baseline | `nerva/affect.py`, `docs/affect_model.md` |
+| Appraisal | **v0 prototype**: fixed EMA-variable appraisals for 5 synthetic events | `nerva/appraisal.py` |
 | Perception | interface only (`PerceptionState`, `Event`) | `nerva/interfaces.py` |
 
 Build order: locomotion style experiment (Phase 5) first, then a simulation-only appraisal → PAD prototype with synthetic events. No LLM or foundation model is part of the plan.
@@ -30,7 +30,7 @@ Build order: locomotion style experiment (Phase 5) first, then a simulation-only
 
 - **Open Duck owns** the robot model, the physics, the actuator model, the trained walking policy and its observation/action conventions.
 - **NERVA owns** everything above the locomotion command: style, behaviour, affect, appraisal, perception, and the experiments and evaluation.
-- Only one module, `nerva/open_duck_sim.py`, imports Open Duck and MuJoCo, and only when a simulator object is created. Everything else in `nerva` (interfaces, style mapping, metrics) is dependency-free apart from NumPy for metrics. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
+- Only one module, `nerva/open_duck_sim.py`, imports Open Duck and MuJoCo, and only when a simulator object is created. Everything else in `nerva` (interfaces, style mapping, metrics, appraisal, affect) needs only NumPy. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
 - Upstream code is never edited. Where we need different behaviour (for example the accelerometer offset in `open_duck_baseline.md` §10), we override it from NERVA code and document why.
 
 ## Safety rule (non-negotiable)

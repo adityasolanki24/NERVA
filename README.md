@@ -13,7 +13,7 @@ NERVA is built **on top of** [Open Duck Mini v2](https://github.com/apirrone/Ope
 | 3–4 | NERVA package and layer interfaces | done (`nerva/interfaces.py`, `docs/architecture.md`) |
 | 5 | First expressive-locomotion experiment | first result: `experiments/expressive_locomotion/README.md` |
 
-Appraisal/affect (EMA-inspired appraisal, PAD) comes after the locomotion experiments work. It is not implemented.
+Affect v0 exists as a simulation-only prototype: synthetic events → EMA-inspired appraisal → emotions → persistent PAD (`docs/affect_model.md`). It is **not** connected to the robot's movement yet.
 
 ## Setup (inference only)
 
@@ -55,6 +55,10 @@ nerva/style.py                   style → gait-clock rate (Phase 5, method A)
 nerva/open_duck_sim.py           headless Open Duck sim driven by BehaviourCommand (only module importing Open Duck)
 nerva/gait_metrics.py            gait measurements (speed, cadence, stride, posture, effort, stability)
 experiments/expressive_locomotion/ RQ1 protocol, results and write-up
+nerva/appraisal.py               synthetic events → EMA appraisal variables (NERVA design values)
+nerva/affect.py                  appraisal → emotions (EMA) → PAD (ALMA points) with dynamics
+docs/affect_model.md             affect model design, sources, and open design questions
+experiments/affect_prototype/    scripted event timeline → PAD plot
 tests/                           pytest suite
 docs/architecture.md             layers, Open Duck/NERVA boundary, safety rule
 docs/research_questions.md       RQ1 (active) and later questions
@@ -64,6 +68,6 @@ scripts/                         NERVA tooling around the baseline
 ## Tests
 
 ```bash
-.venv/Scripts/python -m pip install -e "<NERVA>[dev]"
+.venv/Scripts/python -m pip install -e "<NERVA>[dev,experiments]"
 .venv/Scripts/python -m pytest <NERVA>
 ```

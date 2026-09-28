@@ -4,12 +4,14 @@ version = "0.0.1"
 description = "NERVA: expressive, affect-conditioned locomotion research built on Open Duck Mini v2"
 readme = "README.md"
 requires-python = ">=3.10"
-# The core package has no dependencies on purpose: the layer interfaces must be
-# importable and testable without MuJoCo, JAX or Open Duck installed.
-dependencies = []
+# Core dependencies are deliberately minimal: interfaces, appraisal, affect and
+# gait metrics need only NumPy. MuJoCo/Open Duck are needed only by
+# nerva/open_duck_sim.py and are installed separately (see README).
+dependencies = ["numpy"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+experiments = ["matplotlib>=3.8"]
 
 [build-system]
 requires = ["setuptools>=64"]

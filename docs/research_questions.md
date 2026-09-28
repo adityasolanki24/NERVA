@@ -34,7 +34,7 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
 ## Later questions (not active)
 
 - **RQ2, affect → style.** Can a persistent PAD state, updated over time, drive `style` (and later more style dimensions) in a way that is stable and interpretable?
-- **RQ3, appraisal → affect.** Does an EMA-inspired appraisal of synthetic events (successful walking, near fall, person approaching slowly or rapidly, obstacle blocking goal), mapped to PAD by an explicit, replaceable rule, produce sensible affect trajectories? The mapping is our hypothesis, not psychology.
+- **RQ3, appraisal → affect.** *(v0 prototype built; see `docs/affect_model.md`)* Does an EMA-inspired appraisal of synthetic events (successful walking, near fall, person approaching slowly or rapidly, obstacle blocking goal), mapped to PAD by an explicit, replaceable rule, produce sensible affect trajectories? The mapping is our hypothesis, not psychology.
 - **RQ4, perception by people.** Do human observers perceive the style differences, and do they attribute the intended emotional qualities to them? This is the only route by which labels like "confident" could be justified.
 - **RQ5, imitation of expressive references.** Does conditioning on expressive reference motions (animation, motion capture, designed motion) produce more natural-looking styles than parameter modulation, at acceptable stability cost?
 - **RQ6, failure-aware behaviour.** Can appraisal of near-falls and failures change behaviour (e.g. more cautious gait) while safety remains deterministic?

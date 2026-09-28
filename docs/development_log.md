@@ -4,6 +4,58 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Affect model v0: synthetic events → appraisal → emotions → PAD
+
+The user asked to start the emotional-state system after researching it properly. It is **simulation only and not connected to movement**.
+
+### Research (primary sources read, not summaries)
+- **EMA:**
+  - Marsella & Gratch 2009, pp. 80–81: the appraisal variables, and Table 2's appraisal pattern → emotion label. EMA mood is per-label and discrete; **EMA does not use PAD**.
+  - Gratch & Marsella 2004, Table 3: intensity = abs(desirability × likelihood). The text was extracted locally with `pypdf` in a scratch folder.
+- **ALMA** (Gebhard 2005): Table 2 maps OCC emotions to PAD. Decaying emotions form an intensity-weighted "virtual emotion center" that pulls the mood (plus a push phase), and the mood returns to a default.
+- **WASABI** (Becker-Asano & Wachsmuth 2010):
+  - event valence acts as an impulse, and the state is driven back to balance
+  - dominance comes from situational context in cognition
+  - Table 1 gives the PAD point for "surprised"
+- Paper titles were checked against the PDFs' first pages.
+
+### Built
+- `nerva/appraisal.py`: a table of EMA-variable appraisals for the 5 synthetic events. The values are NERVA design choices, with the reasoning in the doc.
+- `nerva/affect.py`:
+  - `categorise()` implements the EMA rules
+  - `EMOTION_PAD` holds the ALMA values
+  - a controllability → dominance blend (NERVA hypothesis)
+  - `AffectModel`: exponential emotion decay, an ALMA-style pull toward the emotion centre, and a return to baseline, integrated exactly (independent of dt)
+  - every parameter lives in `AffectConfig`
+- `docs/affect_model.md`: the design, with every number labelled by source.
+- `experiments/affect_prototype/run.py`: a 70 s scripted timeline producing a CSV and a plot.
+- `pyproject.toml`:
+  - **Fixed:** `numpy` is now declared. `gait_metrics.py` already needed it, and the empty dependency list was wrong.
+  - Added the optional `experiments` extra (`matplotlib`, installed 3.11.2).
+
+### Verified
+- **pytest: 48 passed.** The tests cover:
+  - the EMA labels and intensities
+  - the ALMA table values
+  - controllability affecting dominance only
+  - staying at baseline without events
+  - rise after an event, then an exact exp(−t/τ) return
+  - update-rate independence
+  - bounds under extreme input
+- **Two mistakes of mine were caught during testing:**
+  - A test demanded a return below 0.001 within 2 minutes. That's wrong: the model's τ values predict about 0.002, so the test now checks the exact exponential instead.
+  - The demo printed decayed intensities (0.01) instead of the intensities at elicitation, because the objects mutate. It now records them at fire time.
+
+### Observed in the demo (details in `docs/affect_model.md`)
+- Across the rapid approach, valence and dominance go down and arousal goes up. That is by construction.
+- Open design issues, not fixed and left for the user to decide:
+  - surprise's +0.1 valence dilutes fear
+  - relevance doesn't scale intensity, so routine success moves PAD a lot
+  - arousal persists for many seconds
+  - weak emotions are barely visible
+
+---
+
 ## 2026-09-28 — Phase 5: first expressive-locomotion experiment (method A)
 
 **Decision** (with the user): method A. `style` sets the gait-phase clock rate, `1 + 0.3·style`, with no retraining. B (style as a policy input) and C (style-conditioned reference motions) need GPU retraining and are deferred.

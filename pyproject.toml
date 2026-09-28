@@ -1,0 +1,22 @@
+[project]
+name = "nerva"
+version = "0.0.1"
+description = "NERVA: expressive, affect-conditioned locomotion research built on Open Duck Mini v2"
+readme = "README.md"
+requires-python = ">=3.10"
+# The core package has no dependencies on purpose: the layer interfaces must be
+# importable and testable without MuJoCo, JAX or Open Duck installed.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["nerva"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

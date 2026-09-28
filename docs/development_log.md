@@ -4,6 +4,47 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Phases 3–4: NERVA package and layer interfaces; Phase 5 probe
+
+### Structure (Phase 3)
+- Added `pyproject.toml` and the package `nerva/`, which has **no dependencies**, so the interfaces import and test without MuJoCo, JAX or Open Duck.
+- Installed editable into the Open Duck venv along with `pytest` 9.1.1: `pip install -e ".[dev]"`.
+- **Decision:** a flat package instead of the suggested `affect/`, `appraisal/`, `behaviour/`, `control/`, `evaluation/` subpackages. Each would currently hold one dataclass or nothing. A layer gets a subpackage once it has real code.
+- Added `docs/architecture.md` (layers, what exists, Open Duck/NERVA boundary, safety rule, claim labels) and `docs/research_questions.md` (RQ1 active; RQ2–6 recorded, inactive).
+
+### Interfaces (Phase 4)
+- `nerva/interfaces.py` holds frozen dataclasses with range checks:
+  - `Event` / `PerceptionState`
+  - `AppraisalState` (relevance, desirability, likelihood, expectedness, controllability)
+  - `PADState`
+  - `ExpressiveStyle` (labels "Style -1" / "Neutral" / "Style +1" only)
+  - `BehaviourCommand` (vx, vy, yaw_rate, skill ∈ {"walk"}, style)
+- No appraisal, affect dynamics or behaviour logic. Ranges are NERVA conventions and are documented as such.
+- `pytest`: **14 passed**.
+
+### Exploratory probe for Phase 5: the gait-phase clock
+This was run from a scratch script, not committed; Phase 5 will reproduce it properly.
+- **Setup:** upstream `MjInfer.run()`, forward command 0.15 m/s, raw accelerometer, 20 s per setting, steady state over the last 10 s. Changed only `phase_frequency_factor`, the rate at which the policy's observed phase clock advances.
+
+| factor | clock Hz | foot-height dominant freq (FFT) | fwd speed | falls |
+|---|---|---|---|---|
+| 0.6 | 1.11 | 1.10 Hz | 0.022 m/s | no |
+| 0.8 | 1.48 | 1.50 | 0.077 | no |
+| 1.0 | 1.85 | 1.90 | 0.110 | no |
+| 1.2 | 2.22 | 2.20 | 0.117 | no |
+| 1.4 | 2.59 | 2.60 | 0.126 | no |
+
+- **Cadence follows the clock closely.** Speed rises with the factor and saturates above 1.0.
+- An earlier 0.8/1.0/1.2 run also showed:
+  - effort (mean Σ τ²) of 9.1 / 12.9 / 13.6
+  - max tilt of 7.0° / 5.3° / 4.1°
+  - left-foot height range of 16.3 / 16.2 / 13.9 mm
+- **Measurement lesson:** counting foot-contact on/off transitions gave nearly the same "step rate" at 0.8 and 1.0 because contact chatters. Cadence must be measured from foot height (or joint angles), not raw contact switches.
+- **Caveat:** training always advanced the clock at factor 1.0 (`joystick.py:326`), so other factors are outside the training distribution. The probe used flat ground with no pushes, and stability under disturbance at other factors is untested.
+- The speed in this probe is world-x displacement, which is close to heading-frame speed because yaw drift is small. Phase 5 uses the heading frame.
+
+---
+
 ## 2026-09-28 — Phase 2: understanding the baseline
 
 Wrote `docs/open_duck_baseline.md` from the upstream source code, the compiled MuJoCo model and the ONNX file. Nothing upstream was modified.

@@ -16,6 +16,11 @@ Differences from upstream `mujoco_infer.py`, all opt-in:
   obs_noise=True       add the observation noise the policy was TRAINED with
                        (joystick.py noise_config), resampled every control step
   push()               add a velocity to the base, as the training env does
+  set_head_offset()    head joint offsets added on top of the policy's head targets,
+                       exactly as the hardware runtime adds gamepad head commands
+                       (Open_Duck_Mini_Runtime/scripts/v2_rl_walk_mujoco.py:310): the
+                       offset goes into the observation's command slots 3:7 and is
+                       added to motor targets 5:9 AFTER the speed limit. Default zero.
 """
 
 from __future__ import annotations
@@ -124,6 +129,7 @@ class OpenDuckSim:
         self._qvel_addr = self.inf.actuator_qvel_addr
         self._mj_step = mujoco.mj_step
         self._last_action = np.zeros(self.model.nu)
+        self.head_offset = np.zeros(4)  # neck_pitch, head_pitch, head_yaw, head_roll [rad]
         self.applied_command: tuple[float, float, float] = (0.0, 0.0, 0.0)
 
     # ── inputs ──────────────────────────────────────────────────────────────
@@ -133,9 +139,15 @@ class OpenDuckSim:
         vx = float(np.clip(cmd.vx, *TRAINED_VX))
         vy = float(np.clip(cmd.vy, *TRAINED_VY))
         wz = float(np.clip(cmd.yaw_rate, *TRAINED_YAW_RATE))
-        self.inf.commands = [vx, vy, wz, 0.0, 0.0, 0.0, 0.0]
+        self.inf.commands = [vx, vy, wz, *self.head_offset.tolist()]
         self.applied_command = (vx, vy, wz)
         self.phase_factor = style_to_phase_factor(cmd.style)
+
+    def set_head_offset(self, neck_pitch: float = 0.0, head_pitch: float = 0.0,
+                        head_yaw: float = 0.0, head_roll: float = 0.0) -> None:
+        """Head posture offsets [rad] on top of the policy (hardware-runtime convention)."""
+        self.head_offset = np.array([neck_pitch, head_pitch, head_yaw, head_roll], dtype=float)
+        self.inf.commands = list(self.inf.commands[:3]) + self.head_offset.tolist()
 
     def push(self, dvx: float, dvy: float) -> None:
         """Instant base velocity change in world x/y [m/s], like the training env's pushes."""
@@ -167,6 +179,7 @@ class OpenDuckSim:
                                     inf.prev_motor_targets - max_delta,
                                     inf.prev_motor_targets + max_delta)
         inf.prev_motor_targets = inf.motor_targets.copy()
+        inf.motor_targets[5:9] = inf.motor_targets[5:9] + self.head_offset  # hardware order
         self.data.ctrl = inf.motor_targets.copy()
         self._last_action = action
 

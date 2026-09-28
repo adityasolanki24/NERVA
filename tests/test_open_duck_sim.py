@@ -115,3 +115,18 @@ def test_obs_noise_is_seeded():
 
     assert np.array_equal(x_after(1), x_after(1))
     assert not np.array_equal(x_after(1), x_after(2))
+
+
+def test_head_offset_reaches_observation_and_head_targets_only():
+    base = OpenDuckSim()
+    base.set_behaviour(BehaviourCommand(vx=0.15))
+    head = OpenDuckSim()
+    head.set_behaviour(BehaviourCommand(vx=0.15))
+    head.set_head_offset(head_pitch=0.3)
+    assert head.inf.commands[4] == 0.3 and base.inf.commands[4] == 0.0
+    base.step_physics(10)
+    head.step_physics(10)  # first control step: same state, so policy leg outputs differ only via obs
+    assert head.data.ctrl[6] - base.data.ctrl[6] == pytest.approx(0.3, abs=0.12)
+    # set_behaviour after set_head_offset keeps the offset
+    head.set_behaviour(BehaviourCommand(vx=0.1))
+    assert head.inf.commands[4] == 0.3

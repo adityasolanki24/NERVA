@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+nerva_env/
+
+# Runtime artefacts written by upstream Open Duck scripts
+mujoco_saved_obs.pkl
+
+# Upstream Open Duck repos are cloned separately (see README), never vendored here
+open_duck/

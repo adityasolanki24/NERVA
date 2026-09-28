@@ -1,6 +1,6 @@
 # Design: style-conditioned imitation policy π(s, c, e) — experiment S1
 
-**Status:** training environment and cloud runner implemented and tested locally; no cloud job has run and no cloud compute has been billed. It follows from RQ1b/RQ1c (`experiments/expressive_locomotion/README.md`) and is roadmap stages 9–11.
+**Status:** training environment and cloud runner implemented; the first capped L4 pipeline smoke passed on 2026-09-29 (`docs/cloud_smoke_report.md`). No scientific baseline or style-policy training has run. It follows from RQ1b/RQ1c (`experiments/expressive_locomotion/README.md`) and is roadmap stages 9–11.
 
 **Claim labels:**
 - **[fact]** verified in code or by running
@@ -95,7 +95,8 @@ They are also chosen because the upstream reference generator already exposes a 
   - every VM is created with `--max-run-duration` and `--instance-termination-action=DELETE`. Both flags exist in gcloud 586 **[fact]**. Results are copied to a Cloud Storage bucket *before* the VM ends.
   - the training script shuts the VM down when it finishes or crashes
   - the budget alert "nerva" ($150) is a backstop only
-- **Per-run cost [unknown]:** measured in B0. Nothing beyond B0 is launched until that number is known.
+- **Smoke measurement [fact]:** 327,680 steps took about 6 min 14 s between checkpoints on an L4. A linear projection puts 300 M steps near 95 hours and roughly $81 compute, so B0 is paused pending a throughput/hardware decision. See `docs/cloud_smoke_report.md`.
+- **Per-run B0 cost [unknown]:** nothing beyond a short throughput pilot is launched until a viable configuration and cap are chosen.
 
 ## 7. Risks
 

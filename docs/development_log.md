@@ -4,7 +4,21 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
-## 2026-09-28 — S1 training env + cloud runner (local, no cloud spend yet)
+## 2026-09-29 — First L4 cloud smoke completed; all resources removed
+
+- Full report: `docs/cloud_smoke_report.md`.
+- Private `g2-standard-8` VM: JAX 0.5.3 saw the L4; MJX/PPO trained one 327,680-step batch; Orbax and ONNX exports completed; results synced; exit 0; VM self-deleted.
+- The successful job took 14 min 15 s (about 18 min including VM bootstrap). Reward changed from 13.961 ± 8.708 to 17.348 ± 12.064. This is a pipeline smoke, not a trained walking result.
+- The final policy remained upright in a 10 s replay but did not move forward. Video and raw artifacts are in the git-ignored `experiments/cloud_runs/` directory.
+- The initial 2 M-step smoke was stopped when its measured rate showed it would exceed the one-hour cap. The smoke-only wrapper now requests one 200k-step batch and two evaluations.
+- Organisation policy required private VMs; the launcher now has temporary Cloud NAT lifecycle commands. GPU stockouts occurred in different zones.
+- Public dependency alerts were addressed by updating the export-only stack to TensorFlow CPU 2.20, tf2onnx 1.17, ONNX 1.22 and protobuf 5.29.6. A clean local Python 3.12 conversion test passed.
+- Throughput projects the unchanged 300 M-step B0 to roughly 95 hours on this L4, so B0 was **not** launched.
+- Teardown audit: zero instances, disks, addresses, forwarding rules, routers/NAT, snapshots, buckets and runner service accounts.
+
+---
+
+## 2026-09-28 — S1 training env + cloud runner (local design stage)
 
 - **`nerva/training/style_joystick.py`:** `StyledReference` stacks upstream reference pickles per style. `StyleJoystick` subclasses the upstream `Joystick`; its `reset`/`step` are copies of upstream with lines marked `# NERVA`. Style keys use `fold_in`, so they never consume upstream randomness.
 - **Tests:**

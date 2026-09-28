@@ -95,11 +95,12 @@ def to_arrays(log: list[StepLog], start: int = 0) -> dict[str, np.ndarray]:
 
 class OpenDuckSim:
     def __init__(self, raw_accel: bool = True, init_joint_noise: float = 0.0,
-                 obs_noise: bool = False, seed: int = 0):
+                 obs_noise: bool = False, seed: int = 0,
+                 policy_path: str | Path = POLICY):
         import mujoco  # noqa: F401  (imported here so `nerva` core never needs it)
         from playground.open_duck_mini_v2.mujoco_infer import MjInfer
 
-        self.inf = MjInfer(str(SCENE), str(REFERENCE), str(POLICY), standing=False)
+        self.inf = MjInfer(str(SCENE), str(REFERENCE), str(policy_path), standing=False)
         self.model, self.data = self.inf.model, self.inf.data
         self.phase_factor = 1.0
         self.inf.commands = [0.0] * 7

@@ -55,7 +55,7 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 
 ## Environment
 
-- **`requirements-train.txt`** pins the science-relevant packages to the local inference versions: mujoco 3.3.0, jax 0.5.3, playground 0.0.4, brax 0.14.2, flax 0.10.6, onnxruntime 1.21.0. It adds `jax[cuda12]`, tensorflow-cpu and tf2onnx for ONNX export, and tensorboardX.
-- **`requirements-train.lock.txt`** is compiled by `uv pip compile --python-platform x86_64-manylinux_2_28 --python-version 3.12`. It resolves NumPy to 2.0.2 and protobuf to 3.20.3, which TensorFlow 2.18 and tf2onnx need; locally NumPy is 2.5.3.
+- **`requirements-train.txt`** pins the science-relevant packages to the local inference versions: mujoco 3.3.0, jax 0.5.3, playground 0.0.4, brax 0.14.2, flax 0.10.6, onnxruntime 1.21.0. It adds `jax[cuda12]`, tensorflow-cpu and tf2onnx for ONNX export, and tensorboardX. ONNX and protobuf are pinned to patched versions because the generated lockfile is public and GitHub audits it.
+- **`requirements-train.lock.txt`** is compiled by `uv pip compile --python-platform x86_64-manylinux_2_28 --python-version 3.12`. NumPy 2.x requires tf2onnx 1.17 or newer (`np.cast` was removed). The export-only stack uses TensorFlow 2.20 so it can share patched ONNX 1.22, protobuf 5.29 and ml-dtypes 0.5.x.
 - **Image:** Deep Learning VM `common-cu129-ubuntu-2204-nvidia-580` (CUDA 12.9, driver 580).
-- **Unverified until the first smoke run:** whether JAX 0.5.3 with the CUDA 12.9 wheels in the lockfile runs on the L4 with that driver.
+- **Verified 2026-09-29:** JAX 0.5.3 used the L4 successfully with the CUDA wheels and driver 580. The post-run security update to the export-only TensorFlow/tf2onnx/ONNX/protobuf stack passed a clean local Python 3.12 conversion test and should be reconfirmed by the next capped cloud smoke.

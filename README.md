@@ -11,9 +11,11 @@ NERVA is built **on top of** [Open Duck Mini v2](https://github.com/apirrone/Ope
 | 1 | Run the Open Duck baseline in MuJoCo | done (see `docs/development_log.md`) |
 | 2 | Document how the baseline works | done (see `docs/open_duck_baseline.md`) |
 | 3–4 | NERVA package and layer interfaces | done (`nerva/interfaces.py`, `docs/architecture.md`) |
-| 5 | First expressive-locomotion experiment | first result: `experiments/expressive_locomotion/README.md` |
+| 5 | First expressive-locomotion experiment | RQ1 and speed-matched RQ1b done: `experiments/expressive_locomotion/README.md` |
 
-Affect v0 exists as a simulation-only prototype: synthetic events → EMA-inspired appraisal → emotions → persistent PAD (`docs/affect_model.md`). It is **not** connected to the robot's movement yet.
+Affect model v0.1 exists as a simulation-only prototype ("Model A": synthetic events → EMA-inspired appraisal → emotions → persistent PAD; `docs/affect_model.md`). It is **not** connected to the robot's movement. Long-term trajectory: `docs/roadmap.md`.
+
+**Licence:** `LICENSE` is currently empty, so no licence has been chosen yet. That is the author's decision and still open.
 
 ## Setup (inference only)
 
@@ -45,7 +47,8 @@ Set `OPEN_DUCK_ROOT` if the upstream repos are not in `C:\Users\24adi\dev\open_d
 ## Layout
 
 ```
-docs/overview.md                 project intent
+docs/overview.md                 what NERVA is and where it stands
+docs/roadmap.md                  long-term research trajectory (not a task list)
 docs/development_log.md          what was done, what ran, what is unverified
 docs/open_duck_baseline.md       how the Open Duck baseline works (obs, actions, control, training, sim vs hardware)
 docs/papers/                     reference papers
@@ -56,9 +59,9 @@ nerva/open_duck_sim.py           headless Open Duck sim driven by BehaviourComma
 nerva/gait_metrics.py            gait measurements (speed, cadence, stride, posture, effort, stability)
 experiments/expressive_locomotion/ RQ1 protocol, results and write-up
 nerva/appraisal.py               synthetic events → EMA appraisal variables (NERVA design values)
-nerva/affect.py                  appraisal → emotions (EMA) → PAD (ALMA points) with dynamics
+nerva/affect.py                  affect model v0.1 (Model A): appraisal → emotions → PAD anchors → persistent PAD
 docs/affect_model.md             affect model design, sources, and open design questions
-experiments/affect_prototype/    scripted event timeline → PAD plot
+experiments/affect_prototype/    scripted event timeline → PAD plot (results per model version)
 tests/                           pytest suite
 docs/architecture.md             layers, Open Duck/NERVA boundary, safety rule
 docs/research_questions.md       RQ1 (active) and later questions

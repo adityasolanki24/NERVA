@@ -7,6 +7,11 @@ affect layer derives emotions from the appraisal.
 The appraisal VALUES below are NERVA design choices for synthetic events, not
 measurements or psychology. Reasoning per event: docs/affect_model.md §1.
 Replace this table (or `appraise`) to change how events are interpreted.
+
+This is appraisal v0: a context-free lookup. It is NOT the target design. Long term,
+appraisal = f(perception, goals, self/physical state, expectations, history,
+available actions), so the same event can mean different things in different
+contexts. Keep callers depending only on `appraise(Event) -> AppraisalState`.
 """
 
 from __future__ import annotations
@@ -16,8 +21,10 @@ import dataclasses
 from nerva.interfaces import AppraisalState, Event
 
 EVENT_APPRAISALS: dict[str, AppraisalState] = {
+    # Routine walking progress: expected and low-stakes. v0.1: relevance 0.5 → 0.2 so routine
+    # success does not dominate affect (a significant success/recovery would be a separate event).
     "successful_walking": AppraisalState(
-        relevance=0.5, desirability=0.4, likelihood=1.0, expectedness=0.9, controllability=0.9),
+        relevance=0.2, desirability=0.4, likelihood=1.0, expectedness=0.9, controllability=0.9),
     "near_fall": AppraisalState(
         relevance=1.0, desirability=-0.8, likelihood=0.5, expectedness=0.1, controllability=0.3),
     "person_approaching_slowly": AppraisalState(

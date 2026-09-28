@@ -5,7 +5,8 @@ evolves, with every step traceable to docs/affect_model.md.
 
 Usage:
     <venv>/Scripts/python experiments/affect_prototype/run.py
-Writes experiments/affect_prototype/results/{timeline.csv, pad_timeline.png}.
+Writes experiments/affect_prototype/results/<MODEL_VERSION>/{timeline.csv, pad_timeline.png}.
+Earlier versions' outputs are kept in their own folders (results/v0.0 = affect model v0).
 """
 
 from __future__ import annotations
@@ -18,10 +19,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from nerva.affect import AffectModel  # noqa: E402
+from nerva.affect import CategoricalAffectModel  # noqa: E402
 from nerva.appraisal import appraise  # noqa: E402
 from nerva.interfaces import Event  # noqa: E402
 
+MODEL_VERSION = "v0.1"  # affect model version this demo documents (see docs/affect_model.md)
 DT = 0.05  # s
 DURATION = 70.0  # s
 TIMELINE = [  # (time s, event)
@@ -37,7 +39,7 @@ LABELS = ["joy", "hope", "fear", "distress", "surprise"]
 
 
 def simulate():
-    model = AffectModel()
+    model = CategoricalAffectModel()
     pending = sorted(TIMELINE)
     rows, fired = [], []
     for k in range(int(round(DURATION / DT)) + 1):
@@ -56,8 +58,8 @@ def simulate():
 
 
 def main() -> None:
-    out = Path(__file__).resolve().parent / "results"
-    out.mkdir(exist_ok=True)
+    out = Path(__file__).resolve().parent / "results" / MODEL_VERSION
+    out.mkdir(parents=True, exist_ok=True)
     rows, fired = simulate()
 
     with (out / "timeline.csv").open("w", newline="") as f:
@@ -82,7 +84,7 @@ def main() -> None:
         ax1.plot(t, [r[lbl] for r in rows], label=lbl, lw=1.6)
     ax1.set_ylabel("emotion intensity")
     ax1.legend(loc="upper right", ncol=5, fontsize=8, frameon=False)
-    ax1.set_title("Synthetic events → EMA appraisal → emotions (top) → PAD state (bottom)")
+    ax1.set_title(f"Affect model {MODEL_VERSION}: synthetic events → appraisal → emotions (top) → PAD (bottom)")
     for key, colour in (("valence", "#2a7ab9"), ("arousal", "#d1492e"), ("dominance", "#3b9a57")):
         ax2.plot(t, [r[key] for r in rows], label=key, lw=2, color=colour)
     ax2.axhline(0, color="0.6", lw=0.8)

@@ -7,8 +7,8 @@ Each layer talks to the next *only* through these types. That keeps the layers
 replaceable: a rule-based appraisal and a learned one must both produce an
 AppraisalState, and the locomotion controller never sees raw events or PAD.
 
-Nothing here implements appraisal, affect dynamics or behaviour selection yet.
-These are containers with documented meanings and range checks.
+This module holds only containers with documented meanings and range checks,
+plus the AffectSystem protocol. Implementations live in other modules.
 
 Status of the ideas behind each type (see docs/architecture.md):
   - Appraisal variables: taken from appraisal theory, specifically the EMA model
@@ -23,6 +23,7 @@ Status of the ideas behind each type (see docs/architecture.md):
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Protocol, runtime_checkable
 
 
 def _check_range(name: str, value: float, lo: float, hi: float) -> None:
@@ -107,6 +108,24 @@ class PADState:
         _check_range("valence", self.valence, -1.0, 1.0)
         _check_range("arousal", self.arousal, -1.0, 1.0)
         _check_range("dominance", self.dominance, -1.0, 1.0)
+
+
+@runtime_checkable
+class AffectSystem(Protocol):
+    """Contract for any affect model: appraisals in, a persistent PADState out.
+
+    How appraisal becomes PAD is deliberately NOT fixed here. Affect model v0
+    (`nerva.affect.CategoricalAffectModel`) goes through discrete emotion labels
+    ("Model A"); a future model may map appraisal to PAD directly ("Model B").
+    Both must satisfy this protocol so the layers around them do not change.
+    """
+
+    def add(self, appraisal: AppraisalState) -> object: ...
+
+    def step(self, dt: float) -> PADState: ...
+
+    @property
+    def pad(self) -> PADState: ...
 
 
 # ── Behaviour: "what should I do, and how?" ──────────────────────────────────

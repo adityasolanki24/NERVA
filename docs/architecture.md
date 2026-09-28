@@ -1,14 +1,30 @@
 # NERVA architecture
 
-## Pipeline (long-term)
+## Canonical architecture
+
+This is the reference architecture for NERVA unless evidence gives a reason to change it:
 
 ```
-WORLD → SENSORS → PERCEPTION ─PerceptionState─▶ APPRAISAL ─AppraisalState─▶ AFFECT (PAD, persistent)
-      ─PADState─▶ BEHAVIOUR ─BehaviourCommand + ExpressiveStyle─▶ LOCOMOTION POLICY
-      → SAFETY + LOW-LEVEL CONTROL → ROBOT → (feedback to sensors)
+WORLD → SENSORS
+  → PERCEPTION                 "What happened?"  (observable facts only)
+  → CONTEXT-AWARE APPRAISAL    "What does this mean relative to my goals, expectations,
+                                capabilities and history?"
+  → PERSISTENT AFFECT (PAD)    valence, arousal, dominance; slow, continuous, recovers to baseline
+  → BEHAVIOUR                  WHAT to do (functional command) + HOW to do it (expressive condition)
+  → LEARNED MOTION POLICY      a_t = π(s_t, c_t, e_t): body state, command, expressive condition
+  → DETERMINISTIC SAFETY + LOW-LEVEL CONTROL
+  → ROBOT → new perception / physical experience ↺
 ```
 
-The types between layers are defined in `nerva/interfaces.py`. A layer may only consume the type produced by the layer directly before it. For example, the locomotion policy never sees events or PAD, only a velocity command and an expressive style. This keeps each layer replaceable and testable on its own.
+The types passed between layers are defined in `nerva/interfaces.py`: `PerceptionState` → `AppraisalState` → `PADState` → `BehaviourCommand` (functional command + `ExpressiveStyle`). Any affect implementation must satisfy the `AffectSystem` protocol. A layer only consumes the type produced by the layer directly before it. For example, the locomotion policy never sees events or PAD, only a command and an expressive condition, and **PAD never maps directly to joint angles**.
+
+**Affect model v0.x is one implementation, not an architectural layer.** The current prototype (`nerva/affect.py`, `CategoricalAffectModel`, "Model A") goes appraisal → discrete emotion labels (fear, joy, …) → PAD anchors → persistent PAD. The discrete-label step belongs to that model only. A future "Model B" (appraisal → PAD directly), or any other model, can replace it behind the same `AffectSystem` interface. Nothing outside `nerva/affect.py` may depend on emotion labels.
+
+**Appraisal v0 is a lookup table, not the target design.** Long term, appraisal = f(perception, goals, self/physical state, expectations, history, available actions). The same event, e.g. "person approaching rapidly", must be able to mean different things in different contexts. The v0 table sits behind `appraise(Event) → AppraisalState` so it can be replaced without touching affect or behaviour.
+
+**Timescales** (fastest first): motor/PD control → locomotion policy and state estimation → behaviour → event-driven appraisal → PAD, the slowest. PAD is never updated or used like a motor controller.
+
+Long-term stages and comparisons: `roadmap.md`.
 
 ## What exists today
 
@@ -20,11 +36,11 @@ The types between layers are defined in `nerva/interfaces.py`. A layer may only 
 | ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/style.py` |
 | Gait measurement | pure-NumPy metrics, unit-tested | `nerva/gait_metrics.py` |
 | Behaviour selection | interface only (`BehaviourCommand`) | `nerva/interfaces.py` |
-| Affect (PAD dynamics) | **v0 prototype, simulation only**: EMA emotion rules → ALMA PAD points → decaying pull + return to baseline | `nerva/affect.py`, `docs/affect_model.md` |
+| Affect (PAD dynamics) | **v0.1 prototype (Model A), simulation only**: simplified EMA-inspired emotion rules → ALMA PAD anchors → per-dimension decaying pull and return to baseline; not connected to movement | `nerva/affect.py`, `docs/affect_model.md` |
 | Appraisal | **v0 prototype**: fixed EMA-variable appraisals for 5 synthetic events | `nerva/appraisal.py` |
 | Perception | interface only (`PerceptionState`, `Event`) | `nerva/interfaces.py` |
 
-Build order: locomotion style experiment (Phase 5) first, then a simulation-only appraisal → PAD prototype with synthetic events. No LLM or foundation model is part of the plan.
+No LLM or foundation model is part of the plan, and none will ever be in the motor-control or safety path.
 
 ## Boundary between Open Duck and NERVA
 
@@ -43,6 +59,8 @@ Physical safety never depends on appraisal, affect or any learned or probabilist
 
 Today these are provided by the MuJoCo model (force and control ranges) and by the upstream control loop (the 5.24 rad/s target rate limit). A dedicated NERVA safety layer will be added before anything runs on hardware.
 
+**Dual pathway for physical events.** A near-fall must trigger *deterministic* recovery immediately, which is the safety pathway: fast, rule-based, never learned. It *may also* produce an appraisal, for example high relevance, undesirable, low controllability. That changes PAD and can make later behaviour more conservative, which is the affective pathway: slower and behavioural. The two pathways are never merged; affect never gates safety.
+
 ## How claims are labelled
 
 Every design document distinguishes between:
@@ -53,5 +71,7 @@ Every design document distinguishes between:
    - the chosen subset and ranges of appraisal variables
    - any appraisal→PAD mapping coefficients
    - a single style scalar for locomotion
-4. **Empirically validated in this project:** only what `development_log.md` records as measured.
+   - the discrete-emotion bridge of affect model v0.x
+4. **Measured in this project:** only what `development_log.md` records as measured.
 5. **Hypotheses:** everything else, including that any style setting will read as a particular emotion to people.
+6. **Future research directions:** `roadmap.md`. These are not claims.

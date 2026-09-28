@@ -4,6 +4,50 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — Affect model v0.1 and documentation cleanup
+
+### Affect v0.1 (decisions by the user)
+- **Fix 1, surprise diluting fear.**
+  - A strong surprise (valence 0) still pulls fear's −0.64 toward 0 in the intensity-weighted average. So setting surprise's valence to 0 was not enough.
+  - Implemented instead:
+    - surprise acts on **arousal only** (0.8, WASABI's value) and is excluded from the valence and dominance averages
+    - the emotion centre is computed per dimension
+    - surprise decays with τ = 1 s
+  - Result: valence minimum after near_fall is −0.39, where v0 gave −0.09.
+- **Fix 2, routine events.**
+  - Intensity is now multiplied by relevance, a NERVA extension of EMA.
+  - Routine `successful_walking` relevance is lowered from 0.5 to 0.2.
+  - Result after two routine walks: valence +0.09, where v0 gave +0.27.
+  - **Limitation:** repeated routine success still settles at valence +0.16 (+0.22 at relevance 0.5). The pull aims at the emotion's anchor however weak the emotion is. The principled fix, habituation in history-aware appraisal, belongs to roadmap stage 5. It was not implemented, and is documented in `affect_model.md` with the alternative fix.
+- **Fix 3, arousal persistence.** τ_return is now per dimension: 20 s, 6 s, 20 s. Arousal 11 s after near_fall is 0.16, where v0 gave 0.50.
+- **Issue 4, weak emotions:** left unchanged as decided. Relevance scaling makes them weaker still (hope 0.12 → 0.05).
+- **Architecture.**
+  - New `AffectSystem` protocol in `nerva/interfaces.py`: `AppraisalState` in, `PADState` out.
+  - `AffectModel` renamed to `CategoricalAffectModel` (Model A). The discrete labels are explicitly one implementation, not a layer.
+  - Appraisal v0 is documented as a context-free table, to be replaced by contextual appraisal.
+- **Documentation honesty.** `affect_model.md` now says the intensity rule is a *simplified* subset of EMA. EMA's appraisal frames, mood-adjusted intensity, focus and coping are not implemented.
+- **Results.** The v0 demo outputs were moved to `experiments/affect_prototype/results/v0.0/`. The new ones are in `results/v0.1/`.
+- **Tests: 52 passed.** New tests cover:
+  - relevance scaling
+  - surprise being arousal-only
+  - surprise not diluting fear's valence
+  - arousal recovering faster than valence and dominance
+  - protocol conformance
+  - repeated routine success staying below 0.2 (a design target)
+
+### Documentation cleanup
+- `overview.md` rewritten: accurate and not oversold (the old text had typos and described capabilities that don't exist).
+- `architecture.md`:
+  - the canonical architecture is stated explicitly (perception → context-aware appraisal → PAD → behaviour → learned policy π(s, c, e) → deterministic safety/control)
+  - Model A is described as v0, not as a layer
+  - the timescales are listed
+  - the safety/affect dual pathway is described
+  - a "future research direction" claim label is added
+- New `roadmap.md`: the 20-stage research trajectory, the planned comparisons and the invariant constraints.
+- **Licence:** `LICENSE` is still empty. **Flagged for the author to decide; nothing was inserted.**
+
+---
+
 ## 2026-09-28 — RQ1b: speed-matched expressive locomotion
 
 **Question:** does the gait-clock style change *how* the robot walks once measured speed is equal?

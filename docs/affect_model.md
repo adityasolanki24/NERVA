@@ -1,120 +1,137 @@
-# NERVA affect model v0: synthetic events → appraisal → emotion → PAD
+# NERVA affect model v0.1 ("Model A"): synthetic events → appraisal → emotions → PAD
 
-This is a simulation-only prototype. It is **not** connected to the robot's movement yet. Every number in it is either taken from a cited model or marked as a NERVA design choice. None of it is a validated model of human emotion.
+This is a simulation-only prototype. It is **not** connected to the robot's movement. Every number is either taken from a cited model or marked as a NERVA design choice. It is an engineered internal state for studying expressive behaviour, not a model of real emotion. If the demo shows "valence down, arousal up, dominance down", what that means is that *PAD moved that way under our chosen mapping*. It does not mean the robot is afraid.
 
-## Pipeline
+## Where this sits in the architecture
+
+The canonical NERVA chain is appraisal → persistent affect (PAD) → behaviour (`architecture.md`). Any affect model must satisfy `nerva.interfaces.AffectSystem`: `AppraisalState` in, `PADState` out.
+
+This model, `CategoricalAffectModel` in `nerva/affect.py`, is **Model A**. It passes through discrete emotion labels:
 
 ```
-Event ──appraise()──▶ AppraisalState ──categorise()──▶ emotion instances ──▶ AffectModel ──▶ PADState
-(perception)   nerva/appraisal.py   (EMA rules)      (label, intensity)   (ALMA-style        (persistent,
-                                    nerva/affect.py                        dynamics)          evolves in time)
+Event ─appraise()─▶ AppraisalState ─categorise()─▶ emotion instances ─▶ PAD anchors ─▶ persistent PAD
+      nerva/appraisal.py            (label, intensity)                  (ALMA)        (ALMA-style dynamics)
 ```
 
-## 1. Appraisal: `nerva/appraisal.py` [NERVA design]
+The labels (joy, fear, …) are an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly. Nothing outside `nerva/affect.py` may depend on emotion labels.
 
-Each synthetic event has a fixed appraisal. EMA defines the *variables* (Marsella & Gratch 2009, §2.3.3). The *values* below are our judgement of what each event means for a small walking robot. `Event.magnitude` scales desirability.
+## 1. Appraisal v0: `nerva/appraisal.py` [NERVA design values]
+
+The *variables* come from EMA (Marsella & Gratch 2009, §2.3.3). The *values* are our judgement for a small walking robot. `Event.magnitude` scales desirability.
+
+**This is a context-free lookup table and not the target design.** Real appraisal must depend on context: goals, physical state, expectations, history and available actions. For example, "person approaching rapidly" should be expected and controllable if NERVA invited the person, and undesirable and uncontrollable if NERVA is unstable near a wall.
 
 | event | relevance | desirability | likelihood | expectedness | controllability | reasoning |
 |---|---|---|---|---|---|---|
-| successful_walking | 0.5 | +0.4 | 1.0 | 0.9 | 0.9 | goal progress has happened, as expected, under own control |
+| successful_walking | **0.2** (v0: 0.5) | +0.4 | 1.0 | 0.9 | 0.9 | *routine* progress: expected, low-stakes, under own control |
 | near_fall | 1.0 | −0.8 | 0.5 | 0.1 | 0.3 | a fall is possible, not certain; sudden; hard to prevent |
 | person_approaching_slowly | 0.4 | +0.2 | 0.6 | 0.7 | 0.7 | possible interaction; mildly positive; anticipated |
 | person_approaching_rapidly | 0.9 | −0.6 | 0.6 | 0.2 | 0.3 | possible collision; sudden; little time to react |
 | obstacle_blocking_goal | 0.8 | −0.5 | 1.0 | 0.5 | 0.6 | the goal *is* blocked; the robot can try to go around |
 
-"Likelihood" is the likelihood of the appraised outcome (for near_fall, the outcome "I fall"). Following EMA, an outcome in the present is certain (1.0) and a future one is uncertain (< 1).
+Likelihood is the likelihood of the appraised outcome (for near_fall, "I fall"). As in EMA, a present outcome is certain (1.0) and a future one is uncertain (< 1).
 
-## 2. Emotion categorisation: `affect.categorise()` [EMA]
-
-These rules are from EMA (Marsella & Gratch 2009, Table 2), with intensities from Gratch & Marsella 2004, Table 3:
+## 2. Emotion categorisation: `categorise()` [simplified EMA-inspired + NERVA extensions]
 
 | appraisal pattern | emotion | intensity |
 |---|---|---|
-| desirability > 0, likelihood < 1 | hope | abs(d × l) |
-| desirability > 0, likelihood = 1 | joy | abs(d × l) |
-| desirability < 0, likelihood < 1 | fear | abs(d × l) |
-| desirability < 0, likelihood = 1 | distress (EMA 2009 calls it "sadness") | abs(d × l) |
-| expectedness low | surprise | **1 − expectedness** [NERVA: EMA gives no intensity rule] |
+| desirability > 0, likelihood < 1 | hope | relevance × abs(d × l) |
+| desirability > 0, likelihood = 1 | joy | relevance × abs(d × l) |
+| desirability < 0, likelihood < 1 | fear | relevance × abs(d × l) |
+| desirability < 0, likelihood = 1 | distress (EMA 2009: "sadness") | relevance × abs(d × l) |
+| expectedness < 0.3 | surprise | relevance × (1 − expectedness) |
 
-- "Low" expectedness means **< 0.3** [NERVA threshold].
-- An appraisal with relevance 0 produces no emotion. In EMA, relevance means non-zero utility.
-- **Not implemented:** anger and guilt, which need EMA's *causal attribution* (blame). None of our five events involves a blameworthy agent. `AppraisalState` has no attribution field yet, and one should be added when an event needs it.
+**What is sourced:**
+- The label rules come from Marsella & Gratch 2009, Table 2.
+- The base intensity abs(desirability × likelihood) is the intensity rule listed for hope, joy, fear and distress in Gratch & Marsella 2004, Table 3.
 
-## 3. Emotion → PAD point [ALMA, plus one WASABI value, plus one NERVA hypothesis]
+**What is simplified or ours:**
+- **This is not EMA's full intensity model.** EMA computes intensity per *appraisal frame* (one per proposition in its causal interpretation). It adds the current mood to each frame's intensity ("mood-adjusted" intensity), and a focus mechanism selects the frame that drives expression and coping. We implement none of that: no causal interpretation, no frames, no mood adjustment, no focus, no coping.
+- **Relevance scaling** (`scale_by_relevance`, v0.1) is a NERVA extension. In EMA, relevance only determines whether a proposition is appraised at all.
+- The surprise intensity rule and the 0.3 threshold are ours; EMA only says expectedness is "low".
+- Anger and guilt are not implemented: they need causal attribution, which `AppraisalState` does not have yet.
 
-Each emotion label has a PAD point, from ALMA (Gebhard 2005, Table 2):
+## 3. Emotion → PAD anchor [ALMA; surprise and the dominance blend are NERVA]
 
-| emotion | P | A | D | source |
+| emotion | V (P) | A | D | source |
 |---|---|---|---|---|
-| joy | 0.40 | 0.20 | 0.10 | ALMA Table 2 |
+| joy | 0.40 | 0.20 | 0.10 | ALMA (Gebhard 2005) Table 2 |
 | hope | 0.20 | 0.20 | −0.10 | ALMA Table 2 |
 | fear | −0.64 | 0.60 | −0.43 | ALMA Table 2 |
 | distress | −0.40 | −0.20 | −0.50 | ALMA Table 2 |
-| surprise | 0.10 | 0.80 | 0.00 | WASABI Table 1 "surprised" (10, 80, ±100), rescaled to ±1. WASABI allows either sign of D; **0 is our choice** |
+| surprise | — | 0.80 | — | arousal from WASABI Table 1 "surprised" (80/100). **V and D deliberately not affected (NERVA v0.1)** |
 
-**Controllability → dominance [NERVA hypothesis]:**
-- Each emotion instance's dominance is blended with the appraised controllability: `D = (1 − w)·D_emotion + w·(2·controllability − 1)`, with `w = 0.5`.
-- Precedent: WASABI derives dominance from the situational context in cognition rather than from the emotion itself (Becker-Asano & Wachsmuth 2010, §3.3). Appraisal theories treat coping potential or control as a determinant of the emotional response (Marsella & Gratch 2009, §2.1).
-- The specific blend and weight are ours.
+- **Surprise [NERVA choice].** Surprise is treated as a short-lived activation/attention effect. It takes part only in the arousal average, and it decays with τ = 1 s instead of 4 s. In v0, surprise had P = +0.1 and took part in all three averages. Because it is usually strong, it cancelled most of fear's negative valence (see *History*).
+- **Controllability → dominance [NERVA hypothesis].** For emotions that have a dominance anchor: `D = (1 − w)·D_emotion + w·(2·controllability − 1)`, with `w = 0.5`. The precedent is that WASABI derives dominance from appraised situational context (Becker-Asano & Wachsmuth 2010, §3.3).
 
-## 4. Dynamics: `affect.AffectModel` [ALMA/WASABI structure, NERVA parameters]
+## 4. Dynamics: `CategoricalAffectModel` [ALMA/WASABI structure; NERVA parameters]
 
-**Active emotions** decay exponentially: `intensity(t) = intensity₀ · exp(−t / τ_emotion)`. They are dropped below 0.01. ALMA decays emotions too, linearly over about 1 minute in its example.
+**Emotions.** Each emotion instance decays exponentially with its own τ and is dropped below intensity 0.01.
 
-**Emotion centre** `E` is the intensity-weighted mean PAD point of the active emotions. Its strength `I` is the **mean** intensity of the active emotions, as in ALMA's "virtual emotion center" (Gebhard 2005, §3).
+**Emotion centre, computed per PAD dimension** (v0.1). For each dimension, over the active emotions that act on it:
+- `E_k` is the intensity-weighted mean anchor
+- `I_k` is the mean intensity
 
-**PAD state** `x` (NERVA's persistent affect, ALMA's "mood") follows
+This follows ALMA's "virtual emotion center", which ALMA computes over all emotions at once.
+
+**PAD state, per dimension k:**
 
 ```
-dx/dt = k_pull · I · (E − x)  +  (x_base − x) / τ_return
+dx_k/dt = k_pull · I_k · (E_k − x_k)  +  (baseline_k − x_k) / τ_return,k
 ```
 
-- The first term is ALMA's *pull* phase: active emotions attract the state.
-- The second is the return to the default state (ALMA's "mood return"; WASABI's drive back to balance).
-- ALMA's *push* phase is **not implemented**. That is where the mood is pushed further once it passes the emotion centre.
-- Between updates `I` and `E` are held constant, so the linear equation is integrated **exactly** (`x ← x* + (x − x*)·exp(−(a+b)·dt)`). The result therefore does not depend on the update rate.
-- `x` is clipped to [−1, 1].
+- The first term is ALMA's *pull* phase. The second is the return to baseline (ALMA's mood return; WASABI's drive back to balance).
+- ALMA's *push* phase is not implemented.
+- The equation is integrated exactly per step, so results don't depend on dt, and the state is clipped to [−1, 1].
 
-**Parameters [NERVA choices, for a robot reacting on a scale of seconds]:**
+**Parameters (`AffectConfig`). All are engineering choices for a robot reacting within seconds, not psychological constants:**
 
-| parameter | value | ALMA's value, for comparison (conversational agents) |
-|---|---|---|
-| τ_emotion | 4 s | about 60 s linear decay |
-| k_pull | 1.0 /s at full intensity | "usual mood change time" 10 min |
-| τ_return | 20 s | return over 20 min for the largest distance |
-| baseline x_base | (0, 0, 0) | derived from Big-Five personality |
-
-All parameters live in `AffectConfig` and can be replaced without touching the code.
+| parameter | v0.1 | v0 | ALMA (conversational agents), for comparison |
+|---|---|---|---|
+| τ_emotion | 4 s; surprise **1 s** | 4 s for all | about 60 s linear decay |
+| k_pull | 1.0 /s at intensity 1 | same | "usual mood change time" 10 min |
+| τ_return (V, A, D) | **20 s, 6 s, 20 s** | 20 s for all | about 20 min |
+| relevance scaling | **on** | off | n/a |
+| baseline | (0, 0, 0) | same | from Big-Five personality |
 
 ## Demo: `experiments/affect_prototype/run.py`
 
-A scripted 70 s timeline of the five events. Output is in `experiments/affect_prototype/results/` (`timeline.csv`, `pad_timeline.png`).
+A scripted 70 s timeline of the five events. The outputs of each model version are kept separately: `results/v0.1/` (current) and `results/v0.0/` (v0, for comparison).
 
-![PAD timeline](../experiments/affect_prototype/results/pad_timeline.png)
+![PAD timeline v0.1](../experiments/affect_prototype/results/v0.1/pad_timeline.png)
 
-**Behaviour checked [measured on the demo]:**
-- Events nudge the PAD state; they don't switch it. The emotions decay over a few seconds, and PAD relaxes toward baseline.
-- Across person_approaching_rapidly (t = 25 → 27 s):
-  - valence 0.17 → −0.01
-  - arousal 0.10 → 0.46
-  - dominance 0.18 → −0.08
-- That direction follows from the tables by construction.
+**Measured on the demo (v0.1 vs v0):**
 
-**Design weaknesses the demo exposes [open decisions, not bugs]:**
-1. **Surprise dilutes negative valence.** After near_fall, valence only reaches about −0.09. Surprise (intensity 0.9, P = +0.1 from WASABI) outweighs fear (0.4, P = −0.64) in the intensity-weighted centre. Many accounts treat surprise as valence-neutral. An option is P = 0 for surprise, or excluding surprise from the valence average.
-2. **Relevance does not scale intensity** (EMA uses it only as a gate). So routine successful_walking (relevance 0.5) moves valence to +0.27 and dominance to +0.31 after two occurrences. An option is intensity × relevance, which would be a NERVA extension of EMA.
-3. **Arousal persists** about 13 s after near_fall (still 0.47), set by τ_return = 20 s. What persistence is appropriate for a robot is an open question.
-4. **Weak emotions** (hope 0.12) have almost no visible effect. That may be acceptable.
+| | v0 | v0.1 |
+|---|---|---|
+| valence minimum after near_fall | −0.09 | **−0.39** |
+| arousal 11 s after near_fall (t = 38 s) | 0.50 | **0.16** |
+| valence after two routine walks (t = 10 s) | +0.27 | **+0.09** |
 
-## What this model is and isn't
+- **Repeated routine success**, one every 3 s for 60 s: steady valence **+0.16**, where v0's relevance of 0.5 gave +0.22. This is covered by a test with a design target of < 0.2.
+- **Weak emotions were left unchanged, as decided.** Relevance scaling makes them weaker still (hope 0.12 → 0.05); nothing amplifies them.
 
-- **It is** an explicit, inspectable engineering model. Every step can be traced back to a table in this document, and every step can be replaced independently. For example:
-  - a learned appraisal instead of the event table
-  - a different emotion → PAD table
-  - direct appraisal → PAD without labels
-- **It isn't** evidence about emotion. If near_fall produces "valence ↓, arousal ↑, dominance ↓", that follows *by construction* from the tables above. The model makes no prediction that could have failed. Validation would need:
-  - human judgements of whether the resulting *behaviour* reads as intended (RQ4)
-  - a comparison with alternative mappings
+## Known limitations of v0.1 [open, measured]
+
+1. **Intensity controls the *rate* of the pull, not its *extent*.** The state is attracted toward the emotion's anchor point however weak the emotion is. So:
+   - frequent weak events drive a lasting level, as in repeated routine success at +0.16
+   - one weak joy (0.08) at t = 52 s visibly lifts a negative valence
+   Two possible fixes:
+   - **Habituation in appraisal:** repeated routine events become less relevant. This is the principled fix, and it belongs to history-aware appraisal (roadmap stage 5).
+   - **Dynamics where intensity scales the displacement,** not just the speed. This departs from ALMA and would further weaken small events.
+   Neither is implemented; both need a decision.
+2. The appraisal is context-free (see §1).
+3. There is one baseline and no personality. That is intentional: roadmap stage 20, only after affect-conditioned motion works.
+
+## History
+
+**v0** (commit `47ef051`). Same pipeline, with these differences:
+- surprise P = +0.1 and D = 0, taking part in all averages
+- no relevance scaling
+- one τ_return = 20 s
+- routine walking relevance 0.5
+
+The v0 demo exposed four issues: surprise diluting fear, routine events too influential, arousal lasting too long, and weak emotions barely visible. The user decided to fix the first three and leave the fourth. The v0 outputs are kept in `experiments/affect_prototype/results/v0.0/`.
 
 ## Sources
 

@@ -4,6 +4,33 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — GPU compute set up; style-conditioned policy designed
+
+### Compute
+- **Google Cloud project** `nerva-adityapersonal`, in the prxptn.com organisation. It is linked to the billing account holding Perception's Google for Startups credits (about $22k, valid to June 2028), with the user's agreement.
+- **Access:** 24adityasolanki24@gmail.com is Owner and Compute Admin.
+- **Budget "nerva":** $150, alerts only. Google's spend caps do not support Compute Engine.
+- **Quota:** GPUs (all regions) 360; L4 in us-central1 8 on-demand and 8 preemptible. No requests were needed.
+- **`gcloud` 586.0.0** was installed locally via winget and the user logged in. Read-only checks confirmed:
+  - billing is enabled
+  - L4 is offered in us-central1 zones a, b and c
+  - no instances are running
+  - the `--max-run-duration` and `--instance-termination-action` flags exist
+  - the DLVM image family `common-cu129-ubuntu-2204-nvidia-580` exists
+
+### Design (`docs/style_policy_design.md`)
+- **Style vector** e = (tempo, step height, torso pitch), mapped to Placo's `single_support_duration`, `walk_foot_height` and `walk_trunk_pitch`, around the `medium` preset. Observation 101 → 104.
+- **Reference and periods:** per-style reference grids and gait periods.
+- **Pipeline R0 → B0 → R1 → B1 → S1,** with success criteria fixed in advance.
+
+### Facts found while designing
+- The generator needs `placo==0.6.3` and Python 3.10.12, and has no Windows build. So references are generated on a Linux VM.
+- Reference keys are computed velocities (`steps_to_vel(dx, period)`, rounded to 3 decimals), not measured ones.
+- The current `auto_gait.json` sweep does not reproduce the shipped pickle's velocity grid, so how the shipped references were generated is unknown.
+- The generator README has an open TODO questioning whether its output still trains. That is why step R0 exists.
+
+---
+
 ## 2026-09-28 — Demo video: closed loop events → appraisal → PAD → behaviour → robot (user request)
 
 - **What it is.** `experiments/demo_video/`: MuJoCo render beside emotion, PAD and behaviour panels revealed over time, with an event caption and a status line. The output is `results/nerva_affect_demo.mp4` (66 s, 1280×650, 25 fps, about 10 MB).

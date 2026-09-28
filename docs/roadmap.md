@@ -12,7 +12,7 @@ This is the long-term research trajectory. It is **not** a task list. Items are 
 | 6 | Physical experience (near-falls, slips, saturation) feeding appraisal and PAD | not started |
 | 7 | Multiple locomotion skills | not started |
 | 8 | Failure-aware behaviour ("I fell" vs "I am becoming unstable") | not started |
-| 9 | Style-conditioned RL policy π(s, c, e) | not started; needs Linux + NVIDIA GPU |
+| 9 | Style-conditioned RL policy π(s, c, e) | designed (`style_policy_design.md`); GCP project ready |
 | 10 | Expressive reference motion (animation, mocap, acted, designed) | not started |
 | 11 | Imitation learning: "move like this" + RL "while staying stable" | not started |
 | 12 | Social perception (presence, distance, approach velocity, orientation, interaction state) | not started |

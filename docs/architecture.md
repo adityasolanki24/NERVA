@@ -46,7 +46,7 @@ No LLM or foundation model is part of the plan, and none will ever be in the mot
 
 - **Open Duck owns** the robot model, the physics, the actuator model, the trained walking policy and its observation/action conventions.
 - **NERVA owns** everything above the locomotion command: style, behaviour, affect, appraisal, perception, and the experiments and evaluation.
-- Only one module, `nerva/open_duck_sim.py`, imports Open Duck and MuJoCo, and only when a simulator object is created. Everything else in `nerva` (interfaces, style mapping, metrics, appraisal, affect) needs only NumPy. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
+- Only two places import Open Duck: `nerva/open_duck_sim.py` (MuJoCo simulation, only when a simulator object is created) and `nerva/training/` (the JAX/MJX training env, imported only by training scripts). `nerva/training/style_joystick.py` subclasses upstream's training env; its re-implemented `reset`/`step` are tested to reproduce upstream exactly with one neutral style. Everything else in `nerva` (interfaces, style mapping, metrics, appraisal, affect) needs only NumPy. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
 - Upstream code is never edited. Where we need different behaviour (for example the accelerometer offset in `open_duck_baseline.md` §10), we override it from NERVA code and document why.
 
 ## Safety rule (non-negotiable)

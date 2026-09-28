@@ -13,3 +13,7 @@ open_duck/
 # Build / test artefacts
 *.egg-info/
 .pytest_cache/
+
+# Cloud run outputs (large; summaries are copied into experiment folders)
+experiments/cloud_runs/
+.nerva-code-*.tar.gz

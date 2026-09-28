@@ -1,0 +1,338 @@
+absl-py==2.5.0
+    # via
+    #   brax
+    #   keras
+    #   ml-collections
+    #   mujoco
+    #   mujoco-mjx
+    #   optax
+    #   orbax-checkpoint
+    #   tensorboard
+    #   tensorflow-cpu
+aiofiles==25.1.0
+    # via orbax-checkpoint
+astunparse==1.6.3
+    # via tensorflow-cpu
+blinker==1.9.0
+    # via flask
+brax==0.14.2
+    # via
+    #   -r cloud/requirements-train.txt
+    #   playground
+certifi==2026.7.22
+    # via requests
+charset-normalizer==3.5.1
+    # via requests
+click==8.5.0
+    # via flask
+coloredlogs==15.0.1
+    # via onnxruntime
+etils==1.14.0
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   mujoco
+    #   mujoco-mjx
+    #   orbax-checkpoint
+    #   playground
+flask==3.1.3
+    # via
+    #   brax
+    #   flask-cors
+flask-cors==6.0.5
+    # via brax
+flatbuffers==25.12.19
+    # via
+    #   onnxruntime
+    #   tensorflow-cpu
+    #   tf2onnx
+flax==0.10.6
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   playground
+fsspec==2026.9.0
+    # via etils
+gast==0.7.0
+    # via tensorflow-cpu
+glfw==2.10.2
+    # via mujoco
+google-pasta==0.2.0
+    # via tensorflow-cpu
+grpcio==1.84.0
+    # via
+    #   tensorboard
+    #   tensorflow-cpu
+h5py==3.16.0
+    # via
+    #   keras
+    #   tensorflow-cpu
+humanfriendly==10.0
+    # via coloredlogs
+humanize==4.16.0
+    # via orbax-checkpoint
+idna==3.20
+    # via requests
+itsdangerous==2.2.0
+    # via flask
+jax==0.5.3
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   flax
+    #   jaxopt
+    #   mujoco-mjx
+    #   optax
+    #   orbax-checkpoint
+    #   playground
+jax-cuda12-pjrt==0.5.3
+    # via
+    #   -r cloud/requirements-train.txt
+    #   jax-cuda12-plugin
+jax-cuda12-plugin==0.5.3
+    # via -r cloud/requirements-train.txt
+jaxlib==0.5.3
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   jax
+    #   jaxopt
+    #   mujoco-mjx
+    #   optax
+jaxopt==0.8.5
+    # via brax
+jinja2==3.1.6
+    # via
+    #   brax
+    #   flask
+keras==3.15.1
+    # via tensorflow-cpu
+libclang==18.1.1
+    # via tensorflow-cpu
+lxml==6.1.3
+    # via playground
+markdown==3.11
+    # via tensorboard
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via
+    #   flask
+    #   jinja2
+    #   werkzeug
+mdurl==0.1.2
+    # via markdown-it-py
+ml-collections==1.1.0
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   playground
+ml-dtypes==0.4.1
+    # via
+    #   jax
+    #   jaxlib
+    #   keras
+    #   tensorflow-cpu
+    #   tensorstore
+mpmath==1.3.0
+    # via sympy
+msgpack==1.2.2
+    # via
+    #   flax
+    #   orbax-checkpoint
+mujoco==3.3.0
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   mujoco-mjx
+    #   playground
+mujoco-mjx==3.3.0
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   playground
+namex==0.1.0
+    # via keras
+nest-asyncio==1.6.0
+    # via orbax-checkpoint
+numpy==2.0.2
+    # via
+    #   brax
+    #   flax
+    #   h5py
+    #   jax
+    #   jaxlib
+    #   jaxopt
+    #   keras
+    #   ml-dtypes
+    #   mujoco
+    #   onnx
+    #   onnxruntime
+    #   optax
+    #   orbax-checkpoint
+    #   scipy
+    #   tensorboard
+    #   tensorboardx
+    #   tensorflow-cpu
+    #   tensorstore
+    #   tf2onnx
+    #   treescope
+    #   trimesh
+nvidia-cublas-cu12==12.9.2.10
+    # via
+    #   jax-cuda12-plugin
+    #   nvidia-cudnn-cu12
+    #   nvidia-cusolver-cu12
+nvidia-cuda-cupti-cu12==12.9.79
+    # via jax-cuda12-plugin
+nvidia-cuda-nvcc-cu12==12.9.86
+    # via jax-cuda12-plugin
+nvidia-cuda-nvrtc-cu12==12.9.86
+    # via nvidia-cublas-cu12
+nvidia-cuda-runtime-cu12==12.9.79
+    # via jax-cuda12-plugin
+nvidia-cudnn-cu12==9.26.0.51
+    # via jax-cuda12-plugin
+nvidia-cufft-cu12==11.4.1.4
+    # via jax-cuda12-plugin
+nvidia-cusolver-cu12==11.7.5.82
+    # via jax-cuda12-plugin
+nvidia-cusparse-cu12==12.5.10.65
+    # via
+    #   jax-cuda12-plugin
+    #   nvidia-cusolver-cu12
+nvidia-nccl-cu12==2.32.3
+    # via jax-cuda12-plugin
+nvidia-nvjitlink-cu12==12.9.86
+    # via
+    #   jax-cuda12-plugin
+    #   nvidia-cufft-cu12
+    #   nvidia-cusolver-cu12
+    #   nvidia-cusparse-cu12
+onnx==1.17.0
+    # via tf2onnx
+onnxruntime==1.21.0
+    # via -r cloud/requirements-train.txt
+opt-einsum==3.4.0
+    # via
+    #   jax
+    #   tensorflow-cpu
+optax==0.2.8
+    # via
+    #   brax
+    #   flax
+optree==0.20.0
+    # via keras
+orbax-checkpoint==0.11.24
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+    #   flax
+packaging==26.3
+    # via
+    #   keras
+    #   onnxruntime
+    #   tensorboard
+    #   tensorboardx
+    #   tensorflow-cpu
+    #   wheel
+pillow==12.3.0
+    # via brax
+playground==0.0.4
+    # via -r cloud/requirements-train.txt
+protobuf==3.20.3
+    # via
+    #   onnx
+    #   onnxruntime
+    #   orbax-checkpoint
+    #   tensorboard
+    #   tensorboardx
+    #   tensorflow-cpu
+    #   tf2onnx
+pygments==2.21.0
+    # via rich
+pyopengl==3.1.10
+    # via mujoco
+pyyaml==6.0.3
+    # via
+    #   flax
+    #   ml-collections
+    #   orbax-checkpoint
+requests==2.34.2
+    # via
+    #   tensorflow-cpu
+    #   tf2onnx
+rich==15.0.0
+    # via
+    #   flax
+    #   keras
+scipy==1.18.1
+    # via
+    #   brax
+    #   jax
+    #   jaxlib
+    #   jaxopt
+    #   mujoco-mjx
+setuptools==84.0.0
+    # via
+    #   tensorboard
+    #   tensorflow-cpu
+simplejson==4.1.2
+    # via orbax-checkpoint
+six==1.17.0
+    # via
+    #   astunparse
+    #   google-pasta
+    #   tensorboard
+    #   tensorflow-cpu
+    #   tf2onnx
+sympy==1.14.0
+    # via onnxruntime
+tensorboard==2.18.0
+    # via tensorflow-cpu
+tensorboard-data-server==0.7.2
+    # via tensorboard
+tensorboardx==2.6.5
+    # via
+    #   -r cloud/requirements-train.txt
+    #   brax
+tensorflow-cpu==2.18.0
+    # via -r cloud/requirements-train.txt
+tensorstore==0.1.74
+    # via
+    #   flax
+    #   orbax-checkpoint
+termcolor==3.3.0
+    # via tensorflow-cpu
+tf2onnx==1.16.1
+    # via -r cloud/requirements-train.txt
+tqdm==4.70.1
+    # via playground
+treescope==0.1.10
+    # via flax
+trimesh==5.1.0
+    # via
+    #   brax
+    #   mujoco-mjx
+typing-extensions==4.16.0
+    # via
+    #   brax
+    #   etils
+    #   flax
+    #   grpcio
+    #   optree
+    #   orbax-checkpoint
+    #   tensorflow-cpu
+urllib3==2.8.0
+    # via requests
+werkzeug==3.1.9
+    # via
+    #   flask
+    #   flask-cors
+    #   tensorboard
+wheel==0.48.0
+    # via astunparse
+wrapt==2.5.0
+    # via tensorflow-cpu
+zipp==4.1.0
+    # via etils

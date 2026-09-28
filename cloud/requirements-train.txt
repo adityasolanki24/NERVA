@@ -1,0 +1,21 @@
+# Cloud training environment (Linux x86-64, Python 3.12, NVIDIA GPU).
+# Science-relevant packages are pinned to the SAME versions as the local inference
+# lock (env/open_duck_inference.lock.txt); everything else is left to the resolver.
+# The first VM freezes what it actually installed to cloud/requirements-train.lock.txt.
+mujoco==3.3.0
+mujoco-mjx==3.3.0
+jax==0.5.3
+jaxlib==0.5.3
+jax-cuda12-plugin[with_cuda]==0.5.3
+jax-cuda12-pjrt==0.5.3
+playground==0.0.4
+brax==0.14.2
+flax==0.10.6
+orbax-checkpoint==0.11.24
+onnxruntime==1.21.0
+ml_collections==1.1.0
+etils==1.14.0
+# ONNX export and logging, as used by upstream common/runner.py + export_onnx.py
+tensorflow-cpu==2.18.0
+tf2onnx==1.16.1
+tensorboardX

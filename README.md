@@ -57,6 +57,9 @@ nerva/interfaces.py              data types passed between layers (no logic yet)
 nerva/style.py                   style → gait-clock rate (Phase 5, method A)
 nerva/open_duck_sim.py           headless Open Duck sim driven by BehaviourCommand (only module importing Open Duck)
 nerva/gait_metrics.py            gait measurements (speed, cadence, stride, posture, effort, stability)
+nerva/training/                  style-conditioned training env (JAX/MJX) and training script (experiment S1)
+cloud/                           Google Cloud runner: capped, self-deleting GPU VMs; job scripts; training lockfile
+docs/style_policy_design.md      design of the style-conditioned imitation policy (S1)
 experiments/expressive_locomotion/ RQ1 protocol, results and write-up
 nerva/appraisal.py               synthetic events → EMA appraisal variables (NERVA design values)
 nerva/affect.py                  affect model v0.1 (Model A): appraisal → emotions → PAD anchors → persistent PAD

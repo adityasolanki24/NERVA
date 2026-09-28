@@ -4,6 +4,25 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-28 — S1 training env + cloud runner (local, no cloud spend yet)
+
+- **`nerva/training/style_joystick.py`:** `StyledReference` stacks upstream reference pickles per style. `StyleJoystick` subclasses the upstream `Joystick`; its `reset`/`step` are copies of upstream with lines marked `# NERVA`. Style keys use `fold_in`, so they never consume upstream randomness.
+- **Tests:**
+  - 5 fast unit tests on synthetic references pass.
+  - **Slow:** the single neutral style reproduces upstream **exactly** over 8 steps (qpos, observations, reward, reference).
+  - **Resample test:** the new style appears in the observation one step later, like upstream's command. The first version of this test wrongly expected it immediately and was fixed.
+- **`nerva/training/train_style.py`:** CPU smoke PPO completed with 1 style (284 s) and with 3 styles (310 s). A suspected scan dtype mismatch did **not** occur.
+- **`cloud/`:**
+  - launcher: plan printed, `--yes` required, committed code only, `max-run-duration` + DELETE, self-delete
+  - job scripts: smoke, b0_baseline, r0_references, session1
+  - a Linux lockfile compiled with uv: numpy 2.0.2, protobuf 3.20.3
+- **Not yet run:**
+  - the `setup` and `launch` commands
+  - whether the GPU and CUDA stack work on the VM
+  - the per-hour price of `g2-standard-8` (the lookup was interrupted)
+
+---
+
 ## 2026-09-28 — GPU compute set up; style-conditioned policy designed
 
 ### Compute

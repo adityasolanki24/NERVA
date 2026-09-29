@@ -4,6 +4,36 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-29 — R0 result: generator reproduces upstream but intermittently produces backward knees
+
+Continued from the parallel Codex session. Its work (benchmark job, R1 generator, B1/S1 jobs, audit and teardown) was reviewed and committed as `d8d160a`. Codex had run R0 locally in WSL at no cloud cost: 240 gaits in 1,405 s with 6 workers, plus a 13 s fit.
+
+**R0 comparison with the shipped `polynomial_coefficients.pkl` [measured]:**
+- The **same 240 keys and 0.54 s period.** My earlier claim that the sweep config doesn't reproduce the shipped grid was wrong and is corrected in the design doc.
+- Raw polynomial coefficients differ by up to 3.4e5, but degree-15 coefficients are ill-conditioned, so the evaluated trajectories were compared instead.
+- For the median gait, joint positions differ by at most 0.0008 rad.
+- **In 41/240 gaits a knee has the opposite sign.**
+  - 39 gaits were flagged as backward-bent by the validator, with left or right knee negative for the whole cycle.
+  - Each flipped gait's generator log shows the negative knee already in the **initial IK placement** (`Initial position reached … right_knee: -0.83`).
+  - Re-running a flipped gait with identical parameters gave a correct knee every time: 3 standalone runs and 12 concurrent ones.
+  - So it's intermittent, not caused by parameters or concurrency.
+- **The shipped file has the same defect, less often:** 1 fully mirrored right knee, and 1 gait whose left knee switches branch mid-cycle (−1.49 → +1.76 rad).
+
+**Response:**
+- `nerva/reference_validation.py`: flags backward knees and non-finite values.
+- `fit_validated`: regenerates each flagged gait with its exact logged parameters until the set is valid.
+- **Repair of a copy of R0** (raw R0 kept): all 39 fixed in 2 rounds (30 on the first retry, 9 on the second), 593 s, and an independent re-validation passes.
+- The repaired set matches the shipped set to within 0.002 rad on every gait except the shipped file's 2 defective gaits.
+- The validated neutral pickle is local and git-ignored: `experiments/cloud_runs/r0-local-20260929/r0_repaired/`.
+
+**Side observation [measured, generator logs]:** a gait's velocity key (the planned value) can differ strongly from its achieved average velocity. For example, key vx = −0.148 with an achieved +0.014 m/s, which is consistent with the preset limit `walk_max_dx_backward = 0.03`. This may be related to the baseline's poor backward tracking (Phase 2) and hasn't been investigated.
+
+**Throughput correction:** the smoke run's 876 steps/s (and Brax's 1,154 `training/sps`) came from a single training chunk that included compiling the training step. So the "95 h / $81 for B0 on L4" projection is an upper bound, not an estimate. The benchmark now measures steady-state throughput from Brax's `training/walltime` between the last two of 3 evaluations. That can't be measured locally (no GPU), so the corrected benchmark is the next paid step.
+
+**Tests:** 80 passed, 2 slow skipped.
+
+---
+
 ## 2026-09-29 — First L4 cloud smoke completed; all resources removed
 
 - Full report: `docs/cloud_smoke_report.md`.

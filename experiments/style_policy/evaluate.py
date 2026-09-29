@@ -131,7 +131,10 @@ def main() -> None:
     if args.quick:
         SECONDS = 6.0
 
-    jobs = [("B0", args.b0, None, s) for s in seeds] + [("B1", args.b1, None, s) for s in seeds]
+    # B1 was trained in StyleJoystick with the neutral style only, so it observes e = 0.
+    neutral = style_vec(0, 0.0)
+    jobs = [("B0", args.b0, None, s) for s in seeds] + [("B1", args.b1, neutral, s) for s in seeds]
+    check_inputs({args.b0: 101, args.b1: 104, args.s1: 104})
     styles = sorted({style_vec(k, lv) for k in FEATURES for lv in LEVELS})
     jobs += [("S1", args.s1, st, s) for st in styles for s in seeds]
     started = time.time()
@@ -148,6 +151,16 @@ def main() -> None:
                       "policies": {"S1": args.s1, "B0": args.b0, "B1": args.b1}}
     (args.out / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
+
+
+def check_inputs(expected: dict[str, int]) -> None:
+    """Fail before the pool starts if a policy's observation size is not what we will feed it."""
+    import onnxruntime
+
+    for path, size in expected.items():
+        got = onnxruntime.InferenceSession(path, providers=["CPUExecutionProvider"]).get_inputs()[0].shape[1]
+        if got != size:
+            raise ValueError(f"{path}: policy expects obs size {got}, evaluation feeds {size}")
 
 
 def _set_seconds(seconds: float) -> None:

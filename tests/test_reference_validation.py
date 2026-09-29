@@ -1,6 +1,6 @@
 import numpy as np
 
-from nerva.reference_validation import KNEES, evaluate_gait, validate_reference
+from nerva.reference_validation import KNEES, evaluate_gait, substitute_invalid, validate_reference
 
 
 def _gait(knee_left, knee_right, n_signals=40):
@@ -38,3 +38,14 @@ def test_mid_cycle_branch_switch_is_rejected():
 def test_nonfinite_gait_is_rejected():
     report = validate_reference({"bad": _gait([float("nan"), 0.0], [1.3, 0.0])})
     assert report["nonfinite_gaits"] == ["bad"] and not report["valid"]
+
+
+def test_invalid_gait_is_replaced_by_nearest_valid_neighbour():
+    good, bad = _gait([1.4, 0.0], [1.3, 0.0]), _gait([1.4, 0.0], [-1.3, 0.0])
+    reference = {"0.222_0.111_0.963": bad, "0.222_0.111_0.704": dict(good, tag="near"),
+                 "-0.148_-0.111_-1.111": dict(good, tag="far")}
+    fixed, mapping = substitute_invalid(reference, ["0.222_0.111_0.963"])
+    assert mapping == {"0.222_0.111_0.963": "0.222_0.111_0.704"}
+    assert fixed["0.222_0.111_0.963"]["tag"] == "near"
+    assert validate_reference(fixed)["valid"]
+    assert reference["0.222_0.111_0.963"] is bad  # input not mutated

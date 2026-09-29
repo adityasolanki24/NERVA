@@ -4,6 +4,37 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-29 — L4 throughput measured; R1 attempt 1 failed on two unrepairable gaits
+
+Both cloud VMs (code `4f7ab2c`) ran and self-deleted within their caps. The temporary Cloud NAT was then removed; `audit` shows no instances, disks, addresses or routers (only the bucket and runner service account remain). The NAT stayed up idle for about 4 h after the jobs ended, because I didn't tear it down promptly.
+
+**Steady-state throughput on an L4 (g2-standard-8) [measured]:** `throughput_benchmark`, 1,638,400 effective steps, 3 evaluations.
+- Brax `training/walltime`: 281.0 s at 819,200 steps, and 293.5 s at 1,638,400 steps.
+- That gives **65,500 training steps/s** between the last two chunks.
+- The first chunk is dominated by the one-time compile of `pmap_training_epoch` (about 4.5 min; XLA printed "Very slow compile?").
+- Wall time was 810 s including evaluations and ONNX export.
+- **Projection [arithmetic, not measured]:** about 25 min of training per 10⁸ steps, plus compile and evaluations. The earlier 876 steps/s and "95 h / $81" figures were compile-dominated and are wrong. L4 is sufficient for B0/B1/S1.
+
+**R1 attempt 1 failed [measured]:**
+- The first style (neutral) stopped after 5 repair rounds, with two gaits still invalid: `0.222_-0.111_-1.111` and `0.222_0.111_0.963`.
+- These are **exactly the shipped file's 2 defective gaits.**
+- The mechanism is different from R0's:
+  - The initial placement is correct (knees +0.84 and +1.09).
+  - Then, at frame 33 and frame 47 respectively, the knee passes through full extension (0 rad) and continues on the backward branch.
+  - This happened on every regeneration on the VM.
+- Both combine maximum forward step, maximum lateral step and fast turning, a reach the leg apparently can't provide.
+- Their achieved average velocities are near zero (for example −0.008 m/s against a key of 0.222).
+- In the laptop R0 repair these same keys regenerated correctly, which suggests that solver behaviour differs between machines [hypothesis].
+
+**Response [NERVA design choice]:**
+- Upstream `PolyReferenceMotion` needs the full grid, so invalid gaits can't be dropped.
+- After `MAX_REPAIR_ATTEMPTS = 2` regenerations, `substitute_invalid` replaces a still-invalid gait with its nearest valid gait in the range-scaled (dx, dy, dθ) grid.
+- More than `MAX_SUBSTITUTIONS = 4` substitutions aborts the run.
+- The mapping is recorded in each style's validation report.
+- Applied to the shipped file, it maps the two gaits to their neighbours one yaw step inward (`…_-0.852` and `…_1.222`), and the result validates. The shipped pickle itself stays unmodified for B0.
+
+---
+
 ## 2026-09-29 — R0 result: generator reproduces upstream but intermittently produces backward knees
 
 Continued from the parallel Codex session. Its work (benchmark job, R1 generator, B1/S1 jobs, audit and teardown) was reviewed and committed as `d8d160a`. Codex had run R0 locally in WSL at no cloud cost: 240 gaits in 1,405 s with 6 workers, plus a 13 s fit.

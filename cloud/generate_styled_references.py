@@ -22,9 +22,11 @@ from pathlib import Path
 # The generator's own uv environment (Python 3.10, numpy) runs this script; the NERVA
 # package is not installed there, so import the pure-numpy validator from the repo.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from nerva.reference_validation import validate_reference  # noqa: E402
+from nerva.reference_validation import substitute_invalid, validate_reference  # noqa: E402
 
-MAX_REPAIR_ATTEMPTS = 5
+MAX_REPAIR_ATTEMPTS = 2
+# Upper bound on gaits replaced by a neighbour; more than this means something is broken.
+MAX_SUBSTITUTIONS = 4
 
 
 PILOT_STYLES: tuple[tuple[str, tuple[float, float, float]], ...] = (
@@ -86,11 +88,14 @@ def regenerate_gait(generator_root: Path, recordings: Path, key: str, attempt: i
 
 def fit_validated(generator_root: Path, recordings: Path, destination: Path,
                   max_attempts: int = MAX_REPAIR_ATTEMPTS) -> dict:
-    """Fit polynomials; regenerate gaits with backward knees until valid (2026-09-29 R0 finding).
+    """Fit polynomials; regenerate gaits with backward knees; substitute the rest.
 
-    The generator's initial inverse-kinematics placement intermittently lands on the
-    mirror-image knee solution; re-running the same gait usually gives the correct one.
-    Raises if any gait is still invalid after max_attempts repairs.
+    2026-09-29 R0: the generator's initial inverse-kinematics placement intermittently
+    lands on the mirror-image knee solution; re-running the gait usually fixes it.
+    2026-09-29 R1: a few extreme gaits pass the knee through full extension mid-walk
+    on every regeneration (upstream's shipped file has the same two); after
+    max_attempts they are replaced by their nearest valid grid neighbour. Raises if
+    more than MAX_SUBSTITUTIONS gaits would need that.
     """
     fit_poly = generator_root / "scripts/fit_poly.py"
     repaired: dict[str, int] = {}
@@ -102,16 +107,26 @@ def fit_validated(generator_root: Path, recordings: Path, destination: Path,
         with generated.open("rb") as stream:
             fitted = pickle.load(stream)  # trusted, locally generated output
         report = validate_reference(fitted)
+        substituted: dict[str, str] = {}
+        if not report["valid"] and attempt == max_attempts:
+            invalid = report["backward_knee_gaits"] + report["nonfinite_gaits"]
+            if len(invalid) > MAX_SUBSTITUTIONS:
+                raise RuntimeError(f"{len(invalid)} gaits still invalid after {max_attempts} repairs: {invalid}")
+            fitted, substituted = substitute_invalid(fitted, invalid)
+            unsubstituted = report
+            report = validate_reference(fitted)
+            report["before_substitution"] = unsubstituted
+            with generated.open("wb") as stream:
+                pickle.dump(fitted, stream)
         if report["valid"]:
             shutil.move(str(generated), destination)
-            report.update(repair_attempts=attempt, repaired_gaits=repaired, fitted_keys=len(fitted))
+            report.update(repair_attempts=attempt, repaired_gaits=repaired,
+                          substituted_gaits=substituted, fitted_keys=len(fitted))
             return report
-        if attempt == max_attempts:
-            break
         for key in report["backward_knee_gaits"]:
             repaired[key] = repaired.get(key, 0) + 1
             regenerate_gait(generator_root, recordings, key, attempt)
-    raise RuntimeError(f"gaits still invalid after {max_attempts} repairs: {report['backward_knee_gaits']}")
+    raise AssertionError("unreachable")
 
 
 def generate_pilot(generator_root: Path, output_root: Path, jobs: int) -> dict:

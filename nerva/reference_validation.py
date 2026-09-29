@@ -55,3 +55,31 @@ def validate_reference(reference: dict) -> dict:
         "knee_over_limit_gaits": len(over_limit),  # informational: shipped references do this too
         "valid": not backward and not nonfinite,
     }
+
+
+def _key_values(key: str) -> tuple[float, float, float]:
+    dx, dy, dtheta = (float(v) for v in key.split("_"))
+    return dx, dy, dtheta
+
+
+def substitute_invalid(reference: dict, invalid: list[str]) -> tuple[dict, dict[str, str]]:
+    """Replace each invalid gait by its nearest valid gait in the (dx, dy, dtheta) grid.
+
+    NERVA design choice (2026-09-29 R1 finding): a few extreme gaits pass the knee
+    through full extension mid-walk and continue on the backward branch every time
+    they are regenerated (upstream's shipped file has the same two). Upstream's
+    PolyReferenceMotion needs the full grid, so they cannot be dropped. Distance is
+    Euclidean after scaling each axis by its range. Returns (new reference, mapping).
+    """
+    valid = [k for k in reference if k not in set(invalid)]
+    if not valid:
+        raise ValueError("no valid gait to substitute from")
+    values = {k: np.array(_key_values(k)) for k in reference}
+    grid = np.stack(list(values.values()))
+    scale = np.where(np.ptp(grid, axis=0) > 0, np.ptp(grid, axis=0), 1.0)
+    result, mapping = dict(reference), {}
+    for key in invalid:
+        nearest = min(valid, key=lambda k: float(np.sum(((values[k] - values[key]) / scale) ** 2)))
+        result[key] = reference[nearest]
+        mapping[key] = nearest
+    return result, mapping

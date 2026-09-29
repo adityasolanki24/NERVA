@@ -307,22 +307,44 @@ def cmd_launch(a):
         print(f"Follow with:  python cloud/launch.py status {run_id}")
         return
 
+    wait_and_finish(run_id, a)
+
+
+def vm_present(name: str, attempts: int = 10) -> bool:
+    """instance_zone with retries: one transient gcloud error must not abort a long wait."""
+    for attempt in range(attempts):
+        try:
+            return bool(instance_zone(name))
+        except subprocess.CalledProcessError as error:
+            print(f"gcloud list failed ({error.returncode}); retry {attempt + 1}/{attempts}", file=sys.stderr)
+            time.sleep(30)
+    raise RuntimeError(f"could not query VM {name}; it stays under its hard cap")
+
+
+def wait_and_finish(run_id: str, a) -> None:
+    """Wait for self-deletion, fetch results, then remove the NAT (and optionally everything)."""
+    name = instance_name(run_id)
     print("Waiting for the capped VM to finish and self-delete (Ctrl+C leaves it under its hard cap).")
-    while instance_zone(name):
-        time.sleep(a.poll_seconds)
-    print("VM is gone; fetching final output.")
     try:
+        while vm_present(name):
+            time.sleep(a.poll_seconds)
+        print("VM is gone; fetching final output.")
         cmd_fetch(argparse.Namespace(run=run_id))
     except Exception:
-        if a.cleanup_network or a.teardown:
+        if (a.cleanup_network or a.teardown) and not vm_present(name):
             cmd_network_down(argparse.Namespace(yes=True))
-        print("Result fetch failed; bucket/account were preserved so the output is recoverable.", file=sys.stderr)
+        print("Wait or fetch failed; bucket/account were preserved so the output is recoverable.", file=sys.stderr)
         raise
     if a.cleanup_network or a.teardown:
         cmd_network_down(argparse.Namespace(yes=True))
     if a.teardown:
         cmd_teardown(argparse.Namespace(yes=True, keep_network=True))
     cmd_audit(argparse.Namespace())
+
+
+def cmd_wait(a):
+    require_cloud_config()
+    wait_and_finish(a.run, a)
 
 
 def cmd_status(a):
@@ -452,6 +474,11 @@ def main():
     s.add_argument("--poll-seconds", type=int, default=30, help=argparse.SUPPRESS)
     s.add_argument("--yes", action="store_true")
     s.set_defaults(f=cmd_launch)
+    s = sub.add_parser("wait", help="resume --wait for a launched run")
+    s.add_argument("run"); s.add_argument("--cleanup-network", action="store_true")
+    s.add_argument("--teardown", action="store_true")
+    s.add_argument("--poll-seconds", type=int, default=30, help=argparse.SUPPRESS)
+    s.set_defaults(f=cmd_wait)
     s = sub.add_parser("status"); s.add_argument("run", nargs="?"); s.add_argument("--lines", type=int, default=40)
     s.set_defaults(f=cmd_status)
     s = sub.add_parser("fetch"); s.add_argument("run"); s.set_defaults(f=cmd_fetch)

@@ -16,6 +16,9 @@ Differences from upstream `mujoco_infer.py`, all opt-in:
   obs_noise=True       add the observation noise the policy was TRAINED with
                        (joystick.py noise_config), resampled every control step
   push()               add a velocity to the base, as the training env does
+  set_style_vector()   S1 policies only: append the style vector e to the observation
+                       and use that style's gait period for the phase clock, as
+                       nerva/training/style_joystick.py does in training
   set_head_offset()    head joint offsets added on top of the policy's head targets,
                        exactly as the hardware runtime adds gamepad head commands
                        (Open_Duck_Mini_Runtime/scripts/v2_rl_walk_mujoco.py:310): the
@@ -32,7 +35,7 @@ from pathlib import Path
 import numpy as np
 
 from nerva.interfaces import BehaviourCommand
-from nerva.style import style_to_phase_factor
+from nerva.style import s1_nb_steps_in_period, style_to_phase_factor
 
 OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", Path.home() / "dev" / "open_duck"))
 PLAYGROUND = OPEN_DUCK_ROOT / "Open_Duck_Playground" / "playground" / "open_duck_mini_v2"
@@ -132,6 +135,8 @@ class OpenDuckSim:
         self._last_action = np.zeros(self.model.nu)
         self.head_offset = np.zeros(4)  # neck_pitch, head_pitch, head_yaw, head_roll [rad]
         self.applied_command: tuple[float, float, float] = (0.0, 0.0, 0.0)
+        self.style_vector: np.ndarray | None = None  # S1 policies only
+        self.nb_steps_in_period = self.inf.PRM.nb_steps_in_period
 
     # ── inputs ──────────────────────────────────────────────────────────────
 
@@ -143,6 +148,18 @@ class OpenDuckSim:
         self.inf.commands = [vx, vy, wz, *self.head_offset.tolist()]
         self.applied_command = (vx, vy, wz)
         self.phase_factor = style_to_phase_factor(cmd.style)
+
+    def set_style_vector(self, e) -> None:
+        """S1 policy input e = (tempo, step height, torso pitch) in [-1, 1]; appended to obs.
+
+        Style enters the observation noise-free (StyleJoystick appends it after
+        upstream noise) and the phase clock uses the style's own gait period.
+        """
+        e = np.asarray(e, dtype=np.float64)
+        if e.shape != (3,) or np.any(np.abs(e) > 1.0):
+            raise ValueError("style vector must be three values in [-1, 1]")
+        self.style_vector = e
+        self.nb_steps_in_period = s1_nb_steps_in_period(float(e[0]))
 
     def set_head_offset(self, neck_pitch: float = 0.0, head_pitch: float = 0.0,
                         head_yaw: float = 0.0, head_roll: float = 0.0) -> None:
@@ -161,13 +178,15 @@ class OpenDuckSim:
         """Mirror of the body of `if counter % decimation == 0:` in upstream run()."""
         inf = self.inf
         inf.imitation_i += 1.0 * self.phase_factor
-        inf.imitation_i = inf.imitation_i % inf.PRM.nb_steps_in_period
-        ang = inf.imitation_i / inf.PRM.nb_steps_in_period * 2 * np.pi
+        inf.imitation_i = inf.imitation_i % self.nb_steps_in_period
+        ang = inf.imitation_i / self.nb_steps_in_period * 2 * np.pi
         inf.imitation_phase = np.array([np.cos(ang), np.sin(ang)])
 
         obs = inf.get_obs(self.data, inf.commands)
         if self._obs_noise_scale is not None:
             obs = obs + self._rng.uniform(-1.0, 1.0, obs.shape) * self._obs_noise_scale
+        if self.style_vector is not None:
+            obs = np.concatenate([obs, self.style_vector])
         action = inf.policy.infer(obs)
 
         inf.last_last_last_action = inf.last_last_action.copy()

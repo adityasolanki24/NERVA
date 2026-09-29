@@ -130,3 +130,18 @@ def test_head_offset_reaches_observation_and_head_targets_only():
     # set_behaviour after set_head_offset keeps the offset
     head.set_behaviour(BehaviourCommand(vx=0.1))
     assert head.inf.commands[4] == 0.3
+
+
+def test_style_vector_is_appended_to_obs_and_sets_gait_period():
+    sim = OpenDuckSim()
+    sim.set_behaviour(BehaviourCommand(vx=0.15))
+    assert sim.nb_steps_in_period == sim.inf.PRM.nb_steps_in_period == 27
+    seen = []
+    sim.inf.policy.infer = lambda obs: (seen.append(obs.copy()), np.zeros(14))[1]
+    sim.set_style_vector((1.0, -0.5, 0.25))
+    assert sim.nb_steps_in_period == 20  # 0.405 s gait at 50 Hz, as the R1 e1+ reference
+    sim.step_physics(10)
+    assert seen[0].shape == (104,)
+    np.testing.assert_array_equal(seen[0][-3:], [1.0, -0.5, 0.25])
+    with pytest.raises(ValueError):
+        sim.set_style_vector((1.5, 0.0, 0.0))

@@ -4,6 +4,41 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-29 — B0, B1 and S1 pilot trained (300 M steps each, L4)
+
+**S1 smoke** (`s1_smoke-20260929-224944`, code `8443fd4`) passed:
+- all 7 styles loaded
+- observation 104 = 101 + e
+- per-style periods 0.54 / 0.675 / 0.405 s
+- 575 s on the GPU, mostly compile
+
+**Runs.** One g2-standard-8 (L4) each, 3 h cap, `flat_terrain_backlash`, 300,482,560 effective steps. All three exited 0 and self-deleted; the waiter removed the NAT and `audit` is clean.
+- `b0_baseline-20260929-230717` (upstream runner, shipped references)
+- `b1_neutral-20260929-230837` (StyleJoystick, R1 neutral references)
+- `s1_pilot-20260929-231102` (StyleJoystick, 7 R1 styles)
+- Wall time was about 1 h 59 min each, with 7,040–7,050 s in training. That is about 43 k steps/s, including 15 evaluations and exports, on the backlash task.
+
+**Evaluation reward (upstream eval, one batch; std ≈ 150 across envs) [measured]:**
+
+| steps (M) | 21 | 64 | 107 | 150 | 193 | 236 | 258 | 279 | 300 |
+|---|---|---|---|---|---|---|---|---|---|
+| B0 | 216 | 244 | 271 | 301 | 282 | 261 | 310 | 305 | 249 |
+| B1 | 208 | 248 | 284 | 281 | 287 | 273 | 297 | 298 | 250 |
+| S1 | 212 | 248 | 265 | 277 | 282 | 233 | 289 | 290 | 224 |
+
+**Reading:**
+- B1 tracks B0 within the evaluation noise at every checkpoint. So the NERVA env with regenerated neutral references reproduces upstream training [measured, reward only].
+- S1 is slightly lower at most checkpoints, which is expected for a 7-style task [hypothesis].
+- All three drop at the last checkpoint, which suggests evaluation variance rather than collapse [hypothesis].
+- **Reward says nothing about whether styles are expressed.** That is the S1 evaluation (design §5), next.
+
+**S1 evaluation tooling:**
+- `OpenDuckSim.set_style_vector(e)` appends e to the observation (noise-free, as in training) and uses `nerva.style.s1_nb_steps_in_period(e1)` for the phase clock. The period is linear in e1, measured on the 3 R1 periods; values between them are interpolated.
+- `experiments/style_policy/evaluate.py` applies the §5 sweep and criteria. Cross-talk "normalised units" had not been defined; before any results, I defined them as that feature's across-seed std at neutral S1.
+- The evaluation runs in the cloud (`cloud/jobs/s1_eval.sh`, CPU). One 6 s trial takes about 1.5 s locally.
+
+---
+
 ## 2026-09-29 — R1 pilot complete: 7 validated style reference sets
 
 Run `r1_references-20260929-210511` (code `084806b`), e2-standard-8, 4,516 s total (618–679 s per style). The VM self-deleted; I removed the NAT and `audit` is clean. The local `launch.py wait` process died without output (exit 4, cause unknown), so the NAT was left up for about 16 min after the job ended.

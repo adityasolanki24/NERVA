@@ -22,9 +22,13 @@ BUCKET=$(meta nerva-bucket)
 RUN_ID=$(meta nerva-run-id)
 CODE_SHA=$(meta nerva-code-sha)
 UPSTREAM_SHA=$(meta nerva-upstream-sha)
+INPUT_URI=$(meta nerva-input-uri || true)
 NAME=$(curl -sf -H "Metadata-Flavor: Google" "$MD/instance/name")
 ZONE=$(curl -sf -H "Metadata-Flavor: Google" "$MD/instance/zone" | awk -F/ '{print $NF}')
 OUT_GS="gs://$BUCKET/runs/$RUN_ID"
+export NERVA_BUCKET="$BUCKET"
+export NERVA_RUN_ID="$RUN_ID"
+export NERVA_INPUT_URI="$INPUT_URI"
 
 mkdir -p /work/out && cd /work
 exec > >(tee -a /work/out/vm.log) 2>&1
@@ -50,23 +54,28 @@ if lspci | grep -qi nvidia; then
   nvidia-smi || { echo "ERROR: NVIDIA driver not available"; exit 10; }
 fi
 
-# 2-3. code
+# 2. NERVA code
 gsutil -q cp "gs://$BUCKET/code/$CODE_SHA.tar.gz" /work/nerva.tar.gz || exit 11
 mkdir -p /work/NERVA && tar -xzf /work/nerva.tar.gz -C /work/NERVA
-git clone -q https://github.com/apirrone/Open_Duck_Playground.git /work/Open_Duck_Playground || exit 12
-git -C /work/Open_Duck_Playground checkout -q "$UPSTREAM_SHA" || exit 12
 
-# 4. environment
+# 3. uv is needed by every job. R0 manages its generator-specific Python 3.10
+# environment itself; avoid installing the multi-GB GPU stack on its CPU VM.
 export HOME=/root
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
-uv venv --python 3.12 /work/venv || exit 13
-source /work/venv/bin/activate
-uv pip install -r /work/NERVA/cloud/requirements-train.lock.txt || exit 13
-uv pip install --no-deps -e /work/Open_Duck_Playground -e /work/NERVA || exit 13
-uv pip freeze > /work/out/pip-freeze.txt
-python -c "import jax; print('jax', jax.__version__, jax.devices())" | tee /work/out/jax-devices.txt
+if [ "$JOB" != "r0_references" ] && [ "$JOB" != "r1_references" ]; then
+  git clone -q https://github.com/apirrone/Open_Duck_Playground.git /work/Open_Duck_Playground || exit 12
+  git -C /work/Open_Duck_Playground checkout -q "$UPSTREAM_SHA" || exit 12
+  uv venv --python 3.12 /work/venv || exit 13
+  source /work/venv/bin/activate
+  uv pip install -r /work/NERVA/cloud/requirements-train.lock.txt || exit 13
+  uv pip install --no-deps -e /work/Open_Duck_Playground -e /work/NERVA || exit 13
+  uv pip freeze > /work/out/pip-freeze.txt
+  python -c "import jax; print('jax', jax.__version__, jax.devices())" | tee /work/out/jax-devices.txt
+else
+  uv --version | tee /work/out/uv-version.txt
+fi
 
-# 5. job
+# 4. job
 date -u +"job-start %Y-%m-%dT%H:%M:%SZ"
 bash "/work/NERVA/cloud/jobs/$JOB.sh"

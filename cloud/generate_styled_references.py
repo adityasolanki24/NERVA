@@ -1,0 +1,159 @@
+"""Generate the seven-reference R1 pilot with the pinned upstream generator.
+
+The upstream ``auto_waddle.py`` only reads its in-tree ``medium.json`` preset.
+R1 therefore changes that preset in the disposable pinned checkout, runs the
+upstream sweep unmodified, and restores the original bytes in a ``finally``
+block. Every effective preset and generator log is retained with the output.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import pickle
+import shutil
+import subprocess
+import time
+from copy import deepcopy
+from pathlib import Path
+
+
+PILOT_STYLES: tuple[tuple[str, tuple[float, float, float]], ...] = (
+    ("neutral", (0.0, 0.0, 0.0)),
+    ("e1_neg", (-1.0, 0.0, 0.0)),
+    ("e1_pos", (1.0, 0.0, 0.0)),
+    ("e2_neg", (0.0, -1.0, 0.0)),
+    ("e2_pos", (0.0, 1.0, 0.0)),
+    ("e3_neg", (0.0, 0.0, -1.0)),
+    ("e3_pos", (0.0, 0.0, 1.0)),
+)
+
+
+def apply_style(base: dict, style: tuple[float, float, float]) -> dict:
+    """Apply the preregistered e1/e2/e3 mapping to an upstream preset copy."""
+    if len(style) != 3 or any(not -1.0 <= value <= 1.0 for value in style):
+        raise ValueError("style must contain three values in [-1, 1]")
+    for key in ("single_support_duration", "walk_foot_height", "walk_trunk_pitch"):
+        if key not in base:
+            raise KeyError(f"upstream preset is missing {key}")
+    e1, e2, e3 = style
+    result = deepcopy(base)
+    result["single_support_duration"] = round(float(base["single_support_duration"]) * (1 - 0.25 * e1), 6)
+    result["walk_foot_height"] = round(float(base["walk_foot_height"]) * (1 + 0.5 * e2), 6)
+    result["walk_trunk_pitch"] = round(float(base["walk_trunk_pitch"]) + 6.0 * e3, 6)
+    return result
+
+
+def run_logged(command: list[str], cwd: Path, log: Path) -> None:
+    log.parent.mkdir(parents=True, exist_ok=True)
+    with log.open("w", encoding="utf-8") as stream:
+        subprocess.run(command, cwd=cwd, check=True, text=True, stdout=stream,
+                       stderr=subprocess.STDOUT)
+
+
+def generate_pilot(generator_root: Path, output_root: Path, jobs: int) -> dict:
+    if jobs <= 0:
+        raise ValueError("jobs must be positive")
+    generator_root = generator_root.resolve()
+    output_root = output_root.resolve()
+    preset_path = generator_root / (
+        "open_duck_reference_motion_generator/robots/open_duck_mini_v2/placo_presets/medium.json"
+    )
+    auto_waddle = generator_root / "scripts/auto_waddle.py"
+    fit_poly = generator_root / "scripts/fit_poly.py"
+    for required in (preset_path, auto_waddle, fit_poly):
+        if not required.is_file():
+            raise FileNotFoundError(required)
+    if output_root.exists() and any(output_root.iterdir()):
+        raise FileExistsError(f"refusing to mix R1 with existing output: {output_root}")
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    original_bytes = preset_path.read_bytes()
+    base = json.loads(original_bytes)
+    results: list[dict] = []
+    started = time.time()
+    try:
+        for name, style in PILOT_STYLES:
+            style_root = output_root / name
+            recordings = style_root / "recordings"
+            style_root.mkdir(parents=True)
+            effective = apply_style(base, style)
+            rendered = json.dumps(effective, indent=2) + "\n"
+            (style_root / "preset.json").write_text(rendered, encoding="utf-8")
+            preset_path.write_text(rendered, encoding="utf-8")
+
+            style_started = time.time()
+            run_logged([
+                "uv", "run", "python", str(auto_waddle), "-j", str(jobs),
+                "--duck", "open_duck_mini_v2", "--sweep", "--output_dir", str(recordings),
+            ], generator_root, style_root / "generate.log")
+
+            generated_pickle = generator_root / "polynomial_coefficients.pkl"
+            generated_pickle.unlink(missing_ok=True)
+            run_logged([
+                "uv", "run", "python", str(fit_poly), "--ref_motion", str(recordings),
+            ], generator_root, style_root / "fit.log")
+            pickle_name = f"polynomial_coefficients_{name}.pkl"
+            destination = output_root / pickle_name
+            shutil.move(str(generated_pickle), destination)
+            with destination.open("rb") as stream:
+                fitted = pickle.load(stream)  # trusted, locally generated output
+
+            gait_files = list(recordings.glob("*.json"))
+            child_logs = list((recordings / "log").glob("*.log"))
+            failed_logs = [
+                path.name for path in child_logs
+                if "Traceback (most recent call last)" in path.read_text(encoding="utf-8", errors="replace")
+            ]
+            result = {
+                "name": name,
+                "style": list(style),
+                "pickle": pickle_name,
+                "parameters": {
+                    "single_support_duration": effective["single_support_duration"],
+                    "walk_foot_height": effective["walk_foot_height"],
+                    "walk_trunk_pitch": effective["walk_trunk_pitch"],
+                },
+                "candidate_logs": len(child_logs),
+                "recordings": len(gait_files),
+                "fitted_keys": len(fitted),
+                "failed_logs": failed_logs,
+                "seconds": time.time() - style_started,
+            }
+            if not gait_files or not fitted:
+                raise RuntimeError(f"style {name} produced no usable references")
+            results.append(result)
+            (output_root / "progress.json").write_text(
+                json.dumps(results, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+    finally:
+        preset_path.write_bytes(original_bytes)
+
+    styles = [{"style": item["style"], "pickle": item["pickle"]} for item in results]
+    (output_root / "styles.json").write_text(
+        json.dumps(styles, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    summary = {
+        "styles": results,
+        "style_count": len(results),
+        "total_seconds": time.time() - started,
+        "jobs": jobs,
+    }
+    (output_root / "summary.json").write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return summary
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--generator-root", type=Path, required=True)
+    parser.add_argument("--output-root", type=Path, required=True)
+    parser.add_argument("--jobs", type=int, default=4)
+    args = parser.parse_args()
+    summary = generate_pilot(args.generator_root, args.output_root, args.jobs)
+    print(json.dumps(summary, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

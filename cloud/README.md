@@ -8,6 +8,7 @@ $env:NERVA_GCP_PROJECT = "<your-project-id>"
 # Optional overrides:
 # $env:NERVA_GCP_REGION = "us-central1"
 # $env:NERVA_GCP_ZONE = "us-central1-a"
+# $env:NERVA_GCP_ZONES = "us-central1-a,us-central1-b,us-central1-c"
 # $env:NERVA_GCP_BUCKET = "<your-results-bucket>"
 # $env:NERVA_GCP_SERVICE_ACCOUNT = "nerva-runner"
 # $env:NERVA_GCP_ROUTER = "nerva-router"
@@ -23,7 +24,10 @@ $env:NERVA_GCP_PROJECT = "<your-project-id>"
 **Cost protection:**
 - **Hard cap:** `--max-run-duration` with `--instance-termination-action=DELETE`, enforced by Google even if the job hangs.
 - **Self-deletion:** the VM deletes itself at the end of the job (`vm_startup.sh`).
+- **Capacity fallback:** launches try the configured zone and then region zones a/b/c; `kill` discovers the selected zone automatically.
 - **Private networking:** VMs have no public IP. Temporary Cloud NAT provides outbound package downloads and should be removed after the jobs finish.
+- **Safe attached mode:** `--wait --cleanup-network` waits for self-deletion, fetches the result and then removes Cloud NAT/router.
+- **Zero-resource teardown:** add `--teardown` to attached mode to also delete the dedicated results bucket and runner account after fetching, or run `teardown --yes` later.
 - **Backstop:** the budget alert "nerva" ($150). It's an alert only; Google's spend caps don't cover Compute Engine.
 
 ## Commands (run from the NERVA repo root)
@@ -31,11 +35,15 @@ $env:NERVA_GCP_PROJECT = "<your-project-id>"
 ```bash
 python cloud/launch.py setup            # one-time: bucket + VM service account (shows plan; add --yes)
 python cloud/launch.py network-up --yes # temporary egress for private VMs (small hourly/data charge)
-python cloud/launch.py launch --job smoke --max-hours 1          # shows plan; add --yes to start
+python cloud/launch.py launch --job smoke --max-minutes 60       # shows plan; add --yes to start
+python cloud/launch.py launch --job throughput_benchmark --hw l4 --max-minutes 45 --wait --cleanup-network
+python cloud/launch.py launch --job s1_smoke --input-dir experiments/cloud_runs/R1/r1/references --max-minutes 45
 python cloud/launch.py status [RUN]     # running VMs; with RUN, tail of that run's log
 python cloud/launch.py fetch RUN        # results → experiments/cloud_runs/RUN/ (git-ignored)
 python cloud/launch.py kill RUN --yes   # delete a VM immediately
 python cloud/launch.py network-down --yes # after all NERVA VMs are gone
+python cloud/launch.py audit            # read-only inventory; should print "none" after cleanup
+python cloud/launch.py teardown --yes   # destructive: remove dedicated bucket/account/network
 ```
 
 Check nothing is left running:
@@ -49,8 +57,13 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 | job | what | hardware | typical cap |
 |---|---|---|---|
 | `smoke` | upstream environment/PPO path, one 200k-step batch with initial/final export: checks GPU, JAX, training, ONNX, sync and self-delete; not a scientific result | L4 | 1 h |
+| `throughput_benchmark` | upstream PPO path, 1 M requested steps and two evaluations; emits batch-rounded steps/s for hardware selection; not a scientific result | L4 or A100 | 45 min |
 | `b0_baseline` | upstream baseline, unchanged, 300 M steps on `flat_terrain_backlash` (README's "current win") | L4 | to be set from smoke timing |
-| `r0_references` | regenerate the neutral reference set with the upstream generator; time the generation | CPU or L4 | to be set |
+| `r0_references` | regenerate the neutral reference set with the upstream generator; skips the unused GPU training environment and records generation/fit timing | CPU | 60 min initially |
+| `r1_references` | seven-style pilot: neutral plus ±1 on tempo, step height and torso pitch; restores the upstream preset and emits a trainer-ready manifest | CPU | set from R0 timing |
+| `b1_neutral` | NERVA environment fixed at neutral, matched to B0 | selected by benchmark | set after B0 |
+| `s1_smoke` | tiny seven-style compile/train test using `--input-run` or `--input-dir`; not a scientific result | selected by benchmark | 45 min |
+| `s1_pilot` | full seven-style policy training using `--input-run` or `--input-dir` | selected by benchmark | set only after B0/B1 |
 | `session1` | R0 in the background plus B0 | L4 | to be set |
 
 ## Environment
@@ -59,3 +72,4 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 - **`requirements-train.lock.txt`** is compiled by `uv pip compile --python-platform x86_64-manylinux_2_28 --python-version 3.12`. NumPy 2.x requires tf2onnx 1.17 or newer (`np.cast` was removed). The export-only stack uses TensorFlow 2.20 so it can share patched ONNX 1.22, protobuf 5.29 and ml-dtypes 0.5.x.
 - **Image:** Deep Learning VM `common-cu129-ubuntu-2204-nvidia-580` (CUDA 12.9, driver 580).
 - **Verified 2026-09-29:** JAX 0.5.3 used the L4 successfully with the CUDA wheels and driver 580. The post-run security update to the export-only TensorFlow/tf2onnx/ONNX/protobuf stack passed a clean local Python 3.12 conversion test and should be reconfirmed by the next capped cloud smoke.
+- **Benchmark interpretation:** compare `benchmark.json` → `training_steps_per_second`, which is measured between batch-rounded checkpoints and excludes bootstrap time. Use `wall_seconds` only to budget total VM lifetime.

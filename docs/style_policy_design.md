@@ -66,7 +66,7 @@ They are also chosen because the upstream reference generator already exposes a 
 | **B1** | NERVA env with e fixed at neutral | GPU VM | should match B0; catches environment bugs |
 | **S1** | NERVA env with e sampled | GPU VM | the experiment |
 
-**Velocity grid [fact]:** reference keys are *computed* velocities, `steps_to_vel(dx, period)`, rounded to 3 decimals. Each style therefore gets its own regular grid. The upstream sweep config (`auto_gait.json`) generates 6 dx × 4 dy × 9 dθ ≈ 216 gaits per style.
+**Velocity grid [fact]:** reference keys are *computed* velocities, `steps_to_vel(dx, period)`, rounded to 3 decimals. Each style therefore gets its own regular grid. The pinned upstream sweep currently schedules 6 dx × 4 dy × 10 dθ = 240 candidates per style. Its `np.arange(max + step)` construction includes a final 0.33 rad yaw-step candidate even though the configured maximum is 0.30; R0 records how many candidates survive upstream filtering before R1 reuses the grid.
 - **Note [fact]:** that config does not reproduce the shipped pickle's grid (6 × 4 × 10 with different values). The settings that produced the shipped references are **[unknown]**, which is another reason for R0.
 - **Generation cost [unknown]:** 7 styles ≈ 1,500 gaits for the pilot; 27 styles ≈ 5,800. Seconds per gait will be measured in R0.
 
@@ -96,7 +96,7 @@ They are also chosen because the upstream reference generator already exposes a 
   - the training script shuts the VM down when it finishes or crashes
   - the budget alert "nerva" ($150) is a backstop only
 - **Smoke measurement [fact]:** 327,680 steps took about 6 min 14 s between checkpoints on an L4. A linear projection puts 300 M steps near 95 hours and roughly $81 compute, so B0 is paused pending a throughput/hardware decision. See `docs/cloud_smoke_report.md`.
-- **Per-run B0 cost [unknown]:** nothing beyond a short throughput pilot is launched until a viable configuration and cap are chosen.
+- **Per-run B0 cost [unknown]:** nothing beyond a short throughput pilot is launched until a viable configuration and cap are chosen. The launcher now supports L4/A100 comparisons, ordered zone fallback, minute-level hard caps, attached result fetching, automatic NAT cleanup and a post-run zero-resource audit.
 
 ## 7. Risks
 

@@ -135,6 +135,9 @@ def main() -> None:
     styles = sorted({style_vec(k, lv) for k in FEATURES for lv in LEVELS})
     jobs += [("S1", args.s1, st, s) for st in styles for s in seeds]
     started = time.time()
+    # Import once in the parent: mujoco_playground clones its model menagerie on first
+    # import, and parallel workers doing that at once collide (cloud s1_eval, 2026-09-29).
+    import playground.open_duck_mini_v2.mujoco_infer  # noqa: F401
     with Pool(args.workers, initializer=_set_seconds, initargs=(SECONDS,)) as pool:
         rows = pool.map(trial, jobs)
     args.out.mkdir(parents=True, exist_ok=True)

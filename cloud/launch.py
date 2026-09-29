@@ -47,6 +47,7 @@ NAT = os.environ.get("NERVA_GCP_NAT", "nerva-nat").strip()
 UPSTREAM_SHA = "b9be205ac64488c23504ca42e5ec790337adeec3"  # Open_Duck_Playground (docs/development_log.md)
 IMAGE_FAMILY = "common-cu129-ubuntu-2204-nvidia-580"
 IMAGE_PROJECT = "deeplearning-platform-release"
+GPU_HARDWARE = {"l4", "a100"}
 MACHINES = {
     "cpu": "e2-standard-8",
     "l4": "g2-standard-8",
@@ -267,7 +268,10 @@ def cmd_launch(a):
             g, "compute", "instances", "create", name, f"--project={PROJECT}", f"--zone={zone}",
             f"--machine-type={MACHINES[a.hw]}",
             f"--image-family={IMAGE_FAMILY}", f"--image-project={IMAGE_PROJECT}",
-            "--boot-disk-size=100GB", "--maintenance-policy=TERMINATE", "--no-address",
+            "--boot-disk-size=100GB", "--no-address",
+            # GPU VMs cannot live-migrate and must TERMINATE on host maintenance; E2 CPU VMs
+            # reject that policy unless preemptible, so they keep the default (MIGRATE).
+            *(["--maintenance-policy=TERMINATE"] if a.hw in GPU_HARDWARE else []),
             f"--service-account={SERVICE_ACCOUNT}", "--scopes=cloud-platform",
             f"--max-run-duration={duration}", "--instance-termination-action=DELETE",
             f"--labels=nerva=1,job={job.replace('_', '-')}",

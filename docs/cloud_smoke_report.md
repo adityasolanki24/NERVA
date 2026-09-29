@@ -53,6 +53,14 @@ The export-only dependencies were updated to TensorFlow CPU 2.20, tf2onnx 1.17, 
 
 The interval between initial and final checkpoints was about 6 min 14 s for 327,680 steps, roughly 876 environment steps/s. At that observed rate, 300 million steps would take about 95 hours before allowing for startup and evaluations. At the observed public on-demand price for this VM, compute alone would be roughly $81.
 
+**Correction (2026-09-29, Claude review):** this rate cannot support a B0 projection.
+- The run had **one** training chunk.
+- Brax's own metrics in the downloaded TensorBoard file give `training/sps` = 1,154 over `training/walltime` = 284 s for that chunk.
+- Brax's timer wraps the first jitted training call, so those 284 s **include compiling the training step**.
+- The checkpoint interval (about 876 steps/s) additionally includes the final evaluation and ONNX export.
+- **Steady-state L4 throughput is therefore unknown,** and the 95 h / $81 figure is an upper bound dominated by one-time costs, not an estimate.
+- `cloud/smoke_train.py` now reports `steady_training_steps_per_second` from Brax's `training/walltime` between the last two evaluations, and the benchmark job uses 3 evaluations, so this is measured properly.
+
 Therefore **do not launch B0 on this L4 configuration yet**. First run a short throughput comparison on a faster accelerator or reduce the baseline workload with a clearly justified pilot protocol. A full B0 must remain unchanged if it is used as the scientific reproduction control.
 
 ## Cost and shutdown

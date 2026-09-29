@@ -50,6 +50,84 @@ def checkpoint_measurement(output_dir: Path) -> dict[str, object]:
     return result
 
 
+def _varint(buf: bytes, i: int) -> tuple[int, int]:
+    result = shift = 0
+    while True:
+        byte = buf[i]
+        i += 1
+        result |= (byte & 0x7F) << shift
+        shift += 7
+        if byte < 0x80:
+            return result, i
+
+
+def _proto_fields(buf: bytes):
+    """Minimal protobuf wire-format reader: yields (field_number, value) pairs."""
+    i = 0
+    while i < len(buf):
+        key, i = _varint(buf, i)
+        number, wire = key >> 3, key & 7
+        if wire == 0:
+            value, i = _varint(buf, i)
+        elif wire == 1:
+            value, i = buf[i:i + 8], i + 8
+        elif wire == 5:
+            value, i = buf[i:i + 4], i + 4
+        elif wire == 2:
+            length, i = _varint(buf, i)
+            value, i = buf[i:i + length], i + length
+        else:
+            raise ValueError(f"unsupported wire type {wire}")
+        yield number, value
+
+
+def training_timing_from_events(output_dir: Path) -> list[tuple[int, float]]:
+    """(env step, cumulative Brax training/walltime) at each evaluation after the first.
+
+    Read from the TensorBoard events file that upstream's runner writes. Brax's
+    training/walltime counts only training epochs (no evaluation or export), but
+    its first chunk includes compiling the training step.
+    """
+    import struct
+
+    points: list[tuple[int, float]] = []
+    for path in sorted(output_dir.glob("events.out.tfevents*")) if output_dir.exists() else []:
+        data, i = path.read_bytes(), 0
+        while i + 12 <= len(data):
+            length = struct.unpack("<Q", data[i:i + 8])[0]
+            record, i = data[i + 12:i + 12 + length], i + 12 + length + 4
+            step, walltime = 0, None
+            for number, value in _proto_fields(record):
+                if number == 2:
+                    step = value
+                elif number == 5:
+                    for n2, v2 in _proto_fields(value):
+                        if n2 != 1:
+                            continue
+                        tag = simple = None
+                        for n3, v3 in _proto_fields(v2):
+                            if n3 == 1:
+                                tag = v3.decode("utf-8", "replace")
+                            elif n3 == 2:
+                                simple = struct.unpack("<f", v3)[0]
+                        if tag == "training/walltime":
+                            walltime = float(simple)
+            if walltime is not None:
+                points.append((int(step), walltime))
+    return sorted(points)
+
+
+def steady_state_throughput(points: list[tuple[int, float]]) -> dict[str, object]:
+    """Steps/s between the last two training chunks: excludes compilation, eval and export."""
+    result: dict[str, object] = {"training_walltime_points": points,
+                                 "steady_training_steps_per_second": None}
+    if len(points) >= 2:
+        (s0, w0), (s1, w1) = points[-2], points[-1]
+        if w1 > w0:
+            result["steady_training_steps_per_second"] = (s1 - s0) / (w1 - w0)
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timesteps", type=int, default=SMOKE_TIMESTEPS)
@@ -94,6 +172,7 @@ def main() -> None:
         "task": args.task,
         "wall_seconds": time.time() - started,
         **checkpoint_measurement(Path(args.output_dir)),
+        **steady_state_throughput(training_timing_from_events(Path(args.output_dir))),
     }
     rendered = json.dumps(summary, indent=2, sort_keys=True)
     print("NERVA_SHORT_RUN_SUMMARY=" + rendered, flush=True)

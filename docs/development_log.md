@@ -59,7 +59,7 @@ Newest entry first. Each entry records what was done, what was actually run, and
 ### Facts found while designing
 - The generator needs `placo==0.6.3` and Python 3.10.12, and has no Windows build. So references are generated on a Linux VM.
 - Reference keys are computed velocities (`steps_to_vel(dx, period)`, rounded to 3 decimals), not measured ones.
-- The current `auto_gait.json` sweep does not reproduce the shipped pickle's velocity grid, so how the shipped references were generated is unknown.
+- The current `auto_gait.json` sweep does not reproduce the shipped pickle's velocity grid, so how the shipped references were generated is unknown. **(Corrected 2026-09-29: wrong. R0 reproduces exactly the shipped 240 keys; see the 2026-09-29 entry.)**
 - The generator README has an open TODO questioning whether its output still trains. That is why step R0 exists.
 
 ---

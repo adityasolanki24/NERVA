@@ -67,8 +67,9 @@ They are also chosen because the upstream reference generator already exposes a 
 | **S1** | NERVA env with e sampled | GPU VM | the experiment |
 
 **Velocity grid [fact]:** reference keys are *computed* velocities, `steps_to_vel(dx, period)`, rounded to 3 decimals. Each style therefore gets its own regular grid. The pinned upstream sweep currently schedules 6 dx × 4 dy × 10 dθ = 240 candidates per style. Its `np.arange(max + step)` construction includes a final 0.33 rad yaw-step candidate even though the configured maximum is 0.30; R0 records how many candidates survive upstream filtering before R1 reuses the grid.
-- **Note [fact]:** that config does not reproduce the shipped pickle's grid (6 × 4 × 10 with different values). The settings that produced the shipped references are **[unknown]**, which is another reason for R0.
-- **Generation cost [unknown]:** 7 styles ≈ 1,500 gaits for the pilot; 27 styles ≈ 5,800. Seconds per gait will be measured in R0.
+- **Correction (R0, 2026-09-29) [measured]:** an earlier note here claimed this config does not reproduce the shipped pickle's grid. **That was wrong.** The regenerated set has exactly the shipped 240 keys and period (0.54 s); `steps_to_vel` accounts for two steps per period.
+- **Generation cost [measured, R0 local WSL]:** 240 gaits in 1,405 s with 6 workers, plus a 13 s fit. Estimate for the 7-style pilot: about 2.7 h on 6 cores.
+- **Reference validity [measured, R0]:** the generator's initial inverse-kinematics placement intermittently lands on the mirror-image, **backward**, knee solution. This happened in 39/240 regenerated gaits, and also in 2/240 of the *shipped* gaits. Re-running an affected gait standalone (15 times, including 12 concurrent runs) always gave the correct knee. So every generated set goes through `nerva/reference_validation.py`, and flagged gaits are regenerated with their exact logged parameters until valid (`cloud/generate_styled_references.py:fit_validated`). The shipped pickle is left unmodified for B0, because B0 reproduces upstream as-is.
 
 ## 5. Evaluation (reuses `nerva/open_duck_sim.py` and `nerva/gait_metrics.py`) [design]
 

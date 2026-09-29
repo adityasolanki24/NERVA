@@ -4,6 +4,46 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-30 — S1 evaluation: tempo and torso pitch work; step height does not; preregistered verdict is FAIL
+
+**Run.** `s1_eval-20260930-013427` (code `70191ab`), e2-standard-8, 170 trials in 77 s of compute. Final ONNX of each run; design §5 protocol (vx = 0.15 m/s, 10 paired seeds, 20 s, metrics over 5–20 s).
+- Two earlier attempts crashed before any trial ran:
+  - parallel workers raced to clone mujoco_playground's menagerie
+  - B1 expects the 104-value observation (it is a StyleJoystick policy with e = 0)
+- Both are fixed, with an up-front input-size check and unit tests of the analysis.
+
+**Results [measured]** (means over 10 seeds):
+
+| e_k | −1 | −0.5 | 0 | +0.5 | +1 | monotonic (10 seeds) | reference target |
+|---|---|---|---|---|---|---|---|
+| e1 → gait frequency, Hz | 1.52 | 1.67 | 1.85 | 2.17 | 2.50 | **10/10** | 1/period = 1.48 / 1.85 / 2.47 |
+| e2 → foot lift, mm | 12.9 | 13.7 | 14.1 | 14.2 | 13.7 | **0/10** | foot height 20 / 40 / 60 mm |
+| e3 → mean torso pitch, ° | −0.71 | −0.38 | 0.20 | 1.26 | 3.14 | **10/10** | trunk pitch −10 / −4 / +2 ° |
+
+**Tempo (e1)**
+- It works, and it is controllable: the achieved gait frequency matches the reference's 1/period within 0.04 Hz at the trained values.
+- **Cross-talk [measured]:** mean foot lift falls about 4 mm at non-neutral tempos (9.6–10.2 mm at ±0.5 and +1).
+
+**Step height (e2)**
+- It is not expressed. Lift barely changes (range 1.3 mm, non-monotonic), while the reference spans 40 mm.
+- Even at neutral, every policy lifts only about 13–14 mm against the 40 mm reference foot height. B0 does the same, so this is inherited from upstream training. Possible causes are the imitation-reward weighting, or the lift metric not measuring the same thing as `walk_foot_height` [hypothesis; both unchecked].
+
+**Torso pitch (e3)**
+- It works in direction, with about 1/3 of the reference magnitude: 3.9° achieved against a 12° span.
+
+**Criteria (design §5)**
+- Monotonic: e1 ✓, e2 ✗, e3 ✓.
+- Cross-talk: e1 ✓, e2 ✗, e3 ✓.
+- Falls: 0/170 ✓.
+- **Tracking ✗:** the worst S1 condition is e1 = −0.5, with |v − 0.15| = 0.075 against the limit 1.25 × B0 (0.053) = 0.066. That value is **not a trained style** (its period is interpolated). The worst trained style (e3 = −1) scores 0.065 and passes. Neutral S1 tracks better than B0 (0.038 vs 0.053).
+- **Overall: FAIL** by the preregistered rule. Reported as a negative result for e2, with e1 and e3 positive.
+
+**Caveats**
+- **The cross-talk normalisation I defined breaks for gait frequency.** The metric is quantised by the FFT resolution and identical across seeds at neutral, so its std is 0 and its normalised values are meaningless (≈10¹⁵). The verdicts don't depend on it: e1's raw frequency change is large, and gait frequency doesn't change for e2 or e3. Next time: a different normaliser, stated in advance.
+- **Neutral S1 leans differently from B1 [measured]:** 0.2° vs 3.4° pitch, with the same neutral references. This is possible blending across styles [hypothesis].
+
+---
+
 ## 2026-09-29 — B0, B1 and S1 pilot trained (300 M steps each, L4)
 
 **S1 smoke** (`s1_smoke-20260929-224944`, code `8443fd4`) passed:

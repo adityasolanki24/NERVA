@@ -4,6 +4,30 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-29 — R1 pilot complete: 7 validated style reference sets
+
+Run `r1_references-20260929-210511` (code `084806b`), e2-standard-8, 4,516 s total (618–679 s per style). The VM self-deleted; I removed the NAT and `audit` is clean. The local `launch.py wait` process died without output (exit 4, cause unknown), so the NAT was left up for about 16 min after the job ended.
+
+**Results [measured]:**
+- All 7 styles generated 240/240 recordings and fitted 240 keys.
+- Every pickle passes an independent re-validation.
+- All 7 load into `StyledReference` (grid 6×4×10, 40 signals, degree 15). Gait periods: 0.54 s, 0.675 s (e1−) and 0.405 s (e1+).
+
+| style | changed parameter | gaits substituted (invalid after 2 regenerations) |
+|---|---|---|
+| neutral | — | 2 |
+| e1− / e1+ | single support 0.225 / 0.135 s | 2 / 1 |
+| e2− / e2+ | foot height 0.02 / 0.06 m | 3 / 1 |
+| e3− / e3+ | trunk pitch −10° / +2° | **4** / 2 |
+
+**Observations:**
+- **Where the failures are [measured]:** every substituted gait sits at the maximum forward step with the maximum lateral step, mostly with large turning. **No regeneration on the VM repaired any gait.** All flagged gaits ended up substituted, so on this machine the failures are deterministic.
+- **The substitution cap was reached exactly [measured].** e3− (more forward lean) needed 4 substitutions, the `MAX_SUBSTITUTIONS` cap. A wider style range on e3 would exceed it.
+- **Knee limit [measured]:** in e2− only 138/240 gaits exceed the ±π/2 knee range (240/240 in the other styles). This is informational only.
+- **Imitation impact [hypothesis]:** the substituted corner commands will imitate a neighbour's gait.
+
+---
+
 ## 2026-09-29 — L4 throughput measured; R1 attempt 1 failed on two unrepairable gaits
 
 Both cloud VMs (code `4f7ab2c`) ran and self-deleted within their caps. The temporary Cloud NAT was then removed; `audit` shows no instances, disks, addresses or routers (only the bucket and runner service account remain). The NAT stayed up idle for about 4 h after the jobs ended, because I didn't tear it down promptly.

@@ -4,6 +4,36 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-30 — S2 result: the feet-height cost lifts feet in B2 but degrades the multi-style policy; S1 remains the best style policy
+
+**Runs.**
+- `b2_neutral-20260930-163257` and `s2_pilot-20260930-163509` (code `991fd6b`): 300 M steps each, both exited 0. The reward curves were slightly below B1/S1, as expected from an added cost.
+- Evaluation `s2_eval-20260930-184340` (code `4d6417f`), same protocol and seeds as S1. In the report files, "S1" means S2 and "B1" means B2.
+- Network cleanup: the first router deletion failed ("in use" right after the NAT was deleted). It succeeded on manual retry, and `network-down` now retries.
+
+**Results [measured]** (means over 10 seeds; S1 values in brackets):
+
+| e_k | −1 | −0.5 | 0 | +0.5 | +1 | monotonic |
+|---|---|---|---|---|---|---|
+| e1 → gait frequency, Hz | 1.95 [1.52] | 2.49 [1.67] | 1.85 | 2.17 | 2.50 | **0/10** [10/10] |
+| e2 → lift, mm (target 20–60) | 14.1 [12.9] | 17.8 | 19.5 [14.1] | 19.6 | 20.1 [13.7] | **1/10** [0/10] |
+| e3 → torso pitch, ° | −1.25 | −1.07 | −0.48 | 0.42 | 1.37 | **10/10** [10/10] |
+
+**Neutral control.** B2 lifts **30.1 mm**, against 13.3 for B0 and 14.4 for B1, with tracking error 0.057 against B0's 0.053. **For a single style the term works.**
+
+**The multi-style policy:**
+- **Step height:** S2 lift now rises with e2 on average (14 → 20 mm), but not reliably per seed. It stays far below the targets and below B2's neutral lift.
+- **Tempo broke.** Slow tempos no longer slow the gait. e1 = −0.5 reads 2.49 Hz: whether that is a harmonic picked by the FFT or a real fast shuffle is unchecked.
+- **Torso pitch** still works, with a smaller range: 2.6° against S1's 3.9°.
+- **Tracking** is worse: mean 0.070 against B0's 0.053, worst condition 0.090.
+- **Falls:** 0/170.
+
+**Verdict: FAIL (preregistered).** S2 is worse than S1 on e1 and on tracking. S1 (e1 and e3 working) remains the best style policy.
+
+**Interpretation [hypothesis]:** with 7 styles, the feet-height cost at weight −30 competes with the per-style clock and tracking. B2 shows the term itself is learnable. A lower weight, a style-dependent schedule, or more steps might help, but each attempt costs about 2 × 2 h L4 and wasn't tried.
+
+---
+
 ## 2026-09-30 — S2 preregistration: per-style feet-height cost; B2 + S2 launched
 
 **Change [NERVA design choice]:** `StyleJoystick(feet_height_scale=...)` adds

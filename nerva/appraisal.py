@@ -43,3 +43,98 @@ def appraise(event: Event, table: dict[str, AppraisalState] = EVENT_APPRAISALS) 
     except KeyError:
         raise ValueError(f"no appraisal defined for event {event.kind!r}; known: {sorted(table)}") from None
     return dataclasses.replace(base, desirability=base.desirability * event.magnitude)
+
+
+# ── Appraisal v1: context-aware (docs/reactive_behaviour_design.md §3) ────────
+#
+# The same event kind is appraised from the current tracks and from memory:
+#   - novelty habituates with exposure: novelty = exp(-exposure_s / HABITUATION_S[kind])
+#   - a fast approach is worse and less controllable the closer and faster it is
+#   - a threat in the recent past (a fast approach or near fall within THREAT_MEMORY_S) turns an
+#     otherwise friendly slow approach or closeness into a threat, and a threat leaving into relief
+#   - repeated harmless fast approaches become more expected (surprise and fear habituate)
+# All numbers are NERVA design choices for simulated events, not psychology.
+
+import math  # noqa: E402
+
+from nerva.interfaces import Track  # noqa: E402
+
+HABITUATION_S = {"person": 25.0, "ball": 10.0}
+THREAT_MEMORY_S = 30.0
+IN_VIEW_PERIOD_S = 2.0  # re-appraise a visible stimulus this often ("still looking at it")
+
+
+class ContextualAppraiser:
+    def __init__(self):
+        self.exposure_s: dict[str, float] = {}
+        self.fast_approaches = 0
+        self.last_threat_t = -math.inf
+        self._last_in_view: dict[str, float] = {}
+
+    def novelty(self, kind: str) -> float:
+        return math.exp(-self.exposure_s.get(kind, 0.0) / HABITUATION_S.get(kind, 20.0))
+
+    def threat_recent(self, t: float) -> bool:
+        return t - self.last_threat_t < THREAT_MEMORY_S
+
+    def observe(self, t: float, tracks: tuple[Track, ...], dt: float) -> list[tuple[str, AppraisalState]]:
+        """Accumulate exposure; every IN_VIEW_PERIOD_S appraise each visible stimulus ("<kind>_in_view")."""
+        out = []
+        for tr in tracks:
+            if not tr.visible:
+                continue
+            self.exposure_s[tr.kind] = self.exposure_s.get(tr.kind, 0.0) + dt
+            if t - self._last_in_view.get(tr.kind, -math.inf) >= IN_VIEW_PERIOD_S:
+                self._last_in_view[tr.kind] = t
+                n = self.novelty(tr.kind)
+                # desirability 0: looking elicits no joy/hope/fear by itself; expectedness ≥ 0.3: no surprise
+                out.append((f"{tr.kind}_in_view", AppraisalState(
+                    relevance=0.2 + 0.4 * n, desirability=0.0, likelihood=0.5,
+                    expectedness=max(0.3, 1.0 - n), controllability=0.8)))
+        return out
+
+    def appraise(self, event: Event, t: float, tracks: tuple[Track, ...]) -> AppraisalState | None:
+        """Appraise one perception/proprioception event in context; None = not relevant."""
+        track = {tr.kind: tr for tr in tracks}
+        kind = event.kind
+        if kind in ("person_appeared", "ball_appeared"):
+            who = kind.split("_")[0]
+            n = self.novelty(who)
+            threat = who == "person" and self.threat_recent(t)
+            return AppraisalState(relevance=0.4 + 0.3 * n, desirability=-0.3 if threat else 0.1,
+                                  likelihood=0.6, expectedness=1.0 - 0.8 * n,
+                                  controllability=0.5 if threat else 0.8)
+        if kind == "person_approaching_rapidly":
+            tr = track.get("person")
+            dist = tr.distance if tr else 1.5
+            expected = min(0.6, 0.15 + 0.15 * self.fast_approaches)  # habituation to harmless lunges
+            self.fast_approaches += 1
+            self.last_threat_t = t
+            return AppraisalState(relevance=0.9, desirability=-min(1.0, 0.4 + 0.4 * event.magnitude + 0.3 / max(dist, 0.3)),
+                                  likelihood=0.7, expectedness=expected,
+                                  controllability=float(min(0.7, max(0.1, dist / 2.5))))
+        if kind == "person_approaching_slowly":
+            if self.threat_recent(t):
+                return AppraisalState(relevance=0.6, desirability=-0.4, likelihood=0.6,
+                                      expectedness=0.5, controllability=0.5)
+            return AppraisalState(relevance=0.5, desirability=0.3, likelihood=0.6, expectedness=0.6,
+                                  controllability=0.7)
+        if kind == "person_close":
+            if self.threat_recent(t) and t - self.last_threat_t < 5.0:
+                return AppraisalState(relevance=0.8, desirability=-0.7, likelihood=0.8, expectedness=0.4,
+                                      controllability=0.2)
+            return AppraisalState(relevance=0.4, desirability=0.2, likelihood=0.7, expectedness=0.7,
+                                  controllability=0.7)
+        if kind == "ball_close":
+            return None  # reaching the ball is the end of an approach, handled by behaviour
+        if kind == "person_lost":
+            if self.threat_recent(t):  # the threat went away: relief
+                return AppraisalState(relevance=0.6, desirability=0.4, likelihood=1.0, expectedness=0.6,
+                                      controllability=0.7)
+            return None
+        if kind == "ball_lost":
+            return None
+        if kind == "near_fall":
+            self.last_threat_t = t
+            return EVENT_APPRAISALS["near_fall"]
+        return appraise(event)

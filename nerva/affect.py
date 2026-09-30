@@ -17,6 +17,12 @@ design choices are documented in docs/affect_model.md. In short:
                  relaxes to its baseline with its own time constant. All
                  parameters are NERVA engineering choices (AffectConfig).
   controllability → dominance blend: NERVA hypothesis.
+  interest       v0.2 NERVA extension (curiosity; EMA/ALMA define none): elicited by a novel
+                 (expectedness < 0.5), non-harmful (desirability ≥ 0) appraisal; intensity
+                 relevance × (1 − expectedness). Anchor: positive valence, raised arousal,
+                 slight dominance, the "interested/alert" region of the affect circumplex
+                 (qualitative placement; the numbers are ours). Events without novelty elicit
+                 exactly what v0.1 did.
 
 This is an engineered internal state, not a validated model of human emotion.
 """
@@ -39,6 +45,7 @@ EMOTION_PAD: dict[str, tuple[float, float, float]] = {
     "fear": (-0.64, 0.60, -0.43),  # ALMA Table 2
     "distress": (-0.40, -0.20, -0.50),  # ALMA Table 2 (EMA 2009 label: "sadness")
     "surprise": (NA, 0.80, NA),  # arousal from WASABI Table 1; V/D excluded (NERVA v0.1)
+    "interest": (0.30, 0.40, 0.10),  # NERVA v0.2 choice, see module docstring
 }
 
 
@@ -47,6 +54,7 @@ class AffectConfig:
     """Every tunable number of the affect model. All are NERVA choices unless noted."""
 
     surprise_expectedness_threshold: float = 0.3  # EMA: surprise when expectedness is "low"
+    interest_expectedness_threshold: float = 0.5  # NERVA v0.2: novelty needed for interest
     scale_by_relevance: bool = True  # NERVA extension of EMA (v0.1)
     controllability_weight: float = 0.5  # w in D = (1-w)·D_emotion + w·(2c-1)
     tau_emotion_s: float = 4.0  # default emotion intensity decay time constant
@@ -79,6 +87,8 @@ def categorise(a: AppraisalState, cfg: AffectConfig = AffectConfig()) -> list[tu
         out.append(("distress" if a.likelihood >= 1.0 else "fear", scale * base))
     if a.expectedness < cfg.surprise_expectedness_threshold:
         out.append(("surprise", scale * (1.0 - a.expectedness)))  # intensity rule: NERVA
+    if a.desirability >= 0 and a.expectedness < cfg.interest_expectedness_threshold:
+        out.append(("interest", scale * (1.0 - a.expectedness)))  # NERVA v0.2
     return [(label, i) for label, i in out if i > 0.0]
 
 

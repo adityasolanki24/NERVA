@@ -4,6 +4,35 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-30 — Why e2 (step height) failed: all Open Duck policies under-lift; reward has no foot-height term
+
+**The metric is right [measured].** Replaying the R1 reference *joint* trajectories kinematically (gait `0.148_0.037_-0.074`, base fixed) and applying our `lift_height` to the MuJoCo foot site gives:
+- 21.7 / 42.5 / 63.4 mm for e2 = −1 / 0 / +1
+- Placo's own toe trajectory in the recordings gives 21.7 / 42.6 / 63.5 mm
+- `walk_foot_height` is 20 / 40 / 60 mm
+
+So a policy that tracked the reference joints would read about 42 mm at neutral. B0, B1, S1 and the shipped `BEST_WALK_ONNX_2` all read **13–14 mm**. Under-lifting is a property of upstream-style training, not of the NERVA env.
+
+**The references differ enough [measured].** Between e2 = −1 and +1 the reference knees differ by up to 0.60 / 0.69 rad, and the mean Σ(Δq²) over leg joints is 0.19 rad². That is the same order as e3 (0.27 rad²), which *was* learned.
+
+**Upstream reward structure [fact, `joystick.py`, `custom_rewards.py`]:**
+- The top-level scales are alive 20, tracking_lin_vel 2.5, tracking_ang_vel 6, action_rate −0.5, torques −1e-3, stand_still −0.2, **imitation 1.0**.
+- Inside imitation, leg joint positions carry `−15·Σ(Δq²)`, and there is an explicit torso-orientation term.
+- **The toe-position terms are commented out.** Nothing rewards foot height directly.
+- `swing_peak` (maximum foot-site z per swing) is tracked but not rewarded.
+- MuJoCo Playground's Berkeley Humanoid env has exactly such a term, `_cost_feet_height = Σ (swing_peak / max_foot_height − 1)² · first_contact`, disabled (scale 0) in its default config [fact].
+
+**Interpretation [hypothesis]:**
+- Torso pitch (e3) has its own reward term plus a near-constant hip offset, and it was learned at about 1/3 magnitude.
+- Swing height only shows up through small, transient knee errors that PPO trades against alive/tracking/action-rate. Under the motor speed limit and action-rate cost, a larger swing is costly.
+
+**Possible fix (not run; a design change needing a new baseline) [NERVA design proposal]:**
+- Add a per-style feet-height term using the existing `swing_peak`, with target = the style's `walk_foot_height` above the stance foot-site height.
+- Retrain a baseline B2 (neutral, same term) and S2 (7 styles), with the same evaluation and a normaliser for cross-talk fixed in advance.
+- Cost is about 2 × 2 h L4.
+
+---
+
 ## 2026-09-30 — S1 evaluation: tempo and torso pitch work; step height does not; preregistered verdict is FAIL
 
 **Run.** `s1_eval-20260930-013427` (code `70191ab`), e2-standard-8, 170 trials in 77 s of compute. Final ONNX of each run; design §5 protocol (vx = 0.15 m/s, 10 paired seeds, 20 s, metrics over 5–20 s).

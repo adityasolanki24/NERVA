@@ -77,7 +77,9 @@ class ReactiveBehaviour:
             self.appeared_at[event_kind.split("_")[0]] = t
 
     def step(self, t: float, dt: float, pad: PADState, emotions: dict[str, float],
-             tracks: tuple[Track, ...]) -> ReactiveDecision:
+             tracks: tuple[Track, ...], salience: dict[str, float] | None = None) -> ReactiveDecision:
+        """salience: per-kind novelty from appraisal (0..1); used by selectors that weigh targets."""
+        self.salience = salience or {}
         tr = {x.kind: x for x in tracks}
         if "person" in tr:
             self.threat_bearing = tr["person"].bearing

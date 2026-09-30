@@ -31,8 +31,8 @@ def window(rows, key, t0, t1):
     return np.array([r[key] for r in rows if t0 <= r["t"] < t1])
 
 
-def evaluate_seed(policy: str, seed: int) -> dict:
-    _, rows, _, fired = scenario.run(policy, seed=seed)
+def evaluate_seed(policy: str, seed: int, selector: str = "utility") -> dict:
+    _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector)
     ball = window(rows, "dist_ball", BALL_T + 0.1, 30.0)
     person_after = window(rows, "dist_person", LUNGE_END_T, LUNGE_END_T + 3.0)
     modes_after = {r["mode"] for r in rows if LUNGE_T <= r["t"] < LUNGE_T + 5.0}
@@ -57,9 +57,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--policy", required=True)
     ap.add_argument("--seeds", type=int, default=5)
+    ap.add_argument("--selector", choices=("utility", "rules"), default="utility")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
     args = ap.parse_args()
-    results = [evaluate_seed(args.policy, s) for s in range(args.seeds)]
+    results = [evaluate_seed(args.policy, s, args.selector) for s in range(args.seeds)]
     summary = {c: f"{sum(r[c] for r in results)}/{len(results)}" for c in ("curiosity", "fear", "habituation", "safe")}
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "evaluation.json").write_text(json.dumps({"summary": summary, "seeds": results}, indent=1) + "\n",

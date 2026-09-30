@@ -22,6 +22,7 @@ from nerva.appraisal import ContextualAppraiser
 from nerva.interfaces import BehaviourCommand, Event
 from nerva.open_duck_sim import OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception
+from nerva.action_selection import UtilityBehaviour
 from nerva.reactive_behaviour import ReactiveBehaviour
 from nerva.world import World, extend_scene
 
@@ -94,7 +95,8 @@ def default_scenario() -> dict[str, Agent]:
 
 
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
-        record_every: int | None = None, head_moves_while_walking: bool = False):
+        record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility"):
+    """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
@@ -103,7 +105,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     perception = SimulatedPerception(seed=seed)
     appraiser = ContextualAppraiser()
     affect = CategoricalAffectModel()
-    behaviour = ReactiveBehaviour(walking_head_limit=None) if head_moves_while_walking else ReactiveBehaviour()
+    behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
+    behaviour = behaviour_cls(walking_head_limit=None) if head_moves_while_walking else behaviour_cls()
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, {}, ())
     sim.set_behaviour(decision.command)
@@ -142,7 +145,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 affect.add(a)
             pad = affect.step(1.0 / FRAME_HZ)
             emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
-            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks)
+            salience = {tr.kind: appraiser.novelty(tr.kind) for tr in tracks}
+            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks, salience)
             sim.set_behaviour(decision.command)
             sim.set_head_offset(*decision.head)
         sim.step_physics(10)

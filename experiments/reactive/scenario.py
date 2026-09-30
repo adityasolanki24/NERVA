@@ -22,6 +22,7 @@ from nerva.appraisal import ContextualAppraiser
 from nerva.interfaces import BehaviourCommand, Event
 from nerva.open_duck_sim import OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception
+from nerva.vision import VisionPerception
 from nerva.action_selection import UtilityBehaviour
 from nerva.reactive_behaviour import ReactiveBehaviour
 from nerva.world import World, extend_scene
@@ -30,6 +31,7 @@ CTRL_DT = 0.02
 PERCEIVE_EVERY = int(round(1 / (FRAME_HZ * CTRL_DT)))  # control steps per perception frame
 HIDDEN = (30.0, 30.0)
 NEAR_FALL_TILT_DEG = 20.0
+EYE_W, EYE_H = 160, 120  # vision resolution
 EMOTIONS = ("joy", "hope", "fear", "distress", "surprise", "interest")
 
 
@@ -96,14 +98,18 @@ def default_scenario() -> dict[str, Agent]:
 
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
-        walking_head_limit=None):
-    """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1)."""
+        walking_head_limit=None, perception_mode: str = "simulated"):
+    """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
+    perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
+    from the robot's head camera, nerva.vision)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
                       scene_extender=extend_scene)
     world = World(sim.model)
-    perception = SimulatedPerception(seed=seed)
+    vision = perception_mode == "vision"
+    perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
+    eye = mujoco.Renderer(sim.model, EYE_H, EYE_W) if vision else None
     appraiser = ContextualAppraiser()
     affect = CategoricalAffectModel()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
@@ -131,8 +137,20 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         if k % PERCEIVE_EVERY == 0:
             mujoco.mj_kinematics(sim.model, d)
             entities = {n: world.entity_position(d, n) for n in agents}
-            pstate = perception.detect(t, d.cam_xpos[cam].copy(), d.cam_xmat[cam].reshape(3, 3).copy(),
-                                       robot_yaw, entities, 1.0 / FRAME_HZ, ego_velocity=d.qvel[0:2].copy())
+            if vision:
+                mujoco.mj_forward(sim.model, d)
+                eye.update_scene(d, camera=cam)
+                rgb = eye.render()
+                eye.enable_depth_rendering()
+                eye.update_scene(d, camera=cam)
+                depth = eye.render()
+                eye.disable_depth_rendering()
+                pstate = perception.detect_frame(t, rgb, depth, d.cam_xpos[cam].copy(),
+                                                 d.cam_xmat[cam].reshape(3, 3).copy(), float(sim.model.cam_fovy[cam]),
+                                                 robot_yaw, 1.0 / FRAME_HZ, ego_velocity=d.qvel[0:2].copy())
+            else:
+                pstate = perception.detect(t, d.cam_xpos[cam].copy(), d.cam_xmat[cam].reshape(3, 3).copy(),
+                                           robot_yaw, entities, 1.0 / FRAME_HZ, ego_velocity=d.qvel[0:2].copy())
             tracks = pstate.tracks
             events = list(pstate.events)
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])

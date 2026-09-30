@@ -97,6 +97,10 @@ class SimulatedPerception:
                 elevation = float(np.arctan2(z, np.hypot(x, y)))
                 toward = rel[:2] / max(h_dist, 1e-6)
                 events += self._update(kind, t, bearing, dist, elevation, dt, float(ego @ toward))
+        return self._age_tracks(t, events)
+
+    def _age_tracks(self, t: float, events: list[Event]) -> PerceptionState:
+        """Mark unseen tracks, forget old ones, report losses; returns this frame's PerceptionState."""
         for kind, st in list(self.tracks.items()):
             unseen = t - st.last_seen_t
             if unseen > 0:

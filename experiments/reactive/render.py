@@ -140,9 +140,11 @@ def main() -> None:
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--duration", type=float, default=100.0)
+    ap.add_argument("--perception", choices=("simulated", "vision"), default="vision")
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    sim, rows, frames, fired = scenario.run(args.policy, seed=args.seed, duration=args.duration, record_every=EVERY)
+    sim, rows, frames, fired = scenario.run(args.policy, seed=args.seed, duration=args.duration, record_every=EVERY,
+                                            perception_mode=args.perception)
     print(f"simulated {args.duration} s, {len(frames)} frames, max tilt {max(r['tilt_deg'] for r in rows):.1f} deg",
           flush=True)
     for te, kind, a, emos in fired:
@@ -168,7 +170,7 @@ def main() -> None:
                                 macro_block_size=1)
     look, dist_cam = None, 1.6
     try:
-        for i, (qpos, mpos, mquat, tracks) in enumerate(frames):
+        for i, (qpos, mpos, mquat, tracks, vision_boxes) in enumerate(frames):
             t = i * EVERY * scenario.CTRL_DT
             data.qpos[:], data.mocap_pos[:], data.mocap_quat[:] = qpos, mpos, mquat
             mujoco.mj_forward(model, data)
@@ -193,12 +195,21 @@ def main() -> None:
             ed = ImageDraw.Draw(eye)
             positions = {"person": np.array([person[0], person[1], 0.0]),
                          "ball": mpos[mocap["ball"]].copy()}
-            for tr, u0, v0, u1, v1 in boxes(model, data, eye_id, tracks, positions):
-                colour = (40, 220, 60) if tr.visible else (160, 160, 160)
-                ed.rectangle([u0, v0, u1, v1], outline=colour, width=2)
-                ed.text((u0 + 3, max(0, v0 - 14)), f"{tr.kind} {tr.distance:.1f} m", fill=colour, font=f_tiny)
+            if vision_boxes is not None:  # the blobs the colour/depth vision found this frame
+                sx, sy = EYE_W / scenario.EYE_W, EYE_H / scenario.EYE_H
+                dist = {tr.kind: tr.distance for tr in tracks}
+                for kind, r0, c0, r1, c1 in vision_boxes:
+                    ed.rectangle([c0 * sx, r0 * sy, (c1 + 1) * sx, (r1 + 1) * sy], outline=(40, 220, 60), width=2)
+                    label = f"{kind} {dist[kind]:.1f} m" if kind in dist else kind
+                    ed.text((c0 * sx + 3, max(0, r0 * sy - 14)), label, fill=(40, 220, 60), font=f_tiny)
+            else:
+                for tr, u0, v0, u1, v1 in boxes(model, data, eye_id, tracks, positions):
+                    colour = (40, 220, 60) if tr.visible else (160, 160, 160)
+                    ed.rectangle([u0, v0, u1, v1], outline=colour, width=2)
+                    ed.text((u0 + 3, max(0, v0 - 14)), f"{tr.kind} {tr.distance:.1f} m", fill=colour, font=f_tiny)
             ed.rectangle([0, 0, EYE_W - 1, EYE_H - 1], outline=(255, 255, 255), width=2)
-            ed.text((6, EYE_H - 16), "robot's eye (simulated detector)", fill=(255, 255, 255), font=f_tiny)
+            ed.text((6, EYE_H - 16), "robot's eye: colour + depth vision" if vision_boxes is not None
+                    else "robot's eye (simulated detector)", fill=(255, 255, 255), font=f_tiny)
             img.paste(eye, (W - EYE_W - 8, 52))
 
             ch = ch_bg.copy()

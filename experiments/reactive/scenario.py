@@ -193,5 +193,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             "tilt_deg": tilt,
         })
         if record_every and k % record_every == 0:
-            frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks))
+            boxes = None
+            if vision:  # what the vision actually found: (kind, row0, col0, row1, col1) in EYE_H x EYE_W pixels
+                boxes = [(bl.kind, *bl.pixels.min(0), *bl.pixels.max(0)) for bl in perception.last_blobs]
+            frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks, boxes))
     return sim, rows, frames, fired

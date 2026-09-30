@@ -145,3 +145,14 @@ def test_style_vector_is_appended_to_obs_and_sets_gait_period():
     np.testing.assert_array_equal(seen[0][-3:], [1.0, -0.5, 0.25])
     with pytest.raises(ValueError):
         sim.set_style_vector((1.5, 0.0, 0.0))
+
+
+def test_behaviour_style_vector_reaches_sim_and_keeps_phase_fraction():
+    from nerva.interfaces import StyleVector
+
+    sim = OpenDuckSim()
+    sim.set_behaviour(BehaviourCommand(vx=0.15, style_vector=StyleVector(tempo=0.0)))
+    sim.inf.imitation_i = 13.5  # half-way through the 27-step neutral cycle
+    sim.set_behaviour(BehaviourCommand(vx=0.15, style_vector=StyleVector(tempo=1.0, torso_pitch=0.5)))
+    assert sim.nb_steps_in_period == 20 and sim.inf.imitation_i == pytest.approx(10.0)
+    np.testing.assert_array_equal(sim.style_vector, [1.0, 0.0, 0.5])

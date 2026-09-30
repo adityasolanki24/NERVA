@@ -148,6 +148,8 @@ class OpenDuckSim:
         self.inf.commands = [vx, vy, wz, *self.head_offset.tolist()]
         self.applied_command = (vx, vy, wz)
         self.phase_factor = style_to_phase_factor(cmd.style)
+        if cmd.style_vector is not None:
+            self.set_style_vector(cmd.style_vector.as_tuple())
 
     def set_style_vector(self, e) -> None:
         """S1 policy input e = (tempo, step height, torso pitch) in [-1, 1]; appended to obs.
@@ -159,7 +161,13 @@ class OpenDuckSim:
         if e.shape != (3,) or np.any(np.abs(e) > 1.0):
             raise ValueError("style vector must be three values in [-1, 1]")
         self.style_vector = e
-        self.nb_steps_in_period = s1_nb_steps_in_period(float(e[0]))
+        nb = s1_nb_steps_in_period(float(e[0]))
+        if nb != self.nb_steps_in_period:
+            # NERVA deployment choice: keep the gait phase FRACTION when the period changes, so
+            # a continuously varying tempo does not make the clock jump (training resampled
+            # style rarely and did not rescale; with fixed styles this has no effect).
+            self.inf.imitation_i = self.inf.imitation_i * nb / self.nb_steps_in_period
+            self.nb_steps_in_period = nb
 
     def set_head_offset(self, neck_pitch: float = 0.0, head_pitch: float = 0.0,
                         head_yaw: float = 0.0, head_roll: float = 0.0) -> None:

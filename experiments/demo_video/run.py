@@ -134,7 +134,10 @@ def smooth(x, n=25):
     return np.convolve(np.pad(x, (n // 2, n - 1 - n // 2), mode="edge"), k, mode="valid")
 
 
-def chart(rows, fired):
+METHOD_A_STYLE_LINES = (("tempo_style", "tempo style", "#9c6644"), ("head_posture", "head posture", "#5e60ce"))
+
+
+def chart(rows, fired, style_lines=METHOD_A_STYLE_LINES):
     """Full chart, background-only chart (axes, legends, event markers; no data), and the
     pixel x-range / y-range of the data area, for a progressive left-to-right reveal."""
     t = np.array([r["t"] for r in rows])
@@ -156,8 +159,8 @@ def chart(rows, fired):
     ax3.plot(t, [r["cmd_vx"] for r in rows], color="0.4", lw=1.2, ls="--", label="commanded vx")
     ax3.plot(t, smooth(np.array([r["v_fwd"] for r in rows])), color="k", lw=1.4, label="measured speed (1 s avg)")
     ax3b = ax3.twinx()
-    ax3b.plot(t, [r["tempo_style"] for r in rows], color="#9c6644", lw=1.2, label="tempo style")
-    ax3b.plot(t, [r["head_posture"] for r in rows], color="#5e60ce", lw=1.2, label="head posture")
+    for key, label, colour in style_lines:
+        ax3b.plot(t, [r[key] for r in rows], color=colour, lw=1.2, label=label)
     ax3b.set_ylim(-1.05, 1.05)
     ax3b.tick_params(labelsize=7)
     ax3.set_ylim(-0.05, 0.2)
@@ -204,7 +207,17 @@ def caption_text(te, kind, a, emos):
             f"expectedness {a.expectedness:.1f}, controllability {a.controllability:.1f}   →   {em}")
 
 
-def render(sim, rows, frames_qpos, fired, path):
+TITLE = "NERVA affect demo — simulation, hand-designed PAD→behaviour mapping (not validated)"
+
+
+def method_a_status(r, rows, t):
+    return (f"PAD  V {r['valence']:+.2f}  A {r['arousal']:+.2f}  D {r['dominance']:+.2f}     "
+            f"behaviour: {r['behaviour']} (cmd {r['cmd_vx']:.2f} m/s)   tempo style {r['tempo_style']:+.2f}   "
+            f"head {r['head_posture']:+.2f}   measured speed {smooth_speed(rows, t):.3f} m/s")
+
+
+def render(sim, rows, frames_qpos, fired, path, title=TITLE, status_fn=method_a_status,
+           style_lines=METHOD_A_STYLE_LINES):
     model = sim.model
     # The loaded MJCF's default offscreen buffer is 640x480; upstream base.py raises it the same way.
     model.vis.global_.offwidth = max(model.vis.global_.offwidth, SIM_W)
@@ -214,7 +227,7 @@ def render(sim, rows, frames_qpos, fired, path):
     cam = mujoco.MjvCamera()
     cam.type = mujoco.mjtCamera.mjCAMERA_FREE
     cam.distance, cam.azimuth, cam.elevation = 0.95, 145.0, -15.0
-    chart_img, chart_bg, x0, x1, top, bottom = chart(rows, fired)
+    chart_img, chart_bg, x0, x1, top, bottom = chart(rows, fired, style_lines)
     f_big, f_small, f_status = font(19), font(14), font(14)
     writer = imageio.get_writer(path, fps=FPS, codec="libx264", quality=8, macro_block_size=1)
     look = None
@@ -240,8 +253,7 @@ def render(sim, rows, frames_qpos, fired, path):
             frame.paste(Image.fromarray(ch), (SIM_W, 0))
             draw = ImageDraw.Draw(frame)
             r = rows[min(int(round(t / CTRL_DT)), len(rows) - 1)]
-            draw.text((10, 8), "NERVA affect demo — simulation, hand-designed PAD→behaviour mapping (not validated)",
-                      fill=(40, 40, 40), font=f_small)
+            draw.text((10, 8), title, fill=(40, 40, 40), font=f_small)
             draw.text((10, 28), f"t = {t:5.1f} s", fill=(40, 40, 40), font=f_small)
             recent = [f for f in fired if f[0] <= t < f[0] + 4.0]
             y = SIM_H + 8
@@ -250,9 +262,7 @@ def render(sim, rows, frames_qpos, fired, path):
                 draw.rectangle([0, SIM_H, SIM_W * 2, SIM_H + 58], fill=(255, 243, 205))
                 draw.text((12, y), l1, fill=(120, 60, 0), font=f_big)
                 draw.text((12, y + 28), l2, fill=(60, 60, 60), font=f_small)
-            status = (f"PAD  V {r['valence']:+.2f}  A {r['arousal']:+.2f}  D {r['dominance']:+.2f}     "
-                      f"behaviour: {r['behaviour']} (cmd {r['cmd_vx']:.2f} m/s)   tempo style {r['tempo_style']:+.2f}   "
-                      f"head {r['head_posture']:+.2f}   measured speed {smooth_speed(rows, t):.3f} m/s")
+            status = status_fn(r, rows, t)
             draw.text((12, SIM_H + 70), status, fill=(20, 20, 20), font=f_status)
             arr = np.asarray(frame)
             writer.append_data(arr)

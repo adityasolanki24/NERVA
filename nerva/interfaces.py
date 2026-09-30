@@ -152,6 +152,30 @@ class ExpressiveStyle:
         return f"Style {self.style:+g}"
 
 
+@dataclass(frozen=True)
+class StyleVector:
+    """Input e of the style-conditioned policy S1 (docs/style_policy_design.md).
+
+      tempo        e1: gait period 0.54·(1 − 0.25·e1) s
+      step_height  e2: reference foot height 40·(1 + 0.5·e2) mm (NOT expressed by S1, 2026-09-30)
+      torso_pitch  e3: reference trunk pitch −4 + 6·e3 deg (+ = more forward lean in MuJoCo)
+
+    Each in [-1, 1]. S1 was trained only at 0 and ±1 on one axis at a time; other
+    values interpolate or combine axes and are outside its training distribution.
+    """
+
+    tempo: float = 0.0
+    step_height: float = 0.0
+    torso_pitch: float = 0.0
+
+    def __post_init__(self) -> None:
+        for name in ("tempo", "step_height", "torso_pitch"):
+            _check_range(name, getattr(self, name), -1.0, 1.0)
+
+    def as_tuple(self) -> tuple[float, float, float]:
+        return (self.tempo, self.step_height, self.torso_pitch)
+
+
 SKILLS = ("walk",)  # only what the baseline can actually do; extend when a policy exists
 
 
@@ -171,7 +195,10 @@ class BehaviourCommand:
     yaw_rate: float = 0.0  # rad/s, counter-clockwise +
     skill: str = "walk"
     style: ExpressiveStyle = field(default_factory=ExpressiveStyle)
+    style_vector: StyleVector | None = None  # only for S1-type policies
 
     def __post_init__(self) -> None:
         if self.skill not in SKILLS:
             raise ValueError(f"unknown skill {self.skill!r}; available: {SKILLS}")
+        if self.style_vector is not None and self.style.style != 0.0:
+            raise ValueError("use either the phase-clock style (method A) or a StyleVector (S1), not both")

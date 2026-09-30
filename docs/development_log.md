@@ -4,6 +4,32 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-30 — Affect connected to S1: behaviour layer v0 and S1 demo video
+
+**Decision (user):** adopt S1 (tempo and torso pitch working), park step height as an open problem, and connect affect.
+
+**Code (`190df97`):**
+- `nerva.interfaces.StyleVector` (e1, e2, e3). `BehaviourCommand.style_vector` is exclusive with the method-A phase-clock style.
+- `OpenDuckSim.set_behaviour` applies it. When e1 changes the period, the phase *fraction* is kept, a deployment choice so a continuously varying tempo doesn't jump the clock.
+- `nerva/behaviour.py`:
+  - HOW: e1 = clip(3·A), e2 = 0, e3 = clip(−1.5·(V + D)).
+  - WHAT: walk at 0.13 m/s; stop while the goal is blocked.
+  - Directions are informed by emotional-gait studies. The gains are hand-chosen so the demo's PAD range spans S1's trained range. **Not validated.**
+- `experiments/demo_video/run_s1.py` reuses run.py's scenario and renderer, which is now parametrised.
+- 93 tests pass.
+
+**Demo run.**
+- Simulation only on the laptop (about 20 s of CPU) to check the loop. The render ran in the cloud: `demo_s1-20260930-204728`, CPU VM, OSMesa, 1,650 frames, exit 0, VM deleted, NAT removed.
+- Results (simulation) [measured]:
+  - No fall; maximum tilt 7.6° (the push at 27 s was recovered).
+  - Fear phase (28–38 s): mean e = (+0.76, 0, +0.91), torso pitch +3.3°, speed 0.063 m/s.
+  - Calm walking: e3 ≈ −0.28, pitch −0.3°, 0.095 m/s.
+  - Blocked (standing): e3 +0.72 but pitch −0.3°, so lean is barely expressed when standing.
+- Combined and intermediate styles are outside S1's training distribution; this is one scenario, not a test.
+- Video and keyframes are local, git-ignored: `experiments/cloud_runs/demo_s1-20260930-204728/demo_s1/`.
+
+---
+
 ## 2026-09-30 — S2 result: the feet-height cost lifts feet in B2 but degrades the multi-style policy; S1 remains the best style policy
 
 **Runs.**

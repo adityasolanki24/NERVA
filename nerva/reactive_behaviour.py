@@ -44,6 +44,9 @@ GAZE_GAIN = 0.3  # per perception frame, on the camera elevation error
 # (measured 2026-09-30: 0.2 rad yaw → 0.012 m/s; ≤0.1 yaw / ≤0.2 pitch, roll tolerated). While
 # walking, head offsets are therefore limited to this (pitch, yaw, roll); None = no limit (S3).
 S1_WALKING_HEAD_LIMIT = (0.15, 0.08, 0.15)
+# S3 (trained with head commands applied): walking kept up to about ±0.3 rad yaw, +0.4 / -0.2 pitch
+# (measured 2026-10-01, vx 0.15: yaw 0.3 → 0.078 m/s, 0.4 → 0.015; pitch -0.2 → 0.083, -0.4 → 0.014).
+S3_WALKING_HEAD_LIMIT = (0.2, 0.3, 0.3)
 FEAR_ENTER, FEAR_KEEP = 0.15, 0.06
 POSITIVE_ENTER, POSITIVE_KEEP = 0.12, 0.05  # hysteresis for approach/inspect
 

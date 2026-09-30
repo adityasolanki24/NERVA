@@ -31,8 +31,8 @@ def window(rows, key, t0, t1):
     return np.array([r[key] for r in rows if t0 <= r["t"] < t1])
 
 
-def evaluate_seed(policy: str, seed: int, selector: str = "utility") -> dict:
-    _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector)
+def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=None) -> dict:
+    _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector, walking_head_limit=head_limit)
     ball = window(rows, "dist_ball", BALL_T + 0.1, 30.0)
     person_after = window(rows, "dist_person", LUNGE_END_T, LUNGE_END_T + 3.0)
     modes_after = {r["mode"] for r in rows if LUNGE_T <= r["t"] < LUNGE_T + 5.0}
@@ -58,9 +58,13 @@ def main() -> None:
     ap.add_argument("--policy", required=True)
     ap.add_argument("--seeds", type=int, default=5)
     ap.add_argument("--selector", choices=("utility", "rules"), default="utility")
+    ap.add_argument("--head-limit", choices=("s1", "s3"), default="s1",
+                    help="walking head-offset limit for the policy (S3 tolerates more head motion)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
     args = ap.parse_args()
-    results = [evaluate_seed(args.policy, s, args.selector) for s in range(args.seeds)]
+    from nerva.reactive_behaviour import S1_WALKING_HEAD_LIMIT, S3_WALKING_HEAD_LIMIT
+    limit = {"s1": S1_WALKING_HEAD_LIMIT, "s3": S3_WALKING_HEAD_LIMIT}[args.head_limit]
+    results = [evaluate_seed(args.policy, s, args.selector, limit) for s in range(args.seeds)]
     summary = {c: f"{sum(r[c] for r in results)}/{len(results)}" for c in ("curiosity", "fear", "habituation", "safe")}
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "evaluation.json").write_text(json.dumps({"summary": summary, "seeds": results}, indent=1) + "\n",

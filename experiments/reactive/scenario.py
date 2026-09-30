@@ -95,7 +95,8 @@ def default_scenario() -> dict[str, Agent]:
 
 
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
-        record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility"):
+        record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
+        walking_head_limit=None):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
@@ -106,7 +107,12 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     appraiser = ContextualAppraiser()
     affect = CategoricalAffectModel()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
-    behaviour = behaviour_cls(walking_head_limit=None) if head_moves_while_walking else behaviour_cls()
+    if head_moves_while_walking:
+        behaviour = behaviour_cls(walking_head_limit=None)
+    elif walking_head_limit is not None:
+        behaviour = behaviour_cls(walking_head_limit=walking_head_limit)
+    else:
+        behaviour = behaviour_cls()
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, {}, ())
     sim.set_behaviour(decision.command)

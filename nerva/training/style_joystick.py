@@ -13,6 +13,9 @@ reset/step) except for the lines marked `# NERVA:`:
   4. a style is sampled at reset and resampled whenever the command is resampled.
 Optional (S2, off by default): a per-style feet-height cost, `feet_height_scale`,
 added in `_get_reward` (see FeetHeight below). With scale 0 nothing changes.
+Optional (S4, off by default): `backward_fraction` replaces the forward-velocity command with a
+backward one (uniform in BACKWARD_RANGE) with that probability, drawn from a derived key, because
+every policy walks backward at only ~25% of the command (2026-10-01).
 Optional (S3, off by default): `apply_head_commands` adds the sampled head commands to the head
 motor targets after the speed limit, exactly as the hardware runtime does
 (Open_Duck_Mini_Runtime v2_rl_walk_mujoco.py); upstream training leaves them in the observation
@@ -44,6 +47,8 @@ from playground.open_duck_mini_v2 import joystick as upstream
 from nerva.style import s1_foot_height
 
 STYLE_KEY_SALT = 0x5717E  # fold_in constant: style keys never consume upstream randomness
+BACKWARD_KEY_SALT = 0xBAC4  # fold_in constant for the S4 backward-emphasis draw
+BACKWARD_RANGE = (-0.15, -0.05)  # m/s, forward-velocity command used for backward-emphasis draws
 
 # S2 feet-height cost (docs/development_log.md, 2026-09-30). Same form as MuJoCo
 # Playground's Berkeley Humanoid _cost_feet_height, with a per-style target:
@@ -109,11 +114,12 @@ class StyleJoystick(upstream.Joystick):
 
     def __init__(self, reference: StyledReference, task: str = "flat_terrain",
                  config=None, config_overrides=None, feet_height_scale: float = 0.0,
-                 apply_head_commands: bool = False):
+                 apply_head_commands: bool = False, backward_fraction: float = 0.0):
         self.SREF = reference
         config = config or upstream.default_config()
         self.feet_height_scale = float(feet_height_scale)
         self.apply_head_commands = bool(apply_head_commands)
+        self.backward_fraction = float(backward_fraction)
         if self.feet_height_scale != 0.0:  # NERVA S2; absent from the reward otherwise
             config.reward_config.scales.feet_height = self.feet_height_scale
         super().__init__(task=task, config=config, config_overrides=config_overrides)
@@ -126,6 +132,14 @@ class StyleJoystick(upstream.Joystick):
         return rewards
 
     # ── style helpers ────────────────────────────────────────────────────────
+
+    def sample_command(self, rng: jax.Array) -> jax.Array:
+        cmd = super().sample_command(rng)  # consumes rng exactly as upstream
+        if self.backward_fraction <= 0.0:
+            return cmd
+        k1, k2 = jax.random.split(jax.random.fold_in(rng, BACKWARD_KEY_SALT))
+        backward = jax.random.uniform(k2, minval=BACKWARD_RANGE[0], maxval=BACKWARD_RANGE[1])
+        return cmd.at[0].set(jp.where(jax.random.bernoulli(k1, self.backward_fraction), backward, cmd[0]))
 
     def _sample_style_idx(self, key: jax.Array) -> jax.Array:
         return jax.random.randint(key, (), 0, self.SREF.n_styles)

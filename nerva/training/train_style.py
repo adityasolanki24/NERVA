@@ -49,6 +49,8 @@ def main():
     p.add_argument("--num_timesteps", type=int, default=150_000_000)
     p.add_argument("--output_dir", default="checkpoints_style")
     p.add_argument("--smoke", action="store_true")
+    p.add_argument("--backward_fraction", type=float, default=0.0,
+                   help="S4: probability of replacing the forward command with a backward one")
     p.add_argument("--apply_head_commands", action="store_true",
                    help="S3: add head commands to head motor targets, as the hardware runtime does")
     p.add_argument("--feet_height_scale", type=float, default=0.0,
@@ -59,10 +61,12 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     ref = build_reference(args)
     env, eval_env = (StyleJoystick(ref, task=args.task, feet_height_scale=args.feet_height_scale,
-                                   apply_head_commands=args.apply_head_commands) for _ in range(2))
+                                   apply_head_commands=args.apply_head_commands,
+                                   backward_fraction=args.backward_fraction) for _ in range(2))
     obs_size = int(env.observation_size["state"][0])
     print(f"styles={ref.n_styles} style_dim={ref.style_dim} obs={obs_size} periods={ref.periods} "
-          f"feet_height_scale={args.feet_height_scale} apply_head_commands={args.apply_head_commands}")
+          f"feet_height_scale={args.feet_height_scale} apply_head_commands={args.apply_head_commands} "
+          f"backward_fraction={args.backward_fraction}")
 
     params = dict(locomotion_params.brax_ppo_config("BerkeleyHumanoidJoystickFlatTerrain"))  # as upstream
     params["num_timesteps"] = args.num_timesteps

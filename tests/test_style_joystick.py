@@ -160,3 +160,21 @@ def test_feet_height_scale_can_be_added_to_upstream_config():
     config.reward_config.scales.feet_height = -30.0
     assert config.reward_config.scales.feet_height == -30.0
     assert "feet_height" not in upstream.default_config().reward_config.scales
+
+
+def test_backward_emphasis_keeps_upstream_draws_and_forces_backward_commands():
+    from playground.open_duck_mini_v2 import joystick as upstream
+
+    from nerva.training.style_joystick import BACKWARD_RANGE, StyleJoystick
+
+    class Probe(StyleJoystick):  # only sample_command is exercised; no model is built
+        def __init__(self, fraction):
+            self.backward_fraction = fraction
+            self._config = upstream.default_config()
+
+    keys = jax.random.split(jax.random.PRNGKey(0), 200)
+    plain = [Probe(0.0).sample_command(k) for k in keys]
+    emph = [Probe(1.0).sample_command(k) for k in keys]
+    for p, e in zip(plain, emph):
+        np.testing.assert_array_equal(np.asarray(p[1:]), np.asarray(e[1:]))  # other commands untouched
+        assert BACKWARD_RANGE[0] <= float(e[0]) <= BACKWARD_RANGE[1]

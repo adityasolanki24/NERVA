@@ -193,8 +193,16 @@ def cmd_network_down(a):
         g, "compute", "routers", "describe", ROUTER, f"--project={PROJECT}", f"--region={REGION}"
     ])
     if router_exists:
-        run([g, "compute", "routers", "delete", ROUTER, f"--project={PROJECT}",
-             f"--region={REGION}", "--quiet"])
+        # Right after the NAT is deleted the router can briefly still be "in use" (2026-09-30).
+        delete = [g, "compute", "routers", "delete", ROUTER, f"--project={PROJECT}",
+                  f"--region={REGION}", "--quiet"]
+        for _ in range(5):
+            print("  $ gcloud " + " ".join(delete[1:]))
+            if gcloud_succeeds(delete):
+                break
+            time.sleep(30)
+        else:
+            run(delete)  # final attempt, raising with gcloud's error
     print("Temporary Cloud NAT removed.")
 
 

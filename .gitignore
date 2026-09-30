@@ -32,3 +32,4 @@ application_default_credentials.json
 
 # Keep third-party papers as local research material unless redistribution is licensed
 docs/papers/*.pdf
+experiments/reactive/results*/

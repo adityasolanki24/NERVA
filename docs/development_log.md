@@ -27,7 +27,14 @@ Newest entry first. Each entry records what was done, what was actually run, and
 - Lunge → fear 0.57, surprise 0.77 → **freeze → retreat**.
 - Person out of sight → relief (joy).
 - The person's return within the threat memory → the same slow approach is appraised as threatening → **watch** (wary, keeps distance) → habituates → explore.
-- Worst tilt 7.7°, no fall. One seed; the planned 5-seed evaluation (design §5) has not been run.
+- Worst tilt 7.7°, no fall.
+
+**5-seed evaluation** (`experiments/reactive/evaluate.py`, design §5 criteria, S1 policy) [measured]:
+- **Curiosity 5/5:** ball distance 1.29 → 0.62 m.
+- **Habituation 5/5:** peak interest at the person's 1st vs 2nd appearance, 1.07 vs 0.20–0.33.
+- **Safety 5/5:** worst tilt 7.8°.
+- **Fear 1/5 — fails the stated criterion.** A freeze and a retreat occur in every seed, but the distance 3 s after the lunge doesn't grow (0.45 → 0.42–0.45 m). The backward step is too slow (the policy walks backward at about 21% of command), and the turn-away only starts after 1.5 s. The robot gets away over about 10 s.
+- The seeds differ very little, so perception/initial-state noise barely changes the outcome.
 
 **Findings along the way [measured]:**
 - **Head offsets stop S1 from walking.** At vx 0.12, 10 s: head yaw 0.2 rad → 0.012 m/s (0.05 without); pitch/roll 0.2 → about 0.05–0.074 m/s; beyond 0.3 rad it nearly stops.

@@ -1,6 +1,6 @@
 # Design proposal: an evolving, brain-inspired memory for NERVA
 
-Status: proposal, 2026-10-01, for the user's decision. Nothing here is implemented yet.
+Status: M1 implemented 2026-10-01 (`nerva/memory.py`, `MemoryAppraiser`, `IdentityBinder` in `experiments/reactive/scenario.py`; results in the development log). M2–M5 proposed.
 Claim labels: **[theory]** established finding or model from the literature; **[design]** NERVA choice;
 **[hw]** hardware consideration.
 

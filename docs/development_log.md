@@ -4,6 +4,42 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Real vision and entity memory (M1): person-specific, evolving associations
+
+**Real vision** (`nerva/vision.py`, `a23a078`):
+- Colour segmentation of the robot_eye RGB frame (HSV) → connected components → depth render gives distance → bearing/elevation from the pixel rays. The same tracker as the simulated detector.
+- **On renders [measured]:** distance within 0.04–0.09 m (it measures to the surface rather than the centre); bearing within about 0.02 rad.
+- **Self-body false positive:** the robot's orange feet were detected as a ball when looking down. Small objects closer than 0.2 m are now rejected.
+- **Reactive 5-seed evaluation with vision:** identical verdicts to simulated perception (curiosity 5/5, habituation 5/5, safety 5/5, fear 0/5).
+
+**Memory M1** (`nerva/memory.py`, `MemoryAppraiser`, `IdentityBinder`; design: `docs/memory_design.md`):
+- **Per-identity records:** familiarity, threat/warmth/trust learned by prediction error with arousal-scaled rate, slow drift in absence.
+- **Identity** comes from a clothing-colour histogram, which is None when uninformative.
+- **Measured on renders:** A vs B far away, cosine 0.33; up close (trousers only) 0.99, indistinguishable. So identity stays bound to the track, and events with an unknown identity are held back and learned once resolved (confidence 0.8).
+- **Touch:** gentle petting is simulated as contact events and appraised as pleasant.
+
+**Two-person scenario, 5 seeds, vision, memory ON vs OFF [measured]:**
+
+| criterion (stated in advance) | memory | no memory |
+|---|---|---|
+| B not blamed for A's lunge (46–58 s) | 5/5 | 0/5 |
+| A still feared on return 70 s later (94–106 s) | 5/5 | 0/5 |
+| B welcomed back (120–130 s) | 5/5 | 5/5 |
+| petting credited to B (warmth B > 0 > A) | 5/5 | — |
+
+- Without memory, the global 45 s threat timer makes the robot wary of innocent B and then forget A.
+- Final records (seed 0): A threat 0.18, warmth −0.17; B threat 0, warmth +0.19 to +0.32.
+- Worst tilt 7.4°.
+- The demo video was rendered locally (it's local only).
+
+**Limits:**
+- One person per class may be tracked at a time (the tracker is keyed by class).
+- Appearance is clothing colour, not faces.
+- A's fear partly re-generates itself: each sighting elicits fear from memory, and fear is learned again. Extinction only happens through positive encounters.
+- Episodic store, consolidation and spatial memory (M2–M4) are not implemented.
+
+---
+
 ## 2026-10-01 — Behaviour v2 (utility arbitration), S3 (head commands in training), backward-walking diagnosis
 
 **Behaviour v2 (`nerva/action_selection.py`):**

@@ -75,11 +75,14 @@ def chart(rows, fired, duration):
             start = i
     dist = np.array([r["dist_person"] if r["dist_person"] < 10 else np.nan for r in rows])
     ax3.plot(t, dist, color="k", lw=1.3, label="distance to person (m)")
+    dist_b = np.array([r.get("dist_person_b", 99) if r.get("dist_person_b", 99) < 10 else np.nan for r in rows])
+    if np.isfinite(dist_b).any():
+        ax3.plot(t, dist_b, color="#2d6a4f", lw=1.3, ls="--", label="distance to person B (m)")
     ax3.set_ylim(-1.5, 5)
     ax3.set_yticks([0, 1, 2, 3, 4])
     ax3.set_xlabel("time (s)", fontsize=8)
     handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in MODE_COLOURS.values()]
-    ax3.legend([ax3.get_lines()[0]] + handles, ["distance to person (m)"] + list(MODE_COLOURS),
+    ax3.legend(list(ax3.get_lines()) + handles, [ln.get_label() for ln in ax3.get_lines()] + list(MODE_COLOURS),
                fontsize=5.8, ncol=5, loc="upper left", frameon=False)
     for ax in axes:
         ax.tick_params(labelsize=7)
@@ -141,10 +144,15 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--duration", type=float, default=100.0)
     ap.add_argument("--perception", choices=("simulated", "vision"), default="vision")
+    ap.add_argument("--scenario", choices=("default", "memory"), default="default")
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
+    memory = args.scenario == "memory"
+    if memory:
+        args.duration = max(args.duration, 135.0)
     sim, rows, frames, fired = scenario.run(args.policy, seed=args.seed, duration=args.duration, record_every=EVERY,
-                                            perception_mode=args.perception)
+                                            perception_mode=args.perception, use_memory=memory,
+                                            agents=scenario.memory_scenario() if memory else None)
     print(f"simulated {args.duration} s, {len(frames)} frames, max tilt {max(r['tilt_deg'] for r in rows):.1f} deg",
           flush=True)
     for te, kind, a, emos in fired:
@@ -165,7 +173,7 @@ def main() -> None:
     cam.azimuth, cam.elevation = 135.0, -22.0
     ch_img, ch_bg, x0, x1, top, bottom = chart(rows, fired, args.duration)
     f_big, f_small, f_tiny = font(19), font(14), font(12)
-    mocap = {n: model.body_mocapid[model.body(n).id] for n in ("person", "ball")}
+    mocap = {n: model.body_mocapid[model.body(n).id] for n in ("person", "ball", "person_b")}
     writer = imageio.get_writer(args.out / "nerva_reactive_demo.mp4", fps=FPS, codec="libx264", quality=8,
                                 macro_block_size=1)
     look, dist_cam = None, 1.6
@@ -176,6 +184,8 @@ def main() -> None:
             mujoco.mj_forward(model, data)
             robot = qpos[0:3]
             person = mpos[mocap["person"]]
+            if np.linalg.norm(mpos[mocap["person_b"]][:2] - qpos[:2]) < np.linalg.norm(person[:2] - qpos[:2]):
+                person = mpos[mocap["person_b"]]  # frame whichever person is nearer
             target = robot + np.array([0, 0, 0.15])
             want = 1.6
             ball = mpos[mocap["ball"]]
@@ -195,12 +205,16 @@ def main() -> None:
             ed = ImageDraw.Draw(eye)
             positions = {"person": np.array([person[0], person[1], 0.0]),
                          "ball": mpos[mocap["ball"]].copy()}
+            row_now = rows[min(int(round(t / scenario.CTRL_DT)), len(rows) - 1)]
             if vision_boxes is not None:  # the blobs the colour/depth vision found this frame
                 sx, sy = EYE_W / scenario.EYE_W, EYE_H / scenario.EYE_H
                 dist = {tr.kind: tr.distance for tr in tracks}
                 for kind, r0, c0, r1, c1 in vision_boxes:
                     ed.rectangle([c0 * sx, r0 * sy, (c1 + 1) * sx, (r1 + 1) * sy], outline=(40, 220, 60), width=2)
-                    label = f"{kind} {dist[kind]:.1f} m" if kind in dist else kind
+                    name = kind
+                    if kind == "person" and row_now["identity"]:
+                        name = f"person {row_now['identity']}"
+                    label = f"{name} {dist[kind]:.1f} m" if kind in dist else name
                     ed.text((c0 * sx + 3, max(0, r0 * sy - 14)), label, fill=(40, 220, 60), font=f_tiny)
             else:
                 for tr, u0, v0, u1, v1 in boxes(model, data, eye_id, tracks, positions):
@@ -222,7 +236,8 @@ def main() -> None:
             frame.paste(Image.fromarray(ch), (W, 0))
             draw = ImageDraw.Draw(frame)
             r = rows[min(int(round(t / scenario.CTRL_DT)), len(rows) - 1)]
-            draw.text((10, 8), "NERVA reactive demo — simulation; scripted person/ball, robot NOT scripted",
+            draw.text((10, 8), ("NERVA memory demo — two people, colour+depth vision, entity memory; robot NOT scripted"
+                                if memory else "NERVA reactive demo — simulation; scripted person/ball, robot NOT scripted"),
                       fill=(30, 30, 30), font=f_small)
             draw.text((10, 28), f"t = {t:5.1f} s   mode: {r['mode'].upper()}", fill=(30, 30, 30), font=f_big)
             recent = [f for f in fired if f[0] <= t < f[0] + 4.0]
@@ -238,7 +253,9 @@ def main() -> None:
             draw.text((12, H + 70), f"behaviour: {r['reason']}   (vx {r['cmd_vx']:+.2f}, turn {r['cmd_yaw']:+.2f})   "
                       f"PAD V {r['valence']:+.2f} A {r['arousal']:+.2f} D {r['dominance']:+.2f}   "
                       f"style tempo {r['e_tempo']:+.2f} lean {r['e_torso_pitch']:+.2f}   "
-                      f"head pitch {r['head_pitch']:+.2f} yaw {r['head_yaw']:+.2f}",
+                      f"head pitch {r['head_pitch']:+.2f} yaw {r['head_yaw']:+.2f}"
+                      + (f"   MEMORY {r['identity']}: threat {r['mem_threat']:.2f} warmth {r['mem_warmth']:+.2f}"
+                         if r.get("identity") else ""),
                       fill=(20, 20, 20), font=f_tiny)
             writer.append_data(np.asarray(frame))
     finally:

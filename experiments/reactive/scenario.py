@@ -279,6 +279,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             "dist_person": float(np.linalg.norm(person_xy - d.qpos[0:2])),
             "dist_person_b": float(np.linalg.norm(person_b_xy - d.qpos[0:2])),
             "identity": who.eid if who is not None else "",
+            "mem_threat": who.threat if who is not None else float("nan"),
+            "mem_warmth": who.warmth if who is not None else float("nan"),
             "dist_ball": float(np.linalg.norm(agents["ball"].xy - d.qpos[0:2])) if "ball" in agents else np.nan,
             "sees_person": any(tr.kind == "person" and tr.visible for tr in tracks),
             "sees_ball": any(tr.kind == "ball" and tr.visible for tr in tracks),

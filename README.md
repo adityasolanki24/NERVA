@@ -21,7 +21,8 @@ PAD never drives joints directly, and no LLM is in the control or safety loop. D
 | Style-conditioned policy (PPO + imitation, cloud GPUs) | S1 expresses tempo and torso pitch, not step height; S2/S3 variants evaluated (`docs/style_policy_design.md`) |
 | Affect | Affect model v0.2: EMA-inspired appraisal → emotions (incl. interest) → persistent PAD (`docs/affect_model.md`) |
 | Reactive behaviour | Scene with a person and a ball, simulated head-camera perception, contextual appraisal, emotion-modulated action selection (`docs/reactive_behaviour_design.md`, `experiments/reactive/`) |
-| Memory | Design proposal: evolving, brain-inspired, hardware-bounded (`docs/memory_design.md`) |
+| Perception | Colour + depth vision from the robot's head camera (`nerva/vision.py`) |
+| Memory | Entity memory M1: person-specific familiarity, threat, warmth, trust; identity kept by track continuity; ablation shows it is causal (`docs/memory_design.md`) |
 | Human evaluation | Not started; no behaviour is claimed to *look* emotional |
 
 The detailed record of every run, measurement and correction is `docs/development_log.md`. Long-term trajectory: `docs/roadmap.md`.

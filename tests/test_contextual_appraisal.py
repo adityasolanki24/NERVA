@@ -39,3 +39,25 @@ def test_same_event_means_different_things_after_a_threat():
     assert friendly.desirability > 0 > wary.desirability
     assert "joy" in labels(ap.appraise(Event("person_lost"), 25.0, ()))  # relief
     assert ap.appraise(Event("person_lost"), 100.0, ()) is None  # long after: irrelevant
+
+
+def test_memory_appraiser_is_person_specific():
+    import numpy as np
+
+    from nerva.appraisal import MemoryAppraiser
+    from nerva.memory import EntityMemory
+
+    mem = EntityMemory()
+    ap = MemoryAppraiser(mem)
+    a = mem.resolve("person", np.array([1.0, 0, 0]), 0.0)
+    b = mem.resolve("person", np.array([0, 1.0, 0]), 0.0)
+    ap.identity = {"person": a}
+    lunge = ap.appraise(Event("person_approaching_rapidly", 1.0), 1.0, (Track("person", 0, 0.6),))
+    mem.learn(a, 1.0, "person_approaching_rapidly", categorise(lunge), arousal=0.4, surprise_negative=True)
+    ap.identity = {"person": a}
+    assert ap.appraise(Event("person_approaching_slowly"), 500.0, ()).desirability < 0  # still wary of A
+    ap.identity = {"person": b}
+    assert ap.appraise(Event("person_approaching_slowly"), 500.0, ()).desirability > 0  # B is fine
+    ap.identity = {"person": a}
+    seen = ap.observe(501.0, (Track("person", 0, 2.0),), 0.1)
+    assert seen and "fear" in labels(seen[0][1])  # seeing A brings the fear back

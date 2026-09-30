@@ -5,7 +5,9 @@ vision on the rendered head-camera frames (docs/reactive_behaviour_design.md; st
 
   RGB frame  → colour segmentation (HSV)  → connected components → largest blob per class
   depth frame → median depth over the blob → 3-D point in the camera frame → world → bearing/distance
-  appearance → normalised hue histogram of the blob (a stand-in for a face/body re-ID embedding)
+  appearance → normalised hue histogram of the blob's strongly coloured pixels (clothing), a stand-in
+               for a face/body re-ID embedding; None when too little of it is visible (e.g. up close
+               only the trousers, which everyone shares), so identity must come from track continuity
 
 The detector knows only colours, not which geometry is which: a person is "a blob of blue-ish
 clothing/dark-blue trousers", the ball "an orange blob". That is honest colour-based vision on simple
@@ -25,6 +27,9 @@ from nerva.perception import RANGE_M, SimulatedPerception, _wrap
 
 MIN_BLOB_PX = 12  # at 160x120: rejects grid lines and noise
 HUE_BINS = 8
+APPEARANCE_MIN_SAT = 0.35  # clothing is strongly coloured; trousers, skin tones and shadows are not
+APPEARANCE_MIN_PX = 10
+MIN_DEPTH_M = {"ball": 0.2}  # closer than this is the robot's own body (camera is 0.09 m ahead of the head)
 
 
 @dataclass(frozen=True)
@@ -34,7 +39,7 @@ class Blob:
     depth_m: float  # median camera-axis depth
     centroid: tuple[float, float]  # (row, col)
     top_row: int
-    appearance: np.ndarray  # (HUE_BINS,) normalised hue histogram
+    appearance: np.ndarray | None  # (HUE_BINS,) normalised hue histogram, or None if not informative
 
 
 def rgb_to_hsv(rgb: np.ndarray) -> np.ndarray:
@@ -59,7 +64,8 @@ def masks(rgb: np.ndarray) -> dict[str, np.ndarray]:
     hsv = rgb_to_hsv(rgb)
     h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
     ball = (h > 10) & (h < 40) & (s > 0.6) & (v > 0.4)
-    person = (h > 190) & (h < 260) & (s > 0.12) & (v > 0.08)  # blue clothing and dark-blue trousers
+    # clothing (blue or green) and dark-blue trousers; grey floor/sky (s≈0), skin and the orange ball excluded
+    person = (h > 80) & (h < 260) & (s > 0.12) & (v > 0.08)
     return {"ball": ball, "person": person}
 
 
@@ -77,12 +83,15 @@ def find_blobs(rgb: np.ndarray, depth: np.ndarray) -> list[Blob]:
         rows, cols = np.nonzero(labels == best)
         d = depth[rows, cols]
         d = d[np.isfinite(d) & (d > 0.02)]
-        if d.size == 0:
-            continue
-        hist, _ = np.histogram(hsv[rows, cols, 0], bins=HUE_BINS, range=(0, 360))
+        if d.size == 0 or (kind in MIN_DEPTH_M and np.median(d) < MIN_DEPTH_M[kind]):
+            continue  # e.g. the robot's own orange feet seen when looking down are not a ball
+        strong = hsv[rows, cols, 1] > APPEARANCE_MIN_SAT
+        appearance = None
+        if strong.sum() >= APPEARANCE_MIN_PX:
+            hist, _ = np.histogram(hsv[rows, cols, 0][strong], bins=HUE_BINS, range=(0, 360))
+            appearance = hist / hist.sum()
         blobs.append(Blob(kind, np.stack([rows, cols], 1), float(np.median(d)),
-                          (float(rows.mean()), float(cols.mean())), int(rows.min()),
-                          hist / max(hist.sum(), 1)))
+                          (float(rows.mean()), float(cols.mean())), int(rows.min()), appearance))
     return blobs
 
 

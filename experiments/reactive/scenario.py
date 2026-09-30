@@ -7,6 +7,10 @@ Loop per 20 ms control step (docs/reactive_behaviour_design.md §2):
                → ReactiveBehaviour → velocity command + S1 style vector + head gaze
   OpenDuckSim with the S1 policy (unchanged), 500 Hz physics.
 Nothing about the robot's reactions is scripted: only the person and the ball follow scripts.
+
+With use_memory=True (docs/memory_design.md, M1) appraisal reads an entity memory: identities come
+from the vision's appearance feature, stay bound to a track while appearance is uninformative (up
+close), and events with an unknown identity are held back and learned once the identity is resolved.
 """
 
 from __future__ import annotations
@@ -18,7 +22,8 @@ import numpy as np
 
 from nerva import gait_metrics as gm
 from nerva.affect import CategoricalAffectModel
-from nerva.appraisal import ContextualAppraiser
+from nerva.appraisal import ContextualAppraiser, MemoryAppraiser
+from nerva.memory import EntityMemory
 from nerva.interfaces import BehaviourCommand, Event
 from nerva.open_duck_sim import OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception
@@ -45,6 +50,7 @@ class Agent:
       approach speed, stop_dist     walk toward the robot's current position, stop at stop_dist
       wait                          stand still, facing the robot
       leave    speed                walk directly away from the robot
+      pet      stop_dist            walk up to the robot and stay there, touching it (touch events)
     """
 
     steps: list[tuple[float, str, tuple]]
@@ -69,6 +75,9 @@ class Agent:
         d = float(np.linalg.norm(to_robot))
         if action in ("approach", "wait", "appear") and d > 1e-6:
             self.yaw = float(np.arctan2(to_robot[1], to_robot[0]))
+        if action == "pet":
+            step = min(0.25 * dt, max(0.0, d - p[0]))
+            self.xy = self.xy + step * to_robot / max(d, 1e-6)
         if action == "approach":
             speed, stop = p
             step = min(speed * dt, max(0.0, d - stop))
@@ -77,6 +86,10 @@ class Agent:
             (speed,) = p
             self.yaw = float(np.arctan2(-to_robot[1], -to_robot[0]))
             self.xy = self.xy - speed * dt * to_robot / max(d, 1e-6)
+
+    @property
+    def action(self) -> str | None:
+        return self.steps[self._i][1] if self._i >= 0 else None
 
 
 def default_scenario() -> dict[str, Agent]:
@@ -96,9 +109,64 @@ def default_scenario() -> dict[str, Agent]:
     return {"ball": ball, "person": person}
 
 
+def memory_scenario() -> dict[str, Agent]:
+    """~135 s, two people never in view together: A lunges early; B (green) is new, then pets the robot;
+    A returns 70 s after the lunge (beyond v1's 45 s threat timer); then B returns."""
+    a = Agent([(0.0, "hide", ()), (5.0, "appear", (3.5, 0.1)), (5.0, "approach", (0.25, 1.4)),
+               (18.0, "leave", (0.8,)), (19.8, "wait", ()), (21.0, "approach", (1.8, 0.45)), (23.0, "wait", ()),
+               (28.0, "leave", (0.5,)), (40.0, "hide", ()),
+               (92.0, "appear", (3.5, -0.1)), (92.0, "approach", (0.25, 1.2)), (106.0, "leave", (0.5,)),
+               (116.0, "hide", ())])
+    b = Agent([(0.0, "hide", ()), (46.0, "appear", (3.5, 0.15)), (46.0, "approach", (0.25, 0.9)),
+               (58.0, "pet", (0.3,)), (68.0, "leave", (0.5,)), (80.0, "hide", ()),
+               (118.0, "appear", (3.5, 0.0)), (118.0, "approach", (0.25, 1.0))])
+    return {"person": a, "person_b": b}
+
+
+DEFERRED_CONFIDENCE = 0.8  # learning applied later, once an unknown identity is resolved
+TOUCH_REACH = 0.5  # m
+TOUCH_PERIOD_S = 1.0
+
+
+class IdentityBinder:
+    """Which remembered entity each perceived track is (docs/memory_design.md section 3.7)."""
+
+    def __init__(self, memory: EntityMemory):
+        self.memory = memory
+        self.current: dict = {}
+        self.pending: dict[str, list] = {}
+
+    def update(self, t: float, tracks, perception) -> dict:
+        present = {tr.kind for tr in tracks}
+        for kind in list(self.current):
+            if kind not in present:  # track lost: continuity broken, identity must be re-established
+                self.current.pop(kind)
+        for kind in list(self.pending):
+            if kind not in present:
+                self.pending.pop(kind)  # never resolved: dropped (M2 will generalise to "unknown person")
+        for tr in tracks:
+            st = perception.tracks.get(tr.kind)
+            appearance = getattr(st, "appearance", None) if tr.visible else None
+            if appearance is None:
+                continue  # up close / occluded: keep the track's identity (continuity)
+            rec = self.memory.resolve(tr.kind, appearance, t)
+            if self.current.get(tr.kind) is not rec:
+                self.current[tr.kind] = rec
+                for args in self.pending.pop(tr.kind, []):  # "oh, it was you"
+                    self.memory.learn(rec, *args, confidence=DEFERRED_CONFIDENCE)
+        return self.current
+
+    def learn(self, kind: str, t: float, event: str, emotions, arousal: float, surprise_negative: bool) -> None:
+        rec = self.current.get(kind)
+        if rec is None:
+            self.pending.setdefault(kind, []).append((t, event, emotions, arousal, surprise_negative))
+        else:
+            self.memory.learn(rec, t, event, emotions, arousal, surprise_negative)
+
+
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
-        walking_head_limit=None, perception_mode: str = "simulated"):
+        walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.vision)."""
@@ -110,7 +178,10 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     vision = perception_mode == "vision"
     perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
     eye = mujoco.Renderer(sim.model, EYE_H, EYE_W) if vision else None
-    appraiser = ContextualAppraiser()
+    memory = EntityMemory() if use_memory else None
+    binder = IdentityBinder(memory) if use_memory else None
+    appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
+    last_touch = -1e9
     affect = CategoricalAffectModel()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
     if head_moves_while_walking:
@@ -136,7 +207,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             world.place(d, name, agent.xy, agent.yaw)
         if k % PERCEIVE_EVERY == 0:
             mujoco.mj_kinematics(sim.model, d)
-            entities = {n: world.entity_position(d, n) for n in agents}
+            entities = {n: world.entity_position(d, n) for n in agents if n in ("person", "ball")}
             if vision:
                 mujoco.mj_forward(sim.model, d)
                 eye.update_scene(d, camera=cam)
@@ -153,6 +224,13 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                                            robot_yaw, entities, 1.0 / FRAME_HZ, ego_velocity=d.qvel[0:2].copy())
             tracks = pstate.tracks
             events = list(pstate.events)
+            if binder is not None:
+                appraiser.identity = binder.update(t, tracks, perception)
+            for name, agent in agents.items():  # simulated touch sensing: gentle contact while petted
+                if (agent.action == "pet" and np.linalg.norm(agent.xy - robot_xy) < TOUCH_REACH
+                        and t - last_touch >= TOUCH_PERIOD_S):
+                    events.append(Event("touch_gentle"))
+                    last_touch = t
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
             if near_fall_armed and tilt > NEAR_FALL_TILT_DEG:
                 events.append(Event("near_fall"))
@@ -164,7 +242,17 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 a = appraiser.appraise(ev, t, tracks)
                 if a is not None:
                     new = affect.add(a)
-                    fired.append((t, ev.kind, a, [(e.label, e.intensity) for e in new]))
+                    elicited = [(e.label, e.intensity) for e in new]
+                    fired.append((t, ev.kind, a, elicited))
+                    if ev.kind.startswith(("person", "touch")):
+                        about = "person"
+                    elif ev.kind.startswith("ball"):
+                        about = "ball"
+                    else:
+                        about = None
+                    if binder is not None and about and not ev.kind.endswith("_lost"):
+                        binder.learn(about, t, ev.kind, elicited, affect.pad.arousal,
+                                     a.desirability < 0 and any(lbl == "surprise" for lbl, _ in elicited))
             for kind, a in appraiser.observe(t, tracks, 1.0 / FRAME_HZ):
                 affect.add(a)
             pad = affect.step(1.0 / FRAME_HZ)
@@ -177,6 +265,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         pad = affect.pad
         tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
         person_xy = agents["person"].xy if "person" in agents else np.array(HIDDEN)
+        person_b_xy = agents["person_b"].xy if "person_b" in agents else np.array(HIDDEN)
+        who = appraiser.identity.get("person") if use_memory else None
         rows.append({
             "t": round(t + CTRL_DT, 3), "valence": pad.valence, "arousal": pad.arousal, "dominance": pad.dominance,
             **{lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS},
@@ -187,6 +277,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             "robot_x": float(d.qpos[0]), "robot_y": float(d.qpos[1]),
             "person_x": float(person_xy[0]), "person_y": float(person_xy[1]),
             "dist_person": float(np.linalg.norm(person_xy - d.qpos[0:2])),
+            "dist_person_b": float(np.linalg.norm(person_b_xy - d.qpos[0:2])),
+            "identity": who.eid if who is not None else "",
             "dist_ball": float(np.linalg.norm(agents["ball"].xy - d.qpos[0:2])) if "ball" in agents else np.nan,
             "sees_person": any(tr.kind == "person" and tr.visible for tr in tracks),
             "sees_ball": any(tr.kind == "ball" and tr.visible for tr in tracks),
@@ -197,4 +289,6 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             if vision:  # what the vision actually found: (kind, row0, col0, row1, col1) in EYE_H x EYE_W pixels
                 boxes = [(bl.kind, *bl.pixels.min(0), *bl.pixels.max(0)) for bl in perception.last_blobs]
             frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks, boxes))
+    if use_memory:
+        sim.memory = memory  # for inspection by callers
     return sim, rows, frames, fired

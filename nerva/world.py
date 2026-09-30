@@ -19,7 +19,8 @@ import numpy as np
 PERSON_HEIGHT = 1.7  # m
 FACE_HEIGHT = 1.58  # m, centre of the person's face
 BALL_RADIUS = 0.06  # m
-ENTITY_KINDS = ("person", "ball")
+ENTITY_KINDS = ("person", "ball", "person_b")  # person_b: a second person in green, for memory tests
+CLOTHING = {"person": [0.25, 0.40, 0.65, 1], "person_b": [0.25, 0.60, 0.30, 1]}
 EYE_FORWARD_M = 0.09  # robot_eye camera offset in front of the head site (clears the head shell)
 
 
@@ -50,9 +51,9 @@ class Mover:
         return self._last_yaw
 
 
-def _add_person(world: mujoco.MjsBody) -> None:
-    body = world.add_body(name="person", mocap=True, pos=[5.0, 0.0, 0.0])
-    skin, cloth, dark = [0.87, 0.72, 0.60, 1], [0.25, 0.40, 0.65, 1], [0.1, 0.1, 0.1, 1]
+def _add_person(world: mujoco.MjsBody, name: str = "person", park=(5.0, 0.0)) -> None:
+    body = world.add_body(name=name, mocap=True, pos=[park[0], park[1], 0.0])
+    skin, cloth, dark = [0.87, 0.72, 0.60, 1], CLOTHING[name], [0.1, 0.1, 0.1, 1]
 
     def geom(**kw):
         g = body.add_geom(contype=0, conaffinity=0, **kw)
@@ -99,6 +100,7 @@ def extend_scene(spec: mujoco.MjSpec) -> None:
     """OpenDuckSim scene_extender: person, ball and the robot_eye camera."""
     _add_robot_eye(spec)  # compiles a copy first, so do it before adding bodies
     _add_person(spec.worldbody)
+    _add_person(spec.worldbody, "person_b", park=(-5.0, 0.0))
     _add_ball(spec.worldbody)
 
 
@@ -127,6 +129,6 @@ class World:
     def entity_position(self, data: mujoco.MjData, name: str) -> np.ndarray:
         """World position of the entity's salient point: the person's face, the ball's centre."""
         p = data.mocap_pos[self._mocap[name]].copy()
-        if name == "person":
+        if name in ("person", "person_b"):
             p[2] = FACE_HEIGHT
         return p

@@ -125,6 +125,9 @@ class ContextualAppraiser:
                                       controllability=0.2)
             return AppraisalState(relevance=0.4, desirability=0.2, likelihood=0.7, expectedness=0.7,
                                   controllability=0.7)
+        if kind == "touch_gentle":  # slow, gentle contact: pleasant (C-tactile analogy, memory_design 3.7)
+            return AppraisalState(relevance=0.6, desirability=0.6, likelihood=1.0, expectedness=0.6,
+                                  controllability=0.8)
         if kind == "ball_close":
             return None  # reaching the ball is the end of an approach, handled by behaviour
         if kind == "person_lost":
@@ -138,3 +141,57 @@ class ContextualAppraiser:
             self.last_threat_t = t
             return EVENT_APPRAISALS["near_fall"]
         return appraise(event)
+
+
+# ── Appraisal v2: memory-based (docs/memory_design.md, phase M1) ─────────────
+#
+# Same event rules as v1, but "novelty" and "is this a threat?" come from the entity memory record of
+# the identity perceived for each kind, not from global counters and timers:
+#   novelty          the identity's own familiarity (a new person is novel even after meeting another)
+#   threat context   the identity's learned threat association (≥ THREAT_ASSOCIATION), which lasts
+#                    across encounters and is extinguished by gentle ones, instead of a 45 s timer
+#   in-view appraisal  looking at someone brings back their association: desirability =
+#                    WARMTH_GAIN·warmth − THREAT_GAIN·threat, so a feared person elicits fear while
+#                    visible and a liked one hope (the emotion system stays in the loop)
+#   lunge expectedness grows with that identity's own history of fast approaches
+# Constants are NERVA design choices.
+
+THREAT_ASSOCIATION = 0.15
+WARMTH_GAIN, THREAT_GAIN = 0.6, 0.8
+
+
+class MemoryAppraiser(ContextualAppraiser):
+    def __init__(self, memory):
+        super().__init__()
+        self.memory = memory
+        self.identity: dict = {}  # kind -> EntityRecord currently perceived (set by the caller each frame)
+
+    def novelty(self, kind: str) -> float:
+        rec = self.identity.get(kind)
+        return rec.novelty() if rec is not None else super().novelty(kind)
+
+    def threat_recent(self, t: float) -> bool:
+        rec = self.identity.get("person")
+        return rec is not None and rec.threat >= THREAT_ASSOCIATION
+
+    def observe(self, t, tracks, dt):
+        out = []
+        for tr in tracks:
+            rec = self.identity.get(tr.kind)
+            if not tr.visible or rec is None:
+                continue
+            self.memory.observe(rec, t, dt)
+            if t - self._last_in_view.get(tr.kind, -math.inf) >= IN_VIEW_PERIOD_S:
+                self._last_in_view[tr.kind] = t
+                n = rec.novelty()
+                desirability = float(max(-1.0, min(1.0, WARMTH_GAIN * rec.warmth - THREAT_GAIN * rec.threat)))
+                out.append((f"{tr.kind}_in_view", AppraisalState(
+                    relevance=0.2 + 0.4 * max(n, abs(desirability)), desirability=desirability, likelihood=0.5,
+                    expectedness=max(0.3, 1.0 - n), controllability=0.8 - 0.4 * rec.threat)))
+        return out
+
+    def appraise(self, event, t, tracks):
+        if event.kind == "person_approaching_rapidly" and "person" in self.identity:
+            rec = self.identity["person"]
+            self.fast_approaches = sum(1 for e in rec.episodes if e["event"] == "person_approaching_rapidly")
+        return super().appraise(event, t, tracks)

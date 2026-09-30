@@ -37,7 +37,10 @@ MAX_VX, MAX_YAW = 0.15, 1.0  # trained command range
 # rad. POSITIVE head_pitch tilts the face UP: measured on the robot_eye camera, +0.4 → 35° up,
 # -0.4 → 14° down (2026-10-01). (experiments/expressive_locomotion/head_posture.py assumes the
 # opposite sign; see docs/development_log.md.)
-HEAD_YAW_MAX, HEAD_PITCH_DOWN, HEAD_PITCH_UP = 1.3, -0.6, 0.6
+# Downward tilt limited to -0.35: B2 fell while inspecting with the head at -0.6 plus a head roll and a
+# slow turn (2026-10-01); at -0.35 a ball 0.45 m ahead is still inside the camera's field of view.
+HEAD_YAW_MAX, HEAD_PITCH_DOWN, HEAD_PITCH_UP = 1.3, -0.35, 0.6
+CURIOUS_TILT = 0.2  # rad, amplitude of the head roll while inspecting
 HEAD_TAU_S = 0.25
 GAZE_GAIN = 0.3  # per perception frame, on the camera elevation error
 # S1 was trained without head motion applied (upstream), and stops walking when the head moves
@@ -191,7 +194,7 @@ class ReactiveBehaviour:
             yaw = float(np.clip(-np.sign(self.threat_bearing) * 0.8, -HEAD_YAW_MAX, HEAD_YAW_MAX))
             return 0.0, 0.0, (0.0, -0.5, yaw, 0.0), "withdraw: head down, look away"
         if m == "inspect" and target is not None:
-            tilt = 0.3 * np.sin(2 * np.pi * 0.25 * age)  # curious head tilt
+            tilt = CURIOUS_TILT * np.sin(2 * np.pi * 0.25 * age)  # curious head tilt
             return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"inspect {self.target}"
         if m == "approach" and target is not None:
             stop = self._stop_distance(self.target, pad)

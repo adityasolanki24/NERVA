@@ -40,6 +40,9 @@ from nerva.style import s1_nb_steps_in_period, style_to_phase_factor
 OPEN_DUCK_ROOT = Path(os.environ.get("OPEN_DUCK_ROOT", Path.home() / "dev" / "open_duck"))
 PLAYGROUND = OPEN_DUCK_ROOT / "Open_Duck_Playground" / "playground" / "open_duck_mini_v2"
 SCENE = PLAYGROUND / "xmls" / "scene_flat_terrain.xml"
+# The scene NERVA's policies (B0-B2, S1-S4) were trained in: joints with backlash. Evaluating in the
+# plain scene underestimates them (2026-10-01: S1 backward -0.043 plain vs -0.071 backlash).
+SCENE_BACKLASH = PLAYGROUND / "xmls" / "scene_flat_terrain_backlash.xml"
 REFERENCE = PLAYGROUND / "data" / "polynomial_coefficients.pkl"
 POLICY = OPEN_DUCK_ROOT / "Open_Duck_Mini" / "BEST_WALK_ONNX_2.onnx"
 
@@ -99,11 +102,12 @@ def to_arrays(log: list[StepLog], start: int = 0) -> dict[str, np.ndarray]:
 class OpenDuckSim:
     def __init__(self, raw_accel: bool = True, init_joint_noise: float = 0.0,
                  obs_noise: bool = False, seed: int = 0,
-                 policy_path: str | Path = POLICY, scene_extender=None):
+                 policy_path: str | Path = POLICY, scene_extender=None, scene: str | Path = SCENE):
         import mujoco  # noqa: F401  (imported here so `nerva` core never needs it)
         from playground.open_duck_mini_v2.mujoco_infer import MjInfer
 
-        self.inf = MjInfer(str(SCENE), str(REFERENCE), str(policy_path), standing=False)
+        self.scene = Path(scene)
+        self.inf = MjInfer(str(self.scene), str(REFERENCE), str(policy_path), standing=False)
         if scene_extender is not None:
             self._extend_scene(scene_extender)
         self.model, self.data = self.inf.model, self.inf.data
@@ -149,7 +153,7 @@ class OpenDuckSim:
         """
         import mujoco
 
-        spec = mujoco.MjSpec.from_file(str(SCENE))
+        spec = mujoco.MjSpec.from_file(str(self.scene))
         extender(spec)
         model = spec.compile()
         model.opt.timestep = self.inf.model.opt.timestep  # MjInfer overrides it after loading

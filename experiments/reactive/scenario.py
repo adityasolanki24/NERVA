@@ -27,7 +27,8 @@ from nerva.episodic import EpisodicMemory
 from nerva.memory import EntityMemory
 from nerva.spatial import PlaceMemory
 from nerva.interfaces import BehaviourCommand, Event
-from nerva.open_duck_sim import OpenDuckSim
+from nerva.interfaces import StyleVector
+from nerva.open_duck_sim import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception
 from nerva.vision import VisionPerception
 from nerva.action_selection import UtilityBehaviour
@@ -170,17 +171,24 @@ class IdentityBinder:
             self.memory.learn(rec, t, event, emotions, arousal, surprise_negative)
 
 
+def neutralised(command):
+    """For policies trained on the neutral style only (B1/B2): keep WHAT, drop the style input."""
+    import dataclasses
+
+    return dataclasses.replace(command, style_vector=StyleVector())
+
+
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
-        use_spatial: bool | None = None):
+        use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.vision)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
-                      scene_extender=extend_scene)
+                      scene_extender=extend_scene, scene=SCENE_BACKLASH if backlash_scene else SCENE)
     world = World(sim.model)
     vision = perception_mode == "vision"
     perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
@@ -285,7 +293,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
             salience = {tr.kind: appraiser.novelty(tr.kind) for tr in tracks}
             decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks, salience)
-            sim.set_behaviour(decision.command)
+            sim.set_behaviour(neutralised(decision.command) if neutral_style else decision.command)
             sim.set_head_offset(*decision.head)
         sim.step_physics(10)
         pad = affect.pad

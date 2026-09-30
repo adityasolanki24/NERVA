@@ -1,6 +1,6 @@
 # Demo video: events → appraisal → PAD → behaviour → walking robot
 
-`results/nerva_affect_demo.mp4`: 66 s, 1280×650, 25 fps, about 10 MB.
+The first closed-loop demo (method A: gait clock + head offset on the unmodified policy). Its outputs are not committed; regenerate with `run.py` (66 s, 1280×650). `run_s1.py` is the same scenario with the style-conditioned policy S1. The current demo is the reactive one: `experiments/reactive/`.
 
 **This is a demonstration of the closed loop running, not an experiment and not a result.** The mapping from PAD to behaviour is hand-designed for the video and has not been validated. It is *not* the answer to how affect should drive movement: that is still open (RQ1c; `docs/research_questions.md`). Nothing in the video shows that the robot "feels" anything, or that its movement *looks* like any emotion.
 

@@ -1,6 +1,6 @@
 # Design: style-conditioned imitation policy π(s, c, e) — experiment S1
 
-**Status:** training environment and cloud runner implemented; the first capped L4 pipeline smoke passed on 2026-09-29 (`docs/cloud_smoke_report.md`). No scientific baseline or style-policy training has run. It follows from RQ1b/RQ1c (`experiments/expressive_locomotion/README.md`) and is roadmap stages 9–11.
+**Status (2026-10-01):** R1 references, baselines B0/B1/B2 and style policies S1/S2/S3 trained and evaluated (`docs/development_log.md`). S1 expresses tempo and torso pitch but not step height (preregistered verdict: fail); S2 (feet-height reward) and S3 (head commands in training) trade off other properties. Roadmap stages 9–11.
 
 **Claim labels:**
 - **[fact]** verified in code or by running
@@ -96,7 +96,7 @@ They are also chosen because the upstream reference generator already exposes a 
   - every VM is created with `--max-run-duration` and `--instance-termination-action=DELETE`. Both flags exist in gcloud 586 **[fact]**. Results are copied to a Cloud Storage bucket *before* the VM ends.
   - the training script shuts the VM down when it finishes or crashes
   - the budget alert "nerva" ($150) is a backstop only
-- **Smoke measurement [fact]:** 327,680 steps took about 6 min 14 s between checkpoints on an L4. A linear projection puts 300 M steps near 95 hours and roughly $81 compute, so B0 is paused pending a throughput/hardware decision. See `docs/cloud_smoke_report.md`.
+- **Smoke measurement [fact]:** 327,680 steps took about 6 min 14 s between checkpoints on an L4. A linear projection puts 300 M steps near 95 hours and roughly $81 compute, (**Superseded:** that measurement was dominated by compilation; the steady-state L4 throughput is about 65,500 steps/s, and 300 M steps take about 2 h, see the development log.)
 - **Per-run B0 cost [unknown]:** nothing beyond a short throughput pilot is launched until a viable configuration and cap are chosen. The launcher now supports L4/A100 comparisons, ordered zone fallback, minute-level hard caps, attached result fetching, automatic NAT cleanup and a post-run zero-resource audit.
 
 ## 7. Risks

@@ -96,7 +96,7 @@ dx_k/dt = k_pull · I_k · (E_k − x_k)  +  (baseline_k − x_k) / τ_return,k
 
 ## Demo: `experiments/affect_prototype/run.py`
 
-A scripted 70 s timeline of the five events. The outputs of each model version are kept separately: `results/v0.1/` (current) and `results/v0.0/` (v0, for comparison).
+A scripted 70 s timeline of the five events. The outputs of the current version are in `results/v0.1/`; v0 outputs were removed from the repository (regenerate with the v0 configuration).
 
 ![PAD timeline v0.1](../experiments/affect_prototype/results/v0.1/pad_timeline.png)
 
@@ -131,7 +131,7 @@ A scripted 70 s timeline of the five events. The outputs of each model version a
 - one τ_return = 20 s
 - routine walking relevance 0.5
 
-The v0 demo exposed four issues: surprise diluting fear, routine events too influential, arousal lasting too long, and weak emotions barely visible. The user decided to fix the first three and leave the fourth. The v0 outputs are kept in `experiments/affect_prototype/results/v0.0/`.
+The v0 demo exposed four issues: surprise diluting fear, routine events too influential, arousal lasting too long, and weak emotions barely visible. The user decided to fix the first three and leave the fourth. 
 
 ## Sources
 

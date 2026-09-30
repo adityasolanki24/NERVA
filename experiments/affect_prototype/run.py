@@ -6,7 +6,7 @@ evolves, with every step traceable to docs/affect_model.md.
 Usage:
     <venv>/Scripts/python experiments/affect_prototype/run.py
 Writes experiments/affect_prototype/results/<MODEL_VERSION>/{timeline.csv, pad_timeline.png}.
-Earlier versions' outputs are kept in their own folders (results/v0.0 = affect model v0).
+Outputs are written per model version (results/v0.1 is committed).
 """
 
 from __future__ import annotations

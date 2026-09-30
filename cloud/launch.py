@@ -344,10 +344,22 @@ def wait_and_finish(run_id: str, a) -> None:
         print("Wait or fetch failed; bucket/account were preserved so the output is recoverable.", file=sys.stderr)
         raise
     if a.cleanup_network or a.teardown:
-        cmd_network_down(argparse.Namespace(yes=True))
-    if a.teardown:
+        others = other_nerva_vms()
+        if others:
+            print("Other NERVA VMs are still running; leaving the NAT for their waiter:
+" + others)
+        else:
+            cmd_network_down(argparse.Namespace(yes=True))
+    if a.teardown and not other_nerva_vms():
         cmd_teardown(argparse.Namespace(yes=True, keep_network=True))
     cmd_audit(argparse.Namespace())
+
+
+def other_nerva_vms() -> str:
+    """Names of NERVA-labelled VMs that still exist (they need the NAT for their result sync)."""
+    return subprocess.run([gcloud(), "compute", "instances", "list", f"--project={PROJECT}",
+                           "--filter=labels.nerva=1", "--format=value(name)"],
+                          text=True, capture_output=True).stdout.strip()
 
 
 def cmd_wait(a):

@@ -20,6 +20,7 @@ PERSON_HEIGHT = 1.7  # m
 FACE_HEIGHT = 1.58  # m, centre of the person's face
 BALL_RADIUS = 0.06  # m
 ENTITY_KINDS = ("person", "ball")
+EYE_FORWARD_M = 0.09  # robot_eye camera offset in front of the head site (clears the head shell)
 
 
 @dataclass
@@ -88,7 +89,9 @@ def _add_robot_eye(spec: mujoco.MjSpec) -> None:
     r_rel = r_body.T @ r_cam
     quat = np.zeros(4)
     mujoco.mju_mat2Quat(quat, r_rel.flatten())
-    pos = r_body.T @ (data.site_xpos[site] - data.xpos[head])
+    # The "head" site is inside the head shell; put the eye EYE_FORWARD_M in front of it.
+    eye_world = data.site_xpos[site] + np.array([EYE_FORWARD_M, 0.0, 0.0])
+    pos = r_body.T @ (eye_world - data.xpos[head])
     spec.body("head_assembly").add_camera(name="robot_eye", pos=pos, quat=quat, fovy=70.0)
 
 

@@ -4,6 +4,40 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Backward walking diagnosed (foot clearance); multi-person tracking
+
+**1. Backward walking — cause found [measured]:**
+- **Scene mismatch.** All policies were trained in `scene_flat_terrain_backlash.xml`, but NERVA evaluated them in the plain scene. In the training scene S1 walks backward at −0.071 m/s (plain: −0.043) and forward at 0.129 (plain: 0.114). `OpenDuckSim(scene=SCENE_BACKLASH)` and `--backlash` now exist. Earlier numbers were measured in the plain scene.
+- **The cause is foot clearance.** In the backlash scene, 2 seeds, at vx −0.15 / −0.10:
+  - B1 (no feet-height cost): −0.002 / −0.001 m/s, foot lift ≈ 1 mm. It shuffles in place.
+  - B2 (feet-height cost −30): −0.113 / −0.074 m/s, lift ≈ 42 mm. That is 75% of the command and matches the backward reference's own −0.115.
+- **Open-loop reference playback** was inconclusive: forward falls, backward stays upright without moving.
+- **B2 in the reactive scenario:**
+  - First run: fell in 5/5 seeds, while inspecting with the head at −0.6 rad plus head roll and slow turning.
+  - Downward head pitch is now limited to −0.35 (the ball stays in view) and the curious tilt to 0.2 rad.
+  - Result (B2, neutral style, backlash, vision): **curiosity 5/5, fear 5/5 (distance 0.45 → 0.52–0.57 m within 3 s), habituation 5/5, safety 5/5.** First time all four criteria pass.
+- **S5** (7 styles + feet-height −10) launched to combine styles with backward walking.
+
+**2. Multi-person tracking:**
+- Tracks have IDs (`Track.tid`) and events carry their track (`Event.source`).
+- The tracker associates detections to tracks by world position (gate 0.8 m) and appearance.
+- Vision returns every person blob, merging components at similar depth and close together (one person's two legs up close).
+- Appraisal, identity binding, memory and the utility selector work per track: fear is directed at the person with the highest remembered threat; a remembered threat gates approach to that person only; touch is attributed to the nearest person track.
+- **Regression checks** (reactive with B2; two-person memory with S1): unchanged (5/5 each; no-memory 0/5).
+
+**New two-people-at-once scenario** (history as before, then A and B return together at 95 s), 3 seeds, vision:
+
+| criterion (stated in advance) | memory | no memory |
+|---|---|---|
+| avoids A (never within 1.0 m) and watches/retreats | 3/3 | 0/3 |
+| engages B (approach/inspect, B closer than A on average) | 3/3 | 3/3 |
+
+The second criterion doesn't discriminate, because the agents' scripted approaches set part of the distances.
+
+**Also fixed:** entities a scenario doesn't use are now removed from the scene. The parked ball had been detected in the memory scenarios.
+
+---
+
 ## 2026-10-01 — S4 (backward emphasis): hypothesis refuted; cloud torn down
 
 **S4:** `s4_pilot-20261001-021916` = S3 + 30% backward-emphasis commands, 300 M steps, exit 0.

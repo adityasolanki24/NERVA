@@ -47,22 +47,26 @@ class UtilityBehaviour(ReactiveBehaviour):
         f, z, d = emo.get("fear", 0.0), emo.get("surprise", 0.0), emo.get("distress", 0.0)
         fear_gate = max(0.0, 1.0 - FEAR_BLOCK * f)
         u: dict[tuple[str, str | None], float] = {("explore", None): EXPLORE_BASE}
-        for kind, track in tr.items():
-            novelty = self.salience.get(kind, 1.0)
-            new = 1.0 if t - self.appeared_at.get(kind, -1e9) < 2.0 else 0.0
-            u[("orient", kind)] = z + NEW_BONUS * new
-            pull = (c * novelty + (s if kind == "person" else 0.0)) * fear_gate
-            stop = self._stop_distance(kind, pad)
-            margin = 0.3 if (self.mode == "inspect" and self.target == kind) else 0.1
-            u[("inspect" if track.distance <= stop + margin else "approach", kind)] = pull
-        person = tr.get("person")
-        if person is not None:
+        focal = self._focal_person(tr)
+        for key, track in tr.items():
+            novelty = self.salience.get(key, 1.0)
+            new = 1.0 if t - self.appeared_at.get(key, -1e9) < 2.0 else 0.0
+            u[("orient", key)] = z + NEW_BONUS * new
+            person = track.kind == "person"
+            # a remembered threat is not approached, even when others are liked
+            gate = fear_gate * (max(0.0, 1.0 - 4.0 * self.threats.get(key, 0.0)) if person else 1.0)
+            pull = (c * novelty + (s if person else 0.0)) * gate
+            stop = self._stop_distance(key, pad)
+            margin = 0.3 if (self.mode == "inspect" and self.target == key) else 0.1
+            u[("inspect" if track.distance <= stop + margin else "approach", key)] = pull
+        if focal is not None:
+            person = tr[focal]
             proximity = max(0.0, 1.0 - person.distance / SAFE_DISTANCE)
-            u[("watch", "person")] = W_WATCH * f
-            u[("retreat", "person")] = W_RETREAT * f * proximity
-            u[("freeze", "person")] = W_FREEZE * z * f * proximity
+            u[("watch", focal)] = W_WATCH * f
+            u[("retreat", focal)] = W_RETREAT * f * proximity
+            u[("freeze", focal)] = W_FREEZE * z * f * proximity
         elif self.mode == "retreat":  # the threat just went out of view: keep moving away while afraid
-            u[("retreat", "person")] = W_RETREAT * f * 0.5
+            u[("retreat", self.target)] = W_RETREAT * f * 0.5
         u[("withdraw", self.target)] = W_WITHDRAW * d
         return u
 

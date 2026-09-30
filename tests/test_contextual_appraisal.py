@@ -51,13 +51,16 @@ def test_memory_appraiser_is_person_specific():
     ap = MemoryAppraiser(mem)
     a = mem.resolve("person", np.array([1.0, 0, 0]), 0.0)
     b = mem.resolve("person", np.array([0, 1.0, 0]), 0.0)
-    ap.identity = {"person": a}
-    lunge = ap.appraise(Event("person_approaching_rapidly", 1.0), 1.0, (Track("person", 0, 0.6),))
+    ap.identity = {"person-0": a}
+    lunge = ap.appraise(Event("person_approaching_rapidly", 1.0, source="person-0"), 1.0,
+                        (Track("person", 0, 0.6, tid="person-0"),))
     mem.learn(a, 1.0, "person_approaching_rapidly", categorise(lunge), arousal=0.4, surprise_negative=True)
-    ap.identity = {"person": a}
-    assert ap.appraise(Event("person_approaching_slowly"), 500.0, ()).desirability < 0  # still wary of A
-    ap.identity = {"person": b}
-    assert ap.appraise(Event("person_approaching_slowly"), 500.0, ()).desirability > 0  # B is fine
-    ap.identity = {"person": a}
-    seen = ap.observe(501.0, (Track("person", 0, 2.0),), 0.1)
+    ap.identity = {"person-3": a}  # A seen again later, on a new track
+    assert ap.appraise(Event("person_approaching_slowly", source="person-3"), 500.0, ()).desirability < 0
+    ap.identity = {"person-4": b}
+    assert ap.appraise(Event("person_approaching_slowly", source="person-4"), 500.0, ()).desirability > 0
+    ap.identity = {"person-3": a, "person-4": b}  # both in view: each event is judged by its own person
+    assert ap.appraise(Event("person_approaching_slowly", source="person-4"), 501.0, ()).desirability > 0
+    assert ap.appraise(Event("person_approaching_slowly", source="person-3"), 501.0, ()).desirability < 0
+    seen = ap.observe(502.0, (Track("person", 0, 2.0, tid="person-3"),), 0.1)
     assert seen and "fear" in labels(seen[0][1])  # seeing A brings the fear back

@@ -78,18 +78,22 @@ class ReactiveBehaviour:
     walking_head_limit: tuple[float, float, float] | None = S1_WALKING_HEAD_LIMIT
     explore_bearing: float | None = None  # from spatial memory (toward novel, safe places); None = wander
 
-    def notice(self, t: float, event_kind: str) -> None:
+    def notice(self, t: float, event_kind: str, source: str = "") -> None:
         """Perception events the behaviour itself cares about (something new to orient to)."""
         if event_kind.endswith("_appeared"):
-            self.appeared_at[event_kind.split("_")[0]] = t
+            self.appeared_at[source or event_kind.split("_")[0]] = t
 
     def step(self, t: float, dt: float, pad: PADState, emotions: dict[str, float],
-             tracks: tuple[Track, ...], salience: dict[str, float] | None = None) -> ReactiveDecision:
-        """salience: per-kind novelty from appraisal (0..1); used by selectors that weigh targets."""
+             tracks: tuple[Track, ...], salience: dict[str, float] | None = None,
+             threats: dict[str, float] | None = None) -> ReactiveDecision:
+        """salience: per-track novelty (0..1). threats: per-track remembered threat (memory), used to
+        decide WHICH person fear is about; without it, the nearest person."""
         self.salience = salience or {}
-        tr = {x.kind: x for x in tracks}
-        if "person" in tr:
-            self.threat_bearing = tr["person"].bearing
+        self.threats = threats or {}
+        tr = {(x.tid or x.kind): x for x in tracks}
+        focal = self._focal_person(tr)
+        if focal is not None:
+            self.threat_bearing = tr[focal].bearing
         self._select(t, pad, emotions, tr)
         vx, yaw, head_target, reason = self._control(t, pad, tr)
 
@@ -121,16 +125,17 @@ class ReactiveBehaviour:
         distress = emo.get("distress", 0.0)
         positive = max(emo.get("interest", 0.0), emo.get("hope", 0.0), emo.get("joy", 0.0))
         age = t - self.mode_since
-        person = tr.get("person")
+        focal = self._focal_person(tr)
+        person = tr.get(focal) if focal else None
         near_person = person is not None and person.distance < SAFE_DISTANCE
 
         if self.mode == "freeze" and age < FREEZE_S:
             return
         if surprise > 0.4 and fear > FEAR_ENTER and person is not None and person.distance < FREEZE_DISTANCE \
                 and self.mode not in ("freeze", "retreat"):
-            return self._set(t, "freeze", "person")
+            return self._set(t, "freeze", focal)
         if fear > FEAR_ENTER and (person is None or person.distance < SAFE_DISTANCE + 0.5):
-            return self._set(t, "retreat", "person")
+            return self._set(t, "retreat", focal)
         if self.mode == "retreat" and fear > FEAR_KEEP and (person is None or near_person):
             return  # keep retreating (hysteresis)
         if age < MIN_DWELL_S and self.mode != "explore":  # exploring can be interrupted any time
@@ -138,7 +143,7 @@ class ReactiveBehaviour:
         if distress > 0.2 and fear < 0.1:
             return self._set(t, "withdraw", self.target)
         if fear > WARY_FEAR and person is not None:
-            return self._set(t, "watch", "person")
+            return self._set(t, "watch", focal)
         target = self._approach_target(tr)
         engaged = self.mode in ("approach", "inspect") and self.target == target
         if (positive > POSITIVE_ENTER or (engaged and positive > POSITIVE_KEEP)) and fear < 0.05 and target is not None:
@@ -154,16 +159,22 @@ class ReactiveBehaviour:
         recent = [(t0, k) for k, t0 in self.appeared_at.items() if t - t0 < 2.0 and k in tr]
         return max(recent)[1] if recent else None
 
-    @staticmethod
-    def _approach_target(tr):
-        for kind in ("person", "ball"):  # a person is more salient than a ball
-            if kind in tr:  # visible, or seen within perception's memory
-                return kind
-        return None
+    def _focal_person(self, tr) -> str | None:
+        """The person fear is about: the highest remembered threat, else the nearest person."""
+        people = [k for k, x in tr.items() if x.kind == "person"]
+        if not people:
+            return None
+        return max(people, key=lambda k: (self.threats.get(k, 0.0), -tr[k].distance))
 
-    @staticmethod
-    def _stop_distance(kind, pad):
-        if kind == "ball":
+    def _approach_target(self, tr):
+        """The most salient thing: persons before balls, then the most novel, then the nearest."""
+        if not tr:
+            return None
+        return max(tr, key=lambda k: (tr[k].kind == "person", self.salience.get(k, 0.0), -tr[k].distance))
+
+    def _stop_distance(self, key, pad):
+        track_kind = key.split("-")[0]
+        if track_kind == "ball":
             return 0.45
         return 0.7 + 0.5 * max(0.0, -pad.dominance)  # keep more distance when feeling less in control
 

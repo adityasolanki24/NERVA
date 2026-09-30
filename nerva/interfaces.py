@@ -44,6 +44,7 @@ class Event:
 
     kind: str
     magnitude: float = 1.0  # [0, 1], how strongly/clearly it is present
+    source: str = ""  # ID of the track it is about (e.g. "person-1"), if any
 
     def __post_init__(self) -> None:
         if not self.kind:
@@ -73,6 +74,7 @@ class Track:
     visible: bool = True
     seen_for_s: float = 0.0
     unseen_for_s: float = 0.0
+    tid: str = ""  # track ID; several objects of one kind can be tracked at once
 
 
 @dataclass(frozen=True)

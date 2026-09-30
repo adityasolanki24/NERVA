@@ -33,7 +33,7 @@ from nerva.perception import FRAME_HZ, SimulatedPerception
 from nerva.vision import VisionPerception
 from nerva.action_selection import UtilityBehaviour
 from nerva.reactive_behaviour import ReactiveBehaviour
-from nerva.world import World, extend_scene
+from nerva.world import ENTITY_KINDS, World, extend_scene
 
 CTRL_DT = 0.02
 PERCEIVE_EVERY = int(round(1 / (FRAME_HZ * CTRL_DT)))  # control steps per perception frame
@@ -128,6 +128,16 @@ def memory_scenario() -> dict[str, Agent]:
 
 IDLE_BEFORE_SLEEP_S = 5.0  # no one in view for this long → consolidate ("sleep")
 SLEEP_EVERY_S = 20.0
+def together_scenario() -> dict[str, Agent]:
+    """memory_scenario's history (A lunges, B is new and pets the robot), then at 95 s A and B come back
+    TOGETHER from the left and the right and approach slowly: multi-person tracking + person-specific memory."""
+    agents = memory_scenario()
+    a, b = agents["person"], agents["person_b"]
+    a.steps = [st for st in a.steps if st[0] < 92.0] + [(95.0, "appear", (3.0, 0.6)), (95.0, "approach", (0.25, 1.3))]
+    b.steps = [st for st in b.steps if st[0] < 118.0] + [(95.0, "appear", (3.0, -0.6)), (95.0, "approach", (0.25, 0.9))]
+    return agents
+
+
 DEFERRED_CONFIDENCE = 0.8  # learning applied later, once an unknown identity is resolved
 TOUCH_REACH = 0.5  # m
 TOUCH_PERIOD_S = 1.0
@@ -142,33 +152,42 @@ class IdentityBinder:
         self.pending: dict[str, list] = {}
 
     def update(self, t: float, tracks, perception) -> dict:
-        present = {tr.kind for tr in tracks}
-        for kind in list(self.current):
-            if kind not in present:  # track lost: continuity broken, identity must be re-established
-                self.current.pop(kind)
-        for kind in list(self.pending):
-            if kind not in present:
-                self.pending.pop(kind)  # never resolved: dropped (M2 will generalise to "unknown person")
+        """Track ID -> entity record for every track whose identity is known."""
+        present = {tr.tid for tr in tracks}
+        for tid in list(self.current):
+            if tid not in present:  # track lost: continuity broken, identity must be re-established
+                self.current.pop(tid)
+        for tid in list(self.pending):
+            if tid not in present:
+                self.pending.pop(tid)  # never resolved: dropped (could generalise to "unknown person")
         for tr in tracks:
-            st = perception.tracks.get(tr.kind)
+            st = perception.tracks.get(tr.tid)
             appearance = getattr(st, "appearance", None) if tr.visible else None
             if appearance is None:
                 continue  # up close / occluded: keep the track's identity (continuity)
             rec = self.memory.resolve(tr.kind, appearance, t)
             if rec is None:
                 continue  # ambiguous appearance: keep whatever identity the track already has
-            if self.current.get(tr.kind) is not rec:
-                self.current[tr.kind] = rec
-                for args in self.pending.pop(tr.kind, []):  # "oh, it was you"
+            if self.current.get(tr.tid) is not rec:
+                self.current[tr.tid] = rec
+                for args in self.pending.pop(tr.tid, []):  # "oh, it was you"
                     self.memory.learn(rec, *args, confidence=DEFERRED_CONFIDENCE)
         return self.current
 
-    def learn(self, kind: str, t: float, event: str, emotions, arousal: float, surprise_negative: bool) -> None:
-        rec = self.current.get(kind)
+    def learn(self, tid: str, t: float, event: str, emotions, arousal: float, surprise_negative: bool) -> None:
+        rec = self.current.get(tid)
         if rec is None:
-            self.pending.setdefault(kind, []).append((t, event, emotions, arousal, surprise_negative))
+            self.pending.setdefault(tid, []).append((t, event, emotions, arousal, surprise_negative))
         else:
             self.memory.learn(rec, t, event, emotions, arousal, surprise_negative)
+
+
+def touch_source(tracks) -> str:
+    """Who is touching the robot: the nearest person track within reach, else the nearest person seen."""
+    people = [tr for tr in tracks if tr.kind == "person"]
+    if not people:
+        return ""
+    return min(people, key=lambda tr: tr.distance).tid
 
 
 def neutralised(command):
@@ -190,6 +209,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
                       scene_extender=extend_scene, scene=SCENE_BACKLASH if backlash_scene else SCENE)
     world = World(sim.model)
+    for name in ENTITY_KINDS:  # entities this scenario does not use are removed from the scene
+        if name not in agents:
+            world.place(sim.data, name, HIDDEN, 0.0)
     vision = perception_mode == "vision"
     perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
     eye = mujoco.Renderer(sim.model, EYE_H, EYE_W) if vision else None
@@ -225,7 +247,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             world.place(d, name, agent.xy, agent.yaw)
         if k % PERCEIVE_EVERY == 0:
             mujoco.mj_kinematics(sim.model, d)
-            entities = {n: world.entity_position(d, n) for n in agents if n in ("person", "ball")}
+            entities = {n: world.entity_position(d, n) for n in agents}
             if vision:
                 mujoco.mj_forward(sim.model, d)
                 eye.update_scene(d, camera=cam)
@@ -247,7 +269,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             for name, agent in agents.items():  # simulated touch sensing: gentle contact while petted
                 if (agent.action == "pet" and np.linalg.norm(agent.xy - robot_xy) < TOUCH_REACH
                         and t - last_touch >= TOUCH_PERIOD_S):
-                    events.append(Event("touch_gentle"))
+                    events.append(Event("touch_gentle", source=touch_source(tracks)))
                     last_touch = t
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
             if near_fall_armed and tilt > NEAR_FALL_TILT_DEG:
@@ -256,25 +278,20 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             elif tilt < NEAR_FALL_TILT_DEG / 2:
                 near_fall_armed = True
             for ev in events:
-                behaviour.notice(t, ev.kind)
+                behaviour.notice(t, ev.kind, ev.source)
                 a = appraiser.appraise(ev, t, tracks)
                 if a is not None:
                     new = affect.add(a)
                     elicited = [(e.label, e.intensity) for e in new]
                     fired.append((t, ev.kind, a, elicited))
-                    if ev.kind.startswith(("person", "touch")):
-                        about = "person"
-                    elif ev.kind.startswith("ball"):
-                        about = "ball"
-                    else:
-                        about = None
+                    about = ev.source or None  # the track this event is about
                     if binder is not None and about and not ev.kind.endswith("_lost"):
                         binder.learn(about, t, ev.kind, elicited, affect.pad.arousal,
                                      a.desirability < 0 and any(lbl == "surprise" for lbl, _ in elicited))
                     if places is not None:
                         places.learn(robot_xy, t, elicited, affect.pad.arousal)
                     if episodic is not None:
-                        who_ev = appraiser.identity.get(about) if about else None
+                        who_ev = appraiser.identity.get(about) if (about and use_memory) else None
                         episodic.encode(t, ev.kind, who_ev.eid if who_ev else None, robot_xy, elicited,
                                         a.relevance, affect.pad.arousal, 1.0 - a.expectedness,
                                         appraiser.novelty(about) if about else 0.0)
@@ -291,8 +308,10 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 behaviour.explore_bearing = places.explore_heading(robot_xy, robot_yaw)[0]
             pad = affect.step(1.0 / FRAME_HZ)
             emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
-            salience = {tr.kind: appraiser.novelty(tr.kind) for tr in tracks}
-            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks, salience)
+            salience = {tr.tid: appraiser.novelty(tr.tid if use_memory else tr.kind) for tr in tracks}
+            threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
+                       if use_memory else None)
+            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks, salience, threats)
             sim.set_behaviour(neutralised(decision.command) if neutral_style else decision.command)
             sim.set_head_offset(*decision.head)
         sim.step_physics(10)
@@ -300,7 +319,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
         person_xy = agents["person"].xy if "person" in agents else np.array(HIDDEN)
         person_b_xy = agents["person_b"].xy if "person_b" in agents else np.array(HIDDEN)
-        who = appraiser.identity.get("person") if use_memory else None
+        people = [tr for tr in tracks if tr.kind == "person"]
+        nearest = min(people, key=lambda tr: tr.distance).tid if people else ""
+        who = appraiser.identity.get(nearest) if use_memory else None
         rows.append({
             "t": round(t + CTRL_DT, 3), "valence": pad.valence, "arousal": pad.arousal, "dominance": pad.dominance,
             **{lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS},

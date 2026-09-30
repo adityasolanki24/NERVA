@@ -47,12 +47,37 @@ def evaluate(policy: str, seed: int, use_memory: bool) -> dict:
     return result
 
 
+def evaluate_together(policy: str, seed: int, use_memory: bool) -> dict:
+    """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
+    avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
+    occurs and B comes closer than A on average."""
+    _, rows, _, _ = scenario.run(policy, seed=seed, duration=125.0, agents=scenario.together_scenario(),
+                                 perception_mode="vision", use_memory=use_memory)
+    w = [r for r in rows if 100 <= r["t"] < 125]
+    ms = {r["mode"] for r in w}
+    mean_a = sum(r["dist_person"] for r in w) / len(w)
+    mean_b = sum(r["dist_person_b"] for r in w) / len(w)
+    return {"seed": seed, "memory": use_memory,
+            "avoids_a": min(r["dist_person"] for r in w) >= 1.0 and bool(ms & WARY),
+            "engages_b": bool(ms & {"approach", "inspect"}) and mean_b < mean_a,
+            "mean_dist_a": round(mean_a, 2), "mean_dist_b": round(mean_b, 2)}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--policy", required=True)
     ap.add_argument("--seeds", type=int, default=5)
+    ap.add_argument("--together", action="store_true", help="only the two-people-at-once scenario")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")
     args = ap.parse_args()
+    if args.together:
+        results = [evaluate_together(args.policy, s, m) for m in (True, False) for s in range(args.seeds)]
+        summary = {("memory" if m else "no_memory"): {k: f"{sum(r[k] for r in results if r['memory'] == m)}/{args.seeds}"
+                                                     for k in ("avoids_a", "engages_b")} for m in (True, False)}
+        for r in results:
+            print(r)
+        print("SUMMARY", json.dumps(summary))
+        return
     results = [evaluate(args.policy, s, m) for m in (True, False) for s in range(args.seeds)]
     summary = {}
     for m in (True, False):

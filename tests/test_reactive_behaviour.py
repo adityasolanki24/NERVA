@@ -49,8 +49,8 @@ def test_retreat_ends_once_safe_and_calm():
 
 
 def test_low_dominance_keeps_more_distance():
-    near = ReactiveBehaviour._stop_distance("person", PADState(dominance=0.2))
-    far = ReactiveBehaviour._stop_distance("person", PADState(dominance=-0.6))
+    near = ReactiveBehaviour()._stop_distance("person-0", PADState(dominance=0.2))
+    far = ReactiveBehaviour()._stop_distance("person-0", PADState(dominance=-0.6))
     assert far > near
 
 

@@ -23,13 +23,15 @@ import numpy as np
 from scipy import ndimage
 
 from nerva.interfaces import PerceptionState
-from nerva.perception import RANGE_M, SimulatedPerception, _wrap
+from nerva.perception import RANGE_M, Observation, SimulatedPerception, _wrap
 
 MIN_BLOB_PX = 12  # at 160x120: rejects grid lines and noise
 HUE_BINS = 8
 APPEARANCE_MIN_SAT = 0.35  # clothing is strongly coloured; trousers, skin tones and shadows are not
 APPEARANCE_MIN_PX = 10
 MIN_DEPTH_M = {"ball": 0.2}  # closer than this is the robot's own body (camera is 0.09 m ahead of the head)
+MERGE_DEPTH_M = 0.4  # components closer than this in depth may be one person
+MERGE_GAP_PX = 12.0  # at 1 m; scaled by 1/depth
 
 
 @dataclass(frozen=True)
@@ -69,7 +71,32 @@ def masks(rgb: np.ndarray) -> dict[str, np.ndarray]:
     return {"ball": ball, "person": person}
 
 
+def _merge_person_components(labels: np.ndarray, ids: list[int], depth: np.ndarray) -> list[np.ndarray]:
+    """Group person-coloured components that belong to one person (e.g. two legs seen up close):
+    similar median depth and overlapping or nearby column ranges."""
+    comps = []
+    for i in ids:
+        rows, cols = np.nonzero(labels == i)
+        d = depth[rows, cols]
+        d = d[np.isfinite(d) & (d > 0.02)]
+        if d.size:
+            comps.append([rows, cols, float(np.median(d)), cols.min(), cols.max()])
+    groups: list[list] = []
+    for c in sorted(comps, key=lambda c: c[3]):
+        for g in groups:
+            gap_px = max(0, c[3] - g[4])
+            if abs(c[2] - g[2]) < MERGE_DEPTH_M and gap_px < MERGE_GAP_PX * (1.0 / max(g[2], 0.3)):
+                g[0] = np.concatenate([g[0], c[0]])
+                g[1] = np.concatenate([g[1], c[1]])
+                g[4] = max(g[4], c[4])
+                break
+        else:
+            groups.append(list(c))
+    return [np.stack([g[0], g[1]], 1) for g in groups]
+
+
 def find_blobs(rgb: np.ndarray, depth: np.ndarray) -> list[Blob]:
+    """All person blobs (merged per person) and the largest ball blob."""
     blobs = []
     hsv = rgb_to_hsv(rgb)
     for kind, mask in masks(rgb).items():
@@ -77,21 +104,27 @@ def find_blobs(rgb: np.ndarray, depth: np.ndarray) -> list[Blob]:
         if n == 0:
             continue
         sizes = ndimage.sum(mask, labels, range(1, n + 1))
-        best = int(np.argmax(sizes)) + 1
-        if sizes[best - 1] < MIN_BLOB_PX:
+        big = [i + 1 for i in range(n) if sizes[i] >= MIN_BLOB_PX]
+        if not big:
             continue
-        rows, cols = np.nonzero(labels == best)
-        d = depth[rows, cols]
-        d = d[np.isfinite(d) & (d > 0.02)]
-        if d.size == 0 or (kind in MIN_DEPTH_M and np.median(d) < MIN_DEPTH_M[kind]):
-            continue  # e.g. the robot's own orange feet seen when looking down are not a ball
-        strong = hsv[rows, cols, 1] > APPEARANCE_MIN_SAT
-        appearance = None
-        if strong.sum() >= APPEARANCE_MIN_PX:
-            hist, _ = np.histogram(hsv[rows, cols, 0][strong], bins=HUE_BINS, range=(0, 360))
-            appearance = hist / hist.sum()
-        blobs.append(Blob(kind, np.stack([rows, cols], 1), float(np.median(d)),
-                          (float(rows.mean()), float(cols.mean())), int(rows.min()), appearance))
+        if kind == "person":
+            pixel_sets = _merge_person_components(labels, big, depth)
+        else:
+            best = max(big, key=lambda i: sizes[i - 1])
+            pixel_sets = [np.stack(np.nonzero(labels == best), 1)]
+        for px in pixel_sets:
+            rows, cols = px[:, 0], px[:, 1]
+            d = depth[rows, cols]
+            d = d[np.isfinite(d) & (d > 0.02)]
+            if d.size == 0 or (kind in MIN_DEPTH_M and np.median(d) < MIN_DEPTH_M[kind]):
+                continue  # e.g. the robot's own orange feet seen when looking down are not a ball
+            strong = hsv[rows, cols, 1] > APPEARANCE_MIN_SAT
+            appearance = None
+            if strong.sum() >= APPEARANCE_MIN_PX:
+                hist, _ = np.histogram(hsv[rows, cols, 0][strong], bins=HUE_BINS, range=(0, 360))
+                appearance = hist / hist.sum()
+            blobs.append(Blob(kind, px, float(np.median(d)), (float(rows.mean()), float(cols.mean())),
+                              int(rows.min()), appearance))
     return blobs
 
 
@@ -109,8 +142,8 @@ class VisionPerception(SimulatedPerception):
                      ego_velocity: np.ndarray | None = None) -> PerceptionState:
         ego = np.zeros(2) if ego_velocity is None else np.asarray(ego_velocity, dtype=float)[:2]
         height, width = depth.shape
-        events = []
         self.last_blobs = find_blobs(rgb, depth)
+        observations = []
         for blob in self.last_blobs:
             ray = pixel_ray(*blob.centroid, height, width, fovy_deg)
             point = cam_pos + cam_xmat @ (ray * blob.depth_m)  # depth is along the optical axis
@@ -123,6 +156,6 @@ class VisionPerception(SimulatedPerception):
             aim = top if blob.kind == "person" else ray
             elevation = float(np.arctan2(aim[1], np.hypot(aim[0], 1.0)))
             toward = rel[:2] / max(h_dist, 1e-6)
-            events += self._update(blob.kind, t, bearing, h_dist, elevation, dt, float(ego @ toward))
-            self.tracks[blob.kind].appearance = blob.appearance
-        return self._age_tracks(t, events)
+            observations.append(Observation(blob.kind, bearing, h_dist, elevation, (float(point[0]), float(point[1])),
+                                            float(ego @ toward), blob.appearance))
+        return self.ingest(t, observations, dt)

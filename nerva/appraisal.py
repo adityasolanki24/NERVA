@@ -61,6 +61,15 @@ from nerva.interfaces import Track  # noqa: E402
 
 HABITUATION_S = {"person": 30.0, "ball": 30.0}
 THREAT_MEMORY_S = 45.0
+
+
+def event_track(event: Event, tracks) -> Track | None:
+    """The track an event is about: by its source ID, else the first track of the event's kind."""
+    for tr in tracks:
+        if event.source and tr.tid == event.source:
+            return tr
+    prefix = event.kind.split("_")[0]
+    return next((tr for tr in tracks if tr.kind == prefix), None)
 IN_VIEW_PERIOD_S = 2.0  # re-appraise a visible stimulus this often ("still looking at it")
 
 
@@ -84,8 +93,9 @@ class ContextualAppraiser:
             if not tr.visible:
                 continue
             self.exposure_s[tr.kind] = self.exposure_s.get(tr.kind, 0.0) + dt
-            if t - self._last_in_view.get(tr.kind, -math.inf) >= IN_VIEW_PERIOD_S:
-                self._last_in_view[tr.kind] = t
+            key = tr.tid or tr.kind
+            if t - self._last_in_view.get(key, -math.inf) >= IN_VIEW_PERIOD_S:
+                self._last_in_view[key] = t
                 n = self.novelty(tr.kind)
                 # desirability 0: looking elicits no joy/hope/fear by itself; expectedness ≥ 0.3: no surprise
                 out.append((f"{tr.kind}_in_view", AppraisalState(
@@ -95,7 +105,6 @@ class ContextualAppraiser:
 
     def appraise(self, event: Event, t: float, tracks: tuple[Track, ...]) -> AppraisalState | None:
         """Appraise one perception/proprioception event in context; None = not relevant."""
-        track = {tr.kind: tr for tr in tracks}
         kind = event.kind
         if kind in ("person_appeared", "ball_appeared"):
             who = kind.split("_")[0]
@@ -105,7 +114,7 @@ class ContextualAppraiser:
                                   likelihood=0.6, expectedness=1.0 - 0.8 * n,
                                   controllability=0.5 if threat else 0.8)
         if kind == "person_approaching_rapidly":
-            tr = track.get("person")
+            tr = event_track(event, tracks)
             dist = tr.distance if tr else 1.5
             expected = min(0.6, 0.15 + 0.15 * self.fast_approaches)  # habituation to harmless lunges
             self.fast_approaches += 1
@@ -164,25 +173,29 @@ class MemoryAppraiser(ContextualAppraiser):
     def __init__(self, memory):
         super().__init__()
         self.memory = memory
-        self.identity: dict = {}  # kind -> EntityRecord currently perceived (set by the caller each frame)
+        self.identity: dict = {}  # track ID -> EntityRecord currently perceived (set by the caller each frame)
+        self._focus: str = ""  # track ID of the event being appraised
 
-    def novelty(self, kind: str) -> float:
-        rec = self.identity.get(kind)
-        return rec.novelty() if rec is not None else super().novelty(kind)
+    def novelty(self, key: str) -> float:
+        rec = self.identity.get(key)
+        return rec.novelty() if rec is not None else super().novelty(key.split("-")[0])
 
     def threat_recent(self, t: float) -> bool:
-        rec = self.identity.get("person")
-        return rec is not None and rec.threat >= THREAT_ASSOCIATION
+        """Is the person this event is about (or, if unknown, any person in view) a remembered threat?"""
+        rec = self.identity.get(self._focus)
+        if rec is None:
+            return any(r.kind == "person" and r.threat >= THREAT_ASSOCIATION for r in self.identity.values())
+        return rec.kind == "person" and rec.threat >= THREAT_ASSOCIATION
 
     def observe(self, t, tracks, dt):
         out = []
         for tr in tracks:
-            rec = self.identity.get(tr.kind)
+            rec = self.identity.get(tr.tid)
             if not tr.visible or rec is None:
                 continue
             self.memory.observe(rec, t, dt)
-            if t - self._last_in_view.get(tr.kind, -math.inf) >= IN_VIEW_PERIOD_S:
-                self._last_in_view[tr.kind] = t
+            if t - self._last_in_view.get(tr.tid, -math.inf) >= IN_VIEW_PERIOD_S:
+                self._last_in_view[tr.tid] = t
                 n = rec.novelty()
                 desirability = float(max(-1.0, min(1.0, WARMTH_GAIN * rec.warmth - THREAT_GAIN * rec.threat)))
                 out.append((f"{tr.kind}_in_view", AppraisalState(
@@ -191,7 +204,8 @@ class MemoryAppraiser(ContextualAppraiser):
         return out
 
     def appraise(self, event, t, tracks):
-        if event.kind == "person_approaching_rapidly" and "person" in self.identity:
-            rec = self.identity["person"]
+        self._focus = event.source
+        rec = self.identity.get(event.source)
+        if event.kind == "person_approaching_rapidly" and rec is not None:
             self.fast_approaches = sum(1 for e in rec.episodes if e["event"] == "person_approaching_rapidly")
         return super().appraise(event, t, tracks)

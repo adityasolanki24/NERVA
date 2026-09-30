@@ -23,6 +23,7 @@ import numpy as np
 from nerva import gait_metrics as gm
 from nerva.affect import CategoricalAffectModel
 from nerva.appraisal import ContextualAppraiser, MemoryAppraiser
+from nerva.episodic import EpisodicMemory
 from nerva.memory import EntityMemory
 from nerva.interfaces import BehaviourCommand, Event
 from nerva.open_duck_sim import OpenDuckSim
@@ -123,6 +124,8 @@ def memory_scenario() -> dict[str, Agent]:
     return {"person": a, "person_b": b}
 
 
+IDLE_BEFORE_SLEEP_S = 5.0  # no one in view for this long → consolidate ("sleep")
+SLEEP_EVERY_S = 20.0
 DEFERRED_CONFIDENCE = 0.8  # learning applied later, once an unknown identity is resolved
 TOUCH_REACH = 0.5  # m
 TOUCH_PERIOD_S = 1.0
@@ -150,6 +153,8 @@ class IdentityBinder:
             if appearance is None:
                 continue  # up close / occluded: keep the track's identity (continuity)
             rec = self.memory.resolve(tr.kind, appearance, t)
+            if rec is None:
+                continue  # ambiguous appearance: keep whatever identity the track already has
             if self.current.get(tr.kind) is not rec:
                 self.current[tr.kind] = rec
                 for args in self.pending.pop(tr.kind, []):  # "oh, it was you"
@@ -181,6 +186,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     memory = EntityMemory() if use_memory else None
     binder = IdentityBinder(memory) if use_memory else None
     appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
+    episodic = EpisodicMemory() if use_memory else None
+    last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
     affect = CategoricalAffectModel()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
@@ -253,8 +260,19 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                     if binder is not None and about and not ev.kind.endswith("_lost"):
                         binder.learn(about, t, ev.kind, elicited, affect.pad.arousal,
                                      a.desirability < 0 and any(lbl == "surprise" for lbl, _ in elicited))
+                    if episodic is not None:
+                        who_ev = appraiser.identity.get(about) if about else None
+                        episodic.encode(t, ev.kind, who_ev.eid if who_ev else None, robot_xy, elicited,
+                                        a.relevance, affect.pad.arousal, 1.0 - a.expectedness,
+                                        appraiser.novelty(about) if about else 0.0)
             for kind, a in appraiser.observe(t, tracks, 1.0 / FRAME_HZ):
                 affect.add(a)
+            if episodic is not None:  # consolidation ("sleep") when nothing has been in view for a while
+                if any(tr.visible for tr in tracks):
+                    last_seen_anything = t
+                elif t - last_seen_anything > IDLE_BEFORE_SLEEP_S and t - last_sleep > SLEEP_EVERY_S:
+                    sleep_log.append((round(t, 1), episodic.consolidate(t, memory)))
+                    last_sleep = t
             pad = affect.step(1.0 / FRAME_HZ)
             emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
             salience = {tr.kind: appraiser.novelty(tr.kind) for tr in tracks}
@@ -292,5 +310,5 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 boxes = [(bl.kind, *bl.pixels.min(0), *bl.pixels.max(0)) for bl in perception.last_blobs]
             frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks, boxes))
     if use_memory:
-        sim.memory = memory  # for inspection by callers
+        sim.memory, sim.episodic, sim.sleep_log = memory, episodic, sleep_log  # for inspection by callers
     return sim, rows, frames, fired

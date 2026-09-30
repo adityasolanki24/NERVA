@@ -24,6 +24,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 MATCH_COSINE = 0.85
+NEW_IDENTITY_COSINE = 0.5  # between this and MATCH_COSINE an observation is ambiguous: no new identity
 HABITUATION_S = {"person": 30.0, "ball": 30.0}
 FORGET_EXPOSURE_S = 600.0  # familiarity fades with this time constant while absent
 DRIFT_S = 900.0  # threat/warmth relax toward neutral with this time constant while absent
@@ -60,16 +61,20 @@ class EntityMemory:
         self._counter: dict[str, int] = {}
 
     # ── identity ────────────────────────────────────────────────────────────
-    def resolve(self, kind: str, appearance: np.ndarray | None, t: float) -> EntityRecord:
-        """The known entity this observation belongs to, or a new one. Absence effects are applied here."""
-        best, best_sim = None, MATCH_COSINE
+    def resolve(self, kind: str, appearance: np.ndarray | None, t: float) -> EntityRecord | None:
+        """The known entity this observation belongs to, a new one if it is clearly unlike all known
+        entities, or None if ambiguous (e.g. a partial view). Absence effects are applied here."""
+        best, best_sim, closest = None, MATCH_COSINE, 0.0
         for rec in self.records.values():
             if rec.kind != kind:
                 continue
             sim = 1.0 if (appearance is None and rec.appearance is None) else (
                 _cosine(appearance, rec.appearance) if appearance is not None and rec.appearance is not None else 0.0)
+            closest = max(closest, sim)
             if sim >= best_sim:
                 best, best_sim = rec, sim
+        if best is None and closest >= NEW_IDENTITY_COSINE:
+            return None
         if best is None:
             n = self._counter.get(kind, 0)
             self._counter[kind] = n + 1
@@ -98,7 +103,7 @@ class EntityMemory:
 
     # ── learning ────────────────────────────────────────────────────────────
     def learn(self, rec: EntityRecord, t: float, kind: str, emotions: list[tuple[str, float]],
-              arousal: float, surprise_negative: bool, confidence: float = 1.0) -> None:
+              arousal: float, surprise_negative: bool, confidence: float = 1.0, record: bool = True) -> None:
         """Update the entity's associations from the emotions an event with it elicited."""
         fear = sum(i for lbl, i in emotions if lbl == "fear")
         valence = (sum(i for lbl, i in emotions if lbl in ("joy", "hope", "interest"))
@@ -107,6 +112,8 @@ class EntityMemory:
         rec.threat += a * (min(fear, 1.0) - rec.threat)
         rec.warmth += a * (float(np.clip(valence, -1, 1)) - rec.warmth)
         rec.trust += a * ((0.0 if surprise_negative else 1.0) - rec.trust)
+        if not record:  # e.g. replay during consolidation: updates the association, not the history
+            return
         rec.episodes.append({"t": round(t, 2), "event": kind, "emotions": [(lbl, round(i, 2)) for lbl, i in emotions],
                              "confidence": round(confidence, 2)})
         del rec.episodes[:-MAX_EPISODES]

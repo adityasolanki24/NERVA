@@ -46,3 +46,10 @@ def test_low_confidence_attribution_learns_less():
     for rec, conf in ((sure, 1.0), (unsure, 0.3)):
         m.learn(rec, 1.0, "touch_gentle", [("joy", 0.5)], arousal=0.1, surprise_negative=False, confidence=conf)
     assert sure.warmth > unsure.warmth > 0
+
+
+def test_ambiguous_appearance_creates_no_new_identity():
+    m = EntityMemory()
+    m.resolve("person", BLUE, 0.0)
+    assert m.resolve("person", 0.6 * BLUE + 0.4 * GREEN, 1.0) is None  # partial/mixed view
+    assert len(m.records) == 1

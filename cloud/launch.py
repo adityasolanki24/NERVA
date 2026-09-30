@@ -339,15 +339,14 @@ def wait_and_finish(run_id: str, a) -> None:
         print("VM is gone; fetching final output.")
         cmd_fetch(argparse.Namespace(run=run_id))
     except Exception:
-        if (a.cleanup_network or a.teardown) and not vm_present(name):
+        if (a.cleanup_network or a.teardown) and not vm_present(name) and not other_nerva_vms():
             cmd_network_down(argparse.Namespace(yes=True))
         print("Wait or fetch failed; bucket/account were preserved so the output is recoverable.", file=sys.stderr)
         raise
     if a.cleanup_network or a.teardown:
         others = other_nerva_vms()
         if others:
-            print("Other NERVA VMs are still running; leaving the NAT for their waiter:
-" + others)
+            print("Other NERVA VMs are still running; leaving the NAT for their waiter:\n" + others)
         else:
             cmd_network_down(argparse.Namespace(yes=True))
     if a.teardown and not other_nerva_vms():

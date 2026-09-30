@@ -15,3 +15,12 @@ def test_requested_zones_preserves_fallback_order_without_duplicates():
 def test_exact_zone_disables_fallback():
     args = Namespace(zone="us-central1-c", zones=None)
     assert requested_zones(args) == ["us-central1-c"]
+
+
+def test_cloud_scripts_compile():
+    import py_compile
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    for script in sorted((root / "cloud").glob("*.py")):
+        py_compile.compile(str(script), doraise=True)

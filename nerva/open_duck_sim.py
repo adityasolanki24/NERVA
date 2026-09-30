@@ -99,11 +99,13 @@ def to_arrays(log: list[StepLog], start: int = 0) -> dict[str, np.ndarray]:
 class OpenDuckSim:
     def __init__(self, raw_accel: bool = True, init_joint_noise: float = 0.0,
                  obs_noise: bool = False, seed: int = 0,
-                 policy_path: str | Path = POLICY):
+                 policy_path: str | Path = POLICY, scene_extender=None):
         import mujoco  # noqa: F401  (imported here so `nerva` core never needs it)
         from playground.open_duck_mini_v2.mujoco_infer import MjInfer
 
         self.inf = MjInfer(str(SCENE), str(REFERENCE), str(policy_path), standing=False)
+        if scene_extender is not None:
+            self._extend_scene(scene_extender)
         self.model, self.data = self.inf.model, self.inf.data
         self.phase_factor = 1.0
         self.inf.commands = [0.0] * 7
@@ -137,6 +139,31 @@ class OpenDuckSim:
         self.applied_command: tuple[float, float, float] = (0.0, 0.0, 0.0)
         self.style_vector: np.ndarray | None = None  # S1 policies only
         self.nb_steps_in_period = self.inf.PRM.nb_steps_in_period
+
+    def _extend_scene(self, extender) -> None:
+        """Rebuild the model with extra (DOF-free) elements, e.g. nerva.world.extend_scene.
+
+        MjInfer looked up all robot indices by name at construction; extensions must only
+        append bodies/geoms/cameras without degrees of freedom, so those indices stay valid.
+        The robot's state is copied over unchanged.
+        """
+        import mujoco
+
+        spec = mujoco.MjSpec.from_file(str(SCENE))
+        extender(spec)
+        model = spec.compile()
+        model.opt.timestep = self.inf.model.opt.timestep  # MjInfer overrides it after loading
+        old = self.inf.data
+        if (model.nq, model.nv, model.nu, model.nsensordata) != (self.inf.model.nq, self.inf.model.nv,
+                                                                  self.inf.model.nu, self.inf.model.nsensordata):
+            raise ValueError("scene extensions must not add joints, actuators or sensors")
+        data = mujoco.MjData(model)
+        data.time = old.time
+        data.qpos[:], data.qvel[:], data.ctrl[:] = old.qpos, old.qvel, old.ctrl
+        mujoco.mj_forward(model, data)
+        # The solver warm start matters here (opt.iterations = 1 in the upstream scene).
+        data.qacc_warmstart[:] = old.qacc_warmstart
+        self.inf.model, self.inf.data = model, data
 
     # ── inputs ──────────────────────────────────────────────────────────────
 

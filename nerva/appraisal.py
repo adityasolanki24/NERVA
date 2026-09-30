@@ -59,8 +59,8 @@ import math  # noqa: E402
 
 from nerva.interfaces import Track  # noqa: E402
 
-HABITUATION_S = {"person": 25.0, "ball": 10.0}
-THREAT_MEMORY_S = 30.0
+HABITUATION_S = {"person": 30.0, "ball": 30.0}
+THREAT_MEMORY_S = 45.0
 IN_VIEW_PERIOD_S = 2.0  # re-appraise a visible stimulus this often ("still looking at it")
 
 

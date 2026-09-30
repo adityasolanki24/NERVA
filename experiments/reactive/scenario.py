@@ -81,19 +81,20 @@ def default_scenario() -> dict[str, Agent]:
     ball = Agent([(0.0, "hide", ()), (4.0, "appear", (1.3, 0.5)), (4.0, "wait", ())])
     person = Agent([
         (0.0, "hide", ()),
-        (30.0, "appear", (3.5, 0.2)), (30.0, "approach", (0.35, 1.4)),  # slow, friendly approach
-        (46.0, "approach", (1.6, 0.3)),  # sudden lunge
-        (48.0, "wait", ()),
+        (30.0, "appear", (3.5, 0.2)), (30.0, "approach", (0.25, 1.4)),  # slow, friendly approach
+        (43.0, "leave", (0.8,)), (44.8, "wait", ()),  # steps back ...
+        (46.5, "approach", (1.8, 0.45)),  # ... then lunges at the robot
+        (48.5, "wait", ()),
         (56.0, "leave", (0.5,)),
-        (70.0, "hide", ()),
-        (74.0, "appear", (3.5, -0.2)), (74.0, "approach", (0.35, 1.2)),  # returns while the lunge is recent
+        (68.0, "hide", ()),
+        (72.0, "appear", (3.5, -0.2)), (72.0, "approach", (0.25, 1.2)),  # returns while the lunge is recent
         (90.0, "wait", ()),
     ])
     return {"ball": ball, "person": person}
 
 
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
-        record_every: int | None = None):
+        record_every: int | None = None, head_moves_while_walking: bool = False):
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
@@ -102,7 +103,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     perception = SimulatedPerception(seed=seed)
     appraiser = ContextualAppraiser()
     affect = CategoricalAffectModel()
-    behaviour = ReactiveBehaviour()
+    behaviour = ReactiveBehaviour(walking_head_limit=None) if head_moves_while_walking else ReactiveBehaviour()
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, {}, ())
     sim.set_behaviour(decision.command)
@@ -122,7 +123,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             mujoco.mj_kinematics(sim.model, d)
             entities = {n: world.entity_position(d, n) for n in agents}
             pstate = perception.detect(t, d.cam_xpos[cam].copy(), d.cam_xmat[cam].reshape(3, 3).copy(),
-                                       robot_yaw, entities, 1.0 / FRAME_HZ)
+                                       robot_yaw, entities, 1.0 / FRAME_HZ, ego_velocity=d.qvel[0:2].copy())
             tracks = pstate.tracks
             events = list(pstate.events)
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])

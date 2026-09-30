@@ -48,3 +48,22 @@ def test_track_is_forgotten_then_reported_lost():
     gone = _run(p, [(-3.0, 0, 1.5)] * 50, t0=1.0)
     assert seen[-1].tracks and not gone[-1].tracks
     assert kinds(gone) == ["person_lost"]
+
+
+def test_robot_walking_toward_a_still_person_is_not_an_approach():
+    p = SimulatedPerception(seed=6)
+    states = []
+    for i in range(40):  # robot walks at 0.6 m/s toward a person standing 3 m ahead
+        cam = CAM + np.array([0.6 * DT * i, 0, 0])
+        states.append(p.detect(i * DT, cam, XMAT, 0.0, {"person": np.array([3.0, 0, 1.5])}, DT,
+                               ego_velocity=np.array([0.6, 0.0])))
+    assert kinds(states) in (["person_appeared"], ["person_appeared", "person_close"])
+    assert abs(states[-1].tracks[0].approach_speed) < 0.15
+
+
+def test_lunge_after_slow_approach_is_still_detected():
+    path = [(3.0 - 0.25 * DT * i, 0, 1.5) for i in range(40)]  # slow to 2.0 m
+    path += [path[-1]] * 20  # stop
+    path += [(max(0.5, 2.0 - 1.6 * DT * i), 0, 1.5) for i in range(15)]  # lunge
+    k = kinds(_run(SimulatedPerception(seed=7), path))
+    assert "person_approaching_slowly" in k and "person_approaching_rapidly" in k

@@ -23,6 +23,8 @@ def test_orients_to_something_new_then_approaches_when_interested():
     d = run(beh, 0.5, {}, ball)
     assert d.mode == "orient" and d.command.yaw_rate > 0 and d.command.vx == 0
     d = run(beh, 1.0, {"interest": 0.4}, ball, t0=MIN_DWELL_S + 0.5)
+    assert d.mode == "approach" and d.command.vx == 0 and d.command.yaw_rate > 0  # turns before walking
+    d = run(beh, 1.0, {"interest": 0.4}, (Track("ball", bearing=0.3, distance=1.5),), t0=2.0)
     assert d.mode == "approach" and d.command.vx > 0 and d.target == "ball"
     d = run(beh, 1.5, {"interest": 0.4}, (Track("ball", 0.0, 0.3),), t0=3.0)
     assert d.mode == "inspect" and d.command.vx == 0
@@ -50,3 +52,11 @@ def test_low_dominance_keeps_more_distance():
     near = ReactiveBehaviour._stop_distance("person", PADState(dominance=0.2))
     far = ReactiveBehaviour._stop_distance("person", PADState(dominance=-0.6))
     assert far > near
+
+
+def test_mild_fear_watches_and_keeps_distance():
+    beh = ReactiveBehaviour()
+    d = run(beh, 2.0, {"fear": 0.1}, (Track("person", 0.3, 1.0),))
+    assert d.mode == "watch" and d.command.vx < 0 and d.command.yaw_rate > 0
+    d = run(beh, 2.0, {"fear": 0.1}, (Track("person", 0.0, 2.0),), t0=5.0)
+    assert d.mode == "watch" and d.command.vx == 0

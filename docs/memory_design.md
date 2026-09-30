@@ -106,6 +106,39 @@ One record per **entity** (a person identity, or an object instance/category) an
   - this is also where reflection-like summaries would come from ("person A is usually gentle"), as
     numeric statistics, not text
 
+### 3.7 Who did it? Identity binding and attribution (e.g. petting without seeing the face) [design]
+
+Example: person A is recognised by face at a distance, walks up, and pets the robot while their face is
+out of view. How does the positive experience end up attached to A?
+
+1. **Track continuity.**
+   - Identity is a belief attached to a *track*, not to the current face detection.
+   - Once the face matches A, the track carries "A" with a confidence. Position/motion continuity, body
+     and clothing appearance (and voice, on hardware) maintain it while the face is out of view.
+   - The confidence decays slowly without confirming cues, and drops if the track is lost.
+2. **Spatial attribution.**
+   - A touch/contact event (head/back touch pads; on Open Duck possibly force/IMU disturbance; contact
+     sensors in simulation) is attributed to the tracked person within reach.
+   - With one person in reach, the attribution is near-certain; with several, it's split by distance.
+3. **Touch appraisal.**
+   - Slow, gentle, rhythmic stroking is appraised as positive. This parallels C-tactile afferents, which
+     respond best to slow, gentle stroking velocities and code pleasant touch (Löken et al. 2009) [theory].
+   - A sharp impact is appraised as negative.
+4. **Temporal credit.**
+   - The affective outcome updates every entity active in working memory within an eligibility window
+     of a few seconds (event binding into one episode).
+   - Each update is weighted by recency × identity confidence: Δassociation = α · p(identity) ·
+     (experienced − expected).
+5. **Deferred binding.**
+   - An unresolved episode is stored as "petted by unknown track #k".
+   - If the same continuous track, or a later appearance re-identification, confirms A, the episode is
+     resolved and applied to A's record at the next consolidation ("oh, it was you").
+6. **Generalisation fallback.** Never-resolved outcomes update the "unknown person" category and the
+   place's affect, so they weaken rather than vanish.
+
+Test (added to §5): A approaches, pets the robot out of face view and leaves; B has never touched it.
+Afterwards, warmth/approach toward A increases, but toward B it doesn't.
+
 ### 3.6 Interfaces to the rest of NERVA
 - **Appraisal:**
   - expectedness = how well memory predicted the event (low for a known-gentle person suddenly lunging →
@@ -156,6 +189,8 @@ One record per **entity** (a person identity, or an object instance/category) an
 | **M5** | Real identity from vision: MuJoCo appearance features now; face embeddings in Isaac/hardware | real perception |
 
 ## Sources
+
+- Löken, Wessberg, Morrison, McGlone & Olausson 2009, *Coding of pleasant touch by unmyelinated afferents in humans*, Nature Neuroscience (C-tactile afferents)
 
 - Kumaran, Hassabis & McClelland 2016, *What learning systems do intelligent agents need? CLS theory updated*: https://web.stanford.edu/~jlmcc/papers/KumaranHassabisMcClelland16FinalMS.pdf
 - Anderson & Schooler 1991 and ACT-R activation (overview): https://www.ai.rug.nl/~niels/publications/taatgenLebiereAnderson.pdf

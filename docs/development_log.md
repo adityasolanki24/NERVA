@@ -4,6 +4,42 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Reactive stage 1: scene, perception, contextual appraisal, interest, behaviour modes
+
+**User decision:** the S1 demo's style differences were too small to see. Make the robot genuinely react to its environment through the emotion model, with complex behaviours (curiosity, fear/stepping back). Stay in MuJoCo for now; Isaac Sim later. Design: `docs/reactive_behaviour_design.md`.
+
+**Built** (commits `d54b7fd` … `33e7475`; 112 tests pass):
+- **Scene** (`nerva/world.py`):
+  - Visual-only mocap person (1.7 m) and ball, added via MjSpec, plus a `robot_eye` camera on the head, 0.09 m in front of the head site (inside the shell the view was blocked).
+  - The robot's dynamics are bit-identical to the plain scene. This needed the solver warm start copied over, because `opt.iterations = 1`.
+- **Perception** (`nerva/perception.py`):
+  - A simulated head-camera detector: field of view and range, a distance-dependent miss rate, bearing/distance noise.
+  - Tracks with memory. Approach speed is a least-squares slope with **ego-motion compensation**; without it, walking toward someone read as them approaching.
+  - Separate re-arm flags for slow and rapid approaches (a slow event had masked a lunge).
+- **Contextual appraisal** (`ContextualAppraiser`): novelty habituation, proximity and speed of approaches, threat memory (45 s), relief when a threat leaves, habituation to repeated lunges.
+- **Affect v0.2:** a new emotion, "interest" (novel and non-harmful). The rule and anchor are NERVA choices. Events without novelty elicit exactly what v0.1 did (existing tests unchanged).
+- **Behaviour v1** (`nerva/reactive_behaviour.py`): explore / orient / approach / inspect / freeze / retreat / watch / withdraw, with hysteresis and head gaze.
+- **Scenario and renderer:** `experiments/reactive/`, rendered in the cloud (`cloud/jobs/reactive_demo.sh`).
+
+**Scenario result, S1 policy, seed 0 (simulation) [measured]:**
+- Ball appears → surprise and interest → approach → inspect (about 16 s).
+- Person approaches slowly → hope and interest → the robot walks up to them.
+- Lunge → fear 0.57, surprise 0.77 → **freeze → retreat**.
+- Person out of sight → relief (joy).
+- The person's return within the threat memory → the same slow approach is appraised as threatening → **watch** (wary, keeps distance) → habituates → explore.
+- Worst tilt 7.7°, no fall. One seed; the planned 5-seed evaluation (design §5) has not been run.
+
+**Findings along the way [measured]:**
+- **Head offsets stop S1 from walking.** At vx 0.12, 10 s: head yaw 0.2 rad → 0.012 m/s (0.05 without); pitch/roll 0.2 → about 0.05–0.074 m/s; beyond 0.3 rad it nearly stops.
+  - Cause [fact, upstream `joystick.py`]: training puts random head commands in the observation but never applies them to the head motors (the line is commented out). The hardware runtime does apply them.
+  - Interim: the behaviour limits head offsets while walking and gazes fully only when standing.
+  - Fix in training: **S3** (`--apply_head_commands`), run `s3_pilot-20260930-235950`, in progress.
+- **Head-pitch sign.** On the robot_eye camera, positive `head_pitch` tilts the face **up** (+0.4 → 35° up, −0.4 → 14° down), while the head position barely moves. `experiments/expressive_locomotion/head_posture.py` (RQ1c) states the opposite ("negative head_pitch raises the head; verified by rendering"), so **RQ1c's head-up/head-down labels may be inverted**. Not yet re-checked visually.
+- **The backward references are fine.** For straight gaits, the R1 neutral recordings achieve −0.10 to −0.12 m/s at key −0.148. The earlier side note (key −0.148, achieved +0.014) came from turning gaits. So the policy's weak backward walking (21% of command) has a different, unknown cause.
+- **Small velocity commands barely move the policy,** so approaches use full speed or nothing.
+
+---
+
 ## 2026-09-30 — Affect connected to S1: behaviour layer v0 and S1 demo video
 
 **Decision (user):** adopt S1 (tempo and torso pitch working), park step height as an open problem, and connect affect.

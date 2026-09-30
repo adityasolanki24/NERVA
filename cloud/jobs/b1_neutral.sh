@@ -13,5 +13,6 @@ python -c "import jax; assert jax.devices()[0].platform == 'gpu', jax.devices()"
   --neutral \
   --task flat_terrain_backlash \
   --num_timesteps "${TRAIN_TIMESTEPS:-300000000}" \
+  --feet_height_scale "${FEET_HEIGHT_SCALE:-0}" \
   --output_dir /work/out/checkpoints \
   2>&1 | tee /work/out/train.log

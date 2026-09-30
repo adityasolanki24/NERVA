@@ -10,8 +10,10 @@ Implements docs/style_policy_design.md §5, fixed before training:
 Success criteria (design §5):
   1. each intended feature changes monotonically over the 5 values, in 10/10 paired seeds
   2. cross-talk: for each other feature, |change between e_k = ±1| < |intended change|,
-     both in "normalised units". The design did not define these; defined here, before
-     looking at results: units of that feature's across-seed std at neutral S1.
+     both in "normalised units". The design did not define these. S1 used the across-seed
+     std at neutral, which is 0 for the FFT-quantised gait frequency (2026-09-30). Fixed
+     before S2: the within-condition std pooled over all S1-policy conditions, floored at
+     the metric's resolution (RESOLUTION).
   3. no walking falls
   4. forward-tracking error |v_fwd − 0.15| no worse than B0's by more than 25%
 
@@ -36,6 +38,9 @@ SECONDS, WINDOW_START_S, INIT_NOISE = 20.0, 5.0, 0.02
 LEVELS = (-1.0, -0.5, 0.0, 0.5, 1.0)
 FEATURES = {0: "gait_hz", 1: "lift_mm", 2: "pitch_mean_deg"}  # intended feature per dimension
 TRACKING_TOLERANCE = 1.25
+# gait_hz: FFT bin of gait_metrics.dominant_frequency over the 15 s window (pad 8).
+RESOLUTION = {"gait_hz": 1.0 / ((SECONDS - WINDOW_START_S) * 8), "lift_mm": 0.1,
+              "pitch_mean_deg": 0.01, "v_fwd": 1e-4}
 
 
 def trial(job: tuple[str, str, tuple[float, float, float] | None, int]) -> dict:
@@ -75,7 +80,10 @@ def analyse(rows: list[dict], seeds: list[int]) -> dict:
     neutral = style_vec(0, 0.0)
     report: dict = {"dimensions": {}}
     all_features = list(FEATURES.values()) + ["v_fwd"]
-    scale = {f: np.std([val("S1", neutral, s, f) for s in seeds]) for f in all_features}
+    conditions = sorted({tuple(r["style"]) for r in rows if r["policy"] == "S1"})
+    scale = {f: max(float(np.sqrt(np.mean([np.var([val("S1", c, s, f) for s in seeds]) for c in conditions]))),
+                    RESOLUTION[f]) for f in all_features}
+    report["normaliser"] = scale
     for k, feature in FEATURES.items():
         series = np.array([[val("S1", style_vec(k, lv), s, feature) for lv in LEVELS] for s in seeds])
         d = np.diff(series, axis=1)
@@ -95,6 +103,10 @@ def analyse(rows: list[dict], seeds: list[int]) -> dict:
             "crosstalk_ok": crosstalk_ok,
             "pass_monotonic": monotonic == len(seeds),
         }
+    from nerva.style import S1_NEUTRAL_PERIOD_S, S1_TEMPO_GAIN, s1_foot_height
+    report["dimensions"]["e1"]["reference_target"] = {
+        str(lv): 1.0 / (S1_NEUTRAL_PERIOD_S * (1 - S1_TEMPO_GAIN * lv)) for lv in LEVELS}
+    report["dimensions"]["e2"]["reference_target"] = {str(lv): 1000 * s1_foot_height(lv) for lv in LEVELS}
     s1_rows = [r for r in rows if r["policy"] == "S1"]
     report["walking_falls"] = {p: int(sum(r["fell"] for r in rows if r["policy"] == p))
                                for p in sorted({r["policy"] for r in rows})}

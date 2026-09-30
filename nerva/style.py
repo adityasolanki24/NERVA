@@ -36,3 +36,12 @@ def s1_nb_steps_in_period(e1: float) -> int:
     """
     period = S1_NEUTRAL_PERIOD_S * (1.0 - S1_TEMPO_GAIN * e1)
     return int(period * REFERENCE_FPS)
+
+
+S1_NEUTRAL_FOOT_HEIGHT_M = 0.04  # upstream placo preset medium.json walk_foot_height
+S1_FOOT_HEIGHT_GAIN = 0.5  # walk_foot_height × (1 + 0.5·e2), cloud/generate_styled_references.py
+
+
+def s1_foot_height(e2: float) -> float:
+    """The walk_foot_height [m] the R1 references were generated with, for step-height e2."""
+    return S1_NEUTRAL_FOOT_HEIGHT_M * (1.0 + S1_FOOT_HEIGHT_GAIN * e2)

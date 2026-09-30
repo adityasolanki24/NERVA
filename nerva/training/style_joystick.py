@@ -11,6 +11,8 @@ reset/step) except for the lines marked `# NERVA:`:
   2. the phase clock uses that style's gait period;
   3. the style vector is appended to both observations;
   4. a style is sampled at reset and resampled whenever the command is resampled.
+Optional (S2, off by default): a per-style feet-height cost, `feet_height_scale`,
+added in `_get_reward` (see FeetHeight below). With scale 0 nothing changes.
 Style randomness is drawn from keys DERIVED with jax.random.fold_in, so the
 upstream random stream is consumed exactly as upstream consumes it. With a single
 neutral style built from upstream's reference file, this env therefore reproduces
@@ -34,7 +36,14 @@ from mujoco_playground._src.collision import geoms_colliding
 from playground.common.poly_reference_motion import PolyReferenceMotion
 from playground.open_duck_mini_v2 import joystick as upstream
 
+from nerva.style import s1_foot_height
+
 STYLE_KEY_SALT = 0x5717E  # fold_in constant: style keys never consume upstream randomness
+
+# S2 feet-height cost (docs/development_log.md, 2026-09-30). Same form as MuJoCo
+# Playground's Berkeley Humanoid _cost_feet_height, with a per-style target:
+#   Σ_feet ((swing_peak − STANCE_FOOT_SITE_Z) / walk_foot_height(e2) − 1)² · first_contact
+STANCE_FOOT_SITE_Z = 0.003  # m; median foot-site z in stance, measured in MuJoCo (B0 policy, 2026-09-30)
 
 
 class StyledReference:
@@ -62,6 +71,7 @@ class StyledReference:
         self.nb_steps = jp.array([p.nb_steps_in_period for p in prms], dtype=jp.int32)
         self.periods = [p.period for p in prms]
         self.styles = jp.array(styles, dtype=jp.float32)  # (S, style_dim)
+        self.foot_heights = jp.array([s1_foot_height(float(e[1])) for e in styles], dtype=jp.float32)
         self.style_dim = int(self.styles.shape[1])
 
     def nb_steps_in_period(self, s):
@@ -83,14 +93,30 @@ class StyledReference:
         return vmap(lambda c: jp.polyval(c, t))(coeffs)
 
 
+def feet_height_cost(swing_peak: jax.Array, first_contact: jax.Array, target: jax.Array) -> jax.Array:
+    """Squared relative error of each foot's swing peak lift, counted on touchdown."""
+    error = (swing_peak - STANCE_FOOT_SITE_Z) / target - 1.0
+    return jp.sum(jp.square(error) * first_contact)
+
+
 class StyleJoystick(upstream.Joystick):
     """Joystick env whose policy observes a style vector and imitates that style's reference."""
 
     def __init__(self, reference: StyledReference, task: str = "flat_terrain",
-                 config=None, config_overrides=None):
+                 config=None, config_overrides=None, feet_height_scale: float = 0.0):
         self.SREF = reference
-        super().__init__(task=task, config=config or upstream.default_config(),
-                         config_overrides=config_overrides)
+        config = config or upstream.default_config()
+        self.feet_height_scale = float(feet_height_scale)
+        if self.feet_height_scale != 0.0:  # NERVA S2; absent from the reward otherwise
+            config.reward_config.scales.feet_height = self.feet_height_scale
+        super().__init__(task=task, config=config, config_overrides=config_overrides)
+
+    def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
+        rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
+        if self.feet_height_scale != 0.0:
+            target = self.SREF.foot_heights[info["style_idx"]]
+            rewards["feet_height"] = feet_height_cost(info["swing_peak"], first_contact, target)
+        return rewards
 
     # ── style helpers ────────────────────────────────────────────────────────
 

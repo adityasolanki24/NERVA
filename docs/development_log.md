@@ -4,6 +4,32 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-09-30 — S2 preregistration: per-style feet-height cost; B2 + S2 launched
+
+**Change [NERVA design choice]:** `StyleJoystick(feet_height_scale=...)` adds
+
+`feet_height = Σ_feet ((swing_peak − 0.003 m) / walk_foot_height(e2) − 1)² · first_contact`
+
+- It has the form of MuJoCo Playground's Berkeley Humanoid `_cost_feet_height`.
+- The target is the style's R1 foot height (20 / 40 / 60 mm).
+- 0.003 m is the median stance foot-site height, measured in MuJoCo with the B0 policy.
+- With scale 0 the reward is unchanged, so S1/B1 are reproducible. Tests cover the targets, the cost and the config key (87 passed).
+
+**Weight −30, fixed before training.** B0 per-step episode means are: alive 20, tracking_lin 1.57, tracking_ang 1.37, imitation 1.51, action_rate −0.56. At the measured under-lift (about 14 of 40 mm, ≈0.074 touchdowns per step), −30 costs about 0.9 per step. That is comparable to, but below, each tracking term.
+
+**Runs:**
+- **B2** (`b2_neutral`): B1 + the term, shipped neutral references.
+- **S2** (`s2_pilot`): S1 + the term, the 7 R1 styles.
+- Both: 300 M steps, L4, 3 h cap.
+
+**Evaluation (unchanged §5 criteria):**
+- The cross-talk normaliser is now the within-condition std pooled over all S-policy conditions, floored at the metric resolution (gait frequency: FFT bin 0.0083 Hz).
+- Re-analysing S1 with it leaves every S1 verdict unchanged.
+- Tracking is compared against B0 as before. B2 is also reported, because the reward change may alter tracking.
+- **Additional pre-stated check for S2:** achieved lift vs the reference target (20 / 30 / 40 / 50 / 60 mm).
+
+---
+
 ## 2026-09-30 — Why e2 (step height) failed: all Open Duck policies under-lift; reward has no foot-height term
 
 **The metric is right [measured].** Replaying the R1 reference *joint* trajectories kinematically (gait `0.148_0.037_-0.074`, base fixed) and applying our `lift_height` to the MuJoCo foot site gives:
@@ -83,7 +109,7 @@ So a policy that tracked the reference joints would read about 42 mm at neutral.
 
 **Runs.** One g2-standard-8 (L4) each, 3 h cap, `flat_terrain_backlash`, 300,482,560 effective steps. All three exited 0 and self-deleted; the waiter removed the NAT and `audit` is clean.
 - `b0_baseline-20260929-230717` (upstream runner, shipped references)
-- `b1_neutral-20260929-230837` (StyleJoystick, R1 neutral references)
+- `b1_neutral-20260929-230837` (StyleJoystick, **shipped** neutral references via `--neutral`; corrected 2026-09-30, earlier this said R1 neutral)
 - `s1_pilot-20260929-231102` (StyleJoystick, 7 R1 styles)
 - Wall time was about 1 h 59 min each, with 7,040–7,050 s in training. That is about 43 k steps/s, including 15 evaluations and exports, on the backlash task.
 
@@ -96,7 +122,7 @@ So a policy that tracked the reference joints would read about 42 mm at neutral.
 | S1 | 212 | 248 | 265 | 277 | 282 | 233 | 289 | 290 | 224 |
 
 **Reading:**
-- B1 tracks B0 within the evaluation noise at every checkpoint. So the NERVA env with regenerated neutral references reproduces upstream training [measured, reward only].
+- B1 tracks B0 within the evaluation noise at every checkpoint. So the NERVA env reproduces upstream training with the same references [measured, reward only]. (Corrected 2026-09-30: B1 uses the shipped pickle, not R1 neutral; R1 neutral is used only inside S1.)
 - S1 is slightly lower at most checkpoints, which is expected for a 7-style task [hypothesis].
 - All three drop at the last checkpoint, which suggests evaluation variance rather than collapse [hypothesis].
 - **Reward says nothing about whether styles are expressed.** That is the S1 evaluation (design §5), next.

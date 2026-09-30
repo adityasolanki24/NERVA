@@ -134,3 +134,29 @@ def test_style_is_observed_and_resampled_with_the_command(in_playground):
         np.testing.assert_array_equal(np.asarray(s.obs["state"][101:]), styles[idx])
         np.testing.assert_array_equal(np.asarray(s.obs["state"][6:13]), np.asarray(s.info["command"]))
     assert len(seen) > 1  # resampling actually changes the style
+
+
+def test_foot_height_targets_follow_the_r1_mapping(tmp_path):
+    a = tmp_path / "a.pkl"
+    _write_pickle(a, [0.0, 0.1], 0.54, lambda dx, d: 0.0)
+    ref = StyledReference([str(a)] * 3, [[0, 0, 0], [0, -1, 0], [0, 1, 0]])
+    np.testing.assert_allclose(np.asarray(ref.foot_heights), [0.04, 0.02, 0.06], rtol=1e-6)
+
+
+def test_feet_height_cost_counts_touchdowns_only():
+    from nerva.training.style_joystick import STANCE_FOOT_SITE_Z, feet_height_cost
+
+    target = jp.float32(0.04)
+    on_target = jp.array([STANCE_FOOT_SITE_Z + 0.04, STANCE_FOOT_SITE_Z + 0.02])
+    # left foot lands exactly at target (0 cost), right lands at half (0.25); right only if it touched down
+    assert float(feet_height_cost(on_target, jp.array([1.0, 1.0]), target)) == pytest.approx(0.25, rel=1e-5)
+    assert float(feet_height_cost(on_target, jp.array([1.0, 0.0]), target)) == pytest.approx(0.0, abs=1e-6)
+
+
+def test_feet_height_scale_can_be_added_to_upstream_config():
+    from playground.open_duck_mini_v2 import joystick as upstream
+
+    config = upstream.default_config()
+    config.reward_config.scales.feet_height = -30.0
+    assert config.reward_config.scales.feet_height == -30.0
+    assert "feet_height" not in upstream.default_config().reward_config.scales

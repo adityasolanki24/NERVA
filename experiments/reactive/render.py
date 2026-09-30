@@ -127,7 +127,10 @@ def boxes(model, data, cam_id, tracks, positions):
         px = [q for q in (project(model, data, cam_id, p) for p in pts) if q is not None]
         if px:
             us, vs = zip(*px)
-            out.append((tr, max(0, min(us)), max(0, min(vs)), min(EYE_W - 1, max(us)), min(EYE_H - 1, max(vs))))
+            u0, v0 = max(0, min(us)), max(0, min(vs))
+            u1, v1 = min(EYE_W - 1, max(us)), min(EYE_H - 1, max(vs))
+            if u1 > u0 and v1 > v0:  # skip boxes entirely outside the image
+                out.append((tr, u0, v0, u1, v1))
     return out
 
 

@@ -4,6 +4,32 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Behaviour v2 (utility arbitration), S3 (head commands in training), backward-walking diagnosis
+
+**Behaviour v2 (`nerva/action_selection.py`):**
+- Emotion-modulated action selection replaces the if/else rules. Each action's utility comes from drives (interest, hope+joy, fear, surprise, distress), per-target novelty from the appraiser, and proximity, plus persistence and committed freeze/back-step.
+- The weights are hand-set design choices. It is not learned.
+- 5-seed reactive evaluation with S1: curiosity 5/5, habituation 5/5, safety 5/5, **fear 0/5**. The robot retreats, but gains no distance within 3 s.
+
+**S3** (`s3_pilot-20260930-235950`, `--apply_head_commands`, 300 M steps, exit 0) [measured]:
+- **Walking with head offsets (vx 0.15, 15 s):**
+  - Yaw 0.2 → 0.089 m/s (S1: 0.012); yaw 0.3 → 0.078; yaw 0.4 → 0.015; yaw 0.5 → steps in place.
+  - Pitch +0.4 → 0.084 (S1: 0.027); pitch −0.2 → 0.083; pitch −0.4 → 0.014.
+  - About three times S1's head range, but not the full range sampled in training.
+- **Style evaluation (`s3_eval`, same §5 protocol):**
+  - At the trained values, gait frequency still follows tempo: 1.52 / 1.85 / 2.50 Hz. At the untrained e1 = −0.5 it reads 3.17 Hz (harmonic or shuffle, unchecked).
+  - Torso pitch is only monotonic from 0 upward (0.42 / 0.22 / 0.79 / 1.65 / 3.31°).
+  - Tracking is worse: mean 0.071, worst condition 0.141, against B0's 0.053.
+  - **FAIL.** S3 trades style fidelity for head tolerance.
+- Reactive scenario with S3 and a wider walking-head limit: same verdicts as S1 (fear 0/5).
+
+**Backward walking [measured]:**
+- At vx −0.15 m/s commanded: B0 −0.036, S1 −0.043. Forward 0.15: 0.096 / 0.114.
+- The references aren't the cause. The shipped backward reference moves at −0.115 m/s at the −0.148 key; forward is +0.155.
+- Hypothesis: too few backward episodes in training. Test prepared as **S4** (S3 + 30% backward-emphasis commands via a derived key; test added). Launch failed: no L4 capacity in us-central1-a/b/c at the time.
+
+---
+
 ## 2026-10-01 — Reactive stage 1: scene, perception, contextual appraisal, interest, behaviour modes
 
 **User decision:** the S1 demo's style differences were too small to see. Make the robot genuinely react to its environment through the emotion model, with complex behaviours (curiosity, fear/stepping back). Stay in MuJoCo for now; Isaac Sim later. Design: `docs/reactive_behaviour_design.md`.

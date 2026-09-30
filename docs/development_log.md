@@ -4,6 +4,27 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — S4 (backward emphasis): hypothesis refuted; cloud torn down
+
+**S4:** `s4_pilot-20261001-021916` = S3 + 30% backward-emphasis commands, 300 M steps, exit 0.
+
+**Mean forward velocity, 2 seeds, 15 s, neutral style [measured]:**
+
+| policy | vx = −0.15 | −0.10 | +0.15 |
+|---|---|---|---|
+| S1 | −0.042 | −0.016 | +0.113 |
+| S3 | −0.001 | +0.000 | +0.095 |
+| S4 | −0.007 | −0.001 | +0.075 |
+
+**Reading:**
+- More backward episodes did **not** improve backward walking. S3 and S4 both walk backward far worse than S1, which suggests that training with head commands applied cost the backward gait [hypothesis].
+- The cause of weak backward walking in all policies stays unknown. Candidates not tested: the tracking reward's σ, the stand-still cost, and the imitation weight of backward gaits.
+- The fear retreat therefore remains limited. S1 stays the policy used in the reactive stage.
+
+**Teardown [measured, `launch.py audit`]:** no instances, disks, addresses, forwarding rules, routers or snapshots. The results bucket and the runner service account remain.
+
+---
+
 ## 2026-10-01 — Memory M2–M4: episodic store, sleep consolidation, spatial memory
 
 **M2/M3 — episodic memory** (`nerva/episodic.py`, `14b4ef1`):

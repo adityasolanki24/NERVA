@@ -13,6 +13,11 @@ reset/step) except for the lines marked `# NERVA:`:
   4. a style is sampled at reset and resampled whenever the command is resampled.
 Optional (S2, off by default): a per-style feet-height cost, `feet_height_scale`,
 added in `_get_reward` (see FeetHeight below). With scale 0 nothing changes.
+Optional (S3, off by default): `apply_head_commands` adds the sampled head commands to the head
+motor targets after the speed limit, exactly as the hardware runtime does
+(Open_Duck_Mini_Runtime v2_rl_walk_mujoco.py); upstream training leaves them in the observation
+only (joystick.py, commented-out line in step). Without it, policies stop walking when the head
+is moved at run time (measured 2026-09-30: 0.2 rad of head yaw → 0.012 m/s).
 Style randomness is drawn from keys DERIVED with jax.random.fold_in, so the
 upstream random stream is consumed exactly as upstream consumes it. With a single
 neutral style built from upstream's reference file, this env therefore reproduces
@@ -103,10 +108,12 @@ class StyleJoystick(upstream.Joystick):
     """Joystick env whose policy observes a style vector and imitates that style's reference."""
 
     def __init__(self, reference: StyledReference, task: str = "flat_terrain",
-                 config=None, config_overrides=None, feet_height_scale: float = 0.0):
+                 config=None, config_overrides=None, feet_height_scale: float = 0.0,
+                 apply_head_commands: bool = False):
         self.SREF = reference
         config = config or upstream.default_config()
         self.feet_height_scale = float(feet_height_scale)
+        self.apply_head_commands = bool(apply_head_commands)
         if self.feet_height_scale != 0.0:  # NERVA S2; absent from the reward otherwise
             config.reward_config.scales.feet_height = self.feet_height_scale
         super().__init__(task=task, config=config, config_overrides=config_overrides)
@@ -277,7 +284,10 @@ class StyleJoystick(upstream.Joystick):
                 prev_motor_targets + self._config.max_motor_velocity * self.dt,
             )
 
-        data = mjx_env.step(self.mjx_model, state.data, motor_targets, self.n_substeps)
+        applied = motor_targets
+        if self.apply_head_commands:  # NERVA S3: head offsets after the speed limit, as on hardware
+            applied = motor_targets.at[5:9].add(state.info["command"][3:7])
+        data = mjx_env.step(self.mjx_model, state.data, applied, self.n_substeps)
         state.info["motor_targets"] = motor_targets
 
         contact = jp.array([geoms_colliding(data, geom_id, self._floor_geom_id)

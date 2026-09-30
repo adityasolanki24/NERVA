@@ -102,7 +102,8 @@ def extend_scene(spec: mujoco.MjSpec) -> None:
 class World:
     """Moves the mocap entities of an extended scene along their Movers."""
 
-    def __init__(self, model: mujoco.MjModel, movers: dict[str, Mover]):
+    def __init__(self, model: mujoco.MjModel, movers: dict[str, Mover] | None = None):
+        movers = movers or {}
         unknown = set(movers) - set(ENTITY_KINDS)
         if unknown:
             raise ValueError(f"unknown entities {unknown}")
@@ -111,12 +112,14 @@ class World:
 
     def update(self, data: mujoco.MjData, t: float) -> None:
         for name, mover in self.movers.items():
-            i = self._mocap[name]
-            xy = mover.position(t)
-            z = BALL_RADIUS if name == "ball" else 0.0
-            data.mocap_pos[i] = [xy[0], xy[1], z]
-            yaw = mover.yaw(t)
-            data.mocap_quat[i] = [np.cos(yaw / 2), 0.0, 0.0, np.sin(yaw / 2)]
+            self.place(data, name, mover.position(t), mover.yaw(t))
+
+    def place(self, data: mujoco.MjData, name: str, xy, yaw: float) -> None:
+        """Put an entity at world (x, y) with heading yaw (for agents driven by other code)."""
+        i = self._mocap[name]
+        z = BALL_RADIUS if name == "ball" else 0.0
+        data.mocap_pos[i] = [xy[0], xy[1], z]
+        data.mocap_quat[i] = [np.cos(yaw / 2), 0.0, 0.0, np.sin(yaw / 2)]
 
     def entity_position(self, data: mujoco.MjData, name: str) -> np.ndarray:
         """World position of the entity's salient point: the person's face, the ball's centre."""

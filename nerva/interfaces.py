@@ -52,11 +52,36 @@ class Event:
 
 
 @dataclass(frozen=True)
+class Track:
+    """One tracked thing in the robot's surroundings (simulated detector + filter).
+
+      kind            "person" | "ball" | ...
+      bearing         rad, horizontal direction relative to the robot's BODY heading, + = left
+      distance        m, horizontal distance from the robot's head
+      elevation       rad, vertical angle from the head camera's axis to the target, + = up
+      approach_speed  m/s, rate at which the distance shrinks (+ = coming closer), filtered
+      visible         detected in the most recent frame
+      seen_for_s      time since the track was created
+      unseen_for_s    time since the last detection (0 while visible)
+    """
+
+    kind: str
+    bearing: float
+    distance: float
+    elevation: float = 0.0
+    approach_speed: float = 0.0
+    visible: bool = True
+    seen_for_s: float = 0.0
+    unseen_for_s: float = 0.0
+
+
+@dataclass(frozen=True)
 class PerceptionState:
     """Everything perception reports at one instant. Carries no interpretation."""
 
     time_s: float
     events: tuple[Event, ...] = field(default_factory=tuple)
+    tracks: tuple[Track, ...] = field(default_factory=tuple)
 
 
 # ── Appraisal: "what does this mean for the robot?" ──────────────────────────

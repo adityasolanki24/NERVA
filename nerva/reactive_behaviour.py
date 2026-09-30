@@ -73,6 +73,7 @@ class ReactiveBehaviour:
     head: np.ndarray = field(default_factory=lambda: np.zeros(4))
     appeared_at: dict = field(default_factory=dict)
     walking_head_limit: tuple[float, float, float] | None = S1_WALKING_HEAD_LIMIT
+    explore_bearing: float | None = None  # from spatial memory (toward novel, safe places); None = wander
 
     def notice(self, t: float, event_kind: str) -> None:
         """Perception events the behaviour itself cares about (something new to orient to)."""
@@ -200,4 +201,7 @@ class ReactiveBehaviour:
         if m == "orient" and target is not None:
             return 0.0, 1.5 * target.bearing, self._gaze(target), f"orient to {self.target}"
         scan = 0.6 * np.sin(2 * np.pi * 0.15 * t)
+        if self.explore_bearing is not None:  # head for the most novel safe place nearby
+            b = self.explore_bearing
+            return (0.12 if abs(b) < 0.8 else 0.0), 1.2 * b, (0.0, 0.0, scan, 0.0), "explore: toward new places"
         return 0.10, 0.3 * np.sin(2 * np.pi * 0.05 * t), (0.0, 0.0, scan, 0.0), "explore"

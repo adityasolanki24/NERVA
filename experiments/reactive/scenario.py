@@ -25,6 +25,7 @@ from nerva.affect import CategoricalAffectModel
 from nerva.appraisal import ContextualAppraiser, MemoryAppraiser
 from nerva.episodic import EpisodicMemory
 from nerva.memory import EntityMemory
+from nerva.spatial import PlaceMemory
 from nerva.interfaces import BehaviourCommand, Event
 from nerva.open_duck_sim import OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception
@@ -171,7 +172,8 @@ class IdentityBinder:
 
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
-        walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False):
+        walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
+        use_spatial: bool | None = None):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.vision)."""
@@ -187,6 +189,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     binder = IdentityBinder(memory) if use_memory else None
     appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
     episodic = EpisodicMemory() if use_memory else None
+    places = PlaceMemory() if (use_memory if use_spatial is None else use_spatial) else None
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
     affect = CategoricalAffectModel()
@@ -260,6 +263,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                     if binder is not None and about and not ev.kind.endswith("_lost"):
                         binder.learn(about, t, ev.kind, elicited, affect.pad.arousal,
                                      a.desirability < 0 and any(lbl == "surprise" for lbl, _ in elicited))
+                    if places is not None:
+                        places.learn(robot_xy, t, elicited, affect.pad.arousal)
                     if episodic is not None:
                         who_ev = appraiser.identity.get(about) if about else None
                         episodic.encode(t, ev.kind, who_ev.eid if who_ev else None, robot_xy, elicited,
@@ -273,6 +278,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 elif t - last_seen_anything > IDLE_BEFORE_SLEEP_S and t - last_sleep > SLEEP_EVERY_S:
                     sleep_log.append((round(t, 1), episodic.consolidate(t, memory)))
                     last_sleep = t
+            if places is not None:
+                places.observe(robot_xy, t, 1.0 / FRAME_HZ)
+                behaviour.explore_bearing = places.explore_heading(robot_xy, robot_yaw)[0]
             pad = affect.step(1.0 / FRAME_HZ)
             emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
             salience = {tr.kind: appraiser.novelty(tr.kind) for tr in tracks}
@@ -311,4 +319,5 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks, boxes))
     if use_memory:
         sim.memory, sim.episodic, sim.sleep_log = memory, episodic, sleep_log  # for inspection by callers
+    sim.places = places
     return sim, rows, frames, fired

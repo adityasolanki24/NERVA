@@ -1,6 +1,6 @@
 # Design proposal: an evolving, brain-inspired memory for NERVA
 
-Status: M1 implemented 2026-10-01 (`nerva/memory.py`, `MemoryAppraiser`, `IdentityBinder` in `experiments/reactive/scenario.py`; results in the development log). M2–M5 proposed.
+Status: M1–M4 implemented 2026-10-01 (`nerva/memory.py`, `nerva/episodic.py`, `nerva/spatial.py`) (`nerva/memory.py`, `MemoryAppraiser`, `IdentityBinder` in `experiments/reactive/scenario.py`; results in the development log). M5 (face/body identity from real vision) proposed.
 Claim labels: **[theory]** established finding or model from the literature; **[design]** NERVA choice;
 **[hw]** hardware consideration.
 

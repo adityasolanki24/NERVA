@@ -4,6 +4,29 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Memory M2–M4: episodic store, sleep consolidation, spatial memory
+
+**M2/M3 — episodic memory** (`nerva/episodic.py`, `14b4ef1`):
+- **Salience-gated encoding:** relevance × (arousal, |prediction error|, novelty).
+- **ACT-R base-level activation:** power-law decay; retrieval strengthens [tested: slope −0.5 on log–log].
+- **Cue retrieval:** the entity cue is a filter. A vivid memory of B used to answer a cue for A; fixed.
+- **Sleep consolidation,** run when no one has been in view for 5 s, at most every 20 s:
+  - prioritised replay of emotionally significant episodes (intensity ≥ 0.3), which nudges the entity association at 0.2× the normal learning rate
+  - gist merging of repeats
+  - pruning of low-activation consolidated episodes
+- **Persistence:** SQLite.
+- **Two-person run [measured]:** 16 episodes plus 1 routine moment; two sleeps (the 6 touches merged into one gist, count 6); A's lunge is A's strongest memory.
+- **Replaying low-intensity episodes diluted B's warmth** (0.19 → 0.08), hence the intensity threshold.
+- **Tests:** a long run of 20,000 events stays within a 500-episode capacity at under 5 ms per event.
+- **Ambiguous identities:** one seed had created a phantom third person from a partial view. A new identity is now created only when cosine < 0.5 to all known people; in between counts as ambiguous, and the track keeps its identity.
+- **Evaluation** (5 seeds, vision) with M1–M4: memory 5/5 on all four criteria; no memory 0/5 on "B not blamed" and "A remembered".
+
+**M4 — spatial memory** (`nerva/spatial.py`):
+- 0.75 m place grid: familiarity (fades with time), place threat/valence learned from events there, and an exploration heading toward the nearest novel, safe cell.
+- **Exploration only, 90 s, 3 seeds [measured]:** 9/10/11 cells visited with spatial memory vs 7/9/8 without (about +25%), limited by walking speed.
+
+---
+
 ## 2026-10-01 — Real vision and entity memory (M1): person-specific, evolving associations
 
 **Real vision** (`nerva/vision.py`, `a23a078`):

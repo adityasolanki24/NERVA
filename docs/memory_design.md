@@ -122,7 +122,7 @@ out of view. How does the positive experience end up attached to A?
    - With one person in reach, the attribution is near-certain; with several, it's split by distance.
 3. **Touch appraisal.**
    - Slow, gentle, rhythmic stroking is appraised as positive. This parallels C-tactile afferents, which
-     respond best to slow, gentle stroking velocities and code pleasant touch (Löken et al. 2009) [theory].
+     respond most strongly to gentle stroking at about 1–10 cm/s, the velocities people rate most pleasant (Löken et al. 2009) [theory].
    - A sharp impact is appraised as negative.
 4. **Temporal credit.**
    - The affective outcome updates every entity active in working memory within an eligibility window
@@ -190,7 +190,7 @@ Afterwards, warmth/approach toward A increases, but toward B it doesn't.
 
 ## Sources
 
-- Löken, Wessberg, Morrison, McGlone & Olausson 2009, *Coding of pleasant touch by unmyelinated afferents in humans*, Nature Neuroscience (C-tactile afferents)
+- Löken, Wessberg, Morrison, McGlone & Olausson 2009, *Coding of pleasant touch by unmyelinated afferents in humans*, Nature Neuroscience 12(5): https://pubmed.ncbi.nlm.nih.gov/19363489/
 
 - Kumaran, Hassabis & McClelland 2016, *What learning systems do intelligent agents need? CLS theory updated*: https://web.stanford.edu/~jlmcc/papers/KumaranHassabisMcClelland16FinalMS.pdf
 - Anderson & Schooler 1991 and ACT-R activation (overview): https://www.ai.rug.nl/~niels/publications/taatgenLebiereAnderson.pdf

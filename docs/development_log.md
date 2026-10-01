@@ -4,6 +4,70 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Refactor stage D results: grounded memory passes the two-person criteria, fails "engages B" in the together scenario
+
+Preregistered in the previous entry. Code at `453a9b9`; vision; criteria unchanged. Results folders
+under `experiments/reactive/`: `results_memory_grounded_s1/`, `results_memory_b2_legacy/`,
+`results_memory_b2_grounded/` [measured].
+
+| setup | learning | b_not_blamed | a_remembered | b_welcomed | touch_to_b |
+|---|---|---|---|---|---|
+| S1, plain scene | legacy (recorded 2026-10-01) | 5/5 | 5/5 | 5/5 | 5/5 |
+| S1, plain scene | **grounded** | 5/5 | 5/5 | 5/5 | 5/5 |
+| B2, backlash, neutral | legacy | 5/5 | 5/5 | 5/5 | 5/5 |
+| B2, backlash, neutral | **grounded** | 5/5 | 5/5 | 5/5 | 5/5 |
+| B2, backlash, neutral | memory OFF | 0/5 | 0/5 | 5/5 | — |
+
+**First memory evaluation with B2:** same pattern as S1. Memory is causal for "B not blamed" and
+"A remembered".
+
+**Together scenario (S1, 3 seeds):**
+
+| learning | avoids A | engages B |
+|---|---|---|
+| legacy (recorded) | 3/3 | 3/3 |
+| **grounded** | 3/3 | **0/3** |
+
+With grounded memory, B was closer than A on average in every seed (0.93–0.95 m vs 1.29–1.31 m), but no
+approach/inspect mode occurred.
+
+**Self-reinforcement check:** A's threat at 40 s → 116 s.
+
+| setup | learning | A's threat 40 s → 116 s |
+|---|---|---|
+| S1 | grounded | 0.50 → 0.47 in every seed |
+| B2 | grounded | 0.48–0.50 → 0.45–0.47 |
+| B2 | legacy | 0.23 → 0.16 |
+
+- **Grounded:** the prediction (no growth without a new adverse outcome) holds in every seed. The
+  decrease is absence drift; replay restores at most to the learned level.
+- **Legacy:** its threat also did not grow in this window. It is re-learned from each re-elicited fear,
+  so it settles toward the fear intensity that memory itself triggers (self-sustaining rather than
+  growing, in this scenario).
+
+**Outcome detector:** one false positive in 10 B2 runs. Seed 2 flagged `near_collision` on B's track at
+63.5 s during petting (closing-speed estimate at 0.3 m). B's adverse value reached 0.013 and was
+extinguished by the touches; no criterion was affected. Thresholds unchanged.
+
+**RQ7 verdict, by the reading fixed in advance:**
+- **Partly falsified:** grounded fails "engages B" in the together scenario, where legacy passes.
+- **Supported:** on the two-person criteria and the self-reinforcement prediction.
+
+**Diagnosis [hypothesis, not tested]:**
+- Grounded memory gives A a larger threat (≈ 0.5, one full-magnitude near-collision at α = 0.5) than
+  legacy (≈ 0.2).
+- The utility selector's fear gate is **global**: (1 − 4·F) multiplies the approach utility of every
+  target. So fear about A also blocks approaching B.
+- The criterion itself does not separate memory from no memory (legacy no-memory also 3/3), so it tests
+  this interaction rather than memory.
+- Candidate follow-up, to be preregistered before running: gate approach by the threat of the *target*
+  only.
+
+The legacy path stays the scenario default (reproducibility); grounded is selected with
+`memory_learning="grounded"` / `--learning grounded`.
+
+---
+
 ## 2026-10-02 — Refactor stage D (part 1): outcome-grounded memory path; evaluation preregistered
 
 **Implemented** (legacy path unchanged and still the default):

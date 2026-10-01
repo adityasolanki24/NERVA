@@ -60,7 +60,9 @@ So the cognitive side is **already a graph**, not the strict chain the older doc
 2. **Memory learns from its own emotional output.** A remembered threat makes the next sighting
    appraise as threatening, which elicits fear, which entity memory learns as more threat. The
    development log recorded this ("A's fear partly re-generates itself", 2026-10-01). There is no
-   grounded outcome (no contact, no loss of balance) behind the association.
+   grounded outcome (no contact, no loss of balance) behind the association. *Stage D adds a grounded
+   path* (`memory_learning="grounded"`: entity/place memory learn only from `OutcomeSignal`s from
+   `nerva/world/outcomes.py`); the legacy path remains the default for reproducibility.
 3. **No explicit self state or goals.** Appraisal uses goals only implicitly (inside rules), and the
    robot's own condition only through the `near_fall` event.
 4. **`likelihood` has no referent.** `AppraisalState.likelihood = 0.7` does not say *which* outcome is
@@ -141,7 +143,7 @@ motion policy → actuation), with safety able to override it.
 | A | Audit; docs describe the live code; abstraction leaks documented | done (this document) |
 | B | Typed contracts: `SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState` + adapters | done 2026-10-02 |
 | C | Behaviour consumes `ActionTendencyState`; Model A produces it; labels for logging only | done 2026-10-02 |
-| D | Outcome-grounded memory learning path; legacy path kept as a baseline | planned |
+| D | Outcome-grounded memory learning path; legacy path kept as a baseline | done 2026-10-02 (grounded passes the two-person criteria; fails "engages B" in the together scenario, see log) |
 | E | Explicit self state, goals and appraisal frames | planned |
 | F | Compact world model / scene graph + modular sensor evidence | planned |
 | G | Model B (appraisal → PAD directly), compared with Model A | planned |

@@ -24,8 +24,12 @@ Only the people and the ball follow scripts. Design: `docs/reactive_behaviour_de
 | two-person memory | **S1, plain scene**, vision | memory: 5/5 on all four criteria; no memory: 0/5 on "B not blamed" and "A remembered" |
 | together scenario | S1, plain scene, vision, 3 seeds | avoids A: memory 3/3, no memory 0/3; "engages B" does not discriminate (3/3 both) |
 
-The memory evaluations have **not** been repeated with B2 in the backlash scene (`evaluate_memory.py`
-has no backlash/neutral-style option yet). The Isaac demo replays the memory scenario with B2, but that
-is a single demo run, not an evaluation.
+| two-person memory | B2, backlash, neutral, vision | legacy: 5/5 on all four; no memory 0/5 on "B not blamed" and "A remembered" |
+| two-person memory, **grounded** learning | S1 plain and B2 backlash | 5/5 on all four in both |
+| together, **grounded** learning | S1, plain, 3 seeds | avoids A 3/3; **engages B 0/3** (legacy 3/3) |
+
+`evaluate_memory.py` options: `--learning legacy|grounded` (refactor stage D), `--backlash
+--neutral-style` (B2), `--no-ablation`. Results: `results_memory_b2_legacy/`,
+`results_memory_b2_grounded/`, `results_memory_grounded_s1/`.
 
 Results folders: `results_eval_*` (default scenario, per policy) and `results_memory/`.

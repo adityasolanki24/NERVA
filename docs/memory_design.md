@@ -10,6 +10,12 @@ vision) proposed.
 > outcomes. A remembered threat therefore re-elicits fear, which is learned as more threat (recorded in
 > the development log as self-regeneration). Refactor stage D adds an outcome-grounded learning path and
 > keeps this one as the legacy baseline (`architecture.md` §1.3, §2.3).
+>
+> **Stage D (2026-10-02):** implemented. Grounded mode learns expected adverse/benign outcomes per entity
+> and place only from measured outcomes (near-collision estimate, loss of stability, benign touch); threat
+> = adverse and warmth = benign − adverse are derived summaries; trust is undefined in grounded mode;
+> sleep replay restores but never adds evidence. Results: passes the two-person criteria with S1 and B2;
+> fails "engages B" in the together scenario (development log).
 Claim labels: **[theory]** established finding or model from the literature; **[design]** NERVA choice;
 **[hw]** hardware consideration.
 

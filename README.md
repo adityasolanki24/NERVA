@@ -67,25 +67,37 @@ where layers still exchange other data (e.g. emotion labels), `docs/architecture
 
 ```
 nerva/                      the NERVA package
-  interfaces.py               data types passed between layers (start here)
+  interfaces.py               typed contracts between modules (start here)
   sim/                        simulation (the only code that imports Open Duck)
     open_duck.py                headless Open Duck robot: policy loop, style vector, head offsets, scene extension
     world.py                    scene extension: people, ball, robot-eye camera
-  perception/                 what is out there
+  perception/                 what is out there (measurements)
     tracker.py                  multi-object tracker; simulated (ground-truth) detector
     vision.py                   detection from the robot's camera images (colour + depth)
+  world/                      the robot's current situation
+    self_state.py               self state from IMU-type quantities (tilt, angular speed, stability risk)
+    outcomes.py                 measured outcomes: near-collision estimate, loss of stability, benign touch
+    model.py                    compact world model / scene graph: self, people, objects, places, relations
   affect/                     what it means and how it feels
     appraisal.py                appraisal: v0 table, v1 contextual, v2 memory-based
-    emotions.py                 affect model (emotions → persistent PAD)
-  memory/                     what the robot remembers
-    entity.py                   people/objects: identity, familiarity, threat, warmth, trust
-    episodic.py                 significant events, forgetting, sleep consolidation
+    frames.py                   appraisal frames over explicit outcome hypotheses, relative to goals and self state
+    emotions.py                 Model A: appraisal → emotions → persistent PAD
+    tendencies.py               Model A's emotions → action tendencies (the only label translation)
+    model_b.py                  Model B: appraisal → PAD and tendencies directly, no emotion labels
+  memory/                     what the robot remembers (legacy or outcome-grounded learning)
+    entity.py                   people/objects: identity, familiarity, threat, warmth, trust / expected outcomes
+    episodic.py                 significant events and outcomes, forgetting, sleep consolidation
     spatial.py                  places: familiarity and affect; exploration heading
-  behaviour/                  what to do and how
-    selection.py                emotion-modulated action selection (current)
+  events/                     learned event discovery (research path)
+    segmentation.py             prediction-error event boundaries
+    prototypes.py               bounded online prototypes with outcome statistics
+  behaviour/                  what to do and how (reads action tendencies, never emotion labels)
+    selection.py                utility-based action selection (current)
     modes.py                    behaviour modes and their controllers (rule-based v1)
+    goals.py                    explicit goal state
     pad_style.py                PAD → expressive style vector
     style.py                    style definitions (gait clock, S1 style vector)
+  safety.py                   deterministic safety supervisor (independent override; no affect inputs)
   analysis/gait_metrics.py    gait measurements on simulation logs
   training/                   learning the locomotion policy (JAX/MJX; cloud only)
     style_joystick.py           style-conditioned training environment

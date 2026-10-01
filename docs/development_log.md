@@ -4,6 +4,84 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Stage E/G/H results; B2 falls found; head-pitch envelope measured
+
+Preregistered in the previous entry. Code at `e7ea38e`; B2, neutral style, backlash scene [measured].
+
+| # | evaluation | result |
+|---|---|---|
+| E1 | default scenario, vision, frames + Model A | curiosity 5/5, fear 5/5, habituation 5/5, safety 5/5 |
+| G1 | default scenario, vision, frames + **Model B** | curiosity 5/5, fear 5/5, habituation 5/5 (exploration tendency 1.41 → 0.50–0.56), safety 5/5 |
+| G2 | two-person, vision, grounded + frames + Model A | 5/5 on all four memory criteria |
+| G3 | two-person, vision, grounded + frames + **Model B** | **the robot fell in 5/5 seeds at 39.8–40.4 s**; the memory criteria (5/5, 4/5, 5/5, 0/5) are therefore not meaningful |
+
+**RQ8 (preregistered reading):**
+- On the default scenario, Model B passes every criterion Model A passes, so discrete categories were not
+  necessary for those behaviours.
+- In the two-person scenario, Model B fails (falls) where Model A passes.
+
+**Why G3 fell [measured]:**
+- The mode sequence before every fall is watch → **withdraw** at 39.0 s, then the fall about 1.5 s later.
+- Model B produces a withdraw tendency (harm with low controllability) after the lunge; Model A's
+  distress rarely does.
+- The withdraw controller set head pitch −0.5 with ±0.8 yaw while standing, bypassing the −0.35 limit
+  introduced on 2026-10-01 because B2 fell at −0.6.
+- Identical with the safety supervisor on or off. The supervisor's stop at 25° is a stop rule, not fall
+  prevention; it neither caused nor prevented the fall.
+- **Fix:** withdraw now respects the downward limit. It does not change any Model A trace (all three
+  regression traces still byte-identical). With it, the G3 seed-0 fall moved from 40.6 s to 41.5 s, so
+  the limit itself was not enough.
+
+**B2 standing head-offset envelope [measured]:** zero velocity, offsets ramped in over 0.5 s, 8 s, seeds
+0–1, maximum tilt.
+
+| head pitch | yaw 0 | yaw 0.4 | yaw 0.8 |
+|---|---|---|---|
+| 0 | 13.8° | 10.4° | 10.6° |
+| −0.2 | 15.2° | 11.5° | 10.9° |
+| −0.35 | 14.1° | **fell** | 11.0° |
+
+- **The −0.35 downward limit is not safe for B2 combined with head yaw.** The non-monotonic response is
+  consistent with head offsets being outside B2's training distribution (upstream training never applies
+  head commands).
+- `ReactiveBehaviour.head_pitch_down` (default −0.35, keeping recorded results; `--head-pitch-down`) now
+  makes the limit policy-specific.
+
+**A pre-existing B2 fall [measured]:**
+- Stage H's data runs (Model A, legacy path, simulated detector) contained one fall: default scenario,
+  seed 3, at 31.0 s, after inspect with the head at −0.35 → approach while turning → orient (stop).
+- The same configuration at the pre-refactor commit `a62fd2f` falls at 31.04 s, so it is **not** a
+  regression.
+- B2's recorded "safety 5/5" was measured with vision perception only. The simulated-detector runs had
+  never been checked with B2. The other 17 of the 18 Stage H runs stayed below 17.2°.
+
+**Stage H, RQ9 (preregistered) — falsified.** 18 runs, 21,600 frames, 181 boundaries, 7 prototypes.
+
+| predictor | Brier, adverse within 3 s | Brier, benign within 3 s |
+|---|---|---|
+| learned prototypes | 0.0249 | 0.0575 |
+| hand-coded labels | **0.0215** | **0.0297** |
+| base rate | 0.0246 | 0.0583 |
+
+- Learned prototypes predict worse than the hand-coded labels on both targets, and no better than the
+  base rate.
+- Most boundaries (145/181) fell into one broad prototype. 114 of 181 boundaries had no hand-coded event
+  within 0.5 s. NMI between prototype and label was 0.26.
+- One prototype is the fallen run (tilt feature ≈ 17, i.e. ~170°).
+- Reading: with these features and this segmentation, prediction-error boundaries mostly mark
+  tracking/gait fluctuations rather than outcome-relevant events. The hand-coded vocabulary stays.
+- Not re-run with other settings: any change would be a new, separately preregistered experiment.
+
+**Follow-up F1, preregistered now** (B2 with `head_pitch_down = −0.2`, the measured standing-safe value;
+criteria unchanged; the fall criterion is tilt > 45°):
+1. Default scenario, simulated detector, seeds 0–5: no fall expected.
+2. Default scenario, vision, Model A, 5 seeds: curiosity, fear, habituation, safety. Risk: at −0.2 the
+   ball may leave the view up close, which could fail curiosity.
+3. Two-person, vision, grounded + frames + Model B, 5 seeds: no fall expected; then the four memory
+   criteria.
+
+---
+
 ## 2026-10-02 — Stages E, F, G (implementation), safety module, trace comparison; scenario evaluations preregistered
 
 **Stage E: self state, goals, appraisal frames.**

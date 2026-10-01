@@ -232,7 +232,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
-        memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A"):
+        memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A",
+        safety_supervisor: bool = True, head_pitch_down: float | None = None):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -271,6 +272,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         behaviour = behaviour_cls(walking_head_limit=walking_head_limit)
     else:
         behaviour = behaviour_cls()
+    if head_pitch_down is not None:
+        behaviour.head_pitch_down = head_pitch_down
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, ActionTendencyState(), ())
     sim.set_behaviour(decision.command)
@@ -372,7 +375,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
                        if use_memory else None)
             decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats)
-            command, head, safety_reason = safety.filter(decision.command, decision.head, self_state)
+            command, head, safety_reason = (safety.filter(decision.command, decision.head, self_state)
+                                            if safety_supervisor else (decision.command, decision.head, ""))
             sim.set_behaviour(neutralised(command) if neutral_style else command)
             sim.set_head_offset(*head)
             touching = next((ev.source for ev in events if ev.kind == "touch_gentle"), "")

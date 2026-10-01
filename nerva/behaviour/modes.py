@@ -80,6 +80,9 @@ class ReactiveBehaviour:
     appeared_at: dict = field(default_factory=dict)
     walking_head_limit: tuple[float, float, float] | None = S1_WALKING_HEAD_LIMIT
     explore_bearing: float | None = None  # from spatial memory (toward novel, safe places); None = wander
+    # downward head-pitch limit; policy-specific. B2 standing fell at -0.35 combined with 0.4 rad head yaw
+    # but not at -0.2 (measured 2026-10-02), so B2 runs may pass -0.2. The default keeps recorded results.
+    head_pitch_down: float = HEAD_PITCH_DOWN
 
     def notice(self, t: float, event_kind: str, source: str = "") -> None:
         """Perception events the behaviour itself cares about (something new to orient to)."""
@@ -188,7 +191,7 @@ class ReactiveBehaviour:
 
     def _gaze(self, track, tilt=0.0):
         """Head offsets pointing at a track (head pitch closed-loop on the camera elevation)."""
-        pitch = float(np.clip(self.head[1] + GAZE_GAIN * track.elevation, HEAD_PITCH_DOWN, HEAD_PITCH_UP))
+        pitch = float(np.clip(self.head[1] + GAZE_GAIN * track.elevation, self.head_pitch_down, HEAD_PITCH_UP))
         return (0.0, pitch, float(np.clip(track.bearing, -HEAD_YAW_MAX, HEAD_YAW_MAX)), tilt)
 
     def _control(self, t, pad, tr):
@@ -196,7 +199,7 @@ class ReactiveBehaviour:
         target = tr.get(self.target) if self.target else None
         age = t - self.mode_since
         if m == "freeze":
-            return 0.0, 0.0, (0.0, -0.3, self.head[2], 0.0), "freeze: startled"
+            return 0.0, 0.0, (0.0, max(-0.3, self.head_pitch_down), self.head[2], 0.0), "freeze: startled"
         if m == "retreat":
             look = (0.0, self.head[1], float(np.clip(self.threat_bearing, -HEAD_YAW_MAX, HEAD_YAW_MAX)), 0.0)
             if age < BACKSTEP_S:  # step back while facing the threat
@@ -209,7 +212,9 @@ class ReactiveBehaviour:
             return vx, 1.5 * target.bearing, self._gaze(target), "watch: wary, keep distance"
         if m == "withdraw":
             yaw = float(np.clip(-np.sign(self.threat_bearing) * 0.8, -HEAD_YAW_MAX, HEAD_YAW_MAX))
-            return 0.0, 0.0, (0.0, -0.5, yaw, 0.0), "withdraw: head down, look away"
+            # head pitch limited to HEAD_PITCH_DOWN like every other mode: the former -0.5 bypassed the limit
+            # set after B2 fell with the head at -0.6, and B2 fell while withdrawing (2026-10-02, Model B runs)
+            return 0.0, 0.0, (0.0, self.head_pitch_down, yaw, 0.0), "withdraw: head down, look away"
         if m == "inspect" and target is not None:
             tilt = CURIOUS_TILT * np.sin(2 * np.pi * 0.25 * age)  # curious head tilt
             return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"inspect {self.target}"

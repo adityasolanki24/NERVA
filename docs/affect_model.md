@@ -115,6 +115,34 @@ A scripted 70 s timeline of the five events. The outputs of the current version 
 - **Repeated routine success**, one every 3 s for 60 s: steady valence **+0.16**, where v0's relevance of 0.5 gave +0.22. This is covered by a test with a design target of < 0.2.
 - **Weak emotions were left unchanged, as decided.** Relevance scaling makes them weaker still (hope 0.12 → 0.05); nothing amplifies them.
 
+## Model B: appraisal → PAD and tendencies directly [NERVA design, refactor stage G]
+
+`nerva/affect/model_b.py`, `DimensionalAffectModel`. Same contract (`AffectSystem`); no emotion labels.
+
+```
+appraisal (r, d, l, e, c) → features u = [r·d⁺·l, r·d⁻·l, r·(1−e)², r·(1−e)·(1−d⁻), r·(2c−1)]
+   → decaying drive traces z (τ 4 s; "unexpected" 1 s)
+   → PAD: dx/dt = −Λ(x − x0) + W z, clipped to [−1, 1]   (τ_V, τ_A, τ_D = 8, 4, 8 s)
+   → tendencies: approach = pos, explore = novelty, avoid = neg, orient = unexpected,
+                 withdraw = neg·(1 − control), freeze = orient·avoid
+```
+
+- **Why:** to test whether the categorical step of Model A is necessary for the tested behaviours (RQ8).
+  The tendencies are continuous functions of appraisal features, with no thresholds; controllability
+  shapes withdrawal.
+- **Parameters:** W was set in one calibration pass on two reference appraisals (a strong rapid approach
+  and a gentle touch) to give PAD peaks of Model A's order. Nothing is fitted to human data.
+- **Status:** the fixed-trace comparison and scenario results are in `development_log.md` and
+  `experiments/affect_models/`.
+- **Not claimed:** that the linear system, or Model A, describes human emotion.
+
+## Action tendencies (refactor stage C)
+
+Behaviour reads `ActionTendencyState`, not labels. Model A's translation is in
+`nerva/affect/tendencies.py`: approach = hope + joy, explore = interest, avoid = fear, orient = surprise,
+freeze = surprise · fear, withdraw = distress. It reproduces the drives behaviour used before, and the
+scenario traces are byte-identical. The pairing is Frijda-inspired; the formulas are NERVA choices.
+
 ## Known limitations of v0.1 [open, measured]
 
 1. **Intensity controls the *rate* of the pull, not its *extent*.** The state is attracted toward the emotion's anchor point however weak the emotion is. So:

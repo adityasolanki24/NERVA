@@ -119,6 +119,89 @@ class AppraisalState:
         _check_range("controllability", self.controllability, 0.0, 1.0)
 
 
+# ── World model: entities, relations, sensor evidence ────────────────────────
+
+
+@dataclass(frozen=True)
+class SensorEvidence:
+    """One piece of evidence about an entity from one modality.
+
+      modality    e.g. "vision.appearance" (clothing-colour histogram today); later "vision.face",
+                  "audio.voice", "touch.contact" ... Only modalities that exist produce evidence.
+      feature     embedding / estimate vector, or None for evidence without a vector (e.g. a contact)
+      confidence  [0, 1]
+    """
+
+    modality: str
+    feature: tuple[float, ...] | None = None
+    confidence: float = 1.0
+    time_s: float = 0.0
+    provenance: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.modality:
+            raise ValueError("SensorEvidence.modality must be non-empty")
+        _check_range("confidence", self.confidence, 0.0, 1.0)
+
+
+NODE_KINDS = ("self", "person", "object", "place")
+RELATIONS = ("near", "visible_from", "at_place", "approaching", "touching", "interacting_with", "seen_with")
+
+
+@dataclass(frozen=True)
+class WorldEntity:
+    """A node of the world model.
+
+      node_id    "self", "place:i,j", the persistent entity ID ("person#0") once identity is known, or
+                 "track:<track ID>" while it is not (track ID = temporary perceptual continuity;
+                 entity ID = persistent remembered identity; the two are kept distinct)
+      xy         estimated world position (m), or None
+      confidence [0, 1] that the node is currently present where estimated
+    """
+
+    node_id: str
+    kind: str
+    track_id: str = ""
+    entity_id: str = ""
+    xy: tuple[float, float] | None = None
+    confidence: float = 1.0
+    time_s: float = 0.0
+
+    def __post_init__(self) -> None:
+        if self.kind not in NODE_KINDS:
+            raise ValueError(f"unknown node kind {self.kind!r}; known: {NODE_KINDS}")
+        _check_range("confidence", self.confidence, 0.0, 1.0)
+
+
+@dataclass(frozen=True)
+class WorldRelation:
+    """A typed, time-stamped relation between two nodes, with confidence and provenance."""
+
+    subject: str
+    relation: str
+    obj: str
+    confidence: float = 1.0
+    time_s: float = 0.0
+    source: str = ""  # which measurement asserted it
+
+    def __post_init__(self) -> None:
+        if self.relation not in RELATIONS:
+            raise ValueError(f"unknown relation {self.relation!r}; known: {RELATIONS}")
+        _check_range("confidence", self.confidence, 0.0, 1.0)
+
+
+@dataclass(frozen=True)
+class WorldModelState:
+    """Snapshot of the world model at one instant."""
+
+    time_s: float
+    entities: tuple[WorldEntity, ...] = ()
+    relations: tuple[WorldRelation, ...] = ()
+
+    def related(self, relation: str, obj: str | None = None) -> tuple[WorldRelation, ...]:
+        return tuple(r for r in self.relations if r.relation == relation and (obj is None or r.obj == obj))
+
+
 # ── Self, goals, outcomes: what appraisal is relative to ─────────────────────
 
 

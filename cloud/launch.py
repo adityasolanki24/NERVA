@@ -467,12 +467,19 @@ def cmd_teardown(a):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
-    s = sub.add_parser("setup"); s.add_argument("--yes", action="store_true"); s.set_defaults(f=cmd_setup)
-    s = sub.add_parser("network-up"); s.add_argument("--yes", action="store_true")
-    s.set_defaults(f=cmd_network_up)
-    s = sub.add_parser("network-down"); s.add_argument("--yes", action="store_true")
-    s.set_defaults(f=cmd_network_down)
-    s = sub.add_parser("launch")
+
+    def command(name, func, yes=False, **defaults):
+        s = sub.add_parser(name)
+        if yes:
+            s.add_argument("--yes", action="store_true")
+        s.set_defaults(f=func, **defaults)
+        return s
+
+    command("setup", cmd_setup, yes=True)
+    command("network-up", cmd_network_up, yes=True)
+    command("network-down", cmd_network_down, yes=True)
+
+    s = command("launch", cmd_launch, yes=True)
     s.add_argument("--job", required=True)
     s.add_argument("--hw", choices=sorted(MACHINES), default="l4")
     z = s.add_mutually_exclusive_group()
@@ -491,21 +498,24 @@ def main():
     s.add_argument("--teardown", action="store_true",
                    help="with --wait, also delete the dedicated bucket and runner account")
     s.add_argument("--poll-seconds", type=int, default=30, help=argparse.SUPPRESS)
-    s.add_argument("--yes", action="store_true")
-    s.set_defaults(f=cmd_launch)
-    s = sub.add_parser("wait", help="resume --wait for a launched run")
-    s.add_argument("run"); s.add_argument("--cleanup-network", action="store_true")
+
+    s = command("wait", cmd_wait)
+    s.add_argument("run")
+    s.add_argument("--cleanup-network", action="store_true")
     s.add_argument("--teardown", action="store_true")
     s.add_argument("--poll-seconds", type=int, default=30, help=argparse.SUPPRESS)
-    s.set_defaults(f=cmd_wait)
-    s = sub.add_parser("status"); s.add_argument("run", nargs="?"); s.add_argument("--lines", type=int, default=40)
-    s.set_defaults(f=cmd_status)
-    s = sub.add_parser("fetch"); s.add_argument("run"); s.set_defaults(f=cmd_fetch)
-    s = sub.add_parser("kill"); s.add_argument("run"); s.add_argument("--zone")
-    s.add_argument("--yes", action="store_true"); s.set_defaults(f=cmd_kill)
-    s = sub.add_parser("audit"); s.set_defaults(f=cmd_audit)
-    s = sub.add_parser("teardown"); s.add_argument("--yes", action="store_true")
-    s.set_defaults(f=cmd_teardown, keep_network=False)
+
+    s = command("status", cmd_status)
+    s.add_argument("run", nargs="?")
+    s.add_argument("--lines", type=int, default=40)
+
+    command("fetch", cmd_fetch).add_argument("run")
+    s = command("kill", cmd_kill, yes=True)
+    s.add_argument("run")
+    s.add_argument("--zone")
+    command("audit", cmd_audit)
+    command("teardown", cmd_teardown, yes=True, keep_network=False)
+
     a = p.parse_args()
     a.f(a)
 

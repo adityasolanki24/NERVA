@@ -151,7 +151,7 @@ class SimulatedPerception:
                 if d < ASSOC_GATE_M:
                     pairs.append((cost, oi, tid))
         used_obs, used_tracks = set(), set()
-        for cost, oi, tid in sorted(pairs):
+        for _cost, oi, tid in sorted(pairs):
             if oi in used_obs or tid in used_tracks:
                 continue
             used_obs.add(oi)

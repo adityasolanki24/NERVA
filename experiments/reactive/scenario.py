@@ -26,7 +26,7 @@ from nerva.appraisal import ContextualAppraiser, MemoryAppraiser
 from nerva.episodic import EpisodicMemory
 from nerva.memory import EntityMemory
 from nerva.spatial import PlaceMemory
-from nerva.interfaces import BehaviourCommand, Event
+from nerva.interfaces import Event
 from nerva.interfaces import StyleVector
 from nerva.open_duck_sim import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception import FRAME_HZ, SimulatedPerception

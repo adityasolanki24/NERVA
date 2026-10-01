@@ -77,7 +77,6 @@ def analyse(rows: list[dict], seeds: list[int]) -> dict:
                 return r[f]
         raise KeyError((policy, style, seed))
 
-    neutral = style_vec(0, 0.0)
     report: dict = {"dimensions": {}}
     all_features = list(FEATURES.values()) + ["v_fwd"]
     conditions = sorted({tuple(r["style"]) for r in rows if r["policy"] == "S1"})

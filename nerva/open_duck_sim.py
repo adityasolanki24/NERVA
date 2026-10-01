@@ -132,8 +132,6 @@ class OpenDuckSim:
             addr = self.inf.get_actuator_joints_addr()
             self.data.qpos[addr] += rng.uniform(-init_joint_noise, init_joint_noise, len(addr))
 
-        import mujoco
-
         self._foot_sites = [mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, n)
                             for n in ("left_foot", "right_foot")]
         self._qvel_addr = self.inf.actuator_qvel_addr

@@ -25,7 +25,6 @@ Writes experiments/demo_video/results/{nerva_affect_demo.mp4, timeline.csv, keyf
 from __future__ import annotations
 
 import csv
-import io
 from dataclasses import dataclass
 from pathlib import Path
 

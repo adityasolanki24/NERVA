@@ -1,4 +1,3 @@
-import math
 import time
 
 from nerva.episodic import EpisodicMemory

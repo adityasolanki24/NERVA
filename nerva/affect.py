@@ -66,6 +66,9 @@ class AffectConfig:
     emotion_pad: dict[str, tuple[float, float, float]] = field(default_factory=lambda: dict(EMOTION_PAD))
 
 
+DEFAULT_CONFIG = AffectConfig()
+
+
 @dataclass
 class EmotionInstance:
     label: str
@@ -74,8 +77,9 @@ class EmotionInstance:
     tau_s: float  # this instance's decay time constant
 
 
-def categorise(a: AppraisalState, cfg: AffectConfig = AffectConfig()) -> list[tuple[str, float]]:
+def categorise(a: AppraisalState, cfg: AffectConfig | None = None) -> list[tuple[str, float]]:
     """Simplified EMA-inspired rules: appraisal → [(emotion label, intensity)]."""
+    cfg = cfg or DEFAULT_CONFIG
     if a.relevance == 0.0:
         return []
     scale = a.relevance if cfg.scale_by_relevance else 1.0
@@ -92,8 +96,9 @@ def categorise(a: AppraisalState, cfg: AffectConfig = AffectConfig()) -> list[tu
     return [(label, i) for label, i in out if i > 0.0]
 
 
-def emotion_pad_point(label: str, controllability: float, cfg: AffectConfig = AffectConfig()) -> np.ndarray:
+def emotion_pad_point(label: str, controllability: float, cfg: AffectConfig | None = None) -> np.ndarray:
     """Emotion's PAD anchor; dominance (if the emotion has one) is blended toward controllability."""
+    cfg = cfg or DEFAULT_CONFIG
     p, a, d = cfg.emotion_pad[label]
     w = cfg.controllability_weight
     if not math.isnan(d):
@@ -107,8 +112,8 @@ class CategoricalAffectModel:
     Per time step:  model.add(appraisal)  (zero or more times),  then  model.step(dt).
     """
 
-    def __init__(self, cfg: AffectConfig = AffectConfig()):
-        self.cfg = cfg
+    def __init__(self, cfg: AffectConfig | None = None):
+        self.cfg = cfg = cfg or DEFAULT_CONFIG
         self.x = np.array(cfg.baseline, dtype=float)
         self.emotions: list[EmotionInstance] = []
 

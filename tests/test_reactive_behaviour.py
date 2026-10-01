@@ -4,10 +4,10 @@ from nerva.reactive_behaviour import FREEZE_S, MIN_DWELL_S, ReactiveBehaviour
 DT = 0.1
 
 
-def run(beh, seconds, emotions, tracks, t0=0.0, pad=PADState()):
+def run(beh, seconds, emotions, tracks, t0=0.0, pad=None):
     d = None
     for i in range(int(seconds / DT)):
-        d = beh.step(t0 + i * DT, DT, pad, emotions, tracks)
+        d = beh.step(t0 + i * DT, DT, pad or PADState(), emotions, tracks)
     return d
 
 

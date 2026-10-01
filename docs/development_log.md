@@ -4,6 +4,34 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Refactor stage C: behaviour reads action tendencies, not emotion labels
+
+- `ReactiveBehaviour.step` and `UtilityBehaviour` take an `ActionTendencyState` instead of an
+  emotion-intensity dict. The utility drives are now explore/approach/avoid/orient/withdraw, and the
+  freeze utility uses `freeze` directly.
+- The scenario passes `affect.tendencies`. Emotion labels remain in the logged rows (logging only), and
+  the tendencies are logged too (`tend_*`).
+- A test asserts that the behaviour modules contain no emotion-label strings; another drives behaviour
+  with label-free tendencies.
+
+**Regression [measured]:** per-step traces (mode, target, commands, PAD, head, position, identity,
+remembered threat) compared with the stage A baselines:
+
+| run | result |
+|---|---|
+| default scenario, S1, simulated detector, utility selector | byte-identical |
+| default scenario, B2, vision, backlash, utility selector | byte-identical |
+| two-person memory, S1, vision, memory on | byte-identical |
+| default scenario, S1, rules selector v1 (vs commit `4df322f`) | identical, 5000/5000 rows |
+
+The rules selector's "positive" drive changed by definition from max(interest, hope, joy) to
+max(explore, approach), with approach = hope + joy. These differ only when hope and joy are both
+active; that did not affect this run. 162 tests pass, 2 skipped; Ruff clean.
+
+Memory still learns from labels (stage D).
+
+---
+
 ## 2026-10-02 — Refactor stage B: typed contracts and the Model A tendency adapter
 
 **Added to `nerva/interfaces.py`** (containers and range checks only; no logic):

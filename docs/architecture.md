@@ -45,7 +45,7 @@ So the cognitive side is **already a graph**, not the strict chain the older doc
 |---|---|---|
 | Appraisal v2 (`MemoryAppraiser`) | events, tracks, entity records (familiarity, threat, warmth, episodes) | memory → appraisal link |
 | Affect Model A | `AppraisalState` | the only part that should know emotion labels |
-| Behaviour (`UtilityBehaviour`, `ReactiveBehaviour`) | PAD, **emotion intensities by label** (`fear`, `interest`, `hope`, `joy`, `surprise`, `distress`), tracks, per-track novelty, per-track remembered threat | **abstraction leak**, see 1.3 |
+| Behaviour (`UtilityBehaviour`, `ReactiveBehaviour`) | PAD, `ActionTendencyState` (since stage C; before: emotion intensities by label), tracks, per-track novelty, per-track remembered threat | label leak removed in stage C |
 | Entity memory `learn()` | **emotion labels** (`fear` → threat; `joy`/`hope`/`interest` − `fear`/`distress` → warmth), arousal, "negative surprise" | **abstraction leak**, and self-reinforcing (1.3) |
 | Place memory `learn()` | **emotion labels**, arousal | same leak |
 | Episodic memory | emotion labels (stored), relevance, arousal, expectedness; sleep replay calls entity `learn()` with the stored labels | same leak; replay re-learns from emotions |
@@ -55,7 +55,8 @@ So the cognitive side is **already a graph**, not the strict chain the older doc
 
 1. **Model A is not replaceable.** `architecture.md` used to say "nothing outside `emotions.py` may
    depend on emotion labels". That was false: behaviour, entity memory, place memory and episodic
-   replay all consume the labels. A Model B without labels could not drive behaviour or memory.
+   replay all consumed the labels. *Behaviour fixed in stage C* (it reads `ActionTendencyState`;
+   `nerva/affect/tendencies.py` is Model A's only label translation). Memory: stage D.
 2. **Memory learns from its own emotional output.** A remembered threat makes the next sighting
    appraise as threatening, which elicits fear, which entity memory learns as more threat. The
    development log recorded this ("A's fear partly re-generates itself", 2026-10-01). There is no
@@ -139,7 +140,7 @@ motion policy → actuation), with safety able to override it.
 |---|---|---|
 | A | Audit; docs describe the live code; abstraction leaks documented | done (this document) |
 | B | Typed contracts: `SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState` + adapters | done 2026-10-02 |
-| C | Behaviour consumes `ActionTendencyState`; Model A produces it; labels for logging only | planned |
+| C | Behaviour consumes `ActionTendencyState`; Model A produces it; labels for logging only | done 2026-10-02 |
 | D | Outcome-grounded memory learning path; legacy path kept as a baseline | planned |
 | E | Explicit self state, goals and appraisal frames | planned |
 | F | Compact world model / scene graph + modular sensor evidence | planned |

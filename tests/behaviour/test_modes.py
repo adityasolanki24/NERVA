@@ -1,3 +1,4 @@
+from nerva.affect.tendencies import tendencies_from_emotions
 from nerva.interfaces import PADState, Track
 from nerva.behaviour.modes import FREEZE_S, MIN_DWELL_S, ReactiveBehaviour
 
@@ -5,6 +6,9 @@ DT = 0.1
 
 
 def run(beh, seconds, emotions, tracks, t0=0.0, pad=None):
+    """`emotions`: Model A intensities by label (converted with the Model A adapter), or tendencies."""
+    if isinstance(emotions, dict):
+        emotions = tendencies_from_emotions(emotions)
     d = None
     for i in range(int(seconds / DT)):
         d = beh.step(t0 + i * DT, DT, pad or PADState(), emotions, tracks)

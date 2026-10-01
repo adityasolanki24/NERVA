@@ -39,7 +39,7 @@ entry, docs, commit.
 |---|---|---|
 | A | Audit + docs describe the live code | done 2026-10-02 |
 | B | Typed contracts + adapters (`SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState`) | done 2026-10-02 |
-| C | Behaviour consumes action tendencies, not emotion labels | planned |
+| C | Behaviour consumes action tendencies, not emotion labels | done 2026-10-02 |
 | D | Outcome-grounded memory learning (legacy path kept as baseline) | planned |
 | E | Self state, goals, appraisal frames over explicit hypotheses | planned |
 | F | Compact world model / scene graph, modular sensor evidence | planned |

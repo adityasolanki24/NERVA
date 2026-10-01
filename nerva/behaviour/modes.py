@@ -1,6 +1,9 @@
-"""Behaviour v1: reactive modes driven by emotion, PAD and perception (docs/reactive_behaviour_design.md §3).
+"""Behaviour v1: reactive modes driven by action tendencies, PAD and perception (docs/reactive_behaviour_design.md §3).
 
-WHAT: a mode chosen from the active emotions, PAD and the perceived tracks, with a minimum dwell
+Behaviour reads `ActionTendencyState` (nerva/interfaces.py), not emotion labels, so any affect model that
+satisfies the AffectSystem contract can drive it (docs/architecture.md, refactor stage C).
+
+WHAT: a mode chosen from the action tendencies, PAD and the perceived tracks, with a minimum dwell
 time (hysteresis); urgent modes (freeze, retreat) pre-empt. Each mode is a small continuous
 controller over (vx, yaw_rate) and a head gaze:
   explore   wander and scan with the head
@@ -23,7 +26,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from nerva.behaviour.pad_style import pad_to_style_vector
-from nerva.interfaces import BehaviourCommand, PADState, StyleVector, Track
+from nerva.interfaces import ActionTendencyState, BehaviourCommand, PADState, StyleVector, Track
 
 MODES = ("explore", "orient", "approach", "inspect", "freeze", "retreat", "watch", "withdraw")
 WARY_FEAR = 0.05
@@ -83,18 +86,18 @@ class ReactiveBehaviour:
         if event_kind.endswith("_appeared"):
             self.appeared_at[source or event_kind.split("_")[0]] = t
 
-    def step(self, t: float, dt: float, pad: PADState, emotions: dict[str, float],
+    def step(self, t: float, dt: float, pad: PADState, tendencies: ActionTendencyState,
              tracks: tuple[Track, ...], salience: dict[str, float] | None = None,
              threats: dict[str, float] | None = None) -> ReactiveDecision:
         """salience: per-track novelty (0..1). threats: per-track remembered threat (memory), used to
-        decide WHICH person fear is about; without it, the nearest person."""
+        decide WHICH person avoidance is about; without it, the nearest person."""
         self.salience = salience or {}
         self.threats = threats or {}
         tr = {(x.tid or x.kind): x for x in tracks}
         focal = self._focal_person(tr)
         if focal is not None:
             self.threat_bearing = tr[focal].bearing
-        self._select(t, pad, emotions, tr)
+        self._select(t, pad, tendencies, tr)
         vx, yaw, head_target, reason = self._control(t, pad, tr)
 
         e = pad_to_style_vector(pad)
@@ -120,10 +123,13 @@ class ReactiveBehaviour:
         if mode != self.mode or target != self.target:
             self.mode, self.mode_since, self.target = mode, t, target
 
-    def _select(self, t, pad, emo, tr) -> None:
-        fear, surprise = emo.get("fear", 0.0), emo.get("surprise", 0.0)
-        distress = emo.get("distress", 0.0)
-        positive = max(emo.get("interest", 0.0), emo.get("hope", 0.0), emo.get("joy", 0.0))
+    def _select(self, t, pad, tend: ActionTendencyState, tr) -> None:
+        # Rules v1 thresholds were set on Model A emotions; avoid = fear, orient = surprise, withdraw = distress.
+        # "positive" was max(interest, hope, joy) before stage C and is now max(explore, approach), where
+        # approach = hope + joy: identical unless hope and joy are both active (documented change).
+        fear, surprise = tend.avoid, tend.orient
+        distress = tend.withdraw
+        positive = max(tend.explore, tend.approach)
         age = t - self.mode_since
         focal = self._focal_person(tr)
         person = tr.get(focal) if focal else None

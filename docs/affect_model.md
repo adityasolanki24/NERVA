@@ -15,7 +15,7 @@ Event ─appraise()─▶ AppraisalState ─categorise()─▶ emotion instances
 
 The labels (joy, fear, …) are meant to be an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly.
 
-> **Audit 2026-10-02:** this is not yet true in the code. Behaviour (`nerva/behaviour/`), entity memory, place memory and episodic replay consume the emotion labels directly (`architecture.md` §1.2–1.3). Removing that dependency is refactor stage C/D.
+> **Audit 2026-10-02:** this was not true in the code. Behaviour now reads `ActionTendencyState`, produced by Model A through `nerva/affect/tendencies.py` (stage C). Entity memory, place memory and episodic replay still consume the labels until stage D (`architecture.md` §1.2–1.3).
 
 ## 1. Appraisal v0 table: `nerva/affect/appraisal.py` [NERVA design values]
 

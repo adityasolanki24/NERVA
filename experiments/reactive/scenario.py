@@ -3,8 +3,8 @@
 Loop per 20 ms control step (docs/reactive_behaviour_design.md §2):
   agents move (their scripts may refer to where the robot is NOW, so the scene stays in view)
   every 0.1 s: head camera → SimulatedPerception → events + tracks
-               → ContextualAppraiser → CategoricalAffectModel (v0.2, with interest) → PAD, emotions
-               → ReactiveBehaviour → velocity command + S1 style vector + head gaze
+               → ContextualAppraiser → CategoricalAffectModel (v0.2, with interest) → PAD + action tendencies
+               → UtilityBehaviour (reads tendencies, not emotion labels) → velocity command + style + head gaze
   OpenDuckSim with the S1 policy (unchanged), 500 Hz physics.
 Nothing about the robot's reactions is scripted: only the person and the ball follow scripts.
 
@@ -26,8 +26,7 @@ from nerva.affect.appraisal import ContextualAppraiser, MemoryAppraiser
 from nerva.memory.episodic import EpisodicMemory
 from nerva.memory.entity import EntityMemory
 from nerva.memory.spatial import PlaceMemory
-from nerva.interfaces import Event
-from nerva.interfaces import StyleVector
+from nerva.interfaces import ActionTendencyState, Event, StyleVector, TENDENCIES
 from nerva.sim.open_duck import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
 from nerva.perception.vision import VisionPerception
@@ -231,7 +230,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     else:
         behaviour = behaviour_cls()
     cam = sim.model.camera("robot_eye").id
-    decision = behaviour.step(0.0, 0.1, affect.pad, {}, ())
+    decision = behaviour.step(0.0, 0.1, affect.pad, ActionTendencyState(), ())
     sim.set_behaviour(decision.command)
     rows, frames, fired = [], [], []
     tracks = ()
@@ -307,11 +306,10 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 places.observe(robot_xy, t, 1.0 / FRAME_HZ)
                 behaviour.explore_bearing = places.explore_heading(robot_xy, robot_yaw)[0]
             pad = affect.step(1.0 / FRAME_HZ)
-            emotions = {lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS}
             salience = {tr.tid: appraiser.novelty(tr.tid if use_memory else tr.kind) for tr in tracks}
             threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
                        if use_memory else None)
-            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, emotions, tracks, salience, threats)
+            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats)
             sim.set_behaviour(neutralised(decision.command) if neutral_style else decision.command)
             sim.set_head_offset(*decision.head)
         sim.step_physics(10)
@@ -324,7 +322,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         who = appraiser.identity.get(nearest) if use_memory else None
         rows.append({
             "t": round(t + CTRL_DT, 3), "valence": pad.valence, "arousal": pad.arousal, "dominance": pad.dominance,
-            **{lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS},
+            **{lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS},  # logging only
+            **{f"tend_{k}": getattr(affect.tendencies, k) for k in TENDENCIES},
             "mode": decision.mode, "reason": decision.reason, "target": decision.target or "",
             "cmd_vx": decision.command.vx, "cmd_yaw": decision.command.yaw_rate,
             "e_tempo": decision.command.style_vector.tempo, "e_torso_pitch": decision.command.style_vector.torso_pitch,

@@ -10,6 +10,10 @@ A coarse grid of places (CELL_M metres), a minimal version of the place layer of
 The robot's pose comes from simulation now and from odometry/SLAM on hardware; this layer stores only
 places. Dict-of-cells: memory grows with explored area only (≈ tens of bytes per cell). NERVA design
 choices throughout.
+
+Learning modes as in entity memory (refactor stage D): "legacy" learns place threat/valence from the
+elicited emotions (learn); "grounded" only from measured outcomes at the place (learn_outcome), and
+learn() is ignored.
 """
 
 from __future__ import annotations
@@ -33,8 +37,11 @@ class Place:
 
 
 class PlaceMemory:
-    def __init__(self, cell: float = CELL_M):
+    def __init__(self, cell: float = CELL_M, learning: str = "legacy"):
+        if learning not in ("legacy", "grounded"):
+            raise ValueError("learning must be 'legacy' or 'grounded'")
         self.cell = cell
+        self.learning = learning
         self.places: dict[tuple[int, int], Place] = {}
 
     def key(self, xy) -> tuple[int, int]:
@@ -60,6 +67,9 @@ class PlaceMemory:
         return 0.0 if p is None else p.threat
 
     def learn(self, xy, t: float, emotions, arousal: float) -> None:
+        """Legacy mode only: learn from the elicited emotions."""
+        if self.learning != "legacy":
+            return
         p = self._place(self.key(xy), t)
         fear = sum(i for lbl, i in emotions if lbl == "fear")
         valence = (sum(i for lbl, i in emotions if lbl in ("joy", "hope", "interest")) - fear
@@ -67,6 +77,18 @@ class PlaceMemory:
         a = min(1.0, ALPHA * (1.0 + max(0.0, arousal)))
         p.threat += a * (min(fear, 1.0) - p.threat)
         p.valence += a * (max(-1.0, min(1.0, valence)) - p.valence)
+
+    def learn_outcome(self, xy, t: float, outcome) -> None:
+        """Grounded mode only: an adverse outcome here raises place threat; a benign one raises valence."""
+        if self.learning != "grounded":
+            return
+        p = self._place(self.key(xy), t)
+        m = outcome.magnitude
+        if outcome.adverse:
+            p.threat += ALPHA * (m - p.threat)
+            p.valence += ALPHA * (-m - p.valence)
+        else:
+            p.valence += ALPHA * (m - p.valence)
 
     def explore_heading(self, xy, yaw: float) -> tuple[float, float]:
         """(bearing relative to yaw, attractiveness) of the best nearby cell by novelty − threat."""

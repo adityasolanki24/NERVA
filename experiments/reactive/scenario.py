@@ -11,6 +11,11 @@ Nothing about the robot's reactions is scripted: only the person and the ball fo
 With use_memory=True (docs/memory_design.md, M1) appraisal reads an entity memory: identities come
 from the vision's appearance feature, stay bound to a track while appearance is uninformative (up
 close), and events with an unknown identity are held back and learned once the identity is resolved.
+
+memory_learning (refactor stage D): "legacy" (default, the recorded baseline) learns entity/place
+associations from the elicited emotions; "grounded" learns them only from measured outcomes
+(nerva/world/outcomes.py: near_collision, stability_loss, benign_contact), attributed through the same
+identity binding. Outcomes are detected in both modes and returned on `sim.outcomes` for analysis.
 """
 
 from __future__ import annotations
@@ -26,6 +31,7 @@ from nerva.affect.appraisal import ContextualAppraiser, MemoryAppraiser
 from nerva.memory.episodic import EpisodicMemory
 from nerva.memory.entity import EntityMemory
 from nerva.memory.spatial import PlaceMemory
+from nerva.world.outcomes import OutcomeMonitor
 from nerva.interfaces import ActionTendencyState, Event, StyleVector, TENDENCIES
 from nerva.sim.open_duck import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
@@ -149,6 +155,7 @@ class IdentityBinder:
         self.memory = memory
         self.current: dict = {}
         self.pending: dict[str, list] = {}
+        self.pending_outcomes: dict[str, list] = {}
 
     def update(self, t: float, tracks, perception) -> dict:
         """Track ID -> entity record for every track whose identity is known."""
@@ -156,9 +163,10 @@ class IdentityBinder:
         for tid in list(self.current):
             if tid not in present:  # track lost: continuity broken, identity must be re-established
                 self.current.pop(tid)
-        for tid in list(self.pending):
-            if tid not in present:
-                self.pending.pop(tid)  # never resolved: dropped (could generalise to "unknown person")
+        for pend in (self.pending, self.pending_outcomes):
+            for tid in list(pend):
+                if tid not in present:
+                    pend.pop(tid)  # never resolved: dropped, no phantom certainty about who it was
         for tr in tracks:
             st = perception.tracks.get(tr.tid)
             appearance = getattr(st, "appearance", None) if tr.visible else None
@@ -171,6 +179,8 @@ class IdentityBinder:
                 self.current[tr.tid] = rec
                 for args in self.pending.pop(tr.tid, []):  # "oh, it was you"
                     self.memory.learn(rec, *args, confidence=DEFERRED_CONFIDENCE)
+                for outcome in self.pending_outcomes.pop(tr.tid, []):
+                    self.memory.learn_outcome(rec, outcome, confidence=DEFERRED_CONFIDENCE)
         return self.current
 
     def learn(self, tid: str, t: float, event: str, emotions, arousal: float, surprise_negative: bool) -> None:
@@ -179,6 +189,14 @@ class IdentityBinder:
             self.pending.setdefault(tid, []).append((t, event, emotions, arousal, surprise_negative))
         else:
             self.memory.learn(rec, t, event, emotions, arousal, surprise_negative)
+
+    def learn_outcome(self, tid: str, outcome) -> None:
+        """Credit a measured outcome to the entity of track `tid`, or hold it until the identity is known."""
+        rec = self.current.get(tid)
+        if rec is None:
+            self.pending_outcomes.setdefault(tid, []).append(outcome)
+        else:
+            self.memory.learn_outcome(rec, outcome)
 
 
 def touch_source(tracks) -> str:
@@ -199,7 +217,8 @@ def neutralised(command):
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
-        use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False):
+        use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
+        memory_learning: str = "legacy"):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -214,11 +233,13 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     vision = perception_mode == "vision"
     perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
     eye = mujoco.Renderer(sim.model, EYE_H, EYE_W) if vision else None
-    memory = EntityMemory() if use_memory else None
+    grounded = memory_learning == "grounded"
+    memory = EntityMemory(learning=memory_learning) if use_memory else None
     binder = IdentityBinder(memory) if use_memory else None
     appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
     episodic = EpisodicMemory() if use_memory else None
-    places = PlaceMemory() if (use_memory if use_spatial is None else use_spatial) else None
+    places = PlaceMemory(learning=memory_learning) if (use_memory if use_spatial is None else use_spatial) else None
+    monitor, outcomes_log, memory_trace = OutcomeMonitor(), [], []
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
     affect = CategoricalAffectModel()
@@ -265,10 +286,12 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             events = list(pstate.events)
             if binder is not None:
                 appraiser.identity = binder.update(t, tracks, perception)
+            outcomes = monitor.proximity(t, tracks)
             for name, agent in agents.items():  # simulated touch sensing: gentle contact while petted
                 if (agent.action == "pet" and np.linalg.norm(agent.xy - robot_xy) < TOUCH_REACH
                         and t - last_touch >= TOUCH_PERIOD_S):
                     events.append(Event("touch_gentle", source=touch_source(tracks)))
+                    outcomes.append(monitor.contact(t, touch_source(tracks)))
                     last_touch = t
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
             if near_fall_armed and tilt > NEAR_FALL_TILT_DEG:
@@ -276,6 +299,16 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 near_fall_armed = False
             elif tilt < NEAR_FALL_TILT_DEG / 2:
                 near_fall_armed = True
+            outcomes += monitor.stability(t, tilt)
+            for oc in outcomes:  # grounded learning: measured consequences, attributed to whoever caused them
+                outcomes_log.append(oc)
+                if binder is not None and oc.source:
+                    binder.learn_outcome(oc.source, oc)
+                if places is not None:
+                    places.learn_outcome(robot_xy, t, oc)
+                if episodic is not None and grounded:
+                    who_oc = appraiser.identity.get(oc.source) if oc.source else None
+                    episodic.encode_outcome(t, oc, who_oc.eid if who_oc else None, robot_xy, affect.pad.arousal)
             for ev in events:
                 behaviour.notice(t, ev.kind, ev.source)
                 a = appraiser.appraise(ev, t, tracks)
@@ -306,6 +339,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 places.observe(robot_xy, t, 1.0 / FRAME_HZ)
                 behaviour.explore_bearing = places.explore_heading(robot_xy, robot_yaw)[0]
             pad = affect.step(1.0 / FRAME_HZ)
+            if memory is not None and k % (PERCEIVE_EVERY * 10) == 0:  # once per second, for analysis
+                memory_trace.append((round(t, 1), {r.eid: (r.threat, r.warmth, r.adverse, r.benign)
+                                                   for r in memory.records.values() if r.kind == "person"}))
             salience = {tr.tid: appraiser.novelty(tr.tid if use_memory else tr.kind) for tr in tracks}
             threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
                        if use_memory else None)
@@ -347,5 +383,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             frames.append((d.qpos.copy(), d.mocap_pos.copy(), d.mocap_quat.copy(), tracks, boxes))
     if use_memory:
         sim.memory, sim.episodic, sim.sleep_log = memory, episodic, sleep_log  # for inspection by callers
+        sim.memory_trace = memory_trace
+    sim.outcomes = outcomes_log
     sim.places = places
     return sim, rows, frames, fired

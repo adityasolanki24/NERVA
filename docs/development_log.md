@@ -4,6 +4,55 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Refactor stage D (part 1): outcome-grounded memory path; evaluation preregistered
+
+**Implemented** (legacy path unchanged and still the default):
+- **`nerva/world/outcomes.py`, `OutcomeMonitor`:**
+  - `stability_loss` when tilt > 20°.
+  - `near_collision` when a person track is within 0.8 m with time to contact (distance ÷
+    ego-corrected closing speed) < 1.0 s. Fires once per track until it is beyond 1.2 m again; magnitude
+    = closing speed ÷ 1.5. This is an *estimate*: the MuJoCo people have no collision geometry.
+  - `benign_contact` from simulated touch.
+  - Thresholds fixed before any evaluation.
+- **Entity memory, `learning="grounded"`:**
+  - Expected adverse A and benign B are learned only from attributed outcomes, with α = 0.5 ×
+    confidence and no arousal scaling. A benign outcome also extinguishes A at half rate.
+  - `learn()` from emotions only records history.
+  - threat = A and warmth = B − A are derived summaries. Trust stays at its prior: undefined in this
+    mode, and not lowered by surprise.
+- **Place memory, grounded:** learns only from outcomes at the cell.
+- **Episodic, grounded:** outcomes are stored as `outcome:<kind>` episodes, and only those are replayed.
+- **Identity binder:** outcomes on a track with unknown identity are held and credited at confidence
+  0.8 once resolved, or dropped if the track is lost (no phantom attribution).
+
+**Design bug found before evaluation:**
+- A first grounded probe (S1, seed 0) showed A's adverse rising 0.50 → 0.55 → 0.60 across sleeps with no
+  new outcome: each replay re-applied the one lunge as new evidence.
+- Fixed so that replay only restores toward the level the last real outcomes set (undoing absence
+  drift) and never beyond. After the fix, A stays at ≤ 0.50 (0.47 after drift).
+
+**Regression:** the legacy memory trace (S1, seed 0) is still byte-identical to the stage A baseline.
+174 tests pass (12 new: grounded vs legacy learning, replay, place memory, outcome monitor, deferred
+and dropped attribution), 2 skipped; Ruff clean.
+
+**Preregistered evaluation** (criteria unchanged from the M1 evaluation; vision; `evaluate_memory.py`):
+1. S1, plain scene, grounded memory ON, 5 seeds. Compare with the recorded legacy result (5/5 on
+   b_not_blamed, a_remembered, b_welcomed, touch_to_b).
+2. B2, neutral style, backlash scene, 5 seeds each: legacy ON, grounded ON, memory OFF. This is the
+   first memory evaluation with B2.
+3. Together scenario, S1, plain, grounded ON, 3 seeds. Compare with the recorded legacy avoids_a 3/3.
+4. **Self-reinforcement (RQ7b):** person#0's (A's) threat at 116 s minus at 40 s, with the adverse
+   outcomes attributed to A in between.
+   - Prediction for grounded: ≤ 0 in every seed in which no new adverse outcome is attributed to A.
+   - Legacy is reported for comparison, with no prediction.
+
+**RQ7 reading, fixed now:**
+- Supported if grounded passes the criteria wherever legacy passes, and the prediction in (4) holds.
+- Falsified if grounded fails a criterion legacy passes in the same setup, or if A's threat grows with
+  no new adverse outcome.
+
+---
+
 ## 2026-10-02 — Refactor stage C: behaviour reads action tendencies, not emotion labels
 
 - `ReactiveBehaviour.step` and `UtilityBehaviour` take an `ActionTendencyState` instead of an

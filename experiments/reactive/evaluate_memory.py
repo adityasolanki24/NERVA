@@ -7,7 +7,13 @@ running, each compared with memory ON and OFF (ablation):
   a_remembered   while A returns (94-106 s) the robot is wary (watch/retreat/freeze ≥ 50 % of the time)
   b_welcomed     after B returns (120-130 s) the robot approaches or inspects B
   touch_to_b     (memory only) B's warmth > 0 > A's warmth after the petting, and A ≠ B as identities
-Usage: python experiments/reactive/evaluate_memory.py --policy S1.onnx [--seeds 5]
+Refactor stage D adds (criteria above unchanged):
+  --learning legacy|grounded   entity/place memory learns from emotions (legacy) or measured outcomes
+  --backlash --neutral-style   evaluate a neutral-style policy (B2) in its training scene
+  a_threat_40 / a_threat_116   person#0's threat when A has left (40 s) and at the end of A's return (116 s);
+                               a_outcomes_between = adverse outcomes attributed to A in between. Recorded to
+                               check self-reinforcement (RQ7): no growth expected without a new adverse outcome.
+Usage: python experiments/reactive/evaluate_memory.py --policy S1.onnx [--seeds 5] [--learning grounded]
 """
 
 from __future__ import annotations
@@ -27,9 +33,19 @@ def modes(rows, t0, t1):
     return [r["mode"] for r in rows if t0 <= r["t"] < t1]
 
 
-def evaluate(policy: str, seed: int, use_memory: bool) -> dict:
+def _threat_at(sim, eid: str, t: float):
+    best = None
+    for tt, recs in getattr(sim, "memory_trace", []):
+        if tt <= t and eid in recs:
+            best = recs[eid][0]
+    return best
+
+
+def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
+             neutral: bool = False) -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
-                                   perception_mode="vision", use_memory=use_memory)
+                                   perception_mode="vision", use_memory=use_memory, memory_learning=learning,
+                                   backlash_scene=backlash, neutral_style=neutral)
     first_b, return_a, return_b = modes(rows, 46, 58), modes(rows, 94, 106), modes(rows, 120, 130)
     result = {
         "seed": seed, "memory": use_memory,
@@ -44,15 +60,21 @@ def evaluate(policy: str, seed: int, use_memory: bool) -> dict:
         result["identities"] = {r.eid: {"threat": round(r.threat, 3), "warmth": round(r.warmth, 3),
                                         "trust": round(r.trust, 3)} for r in recs}
         result["touch_to_b"] = (len(people) == 2 and people[1].warmth > 0 > people[0].warmth)
+        result["learning"] = learning
+        result["a_threat_40"] = _threat_at(sim, "person#0", 40.0)
+        result["a_threat_116"] = _threat_at(sim, "person#0", 116.0)
+        result["outcomes"] = [(round(o.time_s, 1), o.kind, o.source) for o in sim.outcomes]
     return result
 
 
-def evaluate_together(policy: str, seed: int, use_memory: bool) -> dict:
+def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
+                      neutral: bool = False) -> dict:
     """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
     avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
     occurs and B comes closer than A on average."""
     _, rows, _, _ = scenario.run(policy, seed=seed, duration=125.0, agents=scenario.together_scenario(),
-                                 perception_mode="vision", use_memory=use_memory)
+                                 perception_mode="vision", use_memory=use_memory, memory_learning=learning,
+                                 backlash_scene=backlash, neutral_style=neutral)
     w = [r for r in rows if 100 <= r["t"] < 125]
     ms = {r["mode"] for r in w}
     mean_a = sum(r["dist_person"] for r in w) / len(w)
@@ -68,19 +90,30 @@ def main() -> None:
     ap.add_argument("--policy", required=True)
     ap.add_argument("--seeds", type=int, default=5)
     ap.add_argument("--together", action="store_true", help="only the two-people-at-once scenario")
+    ap.add_argument("--learning", choices=("legacy", "grounded"), default="legacy")
+    ap.add_argument("--backlash", action="store_true", help="evaluate in the scene the policies were trained in")
+    ap.add_argument("--neutral-style", action="store_true", help="policy trained on the neutral style only (B1/B2)")
+    ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")
     args = ap.parse_args()
     if args.together:
-        results = [evaluate_together(args.policy, s, m) for m in (True, False) for s in range(args.seeds)]
+        mems = (True,) if args.no_ablation else (True, False)
+        results = [evaluate_together(args.policy, s, m, args.learning, args.backlash, args.neutral_style)
+                   for m in mems for s in range(args.seeds)]
         summary = {("memory" if m else "no_memory"): {k: f"{sum(r[k] for r in results if r['memory'] == m)}/{args.seeds}"
-                                                     for k in ("avoids_a", "engages_b")} for m in (True, False)}
+                                                     for k in ("avoids_a", "engages_b")} for m in mems}
         for r in results:
             print(r)
         print("SUMMARY", json.dumps(summary))
+        args.out.mkdir(parents=True, exist_ok=True)
+        (args.out / "evaluation_together.json").write_text(
+            json.dumps({"summary": summary, "runs": results}, indent=1) + "\n", encoding="utf-8")
         return
-    results = [evaluate(args.policy, s, m) for m in (True, False) for s in range(args.seeds)]
+    mems = (True,) if args.no_ablation else (True, False)
+    results = [evaluate(args.policy, s, m, args.learning, args.backlash, args.neutral_style)
+               for m in mems for s in range(args.seeds)]
     summary = {}
-    for m in (True, False):
+    for m in mems:
         rs = [r for r in results if r["memory"] == m]
         keys = ["b_not_blamed", "a_remembered", "b_welcomed"] + (["touch_to_b"] if m else [])
         summary["memory" if m else "no_memory"] = {k: f"{sum(r[k] for r in rs)}/{len(rs)}" for k in keys}

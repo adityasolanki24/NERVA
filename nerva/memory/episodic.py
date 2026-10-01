@@ -17,6 +17,9 @@ by offline replay:
               are merged into one gist episode with a count; already-consolidated, low-activation
               episodes are pruned when over capacity [adaptive forgetting, Richards & Frankland 2017].
   persist     SQLite (stdlib), one file; survives restarts.
+  grounded    (refactor stage D) with a grounded entity memory, measured outcomes are stored as
+              "outcome:<kind>" episodes (encode_outcome) and only those are replayed into the entity's
+              outcome expectations; emotion episodes stay as history.
 
 Bounded (CAPACITY episodes), pure Python + NumPy, O(N) retrieval over N ≤ CAPACITY: fits a
 Jetson-class computer. All constants are NERVA design choices.
@@ -53,6 +56,7 @@ class Episode:
     uses: list = field(default_factory=list)  # retrieval times (encoding time is t)
     count: int = 1
     consolidated: bool = False
+    magnitude: float = 1.0  # for outcome episodes ("outcome:<kind>"): the outcome's magnitude
 
     def intensity(self) -> float:
         return sum(i for _, i in self.emotions)
@@ -83,6 +87,16 @@ class EpisodicMemory:
             self._prune(t, force=True)
         return ep
 
+    def encode_outcome(self, t: float, outcome, entity: str | None, place, arousal: float = 0.0) -> Episode:
+        """Store a measured outcome (grounded mode). Outcomes are always significant: strength = magnitude.
+        The episode is named "outcome:<kind>" and carries no emotions."""
+        ep = Episode(t, f"outcome:{outcome.kind}", entity, (float(place[0]), float(place[1])), [], arousal, 0.0,
+                     float(outcome.magnitude), magnitude=float(outcome.magnitude))
+        self.episodes.append(ep)
+        if len(self.episodes) > self.capacity:
+            self._prune(t, force=True)
+        return ep
+
     # ── retrieval ───────────────────────────────────────────────────────────
     def retrieve(self, now: float, entity: str | None = None, event: str | None = None, place=None,
                  k: int = 5, radius: float = 1.5) -> list[Episode]:
@@ -105,16 +119,29 @@ class EpisodicMemory:
     # ── consolidation ───────────────────────────────────────────────────────
     def consolidate(self, now: float, entity_memory=None, top_k: int = REPLAY_TOP_K) -> dict:
         """One 'sleep' pass: prioritised replay → entity updates, merge repeats, prune. Returns a report."""
-        candidates = [e for e in self.episodes if e.intensity() >= REPLAY_MIN_INTENSITY]
-        replayed = sorted(candidates, key=lambda e: e.intensity() * (1 + abs(e.prediction_error))
-                          * math.exp(-(now - e.t) / 600.0), reverse=True)[:top_k]
+        grounded = entity_memory is not None and getattr(entity_memory, "learning", "legacy") == "grounded"
+        if grounded:  # only measured outcomes are replayed; their significance is the outcome's magnitude
+            candidates = [e for e in self.episodes if e.event.startswith("outcome:") and e.magnitude >= REPLAY_MIN_INTENSITY]
+            replayed = sorted(candidates, key=lambda e: e.magnitude * math.exp(-(now - e.t) / 600.0),
+                              reverse=True)[:top_k]
+        else:
+            candidates = [e for e in self.episodes if e.intensity() >= REPLAY_MIN_INTENSITY]
+            replayed = sorted(candidates, key=lambda e: e.intensity() * (1 + abs(e.prediction_error))
+                              * math.exp(-(now - e.t) / 600.0), reverse=True)[:top_k]
         for ep in self.episodes:  # everything seen in this sleep is consolidated (eligible for merge/prune)
             ep.consolidated = True
         for ep in replayed:
             ep.uses.append(now)  # replay is a use
             if entity_memory is not None and ep.entity in entity_memory.records:
-                entity_memory.learn(entity_memory.records[ep.entity], now, f"replay:{ep.event}", ep.emotions,
-                                    ep.arousal, surprise_negative=False, confidence=REPLAY_RATE, record=False)
+                rec = entity_memory.records[ep.entity]
+                if not grounded:  # legacy: replay re-learns the stored emotions
+                    entity_memory.learn(rec, now, f"replay:{ep.event}", ep.emotions,
+                                        ep.arousal, surprise_negative=False, confidence=REPLAY_RATE, record=False)
+                elif ep.event.startswith("outcome:"):  # grounded: only replayed OUTCOMES teach
+                    from nerva.interfaces import OutcomeSignal
+
+                    entity_memory.learn_outcome(rec, OutcomeSignal(ep.event.split(":", 1)[1], ep.magnitude, now),
+                                                confidence=REPLAY_RATE * ep.count, record=False, replay=True)
             ep.consolidated = True
         merged = self._merge()
         pruned = self._prune(now)

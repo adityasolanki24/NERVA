@@ -12,6 +12,19 @@ One record per entity (a person identity or an object), found again by appearanc
                 outweigh an early fright rather than erasing it (extinction as new learning)
   episodes      a short list of salient events with this entity (M2 turns this into the episodic store)
 Threat and warmth also relax slowly toward neutral while the entity is absent (DRIFT_S).
+
+Two learning modes (refactor stage D, docs/architecture.md §1.3):
+  "legacy"    the above: associations learned from the emotions Model A elicited. Kept as the baseline.
+              Known problem: a remembered threat re-elicits fear, which is learned as more threat.
+  "grounded"  associations learned only from measured outcomes (OutcomeSignal, nerva/world/outcomes.py):
+                adverse  A ← A + α·(m − A)   on near_collision / stability_loss attributed to the entity
+                benign   B ← B + α·(m − B)   on benign_contact; also A ← A + α·EXTINCTION·(0 − A)
+              with α = OUTCOME_ALPHA·confidence (no arousal scaling: affect does not set the teaching
+              signal). learn() then only records the episode (emotions kept as history).
+              Sleep replay (replay=True) adds NO evidence: it only restores A and B toward the levels the
+              last real outcomes set, undoing absence drift, never beyond (one lunge stays one lunge).
+              threat = A and warmth = B − A are DERIVED display summaries in this mode; trust is not
+              defined in this mode and stays at its prior (surprise is not evidence of untrustworthiness).
 All constants are NERVA design choices (docs/memory_design.md §3.3); nothing here is fitted to data.
 Pure Python/NumPy, O(entities) per lookup: fits embedded hardware.
 """
@@ -31,6 +44,9 @@ DRIFT_S = 900.0  # threat/warmth relax toward neutral with this time constant wh
 ALPHA = 0.5
 APPEARANCE_RATE = 0.1  # running-mean rate of the identity embedding
 MAX_EPISODES = 20
+OUTCOME_ALPHA = 0.5
+EXTINCTION = 0.5  # a benign outcome also counts this much as evidence against adverse expectations
+LEARNING_MODES = ("legacy", "grounded")
 
 
 @dataclass
@@ -45,6 +61,11 @@ class EntityRecord:
     trust: float = 0.5
     encounters: int = 0
     episodes: list = field(default_factory=list)
+    adverse: float = 0.0  # grounded mode: expected adverse outcome from this entity, [0, 1]
+    benign: float = 0.0  # grounded mode: expected benign outcome, [0, 1]
+    outcomes: int = 0  # grounded mode: number of attributed outcomes
+    adverse_learned: float = 0.0  # grounded mode: level set by the last real outcomes (ceiling for replay)
+    benign_learned: float = 0.0
 
     def novelty(self) -> float:
         return math.exp(-self.exposure_s / HABITUATION_S.get(self.kind, 30.0))
@@ -56,7 +77,10 @@ def _cosine(a: np.ndarray, b: np.ndarray) -> float:
 
 
 class EntityMemory:
-    def __init__(self):
+    def __init__(self, learning: str = "legacy"):
+        if learning not in LEARNING_MODES:
+            raise ValueError(f"learning must be one of {LEARNING_MODES}")
+        self.learning = learning
         self.records: dict[str, EntityRecord] = {}
         self._counter: dict[str, int] = {}
 
@@ -94,7 +118,17 @@ class EntityMemory:
             drift = math.exp(-gap / DRIFT_S)
             rec.threat *= drift
             rec.warmth *= drift
+            rec.adverse *= drift
+            rec.benign *= drift
+            if self.learning == "grounded":
+                self._derive(rec)
             rec.encounters += 1
+
+    @staticmethod
+    def _derive(rec: EntityRecord) -> None:
+        """Grounded mode: the user-facing summaries are derived from the outcome expectations."""
+        rec.threat = rec.adverse
+        rec.warmth = float(np.clip(rec.benign - rec.adverse, -1.0, 1.0))
 
     def observe(self, rec: EntityRecord, t: float, dt: float) -> None:
         """Seen during this frame: familiarity grows."""
@@ -104,7 +138,12 @@ class EntityMemory:
     # ── learning ────────────────────────────────────────────────────────────
     def learn(self, rec: EntityRecord, t: float, kind: str, emotions: list[tuple[str, float]],
               arousal: float, surprise_negative: bool, confidence: float = 1.0, record: bool = True) -> None:
-        """Update the entity's associations from the emotions an event with it elicited."""
+        """Legacy mode: update the entity's associations from the emotions an event with it elicited.
+        Grounded mode: only record the episode (the emotions are history, not a teaching signal)."""
+        if self.learning == "grounded":
+            if record:
+                self._record(rec, t, kind, emotions, confidence)
+            return
         fear = sum(i for lbl, i in emotions if lbl == "fear")
         valence = (sum(i for lbl, i in emotions if lbl in ("joy", "hope", "interest"))
                    - sum(i for lbl, i in emotions if lbl in ("fear", "distress")))
@@ -114,6 +153,38 @@ class EntityMemory:
         rec.trust += a * ((0.0 if surprise_negative else 1.0) - rec.trust)
         if not record:  # e.g. replay during consolidation: updates the association, not the history
             return
+        self._record(rec, t, kind, emotions, confidence)
+
+    @staticmethod
+    def _record(rec: EntityRecord, t: float, kind: str, emotions, confidence: float) -> None:
         rec.episodes.append({"t": round(t, 2), "event": kind, "emotions": [(lbl, round(i, 2)) for lbl, i in emotions],
                              "confidence": round(confidence, 2)})
         del rec.episodes[:-MAX_EPISODES]
+
+    def learn_outcome(self, rec: EntityRecord, outcome, confidence: float = 1.0, record: bool = True,
+                      replay: bool = False) -> None:
+        """Grounded mode: update the outcome expectations from a measured outcome attributed to `rec`.
+        replay=True (consolidation): restore toward the learned levels only. Ignored in legacy mode."""
+        if self.learning != "grounded":
+            return
+        a = min(1.0, OUTCOME_ALPHA * confidence)
+        if replay:
+            if outcome.adverse:
+                rec.adverse += a * max(0.0, rec.adverse_learned - rec.adverse)
+            else:
+                rec.benign += a * max(0.0, rec.benign_learned - rec.benign)
+            self._derive(rec)
+            return
+        m = outcome.magnitude
+        if outcome.adverse:
+            rec.adverse += a * (m - rec.adverse)
+        else:
+            rec.benign += a * (m - rec.benign)
+            rec.adverse += a * EXTINCTION * (0.0 - rec.adverse)
+        rec.outcomes += 1
+        rec.adverse_learned, rec.benign_learned = rec.adverse, rec.benign
+        self._derive(rec)
+        if record:
+            rec.episodes.append({"t": round(outcome.time_s, 2), "event": f"outcome:{outcome.kind}",
+                                 "magnitude": round(m, 2), "confidence": round(confidence, 2)})
+            del rec.episodes[:-MAX_EPISODES]

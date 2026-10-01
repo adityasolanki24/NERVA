@@ -178,3 +178,14 @@ def test_backward_emphasis_keeps_upstream_draws_and_forces_backward_commands():
     for p, e in zip(plain, emph):
         np.testing.assert_array_equal(np.asarray(p[1:]), np.asarray(e[1:]))  # other commands untouched
         assert BACKWARD_RANGE[0] <= float(e[0]) <= BACKWARD_RANGE[1]
+
+
+def test_feet_air_time_rewards_steps_only_when_moving():
+    from nerva.training.style_joystick import feet_air_time_reward
+
+    air = jp.array([0.2, 0.05])
+    landed = jp.array([1.0, 1.0])
+    moving, still = jp.array([0.1, 0, 0, 0, 0, 0, 0]), jp.zeros(7)
+    assert float(feet_air_time_reward(air, landed, moving)) == pytest.approx(0.1 - 0.05, abs=1e-6)  # short hop penalised
+    assert float(feet_air_time_reward(air, landed, still)) == 0.0
+    assert float(feet_air_time_reward(jp.array([0.9, 0.0]), jp.array([1.0, 0.0]), moving)) == pytest.approx(0.2)

@@ -103,6 +103,18 @@ class StyledReference:
         return vmap(lambda c: jp.polyval(c, t))(coeffs)
 
 
+# S6 feet air-time reward: MuJoCo Playground's Berkeley Humanoid _reward_feet_air_time form, with thresholds
+# scaled to Open Duck's shorter swings (single support 0.135-0.225 s): without it, a touchdown-gated swing
+# cost can be avoided by never stepping (S5 learned to stand still, 2026-10-01).
+AIR_TIME_MIN_S, AIR_TIME_MAX_S = 0.1, 0.3
+
+
+def feet_air_time_reward(air_time: jax.Array, first_contact: jax.Array, command: jax.Array) -> jax.Array:
+    """Reward each touchdown by its swing time above AIR_TIME_MIN_S (capped), only while moving is commanded."""
+    gained = jp.clip((air_time - AIR_TIME_MIN_S) * first_contact, max=AIR_TIME_MAX_S - AIR_TIME_MIN_S)
+    return jp.sum(gained) * (jp.linalg.norm(command[:3]) > 0.05)
+
+
 def feet_height_cost(swing_peak: jax.Array, first_contact: jax.Array, target: jax.Array) -> jax.Array:
     """Squared relative error of each foot's swing peak lift, counted on touchdown."""
     error = (swing_peak - STANCE_FOOT_SITE_Z) / target - 1.0
@@ -114,12 +126,16 @@ class StyleJoystick(upstream.Joystick):
 
     def __init__(self, reference: StyledReference, task: str = "flat_terrain",
                  config=None, config_overrides=None, feet_height_scale: float = 0.0,
-                 apply_head_commands: bool = False, backward_fraction: float = 0.0):
+                 apply_head_commands: bool = False, backward_fraction: float = 0.0,
+                 feet_air_time_scale: float = 0.0):
         self.SREF = reference
         config = config or upstream.default_config()
         self.feet_height_scale = float(feet_height_scale)
         self.apply_head_commands = bool(apply_head_commands)
         self.backward_fraction = float(backward_fraction)
+        self.feet_air_time_scale = float(feet_air_time_scale)
+        if self.feet_air_time_scale != 0.0:  # NERVA S6
+            config.reward_config.scales.feet_air_time = self.feet_air_time_scale
         if self.feet_height_scale != 0.0:  # NERVA S2; absent from the reward otherwise
             config.reward_config.scales.feet_height = self.feet_height_scale
         super().__init__(task=task, config=config, config_overrides=config_overrides)
@@ -129,6 +145,8 @@ class StyleJoystick(upstream.Joystick):
         if self.feet_height_scale != 0.0:
             target = self.SREF.foot_heights[info["style_idx"]]
             rewards["feet_height"] = feet_height_cost(info["swing_peak"], first_contact, target)
+        if self.feet_air_time_scale != 0.0:
+            rewards["feet_air_time"] = feet_air_time_reward(info["feet_air_time"], first_contact, info["command"])
         return rewards
 
     # ── style helpers ────────────────────────────────────────────────────────

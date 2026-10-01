@@ -49,6 +49,8 @@ def main():
     p.add_argument("--num_timesteps", type=int, default=150_000_000)
     p.add_argument("--output_dir", default="checkpoints_style")
     p.add_argument("--smoke", action="store_true")
+    p.add_argument("--feet_air_time_scale", type=float, default=0.0,
+                   help="S6: reward stepping while a velocity is commanded (0 = off)")
     p.add_argument("--backward_fraction", type=float, default=0.0,
                    help="S4: probability of replacing the forward command with a backward one")
     p.add_argument("--apply_head_commands", action="store_true",
@@ -62,7 +64,8 @@ def main():
     ref = build_reference(args)
     env, eval_env = (StyleJoystick(ref, task=args.task, feet_height_scale=args.feet_height_scale,
                                    apply_head_commands=args.apply_head_commands,
-                                   backward_fraction=args.backward_fraction) for _ in range(2))
+                                   backward_fraction=args.backward_fraction,
+                                   feet_air_time_scale=args.feet_air_time_scale) for _ in range(2))
     obs_size = int(env.observation_size["state"][0])
     print(f"styles={ref.n_styles} style_dim={ref.style_dim} obs={obs_size} periods={ref.periods} "
           f"feet_height_scale={args.feet_height_scale} apply_head_commands={args.apply_head_commands} "

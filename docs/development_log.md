@@ -4,6 +4,19 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — First Isaac Sim render with the robot (kinematic replay)
+
+`isaac_spike-20261001-180054`, L4, Ubuntu 22.04 + driver 570, Isaac Sim 5.1 [measured]:
+- **Robot:** built from MuJoCo's visual geometry (`export_robot_mesh.py`: 44 meshes on 15 bodies, 30 KB), because Isaac's MJCF and URDF importers produced no robot bodies.
+- **Replay:** each body is posed from the memory-scenario replay (16 bodies per frame; `base` has no geometry).
+- **Output:** 3,375 frames (135 s at 25 fps) in 733 s of rendering, encoded locally to MP4 (34 MB, local only).
+- **Looks:** realistic lighting and shadows; the robot walks beside the person.
+- **Earlier fixes along the way:** the job hung twice on apt (unattended-upgrades and needrestart prompts); now non-interactive with a per-phase log. The default stage was Y-up and overexposed; now Z-up with moderate lights.
+- **Limits:** people are static T-pose characters sliding along their paths; no captions yet. Physics stays in MuJoCo.
+- **Teardown:** the NAT was removed after the run; `audit` shows no instances or routers.
+
+---
+
 ## 2026-10-01 — S6 (feet air-time reward) also stands still
 
 `s6_pilot-20261001-130212` = S5 + feet air-time reward 2.0 (thresholds 0.1–0.3 s). Backlash scene [measured]: v = −0.000 at vx −0.15 and +0.001 at +0.15, foot lift 0 mm. **It collapsed to standing like S5.**

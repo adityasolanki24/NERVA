@@ -121,6 +121,30 @@ writer = rep.WriterRegistry.get("BasicWriter")
 writer.initialize(output_dir=os.path.join(args.out, "frames"), rgb=True)
 writer.attach([rp])
 
+# Robot's point of view: a camera at MuJoCo's robot_eye pose (same 70 deg vertical field of view, 4:3), so the
+# boxes found by NERVA's vision in MuJoCo line up with this image.
+EYE_W, EYE_H = 480, 360
+eye_cam = UsdGeom.Camera.Define(stage, "/World/RobotEye")
+fovy = float(replay["eye_fovy"]) if "eye_fovy" in replay else 70.0
+eye_cam.CreateFocalLengthAttr(10.0)
+eye_cam.CreateVerticalApertureAttr(float(2 * 10.0 * np.tan(np.radians(fovy) / 2)))
+eye_cam.CreateHorizontalApertureAttr(float(2 * 10.0 * np.tan(np.radians(fovy) / 2) * EYE_W / EYE_H))
+eye_cam.CreateClippingRangeAttr(Gf.Vec2f(0.02, 100.0))
+eye_rp = rep.create.render_product("/World/RobotEye", (EYE_W, EYE_H))
+eye_writer = rep.WriterRegistry.get("BasicWriter")
+eye_writer.initialize(output_dir=os.path.join(args.out, "frames_eye"), rgb=True)
+eye_writer.attach([eye_rp])
+
+
+def camera_matrix(pos, xmat) -> Gf.Matrix4d:
+    """MuJoCo camera frame (columns: x right, y up, z backward) -> USD camera transform (same axes, row form)."""
+    x = [float(v) for v in xmat.reshape(-1)]
+    return Gf.Matrix4d(x[0], x[3], x[6], 0.0,
+                       x[1], x[4], x[7], 0.0,
+                       x[2], x[5], x[8], 0.0,
+                       float(pos[0]), float(pos[1]), float(pos[2]), 1.0)
+
+
 # ── replay ──
 look = None
 n_total = len(replay["t"])
@@ -142,6 +166,8 @@ for i in range(args.frames):
     eye = look + np.array([-1.3, -1.6, 0.7])
     view = Gf.Matrix4d().SetLookAt(Gf.Vec3d(*eye), Gf.Vec3d(*look), Gf.Vec3d(0, 0, 1))
     set_local(camera.GetPrim(), view.GetInverse())
+    if "eye_pos" in replay:
+        set_local(eye_cam.GetPrim(), camera_matrix(replay["eye_pos"][k], replay["eye_xmat"][k]))
     rep.orchestrator.step(rt_subframes=1)
 
 rep.orchestrator.wait_until_complete()

@@ -16,22 +16,30 @@ IMAGES=${ISAAC_IMAGES:-"nvcr.io/nvidia/isaac-sim:5.1.0"}  # 5.1 renders with dri
 OUT=/work/out/isaac
 sync_isaac() { gsutil -q -m rsync -r "$OUT" "gs://$NERVA_BUCKET/runs/$NERVA_RUN_ID/out/isaac" || true; }
 mkdir -p "$OUT" /work/isaac_cache/{kit,ov,glcache,computecache} /work/isaac_logs
+phase() { echo "$(date -u +%H:%M:%S) $*" | tee -a "$OUT/phases.log"; sync_isaac; }
+# A fresh Ubuntu VM runs unattended-upgrades, which holds the dpkg lock; one run hung here until the cap.
+systemctl stop unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
+APT=(apt-get -o DPkg::Lock::Timeout=900 -y -qq)
+phase "start"
 
 # Full NVIDIA driver with the graphics (Vulkan/OpenGL) components: the VM is plain Ubuntu 22.04.
 if ! command -v nvidia-smi >/dev/null || ! ls /usr/share/vulkan/icd.d/nvidia_icd.json >/dev/null 2>&1; then
   export DEBIAN_FRONTEND=noninteractive
-  apt-get update -qq && apt-get install -y -qq "linux-headers-$(uname -r)" nvidia-driver-570 >/dev/null
+  phase "installing NVIDIA driver 570"
+  "${APT[@]}" update && "${APT[@]}" install "linux-headers-$(uname -r)" nvidia-driver-570 >/dev/null
   modprobe nvidia || true
 fi
 if ! command -v docker >/dev/null; then
-  apt-get update -qq && apt-get install -y -qq docker.io >/dev/null
+  phase "installing docker"
+  "${APT[@]}" update && "${APT[@]}" install docker.io >/dev/null
 fi
 if ! docker info 2>/dev/null | grep -qi nvidia; then
   curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-ct.gpg
   curl -fsSL https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list \
     | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-ct.gpg] https://#' \
     > /etc/apt/sources.list.d/nvidia-container-toolkit.list
-  apt-get update -qq && apt-get install -y -qq nvidia-container-toolkit >/dev/null
+  phase "installing nvidia-container-toolkit"
+  "${APT[@]}" update && "${APT[@]}" install nvidia-container-toolkit >/dev/null
   nvidia-ctk runtime configure --runtime=docker && systemctl restart docker
 fi
 
@@ -44,6 +52,7 @@ MJCF_DIR=/work/odp/playground/open_duck_mini_v2/xmls
 ROBOT=/work/odm/mini_bdx/robots/open_duck_mini_v2
 sed 's#package:///##g' "$ROBOT/robot.urdf" > "$ROBOT/robot_local.urdf"
 
+phase "driver ready"
 nvidia-smi > "$OUT/nvidia-smi.txt"
 {
   echo "== host Vulkan ICDs"; ls -la /usr/share/vulkan/icd.d /etc/vulkan/icd.d 2>&1
@@ -63,6 +72,7 @@ RUN=(docker run --rm --gpus all --network host
      --entrypoint /isaac-sim/python.sh)
 STARTUP="from isaacsim import SimulationApp; a = SimulationApp({'headless': True}); print('ISAAC_STARTED', flush=True); a.close()"
 
+phase "pulling images"
 IMAGE=""
 for candidate in $IMAGES; do
   tag=$(basename "$candidate" | tr ':' '_')
@@ -81,6 +91,7 @@ done
 echo "selected image: ${IMAGE:-none}" | tee "$OUT/selected_image.txt"
 
 if [ -n "$IMAGE" ]; then
+  phase "rendering replay"
   echo "== replay render with $IMAGE (45 min limit)" > "$OUT/render.log"
   timeout 45m "${RUN[@]}" "$IMAGE" /nerva_isaac/render_replay.py --mjcf /mjcf/open_duck_mini_v2.xml     --replay /nerva_isaac/replays/memory_s1.npz --out /out --frames ${ISAAC_FRAMES:-750} --stride 2 --start ${ISAAC_START:-0} >> "$OUT/render.log" 2>&1
   echo "render exit=$?" >> "$OUT/render.log"

@@ -52,3 +52,40 @@ def test_ambiguous_appearance_creates_no_new_identity():
     m.resolve("person", BLUE, 0.0)
     assert m.resolve("person", 0.6 * BLUE + 0.4 * GREEN, 1.0) is None  # partial/mixed view
     assert len(m.records) == 1
+
+
+# ── stage F: modular sensor evidence ─────────────────────────────────────────
+
+from nerva.interfaces import SensorEvidence  # noqa: E402
+
+FACE_A = (1.0, 0.0, 0.0)
+FACE_B = (0.0, 1.0, 0.0)
+
+
+def _ev(modality, feature, conf=1.0):
+    return SensorEvidence(modality, tuple(float(v) for v in feature), conf)
+
+
+def test_missing_modalities_contribute_nothing():
+    m = EntityMemory()
+    a = m.resolve_evidence("person", [_ev("vision.appearance", BLUE), _ev("vision.face", FACE_A)], 0.0)
+    # later only the face is visible (e.g. different clothes cannot be judged): the face alone decides
+    assert m.resolve_evidence("person", [_ev("vision.face", FACE_A)], 1.0) is a
+    # only clothing visible: the stored face does not count against the match
+    assert m.resolve_evidence("person", [_ev("vision.appearance", BLUE)], 2.0) is a
+
+
+def test_modalities_are_combined_by_confidence():
+    m = EntityMemory()
+    a = m.resolve_evidence("person", [_ev("vision.appearance", BLUE), _ev("vision.face", FACE_A)], 0.0)
+    # same clothes but a confidently different face: not person A
+    other = m.resolve_evidence("person", [_ev("vision.appearance", BLUE, 0.3), _ev("vision.face", FACE_B, 1.0)], 1.0)
+    assert other is not a
+
+
+def test_single_modality_resolve_is_unchanged():
+    m1, m2 = EntityMemory(), EntityMemory()
+    for t, look in enumerate((BLUE, GREEN, BLUE * 0.9 + GREEN * 0.1, None)):
+        r1 = m1.resolve("person", look, float(t))
+        r2 = m2.resolve_evidence("person", [] if look is None else [_ev("vision.appearance", look)], float(t))
+        assert (r1.eid if r1 else None) == (r2.eid if r2 else None)

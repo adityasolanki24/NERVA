@@ -26,6 +26,12 @@ Two learning modes (refactor stage D, docs/architecture.md §1.3):
               threat = A and warmth = B − A are DERIVED display summaries in this mode; trust is not
               defined in this mode and stays at its prior (surprise is not evidence of untrustworthiness).
 All constants are NERVA design choices (docs/memory_design.md §3.3); nothing here is fitted to data.
+Identity from modular sensor evidence (refactor stage F): `resolve_evidence(kind, [SensorEvidence, ...])`
+combines whichever modalities are present in both the observation and the record, weighted by the
+evidence confidence (cosine similarity per modality); missing modalities contribute nothing. Today only
+"vision.appearance" exists (stored in `appearance`); other modalities (a face or voice embedding later)
+are stored in `features` when a sensor provides them. `resolve(kind, appearance)` is the single-modality
+case and gives exactly the same results as before.
 Pure Python/NumPy, O(entities) per lookup: fits embedded hardware.
 """
 
@@ -35,6 +41,8 @@ import math
 from dataclasses import dataclass, field
 
 import numpy as np
+
+from nerva.interfaces import SensorEvidence
 
 MATCH_COSINE = 0.85
 NEW_IDENTITY_COSINE = 0.5  # between this and MATCH_COSINE an observation is ambiguous: no new identity
@@ -47,6 +55,7 @@ MAX_EPISODES = 20
 OUTCOME_ALPHA = 0.5
 EXTINCTION = 0.5  # a benign outcome also counts this much as evidence against adverse expectations
 LEARNING_MODES = ("legacy", "grounded")
+APPEARANCE = "vision.appearance"
 
 
 @dataclass
@@ -66,6 +75,7 @@ class EntityRecord:
     outcomes: int = 0  # grounded mode: number of attributed outcomes
     adverse_learned: float = 0.0  # grounded mode: level set by the last real outcomes (ceiling for replay)
     benign_learned: float = 0.0
+    features: dict = field(default_factory=dict)  # other modalities: modality -> running-mean embedding
 
     def novelty(self) -> float:
         return math.exp(-self.exposure_s / HABITUATION_S.get(self.kind, 30.0))
@@ -86,14 +96,34 @@ class EntityMemory:
 
     # ── identity ────────────────────────────────────────────────────────────
     def resolve(self, kind: str, appearance: np.ndarray | None, t: float) -> EntityRecord | None:
+        """Single-modality identity (vision appearance); see resolve_evidence."""
+        evidence = [] if appearance is None else [SensorEvidence(APPEARANCE, tuple(float(v) for v in appearance), 1.0, t)]
+        return self.resolve_evidence(kind, evidence, t)
+
+    @staticmethod
+    def _similarity(rec: EntityRecord, obs: dict) -> float:
+        """Confidence-weighted mean cosine over the modalities both have. With nothing on either side the
+        kind alone identifies it (1.0); with no modality in common nothing can be compared (0.0)."""
+        stored = dict(rec.features)
+        if rec.appearance is not None:
+            stored[APPEARANCE] = rec.appearance
+        if not obs and not stored:
+            return 1.0
+        common = [m for m in obs if m in stored]
+        wsum = sum(obs[m][1] for m in common)
+        if not common or wsum <= 0:
+            return 0.0
+        return sum(obs[m][1] * _cosine(obs[m][0], stored[m]) for m in common) / wsum
+
+    def resolve_evidence(self, kind: str, evidence, t: float) -> EntityRecord | None:
         """The known entity this observation belongs to, a new one if it is clearly unlike all known
         entities, or None if ambiguous (e.g. a partial view). Absence effects are applied here."""
+        obs = {e.modality: (np.asarray(e.feature, float), e.confidence) for e in evidence if e.feature is not None}
         best, best_sim, closest = None, MATCH_COSINE, 0.0
         for rec in self.records.values():
             if rec.kind != kind:
                 continue
-            sim = 1.0 if (appearance is None and rec.appearance is None) else (
-                _cosine(appearance, rec.appearance) if appearance is not None and rec.appearance is not None else 0.0)
+            sim = self._similarity(rec, obs)
             closest = max(closest, sim)
             if sim >= best_sim:
                 best, best_sim = rec, sim
@@ -102,13 +132,19 @@ class EntityMemory:
         if best is None:
             n = self._counter.get(kind, 0)
             self._counter[kind] = n + 1
-            best = EntityRecord(f"{kind}#{n}", kind, None if appearance is None else np.asarray(appearance, float),
-                                encounters=1)
+            best = EntityRecord(f"{kind}#{n}", kind, obs[APPEARANCE][0] if APPEARANCE in obs else None, encounters=1,
+                                features={m: v for m, (v, _) in obs.items() if m != APPEARANCE})
             self.records[best.eid] = best
         else:
             self._apply_absence(best, t)
-            if appearance is not None and best.appearance is not None:
-                best.appearance = (1 - APPEARANCE_RATE) * best.appearance + APPEARANCE_RATE * np.asarray(appearance)
+            for m, (v, _) in obs.items():
+                if m == APPEARANCE:
+                    if best.appearance is not None:
+                        best.appearance = (1 - APPEARANCE_RATE) * best.appearance + APPEARANCE_RATE * v
+                elif m in best.features:
+                    best.features[m] = (1 - APPEARANCE_RATE) * best.features[m] + APPEARANCE_RATE * v
+                else:
+                    best.features[m] = v
         return best
 
     def _apply_absence(self, rec: EntityRecord, t: float) -> None:

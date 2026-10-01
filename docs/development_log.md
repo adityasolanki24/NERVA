@@ -4,6 +4,26 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Isaac Sim on a cloud L4: what it took to get rendering
+
+Four attempts with `cloud/jobs/isaac_spike.sh`, all capped and self-deleting [measured]:
+
+1. **Hung silently until the VM cap.** Output was buffered by `tail`, and the mounts were root-owned while the container runs as uid 1234. Fixed with streamed logs, owned mounts, step timeouts and a minimal startup test.
+2. **Started but couldn't render:** `vkCreateInstance failed … ERROR_INCOMPATIBLE_DRIVER`, `Failed to create any GPU devices`.
+3. **Same failure** with `NVIDIA_DRIVER_CAPABILITIES=all` and Isaac 5.1. The host diagnostics showed the cause: **the Deep Learning VM image's driver is compute-only.** There's no Vulkan ICD and no NVIDIA graphics libraries on the host at all.
+4. **Plain Ubuntu 22.04 + `nvidia-driver-570`** (the launcher now picks this image for `isaac_*` jobs). `nvidia_icd.json` is present, and **Isaac Sim 5.1 starts headless without GPU errors.**
+   - ✓ ground plane and lights
+   - ✓ the asset server is reachable (Omniverse S3)
+   - ✗ a human character loaded, but the transform call needed double precision
+   - ✗ `URDFParseAndImportFile` failed with no detail
+   - ✗ frames were skipped because they depended on the robot
+
+**Attempt 5** (running): the MJCF importer with NERVA's exact MuJoCo model first, then the low-level URDF interface, then the URDF command, each logged. Frames render with or without the robot.
+
+**Container pull:** about 3 min. **Startup:** about 20 s once the caches exist.
+
+---
+
 ## 2026-10-01 — Codebase restructure; S5 collapsed to standing; Isaac Sim spike launched
 
 **Codebase:**

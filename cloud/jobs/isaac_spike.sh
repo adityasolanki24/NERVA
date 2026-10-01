@@ -19,19 +19,22 @@ mkdir -p "$OUT" /work/isaac_cache/{kit,ov,glcache,computecache} /work/isaac_logs
 phase() { echo "$(date -u +%H:%M:%S) $*" | tee -a "$OUT/phases.log"; sync_isaac; }
 # A fresh Ubuntu VM runs unattended-upgrades, which holds the dpkg lock; one run hung here until the cap.
 systemctl stop unattended-upgrades apt-daily.timer apt-daily-upgrade.timer 2>/dev/null || true
-APT=(apt-get -o DPkg::Lock::Timeout=900 -y -qq)
+# Fully non-interactive: Ubuntu 22.04's needrestart otherwise waits for a "restart services?" answer
+# (a run hung while installing docker, 2026-10-01).
+export DEBIAN_FRONTEND=noninteractive NEEDRESTART_MODE=a NEEDRESTART_SUSPEND=1
+APT=(apt-get -o DPkg::Lock::Timeout=900 -o Dpkg::Options::=--force-confdef -o Dpkg::Options::=--force-confold -y -qq)
 phase "start"
 
 # Full NVIDIA driver with the graphics (Vulkan/OpenGL) components: the VM is plain Ubuntu 22.04.
 if ! command -v nvidia-smi >/dev/null || ! ls /usr/share/vulkan/icd.d/nvidia_icd.json >/dev/null 2>&1; then
   export DEBIAN_FRONTEND=noninteractive
   phase "installing NVIDIA driver 570"
-  "${APT[@]}" update && "${APT[@]}" install "linux-headers-$(uname -r)" nvidia-driver-570 >/dev/null
+  "${APT[@]}" update && "${APT[@]}" install "linux-headers-$(uname -r)" nvidia-driver-570 </dev/null >/dev/null
   modprobe nvidia || true
 fi
 if ! command -v docker >/dev/null; then
   phase "installing docker"
-  "${APT[@]}" update && "${APT[@]}" install docker.io >/dev/null
+  "${APT[@]}" update && "${APT[@]}" install docker.io </dev/null >/dev/null
 fi
 if ! docker info 2>/dev/null | grep -qi nvidia; then
   curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | gpg --dearmor -o /usr/share/keyrings/nvidia-ct.gpg
@@ -39,7 +42,7 @@ if ! docker info 2>/dev/null | grep -qi nvidia; then
     | sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-ct.gpg] https://#' \
     > /etc/apt/sources.list.d/nvidia-container-toolkit.list
   phase "installing nvidia-container-toolkit"
-  "${APT[@]}" update && "${APT[@]}" install nvidia-container-toolkit >/dev/null
+  "${APT[@]}" update && "${APT[@]}" install nvidia-container-toolkit </dev/null >/dev/null
   nvidia-ctk runtime configure --runtime=docker && systemctl restart docker
 fi
 

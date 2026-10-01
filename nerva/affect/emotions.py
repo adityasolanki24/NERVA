@@ -34,7 +34,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from nerva.interfaces import AppraisalState, PADState
+from nerva.interfaces import ActionTendencyState, AppraisalFrame, AppraisalState, PADState
 
 NA = float("nan")  # "this emotion does not act on this PAD dimension"
 
@@ -121,8 +121,24 @@ class CategoricalAffectModel:
     def pad(self) -> PADState:
         return PADState(*(float(v) for v in self.x))
 
-    def add(self, appraisal: AppraisalState) -> list[EmotionInstance]:
+    def intensities(self) -> dict[str, float]:
+        """Summed intensity of the active emotions, per label (for logging and the tendency adapter)."""
+        out: dict[str, float] = {}
+        for e in self.emotions:
+            out[e.label] = out.get(e.label, 0.0) + e.intensity
+        return out
+
+    @property
+    def tendencies(self) -> ActionTendencyState:
+        """Action tendencies from the active emotions (nerva/affect/tendencies.py)."""
+        from nerva.affect.tendencies import tendencies_from_emotions
+
+        return tendencies_from_emotions(self.intensities())
+
+    def add(self, appraisal: AppraisalState | AppraisalFrame) -> list[EmotionInstance]:
         """Elicit the emotions an appraisal produces; returns the new instances."""
+        if isinstance(appraisal, AppraisalFrame):
+            appraisal = appraisal.as_appraisal_state()
         c = self.cfg
         new = [EmotionInstance(label, min(i, 1.0), emotion_pad_point(label, appraisal.controllability, c),
                                c.tau_emotion_overrides_s.get(label, c.tau_emotion_s))

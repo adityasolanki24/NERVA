@@ -62,3 +62,72 @@ def test_style_labels_do_not_claim_emotions():
 def test_perception_carries_events_without_interpretation():
     p = PerceptionState(time_s=1.0, events=(Event("person_approaching", 0.8),))
     assert p.events[0].kind == "person_approaching"
+
+
+# ── stage B contracts ────────────────────────────────────────────────────────
+
+from nerva.interfaces import (  # noqa: E402
+    ActionTendencyState,
+    AffectSystem,
+    AppraisalFrame,
+    Goal,
+    GoalState,
+    OutcomeHypothesis,
+    OutcomeSignal,
+    SelfState,
+)
+
+
+@pytest.mark.parametrize(
+    "make",
+    [
+        lambda: SelfState(stability_risk=1.5),
+        lambda: SelfState(tilt_deg=-1.0),
+        lambda: SelfState(speed=-0.1),
+        lambda: SelfState(escape_room=2.0),
+        lambda: Goal("fly"),
+        lambda: Goal("explore", priority=1.2),
+        lambda: OutcomeSignal("hugged"),
+        lambda: OutcomeSignal("benign_contact", magnitude=1.5),
+        lambda: OutcomeHypothesis(""),
+        lambda: OutcomeHypothesis("near_collision", probability=1.2),
+        lambda: OutcomeHypothesis("near_collision", predicts=("hugged",)),
+        lambda: AppraisalFrame(OutcomeHypothesis("x"), relevance=1.2),
+        lambda: ActionTendencyState(avoid=-0.1),
+        lambda: ActionTendencyState(avoid=float("nan")),
+        lambda: ActionTendencyState(approach=1e6),
+    ],
+)
+def test_new_contracts_reject_invalid_values(make):
+    with pytest.raises(ValueError):
+        make()
+
+
+def test_frame_likelihood_is_the_hypothesis_probability():
+    hyp = OutcomeHypothesis("near_collision", subject="person-3", probability=0.72, predicts=("near_collision",))
+    frame = AppraisalFrame(hyp, relevance=0.9, desirability=-0.8, expectedness=0.2, controllability=0.35)
+    assert frame.likelihood == 0.72
+    legacy = frame.as_appraisal_state()
+    assert (legacy.relevance, legacy.desirability, legacy.likelihood) == (0.9, -0.8, 0.72)
+
+
+def test_outcome_kinds_split_into_adverse_and_benign():
+    assert OutcomeSignal("near_collision").adverse and OutcomeSignal("stability_loss").adverse
+    assert not OutcomeSignal("benign_contact").adverse
+
+
+def test_goal_priority_lookup():
+    goals = GoalState((Goal("remain_upright", priority=1.0), Goal("inspect", "ball-1", 0.6)))
+    assert goals.priority(("inspect", "approach")) == 0.6
+    assert goals.priority(("retreat",)) == 0.0
+
+
+def test_model_a_satisfies_the_affect_contract():
+    from nerva.affect.emotions import CategoricalAffectModel
+
+    model = CategoricalAffectModel()
+    assert isinstance(model, AffectSystem)
+    model.add(AppraisalFrame(OutcomeHypothesis("near_collision", probability=0.7), relevance=0.9,
+                             desirability=-0.7, expectedness=0.2, controllability=0.3))
+    model.step(0.1)
+    assert model.tendencies.avoid > 0 and model.tendencies.orient > 0

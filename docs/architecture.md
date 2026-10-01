@@ -138,7 +138,7 @@ motion policy → actuation), with safety able to override it.
 | Stage | Content | Status |
 |---|---|---|
 | A | Audit; docs describe the live code; abstraction leaks documented | done (this document) |
-| B | Typed contracts: `SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState` + adapters | planned |
+| B | Typed contracts: `SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState` + adapters | done 2026-10-02 |
 | C | Behaviour consumes `ActionTendencyState`; Model A produces it; labels for logging only | planned |
 | D | Outcome-grounded memory learning path; legacy path kept as a baseline | planned |
 | E | Explicit self state, goals and appraisal frames | planned |

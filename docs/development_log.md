@@ -4,6 +4,36 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Refactor stage B: typed contracts and the Model A tendency adapter
+
+**Added to `nerva/interfaces.py`** (containers and range checks only; no logic):
+- `SelfState`: tilt, angular speed, speed, foot contact (or None), stability risk and escape room
+  (derived estimates, marked as such), locomotion mode.
+- `Goal` / `GoalState`: seven goal kinds already implicit in the experiments.
+- `OutcomeSignal`: only measurable kinds. Adverse: `stability_loss`, `near_collision`. Benign:
+  `benign_contact`.
+- `OutcomeHypothesis` and `AppraisalFrame`: `AppraisalFrame.likelihood` *is* the hypothesis's
+  probability, so a likelihood cannot exist without a referent. `as_appraisal_state()` gives the legacy
+  view.
+- `ActionTendencyState`: approach, explore, avoid, orient, freeze, withdraw (≥ 0, bounded at 10, NaN
+  rejected).
+- `AffectSystem` now also requires `tendencies`, and `add` accepts a frame or a legacy state.
+
+`SemanticCue` and the world-model types were not added: no stage uses them yet.
+
+**Model A adapter** (`nerva/affect/tendencies.py`, the only place labels are translated):
+- approach = hope + joy; explore = interest; avoid = fear; orient = surprise; freeze = surprise · fear;
+  withdraw = distress.
+- Chosen to equal the drives the utility selector already used [design].
+- `CategoricalAffectModel` gains `intensities()` and `tendencies`, and accepts frames.
+
+**Checks [measured]:**
+- 160 tests pass (22 new), 2 skipped; Ruff clean.
+- The S1 simulated-detector regression trace is byte-identical to the stage A baseline: no behaviour
+  change, as intended.
+
+---
+
 ## 2026-10-02 — Architecture refactor stage A: audit and docs truth pass
 
 A new handoff (from ChatGPT) asked for an architecture refactor: action tendencies, outcome-grounded

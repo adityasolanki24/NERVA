@@ -4,6 +4,26 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Codebase restructure; S5 collapsed to standing; Isaac Sim spike launched
+
+**Codebase:**
+- Ruff (E/F/W/B) is clean.
+- `nerva/` is reorganised into layer packages (`sim`, `perception`, `affect`, `memory`, `behaviour`, `analysis`, `training`), and `tests/` mirrors them.
+- Navigation: a README layout map plus index READMEs in `experiments/`, `scripts/` and `cloud/`.
+- All references were rewritten. 137 tests pass, and every experiment and cloud script imports.
+
+**S5** (`s5_pilot-20261001-092440`, 7 styles + feet-height −10, 300 M steps, exit 0). In the backlash scene, 15 s, every style and both vx = ±0.15 [measured]:
+- **Speed ≈ 0** (|v| ≤ 0.001 m/s), foot lift 0–1 mm.
+- **The policy stands still.** Its eval reward stayed similar to S1's (221–270), because the alive reward dominates.
+
+**Interpretation [hypothesis, consistent with the reward form]:** the feet-height cost is charged only at touchdown (`first_contact`), so never stepping avoids it entirely. B2 (−30) happened not to fall into this optimum; S5 did. Next fix: reward stepping while a velocity is commanded (a feet air-time term, as in MuJoCo Playground's locomotion envs), so standing still cannot dodge the swing cost. B2 remains the policy that walks backward.
+
+**Isaac Sim (user accepted the NVIDIA Omniverse License Agreement; privacy consent N):**
+- Feasibility spike `isaac_spike-20261001-112607` on an L4 (us-central1-b, 90-min cap): headless start, URDF import, human character, frames driven by the MuJoCo replay of the memory scenario (`experiments/isaac/`).
+- The NAT-safety rule kept the NAT up for it when S5 finished.
+
+---
+
 ## 2026-10-01 — Backward walking diagnosed (foot clearance); multi-person tracking
 
 **1. Backward walking — cause found [measured]:**

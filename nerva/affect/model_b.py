@@ -70,6 +70,7 @@ class DimensionalAffectModel:
         self.cfg = cfg = cfg or DEFAULT_B
         self.x = np.array(cfg.baseline, dtype=float)
         self.z = np.zeros(len(FEATURES))
+        self.z_by_source: dict[str, np.ndarray] = {}  # the same traces, split by the track they are about
         self._w = np.array(cfg.w, dtype=float)
         self._lam = 1.0 / np.array(cfg.tau_pad_s, dtype=float)
         self._tau_z = np.array([cfg.tau_drive_s, cfg.tau_drive_s, cfg.tau_unexpected_s, cfg.tau_drive_s,
@@ -79,11 +80,13 @@ class DimensionalAffectModel:
     def pad(self) -> PADState:
         return PADState(*(float(v) for v in self.x))
 
-    def add(self, appraisal: AppraisalState | AppraisalFrame) -> np.ndarray:
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> np.ndarray:
         if isinstance(appraisal, AppraisalFrame):
+            source = source or appraisal.hypothesis.subject
             appraisal = appraisal.as_appraisal_state()
         u = appraisal_features(appraisal)
         self.z = self.z + u
+        self.z_by_source[source] = self.z_by_source.get(source, np.zeros(len(FEATURES))) + u
         return u
 
     def step(self, dt: float) -> PADState:
@@ -91,7 +94,9 @@ class DimensionalAffectModel:
         decay = np.exp(-self._lam * dt)
         drive = self._w @ self.z
         self.x = np.clip(x0 + decay * (self.x - x0) + (1.0 - decay) * drive / self._lam, -1.0, 1.0)
-        self.z = self.z * np.exp(-dt / self._tau_z)
+        k = np.exp(-dt / self._tau_z)
+        self.z = self.z * k
+        self.z_by_source = {s: z * k for s, z in self.z_by_source.items() if float(np.max(np.abs(z))) > 1e-4}
         return self.pad
 
     def intensities(self) -> dict[str, float]:
@@ -100,7 +105,14 @@ class DimensionalAffectModel:
 
     @property
     def tendencies(self) -> ActionTendencyState:
-        pos, neg, unexpected, novelty, control = (float(v) for v in self.z)
+        return self._tendencies(self.z)
+
+    def tendencies_for(self, source: str) -> ActionTendencyState:
+        return self._tendencies(self.z_by_source.get(source, np.zeros(len(FEATURES))))
+
+    @staticmethod
+    def _tendencies(z) -> ActionTendencyState:
+        pos, neg, unexpected, novelty, control = (float(v) for v in z)
         c_bar = 0.5 + 0.5 * math.tanh(control)  # control trace → [0, 1]
 
         def b(v):

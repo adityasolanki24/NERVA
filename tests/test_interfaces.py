@@ -74,6 +74,7 @@ from nerva.interfaces import (  # noqa: E402
     GoalState,
     OutcomeHypothesis,
     OutcomeSignal,
+    RiskEstimate,
     SelfState,
 )
 
@@ -90,8 +91,10 @@ from nerva.interfaces import (  # noqa: E402
         lambda: OutcomeSignal("hugged"),
         lambda: OutcomeSignal("benign_contact", magnitude=1.5),
         lambda: OutcomeHypothesis(""),
-        lambda: OutcomeHypothesis("near_collision", probability=1.2),
-        lambda: OutcomeHypothesis("near_collision", predicts=("hugged",)),
+        lambda: OutcomeHypothesis("collision", probability=1.2),
+        lambda: OutcomeHypothesis("collision", predicts=("hugged",)),
+        lambda: OutcomeSignal("near_collision"),  # a near miss is a RiskEstimate, not an outcome
+        lambda: RiskEstimate("contact_impact"),
         lambda: AppraisalFrame(OutcomeHypothesis("x"), relevance=1.2),
         lambda: ActionTendencyState(avoid=-0.1),
         lambda: ActionTendencyState(avoid=float("nan")),
@@ -104,7 +107,7 @@ def test_new_contracts_reject_invalid_values(make):
 
 
 def test_frame_likelihood_is_the_hypothesis_probability():
-    hyp = OutcomeHypothesis("near_collision", subject="person-3", probability=0.72, predicts=("near_collision",))
+    hyp = OutcomeHypothesis("collision", subject="person-3", probability=0.72, predicts=("contact_impact",))
     frame = AppraisalFrame(hyp, relevance=0.9, desirability=-0.8, expectedness=0.2, controllability=0.35)
     assert frame.likelihood == 0.72
     legacy = frame.as_appraisal_state()
@@ -112,7 +115,7 @@ def test_frame_likelihood_is_the_hypothesis_probability():
 
 
 def test_outcome_kinds_split_into_adverse_and_benign():
-    assert OutcomeSignal("near_collision").adverse and OutcomeSignal("stability_loss").adverse
+    assert OutcomeSignal("contact_impact").adverse and OutcomeSignal("stability_loss").adverse
     assert not OutcomeSignal("benign_contact").adverse
 
 
@@ -127,7 +130,7 @@ def test_model_a_satisfies_the_affect_contract():
 
     model = CategoricalAffectModel()
     assert isinstance(model, AffectSystem)
-    model.add(AppraisalFrame(OutcomeHypothesis("near_collision", probability=0.7), relevance=0.9,
+    model.add(AppraisalFrame(OutcomeHypothesis("collision", probability=0.7), relevance=0.9,
                              desirability=-0.7, expectedness=0.2, controllability=0.3))
     model.step(0.1)
     assert model.tendencies.avoid > 0 and model.tendencies.orient > 0

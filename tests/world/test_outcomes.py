@@ -2,11 +2,12 @@ from nerva.interfaces import Track
 from nerva.world.outcomes import NEAR_FALL_TILT_DEG, OutcomeMonitor
 
 
-def test_a_fast_close_approach_is_a_near_collision_once_until_rearmed():
+def test_a_fast_close_approach_is_a_collision_risk_once_until_rearmed():
     mon = OutcomeMonitor()
     lunge = (Track("person", 0.0, 0.55, approach_speed=1.5, tid="person-0"),)
     out = mon.proximity(1.0, lunge)
-    assert [o.kind for o in out] == ["near_collision"] and out[0].source == "person-0" and out[0].magnitude == 1.0
+    assert [o.kind for o in out] == ["collision_risk"] and out[0].source == "person-0" and out[0].magnitude == 1.0
+    assert type(out[0]).__name__ == "RiskEstimate"  # an estimate, not an outcome
     assert mon.proximity(1.1, lunge) == []  # once per encounter
     mon.proximity(2.0, (Track("person", 0.0, 2.0, tid="person-0"),))  # walks away: re-armed
     assert len(mon.proximity(3.0, lunge)) == 1

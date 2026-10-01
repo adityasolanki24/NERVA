@@ -4,6 +4,73 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Consolidation phase: capabilities, targeted arbitration, world-model queries, risk vs outcome; suite and defaults rule preregistered
+
+Requested next step (review of the refactor): consolidate before deciding defaults.
+
+**1. Policy capability layer.** `PolicyCapabilities` (interfaces) and the registry `nerva/sim/capabilities.py`:
+- Fields: head-offset envelope, walking head limit, style input (`phase_clock` / `vector` /
+  `neutral_only`), training scene, `tested` flag, evidence string.
+- **B2:** pitch (−0.2, 0.6), yaw (−0.4, 0.4), measured (2026-10-02 entries). Unknown policies get
+  `LEGACY` (`tested=False`).
+- Policies are identified by run folder. Behaviour applies capabilities via `apply_capabilities`, and
+  yaw limits may be asymmetric. The head flags remain only as diagnostic overrides.
+
+**2. Target-conditioned arbitration:**
+- Both affect models attribute tendencies to the track an appraisal is about: `add(..., source)` and
+  `tendencies_for(source)`. Totals are numerically unchanged.
+- In-view appraisals now carry their track (`observe_with_subjects`).
+- When given these directed tendencies, `UtilityBehaviour` computes explore/approach/avoid per target
+  (plus the undirected share). Fear of A gates approaching A only.
+- Watch/retreat/freeze use the focal person's avoidance; the focal person is the highest of remembered
+  threat or directed avoidance. Without directed tendencies, the old global gate applies (tested both
+  ways).
+
+**3. The world model is the query source (v2):**
+- It is updated right after identity binding.
+- Appraisal identity is read from it (`identity_map`), as are the tracks behaviour sees and the
+  remembered threat per perceived entity.
+- Touch attribution is a world query (nearest person `near` the robot), followed by `assert_touch`.
+  Interaction is asserted after behaviour.
+- Nodes that are no longer measured keep their identity but drop their stale measurement.
+
+**4. Risk vs outcome:**
+- `RiskEstimate` (`collision_risk`: the former `near_collision`, same detector and threshold) is kept
+  apart from `OutcomeSignal`.
+- Actual outcomes are `stability_loss`, `contact_impact` (none can occur in the current scenes: the
+  people have no collision geometry) and `benign_contact`.
+- Grounded memory learns near misses into a separate `risk` field; threat = max(adverse, risk).
+- The collision hypothesis is now confirmed by `contact_impact`.
+- **Consistency check [measured]:** the stage D grounded run (B2, seed 0) reproduces exactly: A's
+  threat 0.49745 → 0.46681, identical to the recorded values.
+
+**All of this is the scenario's `profile="v2"`.** It sets capabilities (scene, neutral style, head
+envelope), grounded memory, frames, targeted arbitration and world-model queries. `profile="legacy"` (the
+default) is byte-identical to the stage A traces (checked). 216 tests pass, 2 skipped; Ruff clean.
+
+**Preregistered suite** (B2; vision unless stated; criteria unchanged; fall = tilt > 45°):
+
+| # | scenario | profile / affect | seeds | compared with |
+|---|---|---|---|---|
+| C1 | default | v2 / A | 5 | legacy B2: 5/5 each |
+| C2 | default | v2 / B | 5 | C1 |
+| C3 | two-person | v2 / A, memory on and off | 5 + 5 | legacy B2: on 5/5 each, off 0/5 blame/remember |
+| C4 | two-person | v2 / B | 5 | C3 |
+| C5 | together | v2 / A, memory on and off | 5 + 5 | C5L |
+| C5L | together | legacy / A, memory on and off | 5 + 5 | first legacy together run with B2 |
+| C6 | together | v2 / B | 5 | C5L |
+| C7 | default, simulated detector | v2 / A and v2 / B | 6 + 6 (seeds 0–5) | legacy: 1/6 fell (seed 3) |
+
+**Defaults decision rule** (fixed now):
+- **v2 becomes the default profile** if v2 + Model A passes every criterion that legacy passes in the
+  same setup, with no falls. "Engages B" is included, and C5L is the together-scenario reference.
+- **Model B becomes the default affect model** if v2 + Model B also does so; otherwise Model A stays
+  the default.
+- If v2 + A fails any such criterion, legacy stays the default and the failure is reported.
+- The memory-off runs are a validity check: memory must still make a difference where it did before.
+
+---
+
 ## 2026-10-02 — F2 results; architecture refactor status
 
 **F2** (preregistered in the previous entry; B2 with `head_pitch_down −0.2`, `head_yaw_max 0.4`;

@@ -75,6 +75,7 @@ class EmotionInstance:
     intensity: float  # [0, 1], decays over time
     pad: np.ndarray  # (3,) anchor after the controllability adjustment; NaN = dimension not affected
     tau_s: float  # this instance's decay time constant
+    source: str = ""  # track the eliciting appraisal was about ("" = undirected)
 
 
 def categorise(a: AppraisalState, cfg: AffectConfig | None = None) -> list[tuple[str, float]]:
@@ -121,11 +122,12 @@ class CategoricalAffectModel:
     def pad(self) -> PADState:
         return PADState(*(float(v) for v in self.x))
 
-    def intensities(self) -> dict[str, float]:
-        """Summed intensity of the active emotions, per label (for logging and the tendency adapter)."""
+    def intensities(self, source: str | None = None) -> dict[str, float]:
+        """Summed intensity of the active emotions per label (all sources, or only those about `source`)."""
         out: dict[str, float] = {}
         for e in self.emotions:
-            out[e.label] = out.get(e.label, 0.0) + e.intensity
+            if source is None or e.source == source:
+                out[e.label] = out.get(e.label, 0.0) + e.intensity
         return out
 
     @property
@@ -135,13 +137,20 @@ class CategoricalAffectModel:
 
         return tendencies_from_emotions(self.intensities())
 
-    def add(self, appraisal: AppraisalState | AppraisalFrame) -> list[EmotionInstance]:
+    def tendencies_for(self, source: str) -> ActionTendencyState:
+        """Tendencies elicited by appraisals about `source` only ("" = undirected ones)."""
+        from nerva.affect.tendencies import tendencies_from_emotions
+
+        return tendencies_from_emotions(self.intensities(source))
+
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> list[EmotionInstance]:
         """Elicit the emotions an appraisal produces; returns the new instances."""
         if isinstance(appraisal, AppraisalFrame):
+            source = source or appraisal.hypothesis.subject
             appraisal = appraisal.as_appraisal_state()
         c = self.cfg
         new = [EmotionInstance(label, min(i, 1.0), emotion_pad_point(label, appraisal.controllability, c),
-                               c.tau_emotion_overrides_s.get(label, c.tau_emotion_s))
+                               c.tau_emotion_overrides_s.get(label, c.tau_emotion_s), source)
                for label, i in categorise(appraisal, c)]
         self.emotions.extend(new)
         return new

@@ -9,7 +9,7 @@ Data   the reactive scenarios (default, memory, together) × seeds 0..5, interle
        for the nearest person track (none: d = 5 m, other entries 0).
 Learned BoundaryDetector (prediction-error boundaries) → embedding [x_after, x_after − x_before]
        → PrototypeMemory (online, ≤ 12 prototypes). Prediction model and prototypes persist across runs.
-Targets per frame: an adverse outcome (near_collision or stability_loss) within the next 3 s; a benign_contact
+Targets per frame: an adverse event (collision_risk estimate or stability_loss) within the next 3 s; a benign_contact
        within the next 3 s (OutcomeMonitor, nerva/world/outcomes.py).
 Predictors per frame: context = the most recent prototype (learned) or hand-coded appraised event kind
        (baseline) within the last 2 s, else "none"; P(target | context) from a Beta(0.5, 4.5)-smoothed table.
@@ -46,7 +46,8 @@ PRIOR_A, PRIOR_B = 0.5, 4.5
 FRAME_DT = 1.0 / scenario.FRAME_HZ
 SCENARIOS = {"default": (scenario.default_scenario, 100.0), "memory": (scenario.memory_scenario, 135.0),
              "together": (scenario.together_scenario, 125.0)}
-TARGETS = {"adverse": ("near_collision", "stability_loss"), "benign": ("benign_contact",)}
+# "near_collision" was renamed "collision_risk" (a RiskEstimate) on 2026-10-02; same detector and threshold
+TARGETS = {"adverse": ("collision_risk", "contact_impact", "stability_loss"), "benign": ("benign_contact",)}
 
 
 def features(tracks, touched: bool, tilt: float) -> np.ndarray:
@@ -73,7 +74,7 @@ def collect(policy: str, name: str, seed: int) -> dict:
         ts.append(t)
     return {"name": name, "seed": seed, "t": np.array(ts), "x": np.array(xs),
             "events": [(t, kind) for t, kind, *_ in fired],
-            "outcomes": [(o.time_s, o.kind) for o in sim.outcomes]}
+            "outcomes": [(o.time_s, o.kind) for o in sim.outcomes + sim.risks]}
 
 
 def targets_for(run: dict) -> dict[str, np.ndarray]:

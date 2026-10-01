@@ -24,6 +24,16 @@ Refactor stages E-G (defaults reproduce the recorded baselines):
                   memory_learning="grounded" when memory is used, since legacy memory learns from labels)
 Always on: the world model (nerva/world/model.py, returned as sim.world) and the deterministic safety
 supervisor (nerva/safety.py) between behaviour and the policy.
+
+profile="v2" (consolidation, 2026-10-02) bundles the new paths:
+  - the policy's measured capabilities (nerva/sim/capabilities.py) set the head envelope, walking head
+    limit, training scene and whether the style input must stay neutral (no flags needed)
+  - grounded memory, appraisal frames
+  - target-conditioned arbitration (tendencies split by the track they are about)
+  - the world model is updated right after identity binding and is the source that touch attribution,
+    appraisal identity and the behaviour's inputs (tracks, remembered threat per entity) query
+  - near misses are RiskEstimates, kept apart from actual OutcomeSignals (also in legacy runs' logs)
+profile="legacy" (default) is the recorded pre-consolidation behaviour, byte-for-byte.
 """
 
 from __future__ import annotations
@@ -40,13 +50,14 @@ from nerva.memory.episodic import EpisodicMemory
 from nerva.memory.entity import EntityMemory
 from nerva.memory.spatial import PlaceMemory
 from nerva.world.outcomes import OutcomeMonitor
+from nerva.sim.capabilities import capabilities_for
 from nerva.affect.frames import FrameAppraiser
 from nerva.affect.model_b import DimensionalAffectModel
 from nerva.behaviour.goals import active_goals
 from nerva.safety import SafetySupervisor
 from nerva.world.model import WorldModel
 from nerva.world.self_state import estimate_self_state
-from nerva.interfaces import ActionTendencyState, Event, StyleVector, TENDENCIES
+from nerva.interfaces import ActionTendencyState, Event, RiskEstimate, StyleVector, TENDENCIES
 from nerva.sim.open_duck import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
 from nerva.perception.vision import VisionPerception
@@ -193,8 +204,9 @@ class IdentityBinder:
                 self.current[tr.tid] = rec
                 for args in self.pending.pop(tr.tid, []):  # "oh, it was you"
                     self.memory.learn(rec, *args, confidence=DEFERRED_CONFIDENCE)
-                for outcome in self.pending_outcomes.pop(tr.tid, []):
-                    self.memory.learn_outcome(rec, outcome, confidence=DEFERRED_CONFIDENCE)
+                for item in self.pending_outcomes.pop(tr.tid, []):
+                    learn = self.memory.learn_risk if isinstance(item, RiskEstimate) else self.memory.learn_outcome
+                    learn(rec, item, confidence=DEFERRED_CONFIDENCE)
         return self.current
 
     def learn(self, tid: str, t: float, event: str, emotions, arousal: float, surprise_negative: bool) -> None:
@@ -205,12 +217,22 @@ class IdentityBinder:
             self.memory.learn(rec, t, event, emotions, arousal, surprise_negative)
 
     def learn_outcome(self, tid: str, outcome) -> None:
-        """Credit a measured outcome to the entity of track `tid`, or hold it until the identity is known."""
+        """Credit a measured outcome (or a RiskEstimate) to the entity of track `tid`, or hold it until the
+        identity is known."""
         rec = self.current.get(tid)
         if rec is None:
             self.pending_outcomes.setdefault(tid, []).append(outcome)
+        elif isinstance(outcome, RiskEstimate):
+            self.memory.learn_risk(rec, outcome)
         else:
             self.memory.learn_outcome(rec, outcome)
+
+
+def touch_source_from_world(state) -> str:
+    """Who is touching the robot, asked of the world model: the nearest person `near` the robot, else the
+    nearest perceived person (v2; same rule as touch_source, but from the world model)."""
+    node = state.nearest("person", "near") or state.nearest("person")
+    return node.track_id if node is not None else ""
 
 
 def touch_source(tracks) -> str:
@@ -233,11 +255,20 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
         memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A",
-        safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None):
+        safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None,
+        profile: str = "legacy"):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
+    if profile not in ("legacy", "v2"):
+        raise ValueError("profile must be 'legacy' or 'v2'")
+    v2 = profile == "v2"
+    capabilities = capabilities_for(policy) if v2 else None
+    if v2:
+        backlash_scene = capabilities.training_scene == "backlash"
+        neutral_style = capabilities.style_input == "neutral_only"
+        appraisal_mode, memory_learning = "frames", "grounded"
     if affect_model == "B" and use_memory and memory_learning != "grounded":
         raise ValueError("Model B has no emotion labels; legacy memory learns from labels: use memory_learning='grounded'")
     agents = agents or default_scenario()
@@ -261,7 +292,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     self_state, goals = None, None
     episodic = EpisodicMemory() if use_memory else None
     places = PlaceMemory(learning=memory_learning) if (use_memory if use_spatial is None else use_spatial) else None
-    monitor, outcomes_log, memory_trace = OutcomeMonitor(), [], []
+    monitor, outcomes_log, risks_log, memory_trace = OutcomeMonitor(), [], [], []
+    world_state = None
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
     affect = {"A": CategoricalAffectModel, "B": DimensionalAffectModel}[affect_model]()
@@ -272,10 +304,12 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         behaviour = behaviour_cls(walking_head_limit=walking_head_limit)
     else:
         behaviour = behaviour_cls()
-    if head_pitch_down is not None:
+    if capabilities is not None:
+        behaviour.apply_capabilities(capabilities)
+    if head_pitch_down is not None:  # diagnostic overrides; normal runs use the capabilities
         behaviour.head_pitch_down = head_pitch_down
     if head_yaw_max is not None:
-        behaviour.head_yaw_max = head_yaw_max
+        behaviour.head_yaw_max, behaviour.head_yaw_min = head_yaw_max, -head_yaw_max
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, ActionTendencyState(), ())
     sim.set_behaviour(decision.command)
@@ -312,14 +346,25 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             events = list(pstate.events)
             if binder is not None:
                 appraiser.identity = binder.update(t, tracks, perception)
-            outcomes = monitor.proximity(t, tracks)
+            if v2:  # the world model holds the current situation; the rest of the frame queries it
+                world_state = world_model.update(t, robot_xy, robot_yaw, tracks,
+                                                 {tid: rec.eid for tid, rec in appraiser.identity.items()}
+                                                 if use_memory else None)
+                if use_memory:
+                    appraiser.identity = {tid: memory.records[eid] for tid, eid in world_state.identity_map().items()}
+                tracks = world_state.tracks()
+            risks = monitor.proximity(t, tracks)
+            outcomes = []
             self_state = estimate_self_state(t, d.qpos, d.qvel, behaviour.mode)
             goals = active_goals(behaviour.mode, behaviour.target)
             for name, agent in agents.items():  # simulated touch sensing: gentle contact while petted
                 if (agent.action == "pet" and np.linalg.norm(agent.xy - robot_xy) < TOUCH_REACH
                         and t - last_touch >= TOUCH_PERIOD_S):
-                    events.append(Event("touch_gentle", source=touch_source(tracks)))
-                    outcomes.append(monitor.contact(t, touch_source(tracks)))
+                    who_touches = touch_source_from_world(world_state) if v2 else touch_source(tracks)
+                    events.append(Event("touch_gentle", source=who_touches))
+                    outcomes.append(monitor.contact(t, who_touches))
+                    if v2 and who_touches:
+                        world_state = world_model.assert_touch(t, who_touches)
                     last_touch = t
             tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
             if near_fall_armed and tilt > NEAR_FALL_TILT_DEG:
@@ -328,21 +373,23 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             elif tilt < NEAR_FALL_TILT_DEG / 2:
                 near_fall_armed = True
             outcomes += monitor.stability(t, tilt)
-            for oc in outcomes:  # grounded learning: measured consequences, attributed to whoever caused them
-                outcomes_log.append(oc)
+            for oc in outcomes + risks:  # grounded learning: what happened (outcomes) and what nearly did (risks)
+                is_risk = isinstance(oc, RiskEstimate)
+                (risks_log if is_risk else outcomes_log).append(oc)
                 if binder is not None and oc.source:
                     binder.learn_outcome(oc.source, oc)
                 if places is not None:
-                    places.learn_outcome(robot_xy, t, oc)
+                    (places.learn_risk if is_risk else places.learn_outcome)(robot_xy, t, oc)
                 if episodic is not None and grounded:
                     who_oc = appraiser.identity.get(oc.source) if oc.source else None
-                    episodic.encode_outcome(t, oc, who_oc.eid if who_oc else None, robot_xy, affect.pad.arousal)
+                    encode = episodic.encode_risk if is_risk else episodic.encode_outcome
+                    encode(t, oc, who_oc.eid if who_oc else None, robot_xy, affect.pad.arousal)
             for ev in events:
                 behaviour.notice(t, ev.kind, ev.source)
                 a = (appraiser.appraise(ev, t, tracks, self_state, goals) if frames_mode
                      else appraiser.appraise(ev, t, tracks))
                 if a is not None:
-                    new = affect.add(a)
+                    new = affect.add(a, source=ev.source)
                     elicited = [(e.label, e.intensity) for e in new] if affect_model == "A" else []
                     fired.append((t, ev.kind, a, elicited))
                     about = ev.source or None  # the track this event is about
@@ -371,21 +418,32 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 behaviour.explore_bearing = places.explore_heading(robot_xy, robot_yaw)[0]
             pad = affect.step(1.0 / FRAME_HZ)
             if memory is not None and k % (PERCEIVE_EVERY * 10) == 0:  # once per second, for analysis
-                memory_trace.append((round(t, 1), {r.eid: (r.threat, r.warmth, r.adverse, r.benign)
+                memory_trace.append((round(t, 1), {r.eid: (r.threat, r.warmth, r.adverse, r.benign, r.risk)
                                                    for r in memory.records.values() if r.kind == "person"}))
             salience = {tr.tid: appraiser.novelty(tr.tid if use_memory else tr.kind) for tr in tracks}
             threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
                        if use_memory else None)
-            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats)
+            directed = None
+            if v2:  # tendencies split by the track they are about ("" = undirected)
+                about = {""} | {tr.tid for tr in tracks} | ({behaviour.target} if behaviour.target else set())
+                directed = {src: affect.tendencies_for(src) for src in about}
+                if use_memory:  # remembered threat per perceived entity, asked of the world model
+                    threats = {n.track_id: memory.records[n.entity_id].threat for n in world_state.perceived()
+                               if n.kind == "person" and n.entity_id in memory.records}
+            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats, directed)
             command, head, safety_reason = (safety.filter(decision.command, decision.head, self_state)
                                             if safety_supervisor else (decision.command, decision.head, ""))
             sim.set_behaviour(neutralised(command) if neutral_style else command)
             sim.set_head_offset(*head)
-            touching = next((ev.source for ev in events if ev.kind == "touch_gentle"), "")
-            world_model.update(t, robot_xy, robot_yaw, tracks,
-                               {tid: rec.eid for tid, rec in appraiser.identity.items()} if use_memory else None,
-                               touching=touching,
-                               interacting=(decision.target or "") if decision.mode in ("approach", "inspect") else "")
+            if v2:
+                if decision.mode in ("approach", "inspect") and decision.target:
+                    world_model.assert_interacting(t, decision.target)
+            else:
+                touching = next((ev.source for ev in events if ev.kind == "touch_gentle"), "")
+                world_model.update(t, robot_xy, robot_yaw, tracks,
+                                   {tid: rec.eid for tid, rec in appraiser.identity.items()} if use_memory else None,
+                                   touching=touching,
+                                   interacting=(decision.target or "") if decision.mode in ("approach", "inspect") else "")
         sim.step_physics(10)
         pad = affect.pad
         tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
@@ -423,7 +481,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     if use_memory:
         sim.memory, sim.episodic, sim.sleep_log = memory, episodic, sleep_log  # for inspection by callers
         sim.memory_trace = memory_trace
-    sim.outcomes = outcomes_log
+    sim.outcomes, sim.risks, sim.capabilities = outcomes_log, risks_log, capabilities
     sim.world, sim.safety_interventions = world_model, safety.interventions
     sim.places = places
     return sim, rows, frames, fired

@@ -26,7 +26,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from nerva.behaviour.pad_style import pad_to_style_vector
-from nerva.interfaces import ActionTendencyState, BehaviourCommand, PADState, StyleVector, Track
+from nerva.interfaces import ActionTendencyState, BehaviourCommand, PADState, PolicyCapabilities, StyleVector, Track
 
 MODES = ("explore", "orient", "approach", "inspect", "freeze", "retreat", "watch", "withdraw")
 WARY_FEAR = 0.05
@@ -86,6 +86,18 @@ class ReactiveBehaviour:
     # head-yaw limit; policy-specific. B2 standing with head yaw -0.8 fell in 4/4 seeds, at +-0.4 in 0/4
     # (15 s, measured 2026-10-02). The default keeps recorded results.
     head_yaw_max: float = HEAD_YAW_MAX
+    head_yaw_min: float = -HEAD_YAW_MAX
+    head_pitch_up: float = HEAD_PITCH_UP
+
+    def apply_capabilities(self, cap: PolicyCapabilities) -> None:
+        """Take the head envelope and walking head limit from the policy's measured capabilities
+        (nerva/sim/capabilities.py) instead of the global defaults."""
+        self.head_pitch_down, self.head_pitch_up = cap.head_pitch_range
+        self.head_yaw_min, self.head_yaw_max = cap.head_yaw_range
+        self.walking_head_limit = cap.walking_head_limit
+
+    def _yaw(self, yaw: float) -> float:
+        return float(np.clip(yaw, self.head_yaw_min, self.head_yaw_max))
 
     def notice(self, t: float, event_kind: str, source: str = "") -> None:
         """Perception events the behaviour itself cares about (something new to orient to)."""
@@ -94,11 +106,15 @@ class ReactiveBehaviour:
 
     def step(self, t: float, dt: float, pad: PADState, tendencies: ActionTendencyState,
              tracks: tuple[Track, ...], salience: dict[str, float] | None = None,
-             threats: dict[str, float] | None = None) -> ReactiveDecision:
+             threats: dict[str, float] | None = None,
+             directed: dict[str, ActionTendencyState] | None = None) -> ReactiveDecision:
         """salience: per-track novelty (0..1). threats: per-track remembered threat (memory), used to
-        decide WHICH person avoidance is about; without it, the nearest person."""
+        decide WHICH person avoidance is about; without it, the nearest person.
+        directed: tendencies split by the track they are about ("" = undirected). When given, the utility
+        selector conditions approach/avoid on each target instead of using the total (v2)."""
         self.salience = salience or {}
         self.threats = threats or {}
+        self.directed = directed
         tr = {(x.tid or x.kind): x for x in tracks}
         focal = self._focal_person(tr)
         if focal is not None:
@@ -194,8 +210,8 @@ class ReactiveBehaviour:
 
     def _gaze(self, track, tilt=0.0):
         """Head offsets pointing at a track (head pitch closed-loop on the camera elevation)."""
-        pitch = float(np.clip(self.head[1] + GAZE_GAIN * track.elevation, self.head_pitch_down, HEAD_PITCH_UP))
-        return (0.0, pitch, float(np.clip(track.bearing, -self.head_yaw_max, self.head_yaw_max)), tilt)
+        pitch = float(np.clip(self.head[1] + GAZE_GAIN * track.elevation, self.head_pitch_down, self.head_pitch_up))
+        return (0.0, pitch, self._yaw(track.bearing), tilt)
 
     def _control(self, t, pad, tr):
         m = self.mode
@@ -204,7 +220,7 @@ class ReactiveBehaviour:
         if m == "freeze":
             return 0.0, 0.0, (0.0, max(-0.3, self.head_pitch_down), self.head[2], 0.0), "freeze: startled"
         if m == "retreat":
-            look = (0.0, self.head[1], float(np.clip(self.threat_bearing, -self.head_yaw_max, self.head_yaw_max)), 0.0)
+            look = (0.0, self.head[1], self._yaw(self.threat_bearing), 0.0)
             if age < BACKSTEP_S:  # step back while facing the threat
                 return -MAX_VX, 1.5 * self.threat_bearing, look, "retreat: step back"
             away = _wrap(self.threat_bearing + np.pi)  # heading error to "directly away"
@@ -214,7 +230,7 @@ class ReactiveBehaviour:
             vx = -MAX_VX if target.distance < WARY_DISTANCE else 0.0
             return vx, 1.5 * target.bearing, self._gaze(target), "watch: wary, keep distance"
         if m == "withdraw":
-            yaw = float(np.clip(-np.sign(self.threat_bearing) * 0.8, -self.head_yaw_max, self.head_yaw_max))
+            yaw = self._yaw(-np.sign(self.threat_bearing) * 0.8)
             # head pitch limited to HEAD_PITCH_DOWN like every other mode: the former -0.5 bypassed the limit
             # set after B2 fell with the head at -0.6, and B2 fell while withdrawing (2026-10-02, Model B runs)
             return 0.0, 0.0, (0.0, self.head_pitch_down, yaw, 0.0), "withdraw: head down, look away"
@@ -228,7 +244,7 @@ class ReactiveBehaviour:
             return vx, 1.5 * target.bearing, self._gaze(target), f"approach {self.target}"
         if m == "orient" and target is not None:
             return 0.0, 1.5 * target.bearing, self._gaze(target), f"orient to {self.target}"
-        scan = min(0.6, self.head_yaw_max) * np.sin(2 * np.pi * 0.15 * t)
+        scan = min(0.6, self.head_yaw_max, -self.head_yaw_min) * np.sin(2 * np.pi * 0.15 * t)
         if self.explore_bearing is not None:  # head for the most novel safe place nearby
             b = self.explore_bearing
             return (0.12 if abs(b) < 0.8 else 0.0), 1.2 * b, (0.0, 0.0, scan, 0.0), "explore: toward new places"

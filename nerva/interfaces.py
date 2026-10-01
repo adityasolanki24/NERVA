@@ -166,6 +166,7 @@ class WorldEntity:
     xy: tuple[float, float] | None = None
     confidence: float = 1.0
     time_s: float = 0.0
+    track: Track | None = None  # latest measurement (bearing/distance relative to the robot), if perceived
 
     def __post_init__(self) -> None:
         if self.kind not in NODE_KINDS:
@@ -200,6 +201,26 @@ class WorldModelState:
 
     def related(self, relation: str, obj: str | None = None) -> tuple[WorldRelation, ...]:
         return tuple(r for r in self.relations if r.relation == relation and (obj is None or r.obj == obj))
+
+    def node(self, node_id: str) -> WorldEntity | None:
+        return next((n for n in self.entities if n.node_id == node_id), None)
+
+    def perceived(self) -> tuple[WorldEntity, ...]:
+        """Nodes with a current measurement (tracked people and objects)."""
+        return tuple(n for n in self.entities if n.track is not None)
+
+    def tracks(self) -> tuple[Track, ...]:
+        return tuple(n.track for n in self.perceived())
+
+    def identity_map(self) -> dict[str, str]:
+        """Track ID → persistent entity ID, for perceived nodes whose identity is known."""
+        return {n.track_id: n.entity_id for n in self.perceived() if n.entity_id}
+
+    def nearest(self, kind: str, relation: str | None = None) -> WorldEntity | None:
+        """Nearest perceived node of `kind`, optionally only among nodes with `relation` to self."""
+        subjects = None if relation is None else {r.subject for r in self.related(relation, "self")}
+        cands = [n for n in self.perceived() if n.kind == kind and (subjects is None or n.node_id in subjects)]
+        return min(cands, key=lambda n: n.track.distance, default=None)
 
 
 # ── Self, goals, outcomes: what appraisal is relative to ─────────────────────
@@ -265,19 +286,21 @@ class GoalState:
         return max((g.priority for g in self.goals if g.kind in kinds), default=0.0)
 
 
-ADVERSE_OUTCOMES = ("stability_loss", "near_collision")
+ADVERSE_OUTCOMES = ("stability_loss", "contact_impact")
 BENIGN_OUTCOMES = ("benign_contact",)
 OUTCOME_KINDS = ADVERSE_OUTCOMES + BENIGN_OUTCOMES
+RISK_KINDS = ("collision_risk",)
 
 
 @dataclass(frozen=True)
 class OutcomeSignal:
-    """A measurable consequence for the robot: the ground truth for memory learning.
+    """Something that ACTUALLY happened to the robot, measured: the primary ground truth for memory.
 
       stability_loss  tilt beyond the near-fall threshold [IMU]
-      near_collision  something came within reach while closing fast [depth/tracking estimate]
+      contact_impact  a hard contact / collision [force or touch sensor; none occurs in the current MuJoCo
+                      scenes, whose people have no collision geometry]
       benign_contact  gentle, slow touch [touch sensor; simulated in MuJoCo]
-    Only kinds the system can measure or estimate are defined; add more when a sensor exists.
+    Predictions of what might happen are NOT outcomes: they are RiskEstimates.
     `source` is the track the outcome is attributed to ("" = none / the robot itself).
     """
 
@@ -298,10 +321,32 @@ class OutcomeSignal:
 
 
 @dataclass(frozen=True)
+class RiskEstimate:
+    """An ESTIMATE that something adverse was about to happen, derived from measurements, not an outcome.
+
+      collision_risk  a tracked agent came within reach while closing fast enough that, without stopping,
+                      it would have made contact (time to contact from depth/tracking)
+    Memory may learn from risk estimates (a near miss is informative), but keeps them separate from actual
+    outcomes so the two can be weighted and audited differently.
+    """
+
+    kind: str
+    magnitude: float = 1.0  # [0, 1]
+    time_s: float = 0.0
+    source: str = ""
+    provenance: str = ""
+
+    def __post_init__(self) -> None:
+        if self.kind not in RISK_KINDS:
+            raise ValueError(f"unknown risk {self.kind!r}; known: {RISK_KINDS}")
+        _check_range("magnitude", self.magnitude, 0.0, 1.0)
+
+
+@dataclass(frozen=True)
 class OutcomeHypothesis:
     """An explicit proposition about what may happen, e.g. "person-3 may collide with the robot".
 
-      kind         proposition ID ("near_collision", "benign_interaction", "novel_stimulus", ...)
+      kind         proposition ID ("collision", "benign_interaction", "novel_stimulus", ...)
       subject      track/entity the proposition is about ("" = none)
       target       who is affected ("self" by default)
       probability  [0, 1] estimated probability that the proposition is or becomes true
@@ -415,10 +460,12 @@ class AffectSystem(Protocol):
     How appraisal becomes PAD and tendencies is deliberately NOT fixed here. Model A
     (`nerva.affect.emotions.CategoricalAffectModel`) goes through discrete emotion labels; Model B maps
     appraisal to PAD and tendencies directly. Behaviour and memory may depend only on this protocol.
-    `add` accepts an AppraisalFrame or a legacy AppraisalState.
+    `add` accepts an AppraisalFrame or a legacy AppraisalState; `source` is the track the appraisal is about
+    (for a frame, its hypothesis subject is used when `source` is empty). `tendencies` is the total;
+    `tendencies_for(source)` only what is directed at that source ("" = undirected, e.g. a near-fall).
     """
 
-    def add(self, appraisal: AppraisalState | AppraisalFrame) -> object: ...
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> object: ...
 
     def step(self, dt: float) -> PADState: ...
 
@@ -427,6 +474,8 @@ class AffectSystem(Protocol):
 
     @property
     def tendencies(self) -> ActionTendencyState: ...
+
+    def tendencies_for(self, source: str) -> ActionTendencyState: ...
 
 
 # ── Behaviour: "what should I do, and how?" ──────────────────────────────────
@@ -478,6 +527,39 @@ class StyleVector:
 
 
 SKILLS = ("walk",)  # only what the baseline can actually do; extend when a policy exists
+
+
+@dataclass(frozen=True)
+class PolicyCapabilities:
+    """What a locomotion policy can safely be asked to do, as measured (registry: nerva/sim/capabilities.py).
+
+      style_input        "phase_clock" (upstream: gait-clock style), "vector" (S-policies: StyleVector e),
+                         "neutral_only" (B1/B2: trained on e = 0; any other e is out of distribution)
+      training_scene     "backlash" or "plain": evaluate in the scene the policy was trained in
+      head_pitch_range   (down, up) head_pitch offsets [rad] (positive = face up) tested without falls
+      head_yaw_range     (right, left) head_yaw offsets [rad] tested without falls
+      walking_head_limit (pitch, yaw, roll) bound while walking, or None
+      tested             False = no envelope measured; the values are the legacy defaults
+      evidence           where the numbers come from (development log entries)
+    """
+
+    name: str
+    style_input: str = "phase_clock"
+    training_scene: str = "backlash"
+    head_pitch_range: tuple[float, float] = (-0.35, 0.6)
+    head_yaw_range: tuple[float, float] = (-1.3, 1.3)
+    walking_head_limit: tuple[float, float, float] | None = (0.15, 0.08, 0.15)
+    tested: bool = False
+    evidence: str = ""
+
+    def __post_init__(self) -> None:
+        if self.style_input not in ("phase_clock", "vector", "neutral_only"):
+            raise ValueError(f"unknown style_input {self.style_input!r}")
+        if self.training_scene not in ("backlash", "plain"):
+            raise ValueError(f"unknown training_scene {self.training_scene!r}")
+        for lo, hi in (self.head_pitch_range, self.head_yaw_range):
+            if not lo <= 0.0 <= hi:
+                raise ValueError("head ranges must contain 0 (lo <= 0 <= hi)")
 
 
 @dataclass(frozen=True)

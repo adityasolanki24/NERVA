@@ -90,6 +90,14 @@ class PlaceMemory:
         else:
             p.valence += ALPHA * (m - p.valence)
 
+    def learn_risk(self, xy, t: float, risk) -> None:
+        """Grounded mode only: an estimated near miss here raises place threat (as an adverse outcome would)."""
+        if self.learning != "grounded":
+            return
+        p = self._place(self.key(xy), t)
+        p.threat += ALPHA * (risk.magnitude - p.threat)
+        p.valence += ALPHA * (-risk.magnitude - p.valence)
+
     def explore_heading(self, xy, yaw: float) -> tuple[float, float]:
         """(bearing relative to yaw, attractiveness) of the best nearby cell by novelty − threat."""
         cx, cy = self.key(xy)

@@ -1,4 +1,4 @@
-"""Outcome monitor: turns measurements into `OutcomeSignal`s, the ground truth for memory learning.
+"""Outcome monitor: measurements → `OutcomeSignal`s (what happened) and `RiskEstimate`s (what nearly did).
 
 Memory should learn "what happens with this person / at this place" from consequences the robot can
 measure, not from the emotions its own appraisal produced (docs/architecture.md §1.3, refactor stage D).
@@ -6,11 +6,11 @@ Only kinds the system can measure or estimate are produced:
 
   stability_loss  torso tilt crosses NEAR_FALL_TILT_DEG (IMU orientation). Re-arms below half of it.
                   magnitude = (tilt − threshold) / TILT_SPAN, clipped to [0.2, 1].
-  near_collision  a tracked agent within NEAR_M whose time to contact (distance / ego-motion-corrected
-                  closing speed) is below TTC_S. Once per track until it is beyond REARM_M again.
-                  magnitude = closing speed / CLOSING_FULL, clipped to [0, 1].
-                  ESTIMATE from tracking (depth camera on hardware). In the MuJoCo scenes the people have
-                  no collision geometry, so no physical contact can occur: this is a would-be collision.
+  collision_risk  (RiskEstimate, not an outcome) a tracked agent within NEAR_M whose time to contact
+                  (distance / ego-motion-corrected closing speed) is below TTC_S. Once per track until it
+                  is beyond REARM_M again. magnitude = closing speed / CLOSING_FULL, clipped to [0, 1].
+                  Estimated from tracking (depth camera on hardware). The MuJoCo people have no collision
+                  geometry, so no contact_impact outcome can occur in the current scenes.
   benign_contact  a gentle touch measured by the touch sensor (simulated in MuJoCo as "touch_gentle"
                   events), attributed to the touching track.
 
@@ -19,7 +19,7 @@ All thresholds are NERVA design choices, fixed before the first grounded-memory 
 
 from __future__ import annotations
 
-from nerva.interfaces import OutcomeSignal, Track
+from nerva.interfaces import OutcomeSignal, RiskEstimate, Track
 
 NEAR_FALL_TILT_DEG = 20.0  # same threshold as the scenario's near_fall event
 TILT_SPAN = 25.0
@@ -43,7 +43,7 @@ class OutcomeMonitor:
             self._tilt_armed = True
         return []
 
-    def proximity(self, t: float, tracks: tuple[Track, ...]) -> list[OutcomeSignal]:
+    def proximity(self, t: float, tracks: tuple[Track, ...]) -> list[RiskEstimate]:
         out = []
         for tr in tracks:
             if tr.kind != "person" or not tr.tid:
@@ -52,8 +52,8 @@ class OutcomeMonitor:
             closing = tr.approach_speed
             if armed and tr.visible and tr.distance < NEAR_M and closing > 0 and tr.distance / closing < TTC_S:
                 self._collision_armed[tr.tid] = False
-                out.append(OutcomeSignal("near_collision", min(1.0, closing / CLOSING_FULL), t, source=tr.tid,
-                                         provenance=f"track d={tr.distance:.2f} m closing={closing:.2f} m/s"))
+                out.append(RiskEstimate("collision_risk", min(1.0, closing / CLOSING_FULL), t, source=tr.tid,
+                                        provenance=f"track d={tr.distance:.2f} m closing={closing:.2f} m/s"))
             elif tr.distance > REARM_M:
                 self._collision_armed[tr.tid] = True
         return out

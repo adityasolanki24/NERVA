@@ -43,12 +43,12 @@ def _threat_at(sim, eid: str, t: float):
 
 def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
              neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str = "A",
-             head_pitch_down=None, head_yaw_max=None) -> dict:
+             head_pitch_down=None, head_yaw_max=None, profile: str = "legacy") -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
                                    perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                    backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
                                    affect_model=affect_model, head_pitch_down=head_pitch_down,
-                                   head_yaw_max=head_yaw_max)
+                                   head_yaw_max=head_yaw_max, profile=profile)
     first_b, return_a, return_b = modes(rows, 46, 58), modes(rows, 94, 106), modes(rows, 120, 130)
     result = {
         "seed": seed, "memory": use_memory,
@@ -67,18 +67,21 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
         result["learning"] = learning
         result["a_threat_40"] = _threat_at(sim, "person#0", 40.0)
         result["a_threat_116"] = _threat_at(sim, "person#0", 116.0)
-        result["outcomes"] = [(round(o.time_s, 1), o.kind, o.source) for o in sim.outcomes]
+        result["outcomes"] = [(round(o.time_s, 1), o.kind, o.source) for o in sim.outcomes + sim.risks]
     return result
 
 
 def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
-                      neutral: bool = False) -> dict:
+                      neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str = "A",
+                      profile: str = "legacy") -> dict:
     """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
     avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
     occurs and B comes closer than A on average."""
     _, rows, _, _ = scenario.run(policy, seed=seed, duration=125.0, agents=scenario.together_scenario(),
                                  perception_mode="vision", use_memory=use_memory, memory_learning=learning,
-                                 backlash_scene=backlash, neutral_style=neutral)
+                                 backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
+                                 affect_model=affect_model, profile=profile)
+    tilt = max(r["tilt_deg"] for r in rows)
     w = [r for r in rows if 100 <= r["t"] < 125]
     ms = {r["mode"] for r in w}
     mean_a = sum(r["dist_person"] for r in w) / len(w)
@@ -86,7 +89,7 @@ def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = 
     return {"seed": seed, "memory": use_memory,
             "avoids_a": min(r["dist_person"] for r in w) >= 1.0 and bool(ms & WARY),
             "engages_b": bool(ms & {"approach", "inspect"}) and mean_b < mean_a,
-            "mean_dist_a": round(mean_a, 2), "mean_dist_b": round(mean_b, 2)}
+            "mean_dist_a": round(mean_a, 2), "mean_dist_b": round(mean_b, 2), "fell": tilt > 45.0}
 
 
 def main() -> None:
@@ -98,6 +101,7 @@ def main() -> None:
     ap.add_argument("--backlash", action="store_true", help="evaluate in the scene the policies were trained in")
     ap.add_argument("--neutral-style", action="store_true", help="policy trained on the neutral style only (B1/B2)")
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
+    ap.add_argument("--profile", choices=("legacy", "v2"), default="legacy")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
     ap.add_argument("--affect", choices=("A", "B"), default="A")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
@@ -106,7 +110,8 @@ def main() -> None:
     args = ap.parse_args()
     if args.together:
         mems = (True,) if args.no_ablation else (True, False)
-        results = [evaluate_together(args.policy, s, m, args.learning, args.backlash, args.neutral_style)
+        results = [evaluate_together(args.policy, s, m, args.learning, args.backlash, args.neutral_style,
+                                     args.appraisal, args.affect, args.profile)
                    for m in mems for s in range(args.seeds)]
         summary = {("memory" if m else "no_memory"): {k: f"{sum(r[k] for r in results if r['memory'] == m)}/{args.seeds}"
                                                      for k in ("avoids_a", "engages_b")} for m in mems}
@@ -119,7 +124,7 @@ def main() -> None:
         return
     mems = (True,) if args.no_ablation else (True, False)
     results = [evaluate(args.policy, s, m, args.learning, args.backlash, args.neutral_style, args.appraisal, args.affect,
-                        args.head_pitch_down, args.head_yaw_max)
+                        args.head_pitch_down, args.head_yaw_max, args.profile)
                for m in mems for s in range(args.seeds)]
     summary = {}
     for m in mems:

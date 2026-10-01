@@ -14,7 +14,7 @@ HARM = AppraisalState(relevance=1.0, desirability=-1.0, likelihood=0.99, expecte
 def test_both_models_satisfy_the_affect_contract(model_cls):
     m = model_cls()
     assert isinstance(m, AffectSystem)
-    m.add(AppraisalFrame(OutcomeHypothesis("near_collision", probability=0.7), relevance=0.9, desirability=-0.7,
+    m.add(AppraisalFrame(OutcomeHypothesis("collision", probability=0.7), relevance=0.9, desirability=-0.7,
                          expectedness=0.2, controllability=0.3))
     m.add(HARM)
     m.step(0.1)
@@ -57,3 +57,16 @@ def test_model_b_signs_follow_desirability_and_control():
         bad.step(0.1)
     assert good.pad.valence > 0 > bad.pad.valence and good.pad.dominance > 0 > bad.pad.dominance
     assert bad.tendencies.withdraw > 0 and good.tendencies.withdraw == 0
+
+
+@pytest.mark.parametrize("model_cls", [CategoricalAffectModel, DimensionalAffectModel])
+def test_tendencies_are_attributed_to_their_source(model_cls):
+    m = model_cls()
+    m.add(HARM, source="person-0")
+    m.add(AppraisalState(relevance=0.8, desirability=0.8, likelihood=0.7, expectedness=0.8, controllability=0.9),
+          source="person-1")
+    m.step(0.1)
+    a, b, total = m.tendencies_for("person-0"), m.tendencies_for("person-1"), m.tendencies
+    assert a.avoid > 0 and b.avoid == 0 and b.approach > 0 and a.approach == 0
+    assert abs(total.avoid - a.avoid) < 1e-9 and abs(total.approach - b.approach) < 1e-9
+    assert m.tendencies_for("nobody") == ActionTendencyState()

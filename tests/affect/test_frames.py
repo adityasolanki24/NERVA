@@ -15,9 +15,9 @@ CLOSE_PERSON = (Track("person", 0.0, 0.6, approach_speed=1.5, tid="person-0"),)
 
 def test_every_likelihood_has_a_referent():
     frame = FrameAppraiser(ContextualAppraiser()).appraise(LUNGE, 10.0, CLOSE_PERSON)
-    assert frame.hypothesis.kind == "near_collision" and frame.hypothesis.subject == "person-0"
+    assert frame.hypothesis.kind == "collision" and frame.hypothesis.subject == "person-0"
     assert frame.likelihood == frame.hypothesis.probability
-    assert frame.hypothesis.predicts == ("near_collision",)
+    assert frame.hypothesis.predicts == ("contact_impact",)
 
 
 def test_every_mapped_event_resolves_to_a_known_hypothesis_and_unmapped_events_fail():

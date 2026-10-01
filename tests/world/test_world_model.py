@@ -41,3 +41,16 @@ def test_self_and_others_are_placed_on_the_place_grid():
     s = wm.update(0.0, (0.1, 0.1), 0.0, (Track("ball", 0.0, 1.0, tid="ball-0"),))
     assert any(r.subject == "self" and r.obj == "place:0,0" for r in s.related("at_place"))
     assert any(r.subject == "track:ball-0" and r.obj == "place:1,0" for r in s.related("at_place"))
+
+
+def test_queries_used_by_appraisal_and_behaviour():
+    wm = WorldModel()
+    near_a = Track("person", 0.0, 0.4, tid="person-3")
+    s = wm.update(0.0, (0, 0), 0.0, (near_a, B), identities={"person-3": "person#0"})
+    assert s.identity_map() == {"person-3": "person#0"}
+    assert {tr.tid for tr in s.tracks()} == {"person-3", "person-4"}
+    assert s.nearest("person", "near").track_id == "person-3"
+    s = wm.update(0.1, (0, 0), 0.0, (B,))  # person#0 no longer measured: node kept, measurement dropped
+    assert s.node("person#0").track is None and {tr.tid for tr in s.tracks()} == {"person-4"}
+    s = wm.assert_touch(0.2, "person-4")
+    assert s.related("touching", "self")[0].subject == "track:person-4"

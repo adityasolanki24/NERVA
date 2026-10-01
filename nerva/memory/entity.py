@@ -17,13 +17,14 @@ Two learning modes (refactor stage D, docs/architecture.md §1.3):
   "legacy"    the above: associations learned from the emotions Model A elicited. Kept as the baseline.
               Known problem: a remembered threat re-elicits fear, which is learned as more threat.
   "grounded"  associations learned only from measured outcomes (OutcomeSignal, nerva/world/outcomes.py):
-                adverse  A ← A + α·(m − A)   on near_collision / stability_loss attributed to the entity
-                benign   B ← B + α·(m − B)   on benign_contact; also A ← A + α·EXTINCTION·(0 − A)
+                adverse  A ← A + α·(m − A)   on an actual adverse outcome (contact_impact, stability_loss)
+                risk     K ← K + α·(m − K)   on a RiskEstimate (collision_risk: a near miss), kept separate
+                benign   B ← B + α·(m − B)   on benign_contact; also A, K ← · + α·EXTINCTION·(0 − ·)
               with α = OUTCOME_ALPHA·confidence (no arousal scaling: affect does not set the teaching
               signal). learn() then only records the episode (emotions kept as history).
               Sleep replay (replay=True) adds NO evidence: it only restores A and B toward the levels the
               last real outcomes set, undoing absence drift, never beyond (one lunge stays one lunge).
-              threat = A and warmth = B − A are DERIVED display summaries in this mode; trust is not
+              threat = max(A, K) and warmth = B − threat are DERIVED summaries in this mode; trust is not
               defined in this mode and stays at its prior (surprise is not evidence of untrustworthiness).
 All constants are NERVA design choices (docs/memory_design.md §3.3); nothing here is fitted to data.
 Identity from modular sensor evidence (refactor stage F): `resolve_evidence(kind, [SensorEvidence, ...])`
@@ -75,6 +76,8 @@ class EntityRecord:
     outcomes: int = 0  # grounded mode: number of attributed outcomes
     adverse_learned: float = 0.0  # grounded mode: level set by the last real outcomes (ceiling for replay)
     benign_learned: float = 0.0
+    risk: float = 0.0  # grounded mode: expected risk from estimated near misses (RiskEstimate), [0, 1]
+    risk_learned: float = 0.0
     features: dict = field(default_factory=dict)  # other modalities: modality -> running-mean embedding
 
     def novelty(self) -> float:
@@ -156,6 +159,7 @@ class EntityMemory:
             rec.warmth *= drift
             rec.adverse *= drift
             rec.benign *= drift
+            rec.risk *= drift
             if self.learning == "grounded":
                 self._derive(rec)
             rec.encounters += 1
@@ -163,8 +167,8 @@ class EntityMemory:
     @staticmethod
     def _derive(rec: EntityRecord) -> None:
         """Grounded mode: the user-facing summaries are derived from the outcome expectations."""
-        rec.threat = rec.adverse
-        rec.warmth = float(np.clip(rec.benign - rec.adverse, -1.0, 1.0))
+        rec.threat = max(rec.adverse, rec.risk)
+        rec.warmth = float(np.clip(rec.benign - rec.threat, -1.0, 1.0))
 
     def observe(self, rec: EntityRecord, t: float, dt: float) -> None:
         """Seen during this frame: familiarity grows."""
@@ -217,6 +221,8 @@ class EntityMemory:
         else:
             rec.benign += a * (m - rec.benign)
             rec.adverse += a * EXTINCTION * (0.0 - rec.adverse)
+            rec.risk += a * EXTINCTION * (0.0 - rec.risk)
+            rec.risk_learned = rec.risk
         rec.outcomes += 1
         rec.adverse_learned, rec.benign_learned = rec.adverse, rec.benign
         self._derive(rec)
@@ -224,3 +230,21 @@ class EntityMemory:
             rec.episodes.append({"t": round(outcome.time_s, 2), "event": f"outcome:{outcome.kind}",
                                  "magnitude": round(m, 2), "confidence": round(confidence, 2)})
             del rec.episodes[:-MAX_EPISODES]
+
+    def learn_risk(self, rec: EntityRecord, risk, confidence: float = 1.0, record: bool = True,
+                   replay: bool = False) -> None:
+        """Grounded mode: learn from an estimated near miss (RiskEstimate) attributed to `rec`. Same rule as
+        an adverse outcome, in a separate field; replay restores toward the learned level only."""
+        if self.learning != "grounded":
+            return
+        a = min(1.0, OUTCOME_ALPHA * confidence)
+        if replay:
+            rec.risk += a * max(0.0, rec.risk_learned - rec.risk)
+        else:
+            rec.risk += a * (risk.magnitude - rec.risk)
+            rec.risk_learned = rec.risk
+            if record:
+                rec.episodes.append({"t": round(risk.time_s, 2), "event": f"risk:{risk.kind}",
+                                     "magnitude": round(risk.magnitude, 2), "confidence": round(confidence, 2)})
+                del rec.episodes[:-MAX_EPISODES]
+        self._derive(rec)

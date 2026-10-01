@@ -88,6 +88,10 @@ class ContextualAppraiser:
 
     def observe(self, t: float, tracks: tuple[Track, ...], dt: float) -> list[tuple[str, AppraisalState]]:
         """Accumulate exposure; every IN_VIEW_PERIOD_S appraise each visible stimulus ("<kind>_in_view")."""
+        return [(kind, a) for kind, a, _ in self.observe_with_subjects(t, tracks, dt)]
+
+    def observe_with_subjects(self, t: float, tracks: tuple[Track, ...], dt: float) -> list[tuple[str, AppraisalState, str]]:
+        """As observe, plus the track ID each in-view appraisal is about."""
         out = []
         for tr in tracks:
             if not tr.visible:
@@ -100,7 +104,7 @@ class ContextualAppraiser:
                 # desirability 0: looking elicits no joy/hope/fear by itself; expectedness ≥ 0.3: no surprise
                 out.append((f"{tr.kind}_in_view", AppraisalState(
                     relevance=0.2 + 0.4 * n, desirability=0.0, likelihood=0.5,
-                    expectedness=max(0.3, 1.0 - n), controllability=0.8)))
+                    expectedness=max(0.3, 1.0 - n), controllability=0.8), tr.tid))
         return out
 
     def appraise(self, event: Event, t: float, tracks: tuple[Track, ...]) -> AppraisalState | None:
@@ -187,7 +191,7 @@ class MemoryAppraiser(ContextualAppraiser):
             return any(r.kind == "person" and r.threat >= THREAT_ASSOCIATION for r in self.identity.values())
         return rec.kind == "person" and rec.threat >= THREAT_ASSOCIATION
 
-    def observe(self, t, tracks, dt):
+    def observe_with_subjects(self, t, tracks, dt):
         out = []
         for tr in tracks:
             rec = self.identity.get(tr.tid)
@@ -200,7 +204,7 @@ class MemoryAppraiser(ContextualAppraiser):
                 desirability = float(max(-1.0, min(1.0, WARMTH_GAIN * rec.warmth - THREAT_GAIN * rec.threat)))
                 out.append((f"{tr.kind}_in_view", AppraisalState(
                     relevance=0.2 + 0.4 * max(n, abs(desirability)), desirability=desirability, likelihood=0.5,
-                    expectedness=max(0.3, 1.0 - n), controllability=0.8 - 0.4 * rec.threat)))
+                    expectedness=max(0.3, 1.0 - n), controllability=0.8 - 0.4 * rec.threat), tr.tid))
         return out
 
     def appraise(self, event, t, tracks):

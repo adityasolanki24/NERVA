@@ -97,6 +97,15 @@ class EpisodicMemory:
             self._prune(t, force=True)
         return ep
 
+    def encode_risk(self, t: float, risk, entity: str | None, place, arousal: float = 0.0) -> Episode:
+        """Store an estimated near miss (grounded mode) as a "risk:<kind>" episode."""
+        ep = Episode(t, f"risk:{risk.kind}", entity, (float(place[0]), float(place[1])), [], arousal, 0.0,
+                     float(risk.magnitude), magnitude=float(risk.magnitude))
+        self.episodes.append(ep)
+        if len(self.episodes) > self.capacity:
+            self._prune(t, force=True)
+        return ep
+
     # ── retrieval ───────────────────────────────────────────────────────────
     def retrieve(self, now: float, entity: str | None = None, event: str | None = None, place=None,
                  k: int = 5, radius: float = 1.5) -> list[Episode]:
@@ -121,7 +130,8 @@ class EpisodicMemory:
         """One 'sleep' pass: prioritised replay → entity updates, merge repeats, prune. Returns a report."""
         grounded = entity_memory is not None and getattr(entity_memory, "learning", "legacy") == "grounded"
         if grounded:  # only measured outcomes are replayed; their significance is the outcome's magnitude
-            candidates = [e for e in self.episodes if e.event.startswith("outcome:") and e.magnitude >= REPLAY_MIN_INTENSITY]
+            candidates = [e for e in self.episodes if e.event.startswith(("outcome:", "risk:"))
+                          and e.magnitude >= REPLAY_MIN_INTENSITY]
             replayed = sorted(candidates, key=lambda e: e.magnitude * math.exp(-(now - e.t) / 600.0),
                               reverse=True)[:top_k]
         else:
@@ -137,11 +147,16 @@ class EpisodicMemory:
                 if not grounded:  # legacy: replay re-learns the stored emotions
                     entity_memory.learn(rec, now, f"replay:{ep.event}", ep.emotions,
                                         ep.arousal, surprise_negative=False, confidence=REPLAY_RATE, record=False)
-                elif ep.event.startswith("outcome:"):  # grounded: only replayed OUTCOMES teach
+                elif ep.event.startswith("outcome:"):  # grounded: only outcomes and risks are replayed
                     from nerva.interfaces import OutcomeSignal
 
                     entity_memory.learn_outcome(rec, OutcomeSignal(ep.event.split(":", 1)[1], ep.magnitude, now),
                                                 confidence=REPLAY_RATE * ep.count, record=False, replay=True)
+                elif ep.event.startswith("risk:"):
+                    from nerva.interfaces import RiskEstimate
+
+                    entity_memory.learn_risk(rec, RiskEstimate(ep.event.split(":", 1)[1], ep.magnitude, now),
+                                             confidence=REPLAY_RATE * ep.count, record=False, replay=True)
             ep.consolidated = True
         merged = self._merge()
         pruned = self._prune(now)

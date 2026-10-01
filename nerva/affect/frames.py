@@ -4,7 +4,7 @@ Wraps an existing appraiser (v1 `ContextualAppraiser` or v2 `MemoryAppraiser`) a
 `AppraisalState`s into an `AppraisalFrame`:
 
 1. **Hypothesis.** Each event kind is mapped to an explicit proposition (HYPOTHESES), e.g. a rapid
-   approach → "near_collision" (predicts the `near_collision` outcome, bears on remain_upright and
+   approach → "collision" (would be confirmed by a `contact_impact` outcome; bears on remain_upright and
    keep_distance). The appraiser's likelihood becomes that hypothesis's probability, so "likelihood of
    what?" always has an answer. An event kind without a mapping is an error, not a silent default.
    Where an event's meaning depends on context (a person seen while remembered as a threat, or not),
@@ -28,8 +28,8 @@ SELF_RELEVANCE = 0.5
 
 # hypothesis kind → (predicted outcome kinds, goal kinds it bears on, physically adverse?)
 HYPOTHESIS_KINDS = {
-    "near_collision": (("near_collision",), ("remain_upright", "keep_distance", "retreat"), True),
-    "adverse_interaction": (("near_collision",), ("keep_distance", "retreat"), True),
+    "collision": (("contact_impact",), ("remain_upright", "keep_distance", "retreat"), True),
+    "adverse_interaction": (("contact_impact",), ("keep_distance", "retreat"), True),
     "benign_interaction": (("benign_contact",), ("approach", "keep_distance", "explore"), False),
     "threat_recedes": ((), ("keep_distance", "retreat"), False),
     "novel_stimulus": ((), ("explore", "inspect"), False),
@@ -45,8 +45,8 @@ def _social(a: AppraisalState) -> str:
 
 # event kind → hypothesis kind (str) or a function of the contextual appraisal
 HYPOTHESES = {
-    "person_approaching_rapidly": "near_collision",
-    "person_close": lambda a: "near_collision" if a.desirability < 0 else "benign_interaction",
+    "person_approaching_rapidly": "collision",
+    "person_close": lambda a: "collision" if a.desirability < 0 else "benign_interaction",
     "person_appeared": _social,
     "person_approaching_slowly": _social,
     "person_in_view": _social,
@@ -107,4 +107,5 @@ class FrameAppraiser:
 
     def observe(self, t: float, tracks, dt: float, self_state: SelfState | None = None,
                 goals: GoalState | None = None) -> list[tuple[str, AppraisalFrame]]:
-        return [(kind, frame_from(kind, a, "", self_state, goals)) for kind, a in self.inner.observe(t, tracks, dt)]
+        return [(kind, frame_from(kind, a, subject, self_state, goals))
+                for kind, a, subject in self.inner.observe_with_subjects(t, tracks, dt)]

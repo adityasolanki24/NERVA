@@ -82,7 +82,7 @@ class WorldModel:
             xy = (rx + tr.distance * math.cos(a), ry + tr.distance * math.sin(a))
             conf = 1.0 if tr.visible else max(0.0, 1.0 - tr.unseen_for_s / NODE_TTL_S)
             self.nodes[node] = WorldEntity(node, KIND.get(tr.kind, "object"), track_id=tid, entity_id=eid, xy=xy,
-                                           confidence=conf, time_s=t)
+                                           confidence=conf, time_s=t, track=tr)
             if tr.visible:
                 self._assert(t, node, "visible_from", "self", "vision")
                 if tr.kind == "person":
@@ -98,15 +98,29 @@ class WorldModel:
             for b_node in visible_people[i + 1:]:
                 self._assert(t, a_node, "seen_with", b_node, "vision")
         if touching:
-            self._assert(t, self._track_node.get(touching, f"track:{touching}"), "touching", "self", "touch sensor")
+            self._assert(t, self.node_of_track(touching), "touching", "self", "touch sensor")
         if interacting:
-            self._assert(t, "self", "interacting_with", self._track_node.get(interacting, f"track:{interacting}"),
-                         "behaviour")
+            self.assert_interacting(t, interacting)
         present = {self._track_node[tr.tid or tr.kind] for tr in tracks}
         for nid, n in list(self.nodes.items()):
-            if n.kind in ("person", "object") and nid not in present and t - n.time_s > NODE_TTL_S:
-                self.nodes.pop(nid)
+            if n.kind in ("person", "object") and nid not in present:
+                if t - n.time_s > NODE_TTL_S:
+                    self.nodes.pop(nid)
+                elif n.track is not None:  # no longer measured: keep the node, drop the stale measurement
+                    self.nodes[nid] = WorldEntity(n.node_id, n.kind, n.track_id, n.entity_id, n.xy,
+                                                  max(0.0, 1.0 - (t - n.time_s) / NODE_TTL_S), n.time_s, None)
         return self.state(t)
+
+    def node_of_track(self, tid: str) -> str:
+        return self._track_node.get(tid, f"track:{tid}")
+
+    def assert_touch(self, t: float, tid: str) -> WorldModelState:
+        """A touch measured by the touch sensor and attributed to track `tid`."""
+        self._assert(t, self.node_of_track(tid), "touching", "self", "touch sensor")
+        return self.state(t)
+
+    def assert_interacting(self, t: float, tid: str) -> None:
+        self._assert(t, "self", "interacting_with", self.node_of_track(tid), "behaviour")
 
     def state(self, t: float) -> WorldModelState:
         rels = []

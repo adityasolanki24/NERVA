@@ -81,11 +81,19 @@ omni.kit.commands.execute("MJCFCreateAsset", mjcf_path=args.mjcf, import_config=
 
 replay = np.load(args.replay)
 names = [str(n) for n in replay["body_names"]]
+# Find each MuJoCo body's prim anywhere in the stage (the importer's layout is not documented); prefer
+# rigid bodies, accept exact names or names ending in "/<body>" after sanitising.
+from pxr import UsdPhysics  # noqa: E402
+
+all_prims = list(Usd.PrimRange(stage.GetPseudoRoot()))
+log["prim_tree"] = [f"{p.GetPath()} [{p.GetTypeName()}]" for p in all_prims if not str(p.GetPath()).startswith(("/World/Ground", "/Render", "/OmniverseKit"))][:400]
 prims = {}
-for prim in Usd.PrimRange(stage.GetPrimAtPath("/World/duck")):
-    if prim.GetName() in names and prim.GetName() not in prims and prim.IsA(UsdGeom.Xformable):
-        prims[prim.GetName()] = prim
-log["bodies_found"] = sorted(prims)
+for name in names:
+    candidates = [p for p in all_prims if p.GetName() == name and p.IsA(UsdGeom.Xformable)]
+    rigid = [p for p in candidates if p.HasAPI(UsdPhysics.RigidBodyAPI)]
+    if rigid or candidates:
+        prims[name] = (rigid or candidates)[0]
+log["bodies_found"] = {n: str(p.GetPath()) for n, p in sorted(prims.items())}
 log["bodies_missing"] = sorted(set(names) - set(prims))
 ordered = sorted(prims.values(), key=lambda p: len(str(p.GetPath()).split("/")))  # parents first
 
@@ -129,13 +137,13 @@ for i in range(args.frames):
         pos, quat = replay[f"{key}_pos"][k], replay[f"{key}_quat"][k]
         set_local(prim, matrix((pos[0], pos[1], 0.0), quat))
     base = replay["body_pos"][k, names.index("base")]
-    target = np.array([base[0], base[1], 0.25])
+    target = np.array([base[0], base[1], 0.2])
     nearest = min((replay[f"{key}_pos"][k] for key in people), key=lambda p: np.linalg.norm(p[:2] - base[:2]),
                   default=None)
     if nearest is not None and np.linalg.norm(nearest[:2] - base[:2]) < 3.5:
-        target = 0.5 * (target + np.array([nearest[0], nearest[1], 0.6]))
+        target = 0.6 * target + 0.4 * np.array([nearest[0], nearest[1], 0.5])
     look = target if look is None else 0.9 * look + 0.1 * target
-    eye = look + np.array([-1.6, -1.9, 1.1])
+    eye = look + np.array([-1.3, -1.6, 0.7])
     view = Gf.Matrix4d().SetLookAt(Gf.Vec3d(*eye), Gf.Vec3d(*look), Gf.Vec3d(0, 0, 1))
     set_local(camera.GetPrim(), view.GetInverse())
     rep.orchestrator.step(rt_subframes=1)

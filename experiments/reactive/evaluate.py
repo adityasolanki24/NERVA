@@ -37,7 +37,7 @@ def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=
                   perception_mode: str = "simulated", backlash: bool = False, neutral: bool = False,
                   appraisal_mode: str = "legacy", affect_model: str | None = None, head_pitch_down=None,
                   head_yaw_max=None, profile: str = "v2") -> dict:
-    affect_model = affect_model or ("B" if profile == "v2" else "A")
+    affect_model = affect_model or ("Bv2" if profile == "v2" else "A")
     _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector, walking_head_limit=head_limit,
                                      perception_mode=perception_mode, backlash_scene=backlash,
                                      neutral_style=neutral, appraisal_mode=appraisal_mode, affect_model=affect_model,
@@ -79,7 +79,7 @@ def main() -> None:
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2",
                     help="v2: policy capabilities, grounded memory, frames, targeted arbitration, world-model queries")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: B for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: Bv2 for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")

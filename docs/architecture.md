@@ -136,9 +136,10 @@ and identity from modular sensor evidence (`EntityMemory.resolve_evidence`).
 consolidation suite (2026-10-02), v2 with affect Model B is the default.** `profile="legacy"` (affect A)
 is byte-identical to the pre-refactor code and reproduces every earlier result.
 
-Open issue: Model B's PAD saturates under sustained input (dominance > 0.9 for 31% of the default
-scenario). Behaviour reads tendencies and is unaffected, but this must be fixed before PAD conditions
-expressive style.
+Model B's PAD saturation (dominance > 0.9 for 31% of the default scenario) is fixed by **Model B v2**
+(`Bv2`, bounded attractor; the default since 2026-10-02): 0% saturation in all scenarios, with all
+behavioural criteria kept. Open: dominance is mostly positive, because the appraiser gives anything in
+view a constant controllability of 0.8.
 
 ### 2.1 Diagram
 

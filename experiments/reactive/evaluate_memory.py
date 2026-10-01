@@ -107,7 +107,7 @@ def main() -> None:
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: B for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: Bv2 for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")

@@ -9,8 +9,11 @@ grounded memory run unchanged with either.
 
 - `compare_traces.py`: both models on the scripted affect-prototype timeline; criteria (bounded, recovery,
   valence-sign agreement) in its docstring. Results: `results/traces.json`.
-- Scenario comparisons use `experiments/reactive/evaluate.py --affect B` and
-  `evaluate_memory.py --affect B --learning grounded`.
+- Scenario comparisons use `experiments/reactive/evaluate.py --affect A|B|Bv2` and `evaluate_memory.py`.
+- **Model B saturation and Model B v2:**
+  - `diagnose_model_b.py` attributes old B's PAD drive to features and appraisal origins;
+  - `saturation.py` runs the fixed-trace and convergence criteria (`results/saturation.json`);
+  - `summarise_scenarios.py` applies the scenario criteria to `results_scenarios/`.
 
 Neither model is a model of human emotion; the comparison only asks which one produces the tested
 behaviours. Results and their preregistration: `docs/development_log.md`.

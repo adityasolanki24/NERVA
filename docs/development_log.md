@@ -4,6 +4,60 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Model B v2 fixes the saturation; now the default affect model
+
+Preregistered in the previous entry. Code at `6eb2054`; results in `experiments/affect_models/results/`
+(`saturation.json`) and `results_scenarios/` (`summary.json`) [measured].
+
+**Fixed trace and convergence** (`saturation.py`):
+
+| model | bounded | recovery | event direction (counterfactual) | converges | max \|x\| | rate-invariant | steady state, 2 s vs 1 s period (V, A, D) |
+|---|---|---|---|---|---|---|---|
+| A | yes | 18.1 s | 7/7 | yes | 0.26 | yes | 0.21, 0.16, 0.24 vs 0.21, 0.16, 0.24 |
+| old B | yes | 14.3 s | 7/7 | saturated | **1.00** | **no** | 0.54, 0.59, **1.00** vs **1.00, 1.00, 1.00** |
+| **Bv2** | yes | 13.3 s | 7/7 | yes | 0.56 | yes | 0.26, 0.56, 0.56 vs 0.26, 0.56, 0.56 |
+
+- Model A was already rate-invariant: its PAD moves toward an intensity-weighted *centre*, not a sum.
+- With the counterfactual event measure (with vs without the event), old B's directions are also 7/7.
+  The earlier 5/7 "sign agreement with A" came from the naive before/after measure, which confounds an
+  event with ongoing recovery.
+
+**Full scenarios** (profile v2, B2, 5 seeds each; default with vision, two-person, together):
+
+| model | behaviour | time with \|x\| > 0.9, V / A / D | std V / A / D | min…max V / A / D |
+|---|---|---|---|---|
+| A | all pass, no falls | 0 / 0 / 0% | 0.142 / 0.054 / 0.087 | −0.31…0.22 / 0…0.21 / −0.06…0.24 |
+| old B | all pass, no falls | **13.8 / 6.2 / 31.8%** | 0.530 / 0.256 / 0.331 | −0.97…1.00 / 0…1.00 / 0…1.00 |
+| **Bv2** | **all pass, no falls** | **0 / 0 / 0%** | 0.359 / 0.198 / 0.253 | −0.61…0.84 / 0…0.77 / −0.04…0.88 |
+
+Max |V| / |A| per scenario for Bv2: default 0.41 / 0.68, two-person 0.84 / 0.77, together 0.84 / 0.77.
+
+**Verdict:** Bv2 meets every preregistered criterion; old B fails the saturation criterion. Model A
+passes too, but only just (max |V| = 0.20 in the default scenario).
+
+**Decision (preregistered rule):** Bv2 replaces old B as the default affect model (`profile="v2"` now
+means affect `Bv2`). Old B stays as `--affect B`, so the consolidation results stay reproducible. A
+default `evaluate.py` run reproduces the Bv2 suite's seed 0 exactly. The legacy-profile traces are still
+byte-identical.
+
+**Flags (not tuned):**
+- **Dominance is one-sided** (−0.04 … 0.88). The in-view appraiser gives anything in view a constant
+  controllability of 0.8 (0.8 − 0.4·threat with memory), so whenever something is visible the context
+  pulls the dominance target positive, and threat events rarely take it below zero. That constant is a
+  weakly justified **appraiser** design value, not a Model B weight. Revisit it before dominance
+  conditions style.
+- **Valence reaches 0.84 during the petting:** ten touch events summed in the phasic channel, bounded by
+  tanh.
+- **The W flags from the mapping review stand:** the novelty/unexpected redundancy in arousal, the
+  neg/pos valence asymmetry from calibration, and the weak pos → A term.
+- **Action tendencies are unchanged from Model B.** They also re-add repeated in-view appraisals, but are
+  bounded at 2.54× one impulse.
+
+**PAD → style:** Bv2 now keeps useful dynamic range in the existing scenarios. Connecting PAD to style is
+no longer blocked by saturation; it is the next phase and has not been started.
+
+---
+
 ## 2026-10-02 — Model B saturation: diagnosis, mapping review, preregistration of the fix
 
 **Diagnosis [measured]:** default scenario, B2, vision, seed 0, Model B. Every appraisal's features were

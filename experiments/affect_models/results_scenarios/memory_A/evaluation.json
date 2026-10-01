@@ -1,0 +1,532 @@
+{
+ "summary": {
+  "memory": {
+   "b_not_blamed": "5/5",
+   "a_remembered": "5/5",
+   "b_welcomed": "5/5",
+   "touch_to_b": "5/5"
+  },
+  "pad_pooled_memory": {
+   "valence": {
+    "min": -0.306,
+    "max": 0.217,
+    "frac_sat": 0.0,
+    "std": 0.1693
+   },
+   "arousal": {
+    "min": 0.0,
+    "max": 0.206,
+    "frac_sat": 0.0,
+    "std": 0.0547
+   },
+   "dominance": {
+    "min": -0.056,
+    "max": 0.225,
+    "frac_sat": 0.0,
+    "std": 0.0957
+   }
+  }
+ },
+ "runs": [
+  {
+   "seed": 0,
+   "memory": true,
+   "b_not_blamed": true,
+   "a_remembered": true,
+   "b_welcomed": true,
+   "max_tilt_deg": 13.47302296160109,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.306,
+     "max": 0.217,
+     "mean": 0.0003,
+     "std": 0.171,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.205,
+     "mean": 0.1242,
+     "std": 0.0552,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.056,
+     "max": 0.225,
+     "mean": 0.0944,
+     "std": 0.0972,
+     "frac_sat": 0.0
+    }
+   },
+   "identities": {
+    "person#0": {
+     "threat": 0.466,
+     "warmth": -0.466,
+     "trust": 0.5
+    },
+    "person#1": {
+     "threat": 0.0,
+     "warmth": 0.957,
+     "trust": 0.5
+    }
+   },
+   "touch_to_b": true,
+   "learning": "legacy",
+   "a_threat_40": 0.49756152113854735,
+   "a_threat_116": 0.4663718479092333,
+   "outcomes": [
+    [
+     59.8,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     60.8,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     61.8,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     62.8,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     63.8,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     64.9,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     65.9,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     66.9,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     67.9,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     21.9,
+     "collision_risk",
+     "person-0"
+    ]
+   ]
+  },
+  {
+   "seed": 1,
+   "memory": true,
+   "b_not_blamed": true,
+   "a_remembered": true,
+   "b_welcomed": true,
+   "max_tilt_deg": 13.973376414694027,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.299,
+     "max": 0.216,
+     "mean": -0.0001,
+     "std": 0.1686,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.206,
+     "mean": 0.1235,
+     "std": 0.0547,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.051,
+     "max": 0.225,
+     "mean": 0.0947,
+     "std": 0.0952,
+     "frac_sat": 0.0
+    }
+   },
+   "identities": {
+    "person#0": {
+     "threat": 0.449,
+     "warmth": -0.449,
+     "trust": 0.5
+    },
+    "person#1": {
+     "threat": 0.0,
+     "warmth": 0.957,
+     "trust": 0.5
+    }
+   },
+   "touch_to_b": true,
+   "learning": "legacy",
+   "a_threat_40": 0.4794298912715128,
+   "a_threat_116": 0.4493078276412897,
+   "outcomes": [
+    [
+     59.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     60.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     61.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     62.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     63.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     64.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     65.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     66.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     67.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     21.8,
+     "collision_risk",
+     "person-0"
+    ]
+   ]
+  },
+  {
+   "seed": 2,
+   "memory": true,
+   "b_not_blamed": true,
+   "a_remembered": true,
+   "b_welcomed": true,
+   "max_tilt_deg": 14.738525867930896,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.299,
+     "max": 0.215,
+     "mean": -0.0002,
+     "std": 0.1688,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.205,
+     "mean": 0.1236,
+     "std": 0.0547,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.053,
+     "max": 0.225,
+     "mean": 0.0944,
+     "std": 0.0954,
+     "frac_sat": 0.0
+    }
+   },
+   "identities": {
+    "person#0": {
+     "threat": 0.45,
+     "warmth": -0.45,
+     "trust": 0.5
+    },
+    "person#1": {
+     "threat": 0.0,
+     "warmth": 0.957,
+     "trust": 0.5
+    }
+   },
+   "touch_to_b": true,
+   "learning": "legacy",
+   "a_threat_40": 0.48017760967437667,
+   "a_threat_116": 0.4500585714322389,
+   "outcomes": [
+    [
+     59.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     60.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     61.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     62.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     63.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     64.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     65.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     66.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     67.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     21.8,
+     "collision_risk",
+     "person-0"
+    ]
+   ]
+  },
+  {
+   "seed": 3,
+   "memory": true,
+   "b_not_blamed": true,
+   "a_remembered": true,
+   "b_welcomed": true,
+   "max_tilt_deg": 14.036446195201892,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.298,
+     "max": 0.215,
+     "mean": 0.0001,
+     "std": 0.1684,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.205,
+     "mean": 0.1234,
+     "std": 0.0546,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.05,
+     "max": 0.225,
+     "mean": 0.0948,
+     "std": 0.0951,
+     "frac_sat": 0.0
+    }
+   },
+   "identities": {
+    "person#0": {
+     "threat": 0.447,
+     "warmth": -0.447,
+     "trust": 0.5
+    },
+    "person#1": {
+     "threat": 0.0,
+     "warmth": 0.957,
+     "trust": 0.5
+    }
+   },
+   "touch_to_b": true,
+   "learning": "legacy",
+   "a_threat_40": 0.47735908233481356,
+   "a_threat_116": 0.44726772152795125,
+   "outcomes": [
+    [
+     59.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     60.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     61.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     62.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     63.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     64.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     65.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     66.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     67.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     21.8,
+     "collision_risk",
+     "person-0"
+    ]
+   ]
+  },
+  {
+   "seed": 4,
+   "memory": true,
+   "b_not_blamed": true,
+   "a_remembered": true,
+   "b_welcomed": true,
+   "max_tilt_deg": 14.978904147303544,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.305,
+     "max": 0.215,
+     "mean": -0.0012,
+     "std": 0.1699,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.196,
+     "mean": 0.1235,
+     "std": 0.0541,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.054,
+     "max": 0.225,
+     "mean": 0.0936,
+     "std": 0.0958,
+     "frac_sat": 0.0
+    }
+   },
+   "identities": {
+    "person#0": {
+     "threat": 0.466,
+     "warmth": -0.466,
+     "trust": 0.5
+    },
+    "person#1": {
+     "threat": 0.0,
+     "warmth": 0.957,
+     "trust": 0.5
+    }
+   },
+   "touch_to_b": true,
+   "learning": "legacy",
+   "a_threat_40": 0.49745096419618734,
+   "a_threat_116": 0.46628798839025465,
+   "outcomes": [
+    [
+     59.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     60.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     61.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     62.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     63.6,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     64.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     65.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     66.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     67.7,
+     "benign_contact",
+     "person-2"
+    ],
+    [
+     21.9,
+     "collision_risk",
+     "person-0"
+    ]
+   ]
+  }
+ ]
+}

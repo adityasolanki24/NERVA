@@ -98,8 +98,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
       limit that Model A never reached.
     - *Consolidation (v2, 2026-10-02):* Model B passes all reactive, two-person and together criteria
       with no falls, and is now the default.
-    - *Caveat:* its PAD saturates under sustained input (dominance > 0.9 for 31% of the default
-      scenario). This is not a behavioural criterion, but it matters before PAD drives style.
+    - *Caveat:* its PAD saturated under sustained input (dominance > 0.9 for 31% of the default
+      scenario).
+    - *Fixed by Model B v2* (bounded attractor; default): 0% saturation in all scenarios, all behavioural
+      criteria kept (development log 2026-10-02).
 - **RQ9, learned events.** Do event prototypes found by prediction-error segmentation and online
   clustering of world/self state predict grounded outcomes at least as well as the hand-coded event
   labels, in the same simulated scenarios?

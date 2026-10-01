@@ -136,6 +136,37 @@ appraisal (r, d, l, e, c) → features u = [r·d⁺·l, r·d⁻·l, r·(1−e)²
   `experiments/affect_models/`.
 - **Not claimed:** that the linear system, or Model A, describes human emotion.
 
+## Model B v2: bounded attractor (default since 2026-10-02) [NERVA design]
+
+`AttractorAffectModel` in `nerva/affect/model_b.py`, `affect_model="Bv2"`. It fixes old Model B's
+saturation. In old B, every re-appraisal of an unchanged situation (the in-view frames every 2 s) added a
+new impulse, so PAD grew with the re-appraisal rate. Dominance saturated through the integrated
+control → D term.
+
+```
+persistent appraisal (AppraisalFrame.persistent, e.g. "<kind>_in_view")
+     → one context slot per source: latest features, replaced (full weight 2.5 s after a refresh, then τ 3 s)
+discrete event → phasic traces (as old B)
+target  x* = x0 + tanh(G · W · (u_context + z_phasic)),   G = diag(τ_V, τ_A, τ_D)   (unit conversion, W unchanged)
+PAD     dx/dt = −Λ (x − x*)
+```
+
+- **Properties (tested):** bounded by construction; repeating an identical persistent appraisal converges
+  at any rate; PAD returns to the baseline when nothing is appraised.
+- **Tendencies:** identical to old B.
+- **Results:** `development_log.md`.
+
+**Mapping review (W, shared by B and Bv2):**
+- **Sound:** pos → V +, neg → V −, neg → A +, unexpected → A +, control → D + (as a level).
+- **Flagged:**
+  - the neg/pos valence asymmetry (calibration only);
+  - pos → A (weak);
+  - novelty → A, which duplicates unexpected → A (both functions of 1 − e);
+  - neg → D, which overlaps with control.
+- **High dominance under prolonged novelty** came from the repeated control impulse (novelty only scaled
+  its relevance), not from a novelty → D weight; there is none.
+- **Open:** the appraiser's constant in-view controllability (0.8) keeps dominance mostly positive.
+
 ## Action tendencies (refactor stage C)
 
 Behaviour reads `ActionTendencyState`, not labels. Model A's translation is in

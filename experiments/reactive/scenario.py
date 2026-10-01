@@ -33,7 +33,7 @@ profile="v2" (consolidation, 2026-10-02) bundles the new paths:
   - the world model is updated right after identity binding and is the source that touch attribution,
     appraisal identity and the behaviour's inputs (tracks, remembered threat per entity) query
   - near misses are RiskEstimates, kept apart from actual OutcomeSignals (also in legacy runs' logs)
-profile="v2" with affect Model B is the DEFAULT since 2026-10-02 (preregistered consolidation suite,
+profile="v2" with affect Model B v2 ("Bv2", the saturation fix) is the DEFAULT since 2026-10-02 (preregistered consolidation suite,
 development log). profile="legacy" (affect A by default) reproduces the pre-refactor behaviour byte-for-byte;
 pass it explicitly to reproduce any result recorded before that date.
 """
@@ -266,7 +266,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     if profile not in ("legacy", "v2"):
         raise ValueError("profile must be 'legacy' or 'v2'")
     v2 = profile == "v2"
-    affect_model = affect_model or ("B" if v2 else "A")  # defaults decided 2026-10-02 (development log)
+    affect_model = affect_model or ("Bv2" if v2 else "A")  # defaults decided 2026-10-02 (development log)
     capabilities = capabilities_for(policy) if v2 else None
     if v2:
         backlash_scene = capabilities.training_scene == "backlash"

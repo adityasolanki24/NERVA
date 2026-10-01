@@ -49,7 +49,8 @@ W = np.array(mb.DEFAULT_B.w)
 tot = {"in_view": np.zeros(5), "event": np.zeros(5)}
 cnt = {"in_view": 0, "event": 0}
 for kind, src, u, a, origin in log:
-    tot[origin] += u; cnt[origin] += 1
+    tot[origin] += u
+    cnt[origin] += 1
 print("appraisals added:", cnt)
 names = mb.FEATURES
 for origin in tot:

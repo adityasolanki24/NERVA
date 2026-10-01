@@ -4,6 +4,18 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — S6 (feet air-time reward) also stands still
+
+`s6_pilot-20261001-130212` = S5 + feet air-time reward 2.0 (thresholds 0.1–0.3 s). Backlash scene [measured]: v = −0.000 at vx −0.15 and +0.001 at +0.15, foot lift 0 mm. **It collapsed to standing like S5.**
+
+**Arithmetic:** at the policies' typical under-lift, the feet-height cost is about 10·(14/40 − 1)² ≈ 4.2 per touchdown, while the air-time reward pays at most 2·0.2 = 0.4. So early in training any step is net negative, and the policy settles on standing before it discovers walking [hypothesis].
+
+**Next idea (not run):** a curriculum that ramps the feet-height weight from 0 after walking emerges, or a normalised error.
+
+**Status:** B2 stays the policy that walks backward (reactive evaluation 4 × 5/5).
+
+---
+
 ## 2026-10-01 — Isaac Sim on a cloud L4: what it took to get rendering
 
 Four attempts with `cloud/jobs/isaac_spike.sh`, all capped and self-deleting [measured]:

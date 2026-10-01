@@ -4,6 +4,56 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — F2 results; architecture refactor status
+
+**F2** (preregistered in the previous entry; B2 with `head_pitch_down −0.2`, `head_yaw_max 0.4`;
+`experiments/reactive/results_f2/`) [measured]:
+
+| # | evaluation | result |
+|---|---|---|
+| F2.1 | two-person, vision, grounded + frames + **Model B** | **no falls** (max tilt 13.5–15.0°); b_not_blamed, a_remembered, b_welcomed, touch_to_b 5/5 each |
+| F2.2 | default scenario, vision, frames + **Model B** | curiosity, fear, habituation, safety 5/5 each |
+| F2.3 | default scenario, vision, Model A, legacy appraisal | 5/5 each: the narrower envelope keeps the baseline behaviour |
+| F2.4 | default scenario, simulated detector, Model A, seeds 0–5 | 0/6 falls |
+
+**RQ8 conclusion:** with B2's measured-safe head envelope, Model B (no emotion categories) passes every
+criterion Model A passes in both scenarios. The categories were not necessary for these behaviours. The
+fixed-trace sign-agreement criterion (5/7) was not met. Model B also revealed a body limit (head yaw
+−0.8) that Model A never reached.
+
+**Stage F completed:** `EntityMemory.resolve_evidence` combines per-modality cosine similarities weighted
+by evidence confidence; missing modalities contribute nothing. `resolve(kind, appearance)` is the
+single-modality case. Merged as `745372f`; all three regression traces still byte-identical.
+
+**Refactor status** (handoff completion criteria):
+
+| criterion | status |
+|---|---|
+| canonical docs describe the live code | done (`architecture.md` §1.5, README, roadmap, RQs) |
+| behaviour does not require Model A labels | done (stage C; traces byte-identical) |
+| memory's new learning path grounded in outcomes | done (stage D, opt-in) |
+| self state and goals explicit inputs | done in the frames path (stage E) |
+| likelihood refers to an explicit hypothesis | done in the frames path |
+| small world model | done (stage F); not yet read by behaviour |
+| Model A runnable; Model B behind the same contract | done |
+| old experiments still run | defaults reproduce the pre-refactor traces byte-for-byte |
+| tests / Ruff | 202 pass, 2 skipped / clean |
+| measurements logged | yes (this and the preceding 2026-10-02 entries) |
+| no unmanaged cloud resources | no cloud work in this session (audit below) |
+
+**Open issues:**
+- The new paths are opt-in; the defaults stay on the legacy path for reproducibility.
+- Grounded memory fails "engages B" in the together scenario (global fear gate; follow-up not run).
+- Perception still emits interpreted events (legacy vocabulary).
+- RQ9 was falsified for this learned-event design.
+- The safety module is a stop rule, not fall prevention.
+- B2's head envelope is narrow, and its asymmetry is unexplained.
+- Stage I (semantic cues) is deferred.
+
+**Cloud audit [measured]:** no instances, disks, addresses, forwarding rules, routers or snapshots.
+
+---
+
 ## 2026-10-02 — Follow-up F1 (B2 head pitch −0.2) and the head-yaw envelope; F2 preregistered
 
 **F1 results** (preregistered in the previous entry; `experiments/reactive/results_f1/`) [measured]:

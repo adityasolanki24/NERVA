@@ -27,7 +27,17 @@ Only the people and the ball follow scripts. Design: `docs/reactive_behaviour_de
 | two-person memory, **grounded** learning | S1 plain and B2 backlash | 5/5 on all four in both |
 | together, **grounded** learning | S1, plain, 3 seeds | avoids A 3/3; **engages B 0/3** (legacy 3/3) |
 
-`evaluate_memory.py` options: `--learning legacy|grounded` (refactor stage D), `--backlash
+| default scenario, frames + **Model B** | B2, vision | 5/5 on all four |
+| two-person, grounded + frames + **Model B** | B2, vision, default head limits | **fell in 5/5 seeds** (withdraw: head yaw −0.8) |
+| same, **B2 head envelope** (pitch ≥ −0.2, \|yaw\| ≤ 0.4) | B2, vision | no falls; 5/5 on all four |
+| default scenario, Model A, B2 head envelope | B2, vision | 5/5 on all four |
+| default scenario, simulated detector, Model A | B2, seeds 0–5 | default limits: 1/6 fell (seed 3, pre-existing); B2 envelope: 0/6 |
+
+**For B2 runs use `--head-pitch-down -0.2 --head-yaw-max 0.4`** (measured standing-safe envelope,
+development log 2026-10-02). The defaults keep the earlier, recorded behaviour.
+
+`evaluate.py` / `evaluate_memory.py` options: `--appraisal legacy|frames`, `--affect A|B`,
+`--head-pitch-down`, `--head-yaw-max`; `evaluate_memory.py` also: `--learning legacy|grounded` (refactor stage D), `--backlash
 --neutral-style` (B2), `--no-ablation`. Results: `results_memory_b2_legacy/`,
 `results_memory_b2_grounded/`, `results_memory_grounded_s1/`.
 

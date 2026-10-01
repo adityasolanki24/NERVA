@@ -202,6 +202,8 @@ Afterwards, warmth/approach toward A increases, but toward B it doesn't.
 | **M3** | Consolidation/replay, reconsolidation on prediction error, pruning and compression | M2 |
 | **M4** | Spatial place memory (place familiarity and affect) | M1 |
 | **M5** | Real identity from vision: MuJoCo appearance features now; face embeddings in Isaac/hardware | real perception |
+| **M6** | Outcome-grounded learning (refactor stage D): expected adverse/benign outcomes per entity and place from measured outcomes; evidence-neutral replay | done 2026-10-02 |
+| **M7** | Identity from modular sensor evidence (`resolve_evidence`, refactor stage F): per-modality, confidence-weighted; missing modalities contribute nothing. Only vision appearance exists today | done 2026-10-02 |
 
 ## Sources
 

@@ -1,14 +1,20 @@
 #!/bin/bash
 # Isaac Sim feasibility spike on an L4 (experiments/isaac/isaac_spike.py). Requires the user's explicit
 # acceptance of the NVIDIA Omniverse License Agreement: the launcher passes ISAAC_ACCEPT_EULA only then.
-# Attempt 1 (2026-10-01) hung silently until the VM cap: output was buffered by `tail` and the mounted
-# directories were root-owned while the container runs as uid 1234. Now: streamed logs, owned mounts,
-# a minimal startup test first, and timeouts that leave time to sync results before the VM cap.
+#
+# Attempt 1 (2026-10-01) hung silently until the VM cap (output buffered by `tail`; root-owned mounts while
+# the container runs as uid 1234). Attempt 2 started Isaac but rendering failed: "vkCreateInstance failed
+# ... ERROR_INCOMPATIBLE_DRIVER" (no Vulkan inside the container). This version: streamed logs, owned
+# mounts, NVIDIA_DRIVER_CAPABILITIES=all (graphics, not only compute), host Vulkan diagnostics, and image
+# versions tried in order (the image's driver 580 may be newer than 5.0 supports). Each step has a timeout
+# that leaves time to sync results before the VM's hard cap.
 set -uo pipefail
 : "${ISAAC_ACCEPT_EULA:?the user has not accepted the NVIDIA Omniverse License Agreement}"
-IMAGE=${ISAAC_IMAGE:-nvcr.io/nvidia/isaac-sim:5.0.0}
+IMAGES=${ISAAC_IMAGES:-"nvcr.io/nvidia/isaac-sim:5.1.0 nvcr.io/nvidia/isaac-sim:5.0.0"}
 OUT=/work/out/isaac
-mkdir -p "$OUT" /work/isaac_cache/{kit,ov,pip,glcache,computecache} /work/isaac_logs
+sync_isaac() { gsutil -q -m rsync -r "$OUT" "gs://$NERVA_BUCKET/runs/$NERVA_RUN_ID/out/isaac" || true; }
+mkdir -p "$OUT" /work/isaac_cache/{kit,ov,glcache,computecache} /work/isaac_logs
+
 if ! command -v docker >/dev/null; then
   apt-get update -qq && apt-get install -y -qq docker.io >/dev/null
 fi
@@ -20,31 +26,53 @@ if ! docker info 2>/dev/null | grep -qi nvidia; then
   apt-get update -qq && apt-get install -y -qq nvidia-container-toolkit >/dev/null
   nvidia-ctk runtime configure --runtime=docker && systemctl restart docker
 fi
+
 git clone -q -b v2 --depth 1 https://github.com/apirrone/Open_Duck_Mini.git /work/odm
 ROBOT=/work/odm/mini_bdx/robots/open_duck_mini_v2
 sed 's#package:///##g' "$ROBOT/robot.urdf" > "$ROBOT/robot_local.urdf"
-nvidia-smi > "$OUT/nvidia-smi.txt"
-( time docker pull -q "$IMAGE" ) > "$OUT/pull.txt" 2>&1
-chown -R 1234:1234 "$OUT" /work/isaac_cache /work/isaac_logs   # the container's user
 
-RUN=(docker run --rm --gpus all --network host -e ACCEPT_EULA=Y -e PRIVACY_CONSENT=N
+nvidia-smi > "$OUT/nvidia-smi.txt"
+{
+  echo "== host Vulkan ICDs"; ls -la /usr/share/vulkan/icd.d /etc/vulkan/icd.d 2>&1
+  echo "== host NVIDIA graphics libraries"; ls /usr/lib/x86_64-linux-gnu | grep -iE "GLX_nvidia|EGL_nvidia|vulkan|glvk" 2>&1
+  echo "== docker runtimes"; docker info 2>/dev/null | grep -iE "runtime|nvidia"
+} > "$OUT/host_graphics.txt" 2>&1
+chown -R 1234:1234 "$OUT" /work/isaac_cache /work/isaac_logs  # the container's user
+sync_isaac
+
+RUN=(docker run --rm --gpus all --network host
+     -e ACCEPT_EULA=Y -e PRIVACY_CONSENT=N -e NVIDIA_DRIVER_CAPABILITIES=all
      -v /work/NERVA/experiments/isaac:/nerva_isaac:ro -v "$ROBOT":/robot:ro -v "$OUT":/out
      -v /work/isaac_cache/kit:/isaac-sim/kit/cache -v /work/isaac_cache/ov:/root/.cache/ov
      -v /work/isaac_cache/glcache:/root/.cache/nvidia/GLCache
-     -v /work/isaac_cache/computecache:/root/.nv/ComputeCache -v /work/isaac_logs:/root/.nvidia-omniverse/logs
-     --entrypoint /isaac-sim/python.sh "$IMAGE")
+     -v /work/isaac_cache/computecache:/root/.nv/ComputeCache
+     -v /work/isaac_logs:/root/.nvidia-omniverse/logs
+     --entrypoint /isaac-sim/python.sh)
+STARTUP="from isaacsim import SimulationApp; a = SimulationApp({'headless': True}); print('ISAAC_STARTED', flush=True); a.close()"
 
-echo "== step 0: minimal headless start (20 min limit)" | tee "$OUT/startup.log"
-timeout 20m "${RUN[@]}" -c "from isaacsim import SimulationApp; a = SimulationApp({'headless': True}); print('ISAAC_STARTED', flush=True); a.close()" \
-  >> "$OUT/startup.log" 2>&1
-echo "startup exit=$?" | tee -a "$OUT/startup.log"
-gsutil -q -m rsync -r "$OUT" "gs://$NERVA_BUCKET/runs/$NERVA_RUN_ID/out/isaac" || true
+IMAGE=""
+for candidate in $IMAGES; do
+  tag=$(basename "$candidate" | tr ':' '_')
+  echo "== pull $candidate" >> "$OUT/pull.txt"
+  ( time docker pull -q "$candidate" ) >> "$OUT/pull.txt" 2>&1 || continue
+  log="$OUT/startup_$tag.log"
+  echo "== minimal headless start with $candidate (15 min limit)" > "$log"
+  timeout 15m "${RUN[@]}" "$candidate" -c "$STARTUP" >> "$log" 2>&1
+  echo "startup exit=$?" >> "$log"
+  sync_isaac
+  if grep -q ISAAC_STARTED "$log" && ! grep -q "Failed to create any GPU devices" "$log"; then
+    IMAGE=$candidate
+    break
+  fi
+done
+echo "selected image: ${IMAGE:-none}" | tee "$OUT/selected_image.txt"
 
-if grep -q ISAAC_STARTED "$OUT/startup.log"; then
-  echo "== step 1: spike (35 min limit)" | tee "$OUT/spike.log"
-  timeout 35m "${RUN[@]}" /nerva_isaac/isaac_spike.py --urdf /robot/robot_local.urdf --out /out \
+if [ -n "$IMAGE" ]; then
+  echo "== spike with $IMAGE (35 min limit)" > "$OUT/spike.log"
+  timeout 35m "${RUN[@]}" "$IMAGE" /nerva_isaac/isaac_spike.py --urdf /robot/robot_local.urdf --out /out \
     --frames 120 --replay /nerva_isaac/replays/memory_s1.npz >> "$OUT/spike.log" 2>&1
-  echo "spike exit=$?" | tee -a "$OUT/spike.log"
+  echo "spike exit=$?" >> "$OUT/spike.log"
 fi
 cp -r /work/isaac_logs "$OUT/kit_logs" 2>/dev/null || true
+sync_isaac
 ls -R "$OUT" | head -60

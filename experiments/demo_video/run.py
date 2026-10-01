@@ -6,7 +6,7 @@ research result that decides how affect should drive movement (see
 docs/research_questions.md RQ1c). It exists to show the closed loop running.
 
 Loop (all in one process, simulation only):
-  events (scripted times)  → nerva.appraisal.appraise → CategoricalAffectModel (affect v0.1)
+  events (scripted times)  → nerva.affect.appraisal.appraise → CategoricalAffectModel (affect v0.1)
   affect updated at 10 Hz  → demo_behaviour(PAD, context) → BehaviourCommand + head posture
   OpenDuckSim at 50 Hz policy / 500 Hz physics, unmodified Open Duck policy.
   The "near_fall" event coincides with a real sideways push, so the stumble is physical.
@@ -37,10 +37,10 @@ import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
 from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 
-from nerva.affect import CategoricalAffectModel  # noqa: E402
-from nerva.appraisal import appraise  # noqa: E402
+from nerva.affect.emotions import CategoricalAffectModel  # noqa: E402
+from nerva.affect.appraisal import appraise  # noqa: E402
 from nerva.interfaces import BehaviourCommand, Event, ExpressiveStyle  # noqa: E402
-from nerva.open_duck_sim import OpenDuckSim  # noqa: E402
+from nerva.sim.open_duck import OpenDuckSim  # noqa: E402
 
 OUT = Path(__file__).resolve().parent / "results"
 DURATION = 66.0  # s

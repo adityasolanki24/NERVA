@@ -22,7 +22,7 @@ from pathlib import Path
 # The generator's own uv environment (Python 3.10, numpy) runs this script; the NERVA
 # package is not installed there, so import the pure-numpy validator from the repo.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from nerva.reference_validation import substitute_invalid, validate_reference  # noqa: E402
+from nerva.training.reference_validation import substitute_invalid, validate_reference  # noqa: E402
 
 MAX_REPAIR_ATTEMPTS = 2
 # Upper bound on gaits replaced by a neighbour; more than this means something is broken.

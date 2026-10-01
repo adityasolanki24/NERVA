@@ -44,7 +44,7 @@ from mujoco_playground._src.collision import geoms_colliding
 from playground.common.poly_reference_motion import PolyReferenceMotion
 from playground.open_duck_mini_v2 import joystick as upstream
 
-from nerva.style import s1_foot_height
+from nerva.behaviour.style import s1_foot_height
 
 STYLE_KEY_SALT = 0x5717E  # fold_in constant: style keys never consume upstream randomness
 BACKWARD_KEY_SALT = 0xBAC4  # fold_in constant for the S4 backward-emphasis draw

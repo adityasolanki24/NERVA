@@ -29,7 +29,7 @@ from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import scenario  # noqa: E402
 
-from nerva.world import BALL_RADIUS, PERSON_HEIGHT  # noqa: E402
+from nerva.sim.world import BALL_RADIUS, PERSON_HEIGHT  # noqa: E402
 
 FPS = 25
 EVERY = int(round(1 / (FPS * scenario.CTRL_DT)))

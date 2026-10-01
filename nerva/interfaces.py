@@ -142,7 +142,7 @@ class AffectSystem(Protocol):
     """Contract for any affect model: appraisals in, a persistent PADState out.
 
     How appraisal becomes PAD is deliberately NOT fixed here. Affect model v0
-    (`nerva.affect.CategoricalAffectModel`) goes through discrete emotion labels
+    (`nerva.affect.emotions.CategoricalAffectModel`) goes through discrete emotion labels
     ("Model A"); a future model may map appraisal to PAD directly ("Model B").
     Both must satisfy this protocol so the layers around them do not change.
     """

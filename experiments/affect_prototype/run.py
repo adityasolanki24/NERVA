@@ -19,8 +19,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-from nerva.affect import CategoricalAffectModel  # noqa: E402
-from nerva.appraisal import appraise  # noqa: E402
+from nerva.affect.emotions import CategoricalAffectModel  # noqa: E402
+from nerva.affect.appraisal import appraise  # noqa: E402
 from nerva.interfaces import Event  # noqa: E402
 
 MODEL_VERSION = "v0.1"  # affect model version this demo documents (see docs/affect_model.md)

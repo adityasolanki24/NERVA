@@ -68,7 +68,7 @@ def main() -> None:
                     help="walking head-offset limit for the policy (S3 tolerates more head motion)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
     args = ap.parse_args()
-    from nerva.reactive_behaviour import S1_WALKING_HEAD_LIMIT, S3_WALKING_HEAD_LIMIT
+    from nerva.behaviour.modes import S1_WALKING_HEAD_LIMIT, S3_WALKING_HEAD_LIMIT
     limit = {"s1": S1_WALKING_HEAD_LIMIT, "s3": S3_WALKING_HEAD_LIMIT}[args.head_limit]
     results = [evaluate_seed(args.policy, s, args.selector, limit, args.perception, args.backlash, args.neutral_style)
                for s in range(args.seeds)]

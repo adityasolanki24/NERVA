@@ -61,7 +61,7 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 
 ## 2026-10-01 — Memory M2–M4: episodic store, sleep consolidation, spatial memory
 
-**M2/M3 — episodic memory** (`nerva/episodic.py`, `14b4ef1`):
+**M2/M3 — episodic memory** (`nerva/memory/episodic.py`, `14b4ef1`):
 - **Salience-gated encoding:** relevance × (arousal, |prediction error|, novelty).
 - **ACT-R base-level activation:** power-law decay; retrieval strengthens [tested: slope −0.5 on log–log].
 - **Cue retrieval:** the entity cue is a filter. A vivid memory of B used to answer a cue for A; fixed.
@@ -76,7 +76,7 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 - **Ambiguous identities:** one seed had created a phantom third person from a partial view. A new identity is now created only when cosine < 0.5 to all known people; in between counts as ambiguous, and the track keeps its identity.
 - **Evaluation** (5 seeds, vision) with M1–M4: memory 5/5 on all four criteria; no memory 0/5 on "B not blamed" and "A remembered".
 
-**M4 — spatial memory** (`nerva/spatial.py`):
+**M4 — spatial memory** (`nerva/memory/spatial.py`):
 - 0.75 m place grid: familiarity (fades with time), place threat/valence learned from events there, and an exploration heading toward the nearest novel, safe cell.
 - **Exploration only, 90 s, 3 seeds [measured]:** 9/10/11 cells visited with spatial memory vs 7/9/8 without (about +25%), limited by walking speed.
 
@@ -84,13 +84,13 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 
 ## 2026-10-01 — Real vision and entity memory (M1): person-specific, evolving associations
 
-**Real vision** (`nerva/vision.py`, `a23a078`):
+**Real vision** (`nerva/perception/vision.py`, `a23a078`):
 - Colour segmentation of the robot_eye RGB frame (HSV) → connected components → depth render gives distance → bearing/elevation from the pixel rays. The same tracker as the simulated detector.
 - **On renders [measured]:** distance within 0.04–0.09 m (it measures to the surface rather than the centre); bearing within about 0.02 rad.
 - **Self-body false positive:** the robot's orange feet were detected as a ball when looking down. Small objects closer than 0.2 m are now rejected.
 - **Reactive 5-seed evaluation with vision:** identical verdicts to simulated perception (curiosity 5/5, habituation 5/5, safety 5/5, fear 0/5).
 
-**Memory M1** (`nerva/memory.py`, `MemoryAppraiser`, `IdentityBinder`; design: `docs/memory_design.md`):
+**Memory M1** (`nerva/memory/entity.py`, `MemoryAppraiser`, `IdentityBinder`; design: `docs/memory_design.md`):
 - **Per-identity records:** familiarity, threat/warmth/trust learned by prediction error with arousal-scaled rate, slow drift in absence.
 - **Identity** comes from a clothing-colour histogram, which is None when uninformative.
 - **Measured on renders:** A vs B far away, cosine 0.33; up close (trousers only) 0.99, indistinguishable. So identity stays bound to the track, and events with an unknown identity are held back and learned once resolved (confidence 0.8).
@@ -120,7 +120,7 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 
 ## 2026-10-01 — Behaviour v2 (utility arbitration), S3 (head commands in training), backward-walking diagnosis
 
-**Behaviour v2 (`nerva/action_selection.py`):**
+**Behaviour v2 (`nerva/behaviour/selection.py`):**
 - Emotion-modulated action selection replaces the if/else rules. Each action's utility comes from drives (interest, hope+joy, fear, surprise, distress), per-target novelty from the appraiser, and proximity, plus persistence and committed freeze/back-step.
 - The weights are hand-set design choices. It is not learned.
 - 5-seed reactive evaluation with S1: curiosity 5/5, habituation 5/5, safety 5/5, **fear 0/5**. The robot retreats, but gains no distance within 3 s.
@@ -149,16 +149,16 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 **User decision:** the S1 demo's style differences were too small to see. Make the robot genuinely react to its environment through the emotion model, with complex behaviours (curiosity, fear/stepping back). Stay in MuJoCo for now; Isaac Sim later. Design: `docs/reactive_behaviour_design.md`.
 
 **Built** (commits `d54b7fd` … `33e7475`; 112 tests pass):
-- **Scene** (`nerva/world.py`):
+- **Scene** (`nerva/sim/world.py`):
   - Visual-only mocap person (1.7 m) and ball, added via MjSpec, plus a `robot_eye` camera on the head, 0.09 m in front of the head site (inside the shell the view was blocked).
   - The robot's dynamics are bit-identical to the plain scene. This needed the solver warm start copied over, because `opt.iterations = 1`.
-- **Perception** (`nerva/perception.py`):
+- **Perception** (`nerva/perception/tracker.py`):
   - A simulated head-camera detector: field of view and range, a distance-dependent miss rate, bearing/distance noise.
   - Tracks with memory. Approach speed is a least-squares slope with **ego-motion compensation**; without it, walking toward someone read as them approaching.
   - Separate re-arm flags for slow and rapid approaches (a slow event had masked a lunge).
 - **Contextual appraisal** (`ContextualAppraiser`): novelty habituation, proximity and speed of approaches, threat memory (45 s), relief when a threat leaves, habituation to repeated lunges.
 - **Affect v0.2:** a new emotion, "interest" (novel and non-harmful). The rule and anchor are NERVA choices. Events without novelty elicit exactly what v0.1 did (existing tests unchanged).
-- **Behaviour v1** (`nerva/reactive_behaviour.py`): explore / orient / approach / inspect / freeze / retreat / watch / withdraw, with hysteresis and head gaze.
+- **Behaviour v1** (`nerva/behaviour/modes.py`): explore / orient / approach / inspect / freeze / retreat / watch / withdraw, with hysteresis and head gaze.
 - **Scenario and renderer:** `experiments/reactive/`, rendered in the cloud (`cloud/jobs/reactive_demo.sh`).
 
 **Scenario result, S1 policy, seed 0 (simulation) [measured]:**
@@ -194,7 +194,7 @@ The second criterion doesn't discriminate, because the agents' scripted approach
 **Code (`190df97`):**
 - `nerva.interfaces.StyleVector` (e1, e2, e3). `BehaviourCommand.style_vector` is exclusive with the method-A phase-clock style.
 - `OpenDuckSim.set_behaviour` applies it. When e1 changes the period, the phase *fraction* is kept, a deployment choice so a continuously varying tempo doesn't jump the clock.
-- `nerva/behaviour.py`:
+- `nerva/behaviour/pad_style.py`:
   - HOW: e1 = clip(3·A), e2 = 0, e3 = clip(−1.5·(V + D)).
   - WHAT: walk at 0.13 m/s; stop while the goal is blocked.
   - Directions are informed by emotional-gait studies. The gains are hand-chosen so the demo's PAD range spans S1's trained range. **Not validated.**
@@ -367,7 +367,7 @@ So a policy that tracked the reference joints would read about 42 mm at neutral.
 - **Reward says nothing about whether styles are expressed.** That is the S1 evaluation (design §5), next.
 
 **S1 evaluation tooling:**
-- `OpenDuckSim.set_style_vector(e)` appends e to the observation (noise-free, as in training) and uses `nerva.style.s1_nb_steps_in_period(e1)` for the phase clock. The period is linear in e1, measured on the 3 R1 periods; values between them are interpolated.
+- `OpenDuckSim.set_style_vector(e)` appends e to the observation (noise-free, as in training) and uses `nerva.behaviour.style.s1_nb_steps_in_period(e1)` for the phase clock. The period is linear in e1, measured on the 3 R1 periods; values between them are interpolated.
 - `experiments/style_policy/evaluate.py` applies the §5 sweep and criteria. Cross-talk "normalised units" had not been defined; before any results, I defined them as that feature's across-seed std at neutral S1.
 - The evaluation runs in the cloud (`cloud/jobs/s1_eval.sh`, CPU). One 6 s trial takes about 1.5 s locally.
 
@@ -444,7 +444,7 @@ Continued from the parallel Codex session. Its work (benchmark job, R1 generator
 - **The shipped file has the same defect, less often:** 1 fully mirrored right knee, and 1 gait whose left knee switches branch mid-cycle (−1.49 → +1.76 rad).
 
 **Response:**
-- `nerva/reference_validation.py`: flags backward knees and non-finite values.
+- `nerva/training/reference_validation.py`: flags backward knees and non-finite values.
 - `fit_validated`: regenerates each flagged gait with its exact logged parameters until the set is valid.
 - **Repair of a copy of R0** (raw R0 kept): all 39 fixed in 2 rounds (30 on the first retry, 9 on the second), 593 s, and an independent re-validation passes.
 - The repaired set matches the shipped set to within 0.002 rad on every gait except the shipped file's 2 defective gaits.
@@ -669,8 +669,8 @@ The user asked to start the emotional-state system after researching it properly
 - Paper titles were checked against the PDFs' first pages.
 
 ### Built
-- `nerva/appraisal.py`: a table of EMA-variable appraisals for the 5 synthetic events. The values are NERVA design choices, with the reasoning in the doc.
-- `nerva/affect.py`:
+- `nerva/affect/appraisal.py`: a table of EMA-variable appraisals for the 5 synthetic events. The values are NERVA design choices, with the reasoning in the doc.
+- `nerva/affect/emotions.py`:
   - `categorise()` implements the EMA rules
   - `EMOTION_PAD` holds the ALMA values
   - a controllability → dominance blend (NERVA hypothesis)
@@ -710,14 +710,14 @@ The user asked to start the emotional-state system after researching it properly
 **Decision** (with the user): method A. `style` sets the gait-phase clock rate, `1 + 0.3·style`, with no retraining. B (style as a policy input) and C (style-conditioned reference motions) need GPU retraining and are deferred.
 
 ### Built
-- `nerva/style.py`: the style → phase-factor mapping.
-- `nerva/open_duck_sim.py`: a headless simulator. It reuses upstream `MjInfer` (model, obs, policy, action scaling, speed limit) and replaces only its viewer loop. Options:
+- `nerva/behaviour/style.py`: the style → phase-factor mapping.
+- `nerva/sim/open_duck.py`: a headless simulator. It reuses upstream `MjInfer` (model, obs, policy, action scaling, speed limit) and replaces only its viewer loop. Options:
   - raw accelerometer
   - seeded initial joint noise
   - training-level observation noise
   - pushes
   - `set_behaviour(BehaviourCommand)`, which clips velocities to the trained range
-- `nerva/gait_metrics.py`: pure-NumPy metrics.
+- `nerva/analysis/gait_metrics.py`: pure-NumPy metrics.
 - `experiments/expressive_locomotion/run.py`: the protocol runner, and its `README.md`.
 
 ### Verified

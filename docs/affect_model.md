@@ -6,16 +6,16 @@ This is a simulation-only prototype. It is **not** connected to the robot's move
 
 The canonical NERVA chain is appraisal → persistent affect (PAD) → behaviour (`architecture.md`). Any affect model must satisfy `nerva.interfaces.AffectSystem`: `AppraisalState` in, `PADState` out.
 
-This model, `CategoricalAffectModel` in `nerva/affect.py`, is **Model A**. It passes through discrete emotion labels:
+This model, `CategoricalAffectModel` in `nerva/affect/emotions.py`, is **Model A**. It passes through discrete emotion labels:
 
 ```
 Event ─appraise()─▶ AppraisalState ─categorise()─▶ emotion instances ─▶ PAD anchors ─▶ persistent PAD
-      nerva/appraisal.py            (label, intensity)                  (ALMA)        (ALMA-style dynamics)
+      nerva/affect/appraisal.py            (label, intensity)                  (ALMA)        (ALMA-style dynamics)
 ```
 
-The labels (joy, fear, …) are an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly. Nothing outside `nerva/affect.py` may depend on emotion labels.
+The labels (joy, fear, …) are an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly. Nothing outside `nerva/affect/emotions.py` may depend on emotion labels.
 
-## 1. Appraisal v0: `nerva/appraisal.py` [NERVA design values]
+## 1. Appraisal v0: `nerva/affect/appraisal.py` [NERVA design values]
 
 The *variables* come from EMA (Marsella & Gratch 2009, §2.3.3). The *values* are our judgement for a small walking robot. `Event.magnitude` scales desirability.
 

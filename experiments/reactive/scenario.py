@@ -20,20 +20,20 @@ from dataclasses import dataclass, field
 import mujoco
 import numpy as np
 
-from nerva import gait_metrics as gm
-from nerva.affect import CategoricalAffectModel
-from nerva.appraisal import ContextualAppraiser, MemoryAppraiser
-from nerva.episodic import EpisodicMemory
-from nerva.memory import EntityMemory
-from nerva.spatial import PlaceMemory
+from nerva.analysis import gait_metrics as gm
+from nerva.affect.emotions import CategoricalAffectModel
+from nerva.affect.appraisal import ContextualAppraiser, MemoryAppraiser
+from nerva.memory.episodic import EpisodicMemory
+from nerva.memory.entity import EntityMemory
+from nerva.memory.spatial import PlaceMemory
 from nerva.interfaces import Event
 from nerva.interfaces import StyleVector
-from nerva.open_duck_sim import SCENE, SCENE_BACKLASH, OpenDuckSim
-from nerva.perception import FRAME_HZ, SimulatedPerception
-from nerva.vision import VisionPerception
-from nerva.action_selection import UtilityBehaviour
-from nerva.reactive_behaviour import ReactiveBehaviour
-from nerva.world import ENTITY_KINDS, World, extend_scene
+from nerva.sim.open_duck import SCENE, SCENE_BACKLASH, OpenDuckSim
+from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
+from nerva.perception.vision import VisionPerception
+from nerva.behaviour.selection import UtilityBehaviour
+from nerva.behaviour.modes import ReactiveBehaviour
+from nerva.sim.world import ENTITY_KINDS, World, extend_scene
 
 CTRL_DT = 0.02
 PERCEIVE_EVERY = int(round(1 / (FRAME_HZ * CTRL_DT)))  # control steps per perception frame
@@ -203,7 +203,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
-    from the robot's head camera, nerva.vision)."""
+    from the robot's head camera, nerva.perception.vision)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,

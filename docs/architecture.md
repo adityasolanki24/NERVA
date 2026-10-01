@@ -18,7 +18,7 @@ WORLD → SENSORS
 
 The types passed between layers are defined in `nerva/interfaces.py`: `PerceptionState` → `AppraisalState` → `PADState` → `BehaviourCommand` (functional command + `ExpressiveStyle`). Any affect implementation must satisfy the `AffectSystem` protocol. A layer only consumes the type produced by the layer directly before it. For example, the locomotion policy never sees events or PAD, only a command and an expressive condition, and **PAD never maps directly to joint angles**.
 
-**Affect model v0.x is one implementation, not an architectural layer.** The current prototype (`nerva/affect.py`, `CategoricalAffectModel`, "Model A") goes appraisal → discrete emotion labels (fear, joy, …) → PAD anchors → persistent PAD. The discrete-label step belongs to that model only. A future "Model B" (appraisal → PAD directly), or any other model, can replace it behind the same `AffectSystem` interface. Nothing outside `nerva/affect.py` may depend on emotion labels.
+**Affect model v0.x is one implementation, not an architectural layer.** The current prototype (`nerva/affect/emotions.py`, `CategoricalAffectModel`, "Model A") goes appraisal → discrete emotion labels (fear, joy, …) → PAD anchors → persistent PAD. The discrete-label step belongs to that model only. A future "Model B" (appraisal → PAD directly), or any other model, can replace it behind the same `AffectSystem` interface. Nothing outside `nerva/affect/emotions.py` may depend on emotion labels.
 
 **Appraisal v0 is a lookup table, not the target design.** Long term, appraisal = f(perception, goals, self/physical state, expectations, history, available actions). The same event, e.g. "person approaching rapidly", must be able to mean different things in different contexts. The v0 table sits behind `appraise(Event) → AppraisalState` so it can be replaced without touching affect or behaviour.
 
@@ -32,12 +32,12 @@ Long-term stages and comparisons: `roadmap.md`.
 |---|---|---|
 | Robot, simulation, low-level control | **Open Duck Mini v2, upstream, unmodified** | external checkout under `OPEN_DUCK_ROOT` (see `open_duck_baseline.md`) |
 | Locomotion policy | **Open Duck `BEST_WALK_ONNX_2.onnx`**, 50 Hz, velocity-commanded | upstream |
-| Behaviour → locomotion adapter | **`OpenDuckSim.set_behaviour`**: clips velocities to the trained range, style → phase-clock rate | `nerva/open_duck_sim.py`, `nerva/style.py` |
-| ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/style.py` |
-| Gait measurement | pure-NumPy metrics, unit-tested | `nerva/gait_metrics.py` |
+| Behaviour → locomotion adapter | **`OpenDuckSim.set_behaviour`**: clips velocities to the trained range, style → phase-clock rate | `nerva/sim/open_duck.py`, `nerva/behaviour/style.py` |
+| ExpressiveStyle | **used**: one scalar → gait-clock rate (method A) | `nerva/behaviour/style.py` |
+| Gait measurement | pure-NumPy metrics, unit-tested | `nerva/analysis/gait_metrics.py` |
 | Behaviour selection | interface only (`BehaviourCommand`) | `nerva/interfaces.py` |
-| Affect (PAD dynamics) | **v0.1 prototype (Model A), simulation only**: simplified EMA-inspired emotion rules → ALMA PAD anchors → per-dimension decaying pull and return to baseline; not connected to movement | `nerva/affect.py`, `docs/affect_model.md` |
-| Appraisal | **v0 prototype**: fixed EMA-variable appraisals for 5 synthetic events | `nerva/appraisal.py` |
+| Affect (PAD dynamics) | **v0.1 prototype (Model A), simulation only**: simplified EMA-inspired emotion rules → ALMA PAD anchors → per-dimension decaying pull and return to baseline; not connected to movement | `nerva/affect/emotions.py`, `docs/affect_model.md` |
+| Appraisal | **v0 prototype**: fixed EMA-variable appraisals for 5 synthetic events | `nerva/affect/appraisal.py` |
 | Perception | interface only (`PerceptionState`, `Event`) | `nerva/interfaces.py` |
 
 No LLM or foundation model is part of the plan, and none will ever be in the motor-control or safety path.
@@ -46,7 +46,7 @@ No LLM or foundation model is part of the plan, and none will ever be in the mot
 
 - **Open Duck owns** the robot model, the physics, the actuator model, the trained walking policy and its observation/action conventions.
 - **NERVA owns** everything above the locomotion command: style, behaviour, affect, appraisal, perception, and the experiments and evaluation.
-- Only two places import Open Duck: `nerva/open_duck_sim.py` (MuJoCo simulation, only when a simulator object is created) and `nerva/training/` (the JAX/MJX training env, imported only by training scripts). `nerva/training/style_joystick.py` subclasses upstream's training env; its re-implemented `reset`/`step` are tested to reproduce upstream exactly with one neutral style. Everything else in `nerva` (interfaces, style mapping, metrics, appraisal, affect) needs only NumPy. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
+- Only two places import Open Duck: `nerva/sim/open_duck.py` (MuJoCo simulation, only when a simulator object is created) and `nerva/training/` (the JAX/MJX training env, imported only by training scripts). `nerva/training/style_joystick.py` subclasses upstream's training env; its re-implemented `reset`/`step` are tested to reproduce upstream exactly with one neutral style. Everything else in `nerva` (interfaces, style mapping, metrics, appraisal, affect) needs only NumPy. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py` exactly.
 - Upstream code is never edited. Where we need different behaviour (for example the accelerometer offset in `open_duck_baseline.md` §10), we override it from NERVA code and document why.
 
 ## Safety rule (non-negotiable)

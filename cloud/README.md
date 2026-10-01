@@ -54,17 +54,17 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 
 ## Jobs
 
-| job | what | hardware | typical cap |
+| job | what | hardware | used cap |
 |---|---|---|---|
-| `smoke` | upstream environment/PPO path, one 200k-step batch with initial/final export: checks GPU, JAX, training, ONNX, sync and self-delete; not a scientific result | L4 | 1 h |
-| `throughput_benchmark` | upstream PPO path, 1 M requested steps and two evaluations; emits batch-rounded steps/s for hardware selection; not a scientific result | L4 or A100 | 45 min |
-| `b0_baseline` | upstream baseline, unchanged, 300 M steps on `flat_terrain_backlash` (README's "current win") | L4 | to be set from smoke timing |
-| `r0_references` | regenerate the neutral reference set with the upstream generator; skips the unused GPU training environment and records generation/fit timing | CPU | 60 min initially |
-| `r1_references` | seven-style pilot: neutral plus ±1 on tempo, step height and torso pitch; restores the upstream preset and emits a trainer-ready manifest | CPU | set from R0 timing |
-| `b1_neutral` | NERVA environment fixed at neutral, matched to B0 | selected by benchmark | set after B0 |
-| `s1_smoke` | tiny seven-style compile/train test using `--input-run` or `--input-dir`; not a scientific result | selected by benchmark | 45 min |
-| `s1_pilot` | full seven-style policy training using `--input-run` or `--input-dir` | selected by benchmark | set only after B0/B1 |
-| `session1` | R0 in the background plus B0 | L4 | to be set |
+| `smoke` | upstream PPO path, one short batch: checks GPU, JAX, training, ONNX, sync, self-delete (not a result) | L4 | 1 h |
+| `throughput_benchmark` | steady-state steps/s for hardware selection (not a result) | L4 | 45 min |
+| `r0_references` / `r1_references` | regenerate neutral / seven-style reference gaits with validation and repair | CPU | 1–3 h |
+| `b0_baseline` | upstream baseline, unchanged, 300 M steps (backlash scene) | L4 | 3 h |
+| `b1_neutral` / `b2_neutral` | NERVA env at neutral; B2 adds the feet-height cost (the policy that walks backward) | L4 | 3 h |
+| `s1_smoke` | tiny seven-style compile/train check (not a result) | L4 | 1 h |
+| `s1_pilot` … `s5_pilot` | seven-style policies: S1 base, S2 feet-height −30, S3 head commands applied, S4 S3 + backward emphasis, S5 feet-height −10 | L4 | 3 h |
+| `s1_eval` / `s2_eval` / `s3_eval` | style evaluation of a trained policy (MuJoCo rollouts) | CPU | 1 h |
+| `demo_s1` / `reactive_demo` | render demo videos offscreen | CPU | 1–1.5 h |
 
 ## Environment
 

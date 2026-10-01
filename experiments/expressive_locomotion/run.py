@@ -30,10 +30,10 @@ from pathlib import Path
 
 import numpy as np
 
-from nerva import gait_metrics as gm
+from nerva.analysis import gait_metrics as gm
 from nerva.interfaces import BehaviourCommand, ExpressiveStyle
-from nerva.open_duck_sim import OPEN_DUCK_ROOT, POLICY, OpenDuckSim, to_arrays
-from nerva.style import PHASE_GAIN, style_to_phase_factor
+from nerva.sim.open_duck import OPEN_DUCK_ROOT, POLICY, OpenDuckSim, to_arrays
+from nerva.behaviour.style import PHASE_GAIN, style_to_phase_factor
 
 STYLES = (-1.0, 0.0, 1.0)
 COMMAND_VX = 0.15

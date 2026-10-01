@@ -3,7 +3,7 @@
 THIS IS A DEMONSTRATION, NOT AN EXPERIMENT. Same scripted scenario, affect model and
 renderer as run.py (method A); the difference is HOW affect reaches movement:
   run.py     PAD → gait-clock rate + head offset, unmodified upstream policy
-  run_s1.py  PAD → style vector e (nerva.behaviour.s1_behaviour) → the S1 policy observes e
+  run_s1.py  PAD → style vector e (nerva.behaviour.pad_style.s1_behaviour) → the S1 policy observes e
              and was trained to imitate that style's reference motion (tempo, torso pitch).
 The PAD → e mapping is a hand-designed, unvalidated NERVA design choice. S1 never saw
 combined or intermediate styles in training; the video shows what it does with them.
@@ -25,11 +25,11 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import run as demo  # noqa: E402  (same directory: scenario, chart and renderer)
 
-from nerva.affect import CategoricalAffectModel  # noqa: E402
-from nerva.appraisal import appraise  # noqa: E402
-from nerva.behaviour import s1_behaviour  # noqa: E402
+from nerva.affect.emotions import CategoricalAffectModel  # noqa: E402
+from nerva.affect.appraisal import appraise  # noqa: E402
+from nerva.behaviour.pad_style import s1_behaviour  # noqa: E402
 from nerva.interfaces import Event, PADState  # noqa: E402
-from nerva.open_duck_sim import OpenDuckSim  # noqa: E402
+from nerva.sim.open_duck import OpenDuckSim  # noqa: E402
 
 TITLE = "NERVA affect demo (S1) — PAD → style vector e → style-conditioned policy; mapping hand-designed, not validated"
 STYLE_LINES = (("e_tempo", "e1 tempo", "#9c6644"), ("e_torso_pitch", "e3 torso pitch (+ = lean fwd)", "#5e60ce"))

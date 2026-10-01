@@ -2,15 +2,15 @@
 
 **Question.** Can one variable `style ∈ [-1, 1]` make the *same* walking controller move measurably differently while staying stable?
 
-**Method A.** `style` sets the rate of the policy's gait-phase clock: `phase_factor = 1 + 0.3·style` (`nerva/style.py`). So Style −1 is 0.7×, Neutral 1.0× and Style +1 1.3×. The policy is the unmodified upstream `BEST_WALK_ONNX_2.onnx`; nothing is retrained.
+**Method A.** `style` sets the rate of the policy's gait-phase clock: `phase_factor = 1 + 0.3·style` (`nerva/behaviour/style.py`). So Style −1 is 0.7×, Neutral 1.0× and Style +1 1.3×. The policy is the unmodified upstream `BEST_WALK_ONNX_2.onnx`; nothing is retrained.
 
 ## Protocol (`run.py`)
 
 - **Task, identical for all conditions:** walk forward, commanded 0.15 m/s, flat ground, 20 s.
-- **Simulation:** `nerva/open_duck_sim.py`. The control loop is tested to reproduce upstream `mujoco_infer.py` bit for bit (`tests/test_open_duck_sim.py`). Two deliberate differences:
+- **Simulation:** `nerva/sim/open_duck.py`. The control loop is tested to reproduce upstream `mujoco_infer.py` bit for bit (`tests/test_open_duck_sim.py`). Two deliberate differences:
   - **Raw accelerometer.** The +1.3 offset that only upstream sim inference adds is removed, which matches training and hardware.
   - **Training-level observation noise.** The noise from `joystick.py` `noise_config`, resampled every step and seeded. This is the source of trial-to-trial variation: without it, every run converges to the same limit cycle within seconds.
-- **Gait trials:** 10 seeds per style, with the same seeds across styles (paired). Initial joint noise is ±0.02 rad. Metrics are computed over t = 5–20 s (`nerva/gait_metrics.py`).
+- **Gait trials:** 10 seeds per style, with the same seeds across styles (paired). Initial joint noise is ±0.02 rad. Metrics are computed over t = 5–20 s (`nerva/analysis/gait_metrics.py`).
 - **Push trials:** per style, one base-velocity kick at t = 8 s, at 3 magnitudes × 8 directions, 15 s total. Fall = tilt > 45°.
 
 **Reproduce:**

@@ -44,9 +44,9 @@ RESOLUTION = {"gait_hz": 1.0 / ((SECONDS - WINDOW_START_S) * 8), "lift_mm": 0.1,
 
 
 def trial(job: tuple[str, str, tuple[float, float, float] | None, int]) -> dict:
-    from nerva import gait_metrics as gm
+    from nerva.analysis import gait_metrics as gm
     from nerva.interfaces import BehaviourCommand
-    from nerva.open_duck_sim import OpenDuckSim, to_arrays
+    from nerva.sim.open_duck import OpenDuckSim, to_arrays
 
     policy_name, policy_path, style, seed = job
     sim = OpenDuckSim(raw_accel=True, init_joint_noise=INIT_NOISE, obs_noise=True, seed=seed,
@@ -102,7 +102,7 @@ def analyse(rows: list[dict], seeds: list[int]) -> dict:
             "crosstalk_ok": crosstalk_ok,
             "pass_monotonic": monotonic == len(seeds),
         }
-    from nerva.style import S1_NEUTRAL_PERIOD_S, S1_TEMPO_GAIN, s1_foot_height
+    from nerva.behaviour.style import S1_NEUTRAL_PERIOD_S, S1_TEMPO_GAIN, s1_foot_height
     report["dimensions"]["e1"]["reference_target"] = {
         str(lv): 1.0 / (S1_NEUTRAL_PERIOD_S * (1 - S1_TEMPO_GAIN * lv)) for lv in LEVELS}
     report["dimensions"]["e2"]["reference_target"] = {str(lv): 1000 * s1_foot_height(lv) for lv in LEVELS}

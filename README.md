@@ -21,7 +21,7 @@ PAD never drives joints directly, and no LLM is in the control or safety loop. D
 | Style-conditioned policy (PPO + imitation, cloud GPUs) | S1 expresses tempo and torso pitch, not step height; S2/S3 variants evaluated (`docs/style_policy_design.md`) |
 | Affect | Affect model v0.2: EMA-inspired appraisal → emotions (incl. interest) → persistent PAD (`docs/affect_model.md`) |
 | Reactive behaviour | Scene with a person and a ball, simulated head-camera perception, contextual appraisal, emotion-modulated action selection (`docs/reactive_behaviour_design.md`, `experiments/reactive/`) |
-| Perception | Colour + depth vision from the robot's head camera (`nerva/vision.py`) |
+| Perception | Colour + depth vision from the robot's head camera (`nerva/perception/vision.py`) |
 | Memory | Entity memory M1: person-specific familiarity, threat, warmth, trust; identity kept by track continuity; ablation shows it is causal (`docs/memory_design.md`) |
 | Human evaluation | Not started; no behaviour is claimed to *look* emotional |
 
@@ -52,26 +52,44 @@ On Windows, enable long-path support first; a transitive dependency has paths lo
 
 ## Layout
 
+The package follows the architecture: one folder per layer, data passed between layers only through
+the types in `nerva/interfaces.py`.
+
 ```
-nerva/                  the NERVA package
-  interfaces.py           data types passed between layers
-  open_duck_sim.py        headless Open Duck sim (only module importing Open Duck); style vector, head offsets, scene extension
-  world.py                scene extension: person, ball, robot-eye camera
-  perception.py           simulated head-camera detector and tracker
-  appraisal.py            appraisal v0 (table) and v1 (contextual)
-  affect.py               affect model v0.2 (Model A)
-  behaviour.py            PAD → style vector
-  reactive_behaviour.py   behaviour modes and their controllers (v1 rules)
-  action_selection.py     emotion-modulated action selection (v2)
-  gait_metrics.py         gait measurements
-  reference_validation.py checks for generated reference gaits
-  training/               style-conditioned training env (JAX/MJX) and training script
-cloud/                  Google Cloud runner: capped, self-deleting VMs; job scripts; training lockfile
-experiments/            expressive_locomotion, style_policy, reactive, affect_prototype, demo_video
-docs/                   architecture, designs, research questions, roadmap, development log
-tests/                  pytest suite
-scripts/                tooling around the baseline
+nerva/                      the NERVA package
+  interfaces.py               data types passed between layers (start here)
+  sim/                        simulation (the only code that imports Open Duck)
+    open_duck.py                headless Open Duck robot: policy loop, style vector, head offsets, scene extension
+    world.py                    scene extension: people, ball, robot-eye camera
+  perception/                 what is out there
+    tracker.py                  multi-object tracker; simulated (ground-truth) detector
+    vision.py                   detection from the robot's camera images (colour + depth)
+  affect/                     what it means and how it feels
+    appraisal.py                appraisal: v0 table, v1 contextual, v2 memory-based
+    emotions.py                 affect model (emotions → persistent PAD)
+  memory/                     what the robot remembers
+    entity.py                   people/objects: identity, familiarity, threat, warmth, trust
+    episodic.py                 significant events, forgetting, sleep consolidation
+    spatial.py                  places: familiarity and affect; exploration heading
+  behaviour/                  what to do and how
+    selection.py                emotion-modulated action selection (current)
+    modes.py                    behaviour modes and their controllers (rule-based v1)
+    pad_style.py                PAD → expressive style vector
+    style.py                    style definitions (gait clock, S1 style vector)
+  analysis/gait_metrics.py    gait measurements on simulation logs
+  training/                   learning the locomotion policy (JAX/MJX; cloud only)
+    style_joystick.py           style-conditioned training environment
+    train_style.py              training script
+    reference_validation.py     checks for generated reference gaits
+experiments/                runnable studies, one folder each, with results and a README (see experiments/README.md)
+cloud/                      Google Cloud runner: capped, self-deleting VMs and the job scripts (see cloud/README.md)
+scripts/                    small tools around the Open Duck baseline (see scripts/README.md)
+tests/                      pytest suite, same folders as nerva/
+docs/                       architecture, design documents, research questions, roadmap, development log
 ```
+
+**Where to start reading:** `docs/architecture.md` → `nerva/interfaces.py` →
+`experiments/reactive/scenario.py` (the whole loop in one function) → the layer you care about.
 
 ## Tests
 

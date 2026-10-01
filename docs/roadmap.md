@@ -7,7 +7,7 @@ This is the long-term research trajectory. It is **not** a task list. Items are 
 | 1 | Expressive locomotion parameter study (gait-clock style) | done: `experiments/expressive_locomotion/` |
 | 2 | Speed-matched evaluation of that style | done (RQ1b): differences persist at 0.045 m/s; coupled single axis |
 | 3 | Expressive style representation: scalar vs small style vector, justified by measurement and expressive-motion research | done: style vector e = (tempo, step height, torso pitch) |
-| 4 | PAD → expressive style | hand-designed v0 (`nerva/behaviour.py`); not validated |
+| 4 | PAD → expressive style | hand-designed v0 (`nerva/behaviour/pad_style.py`); not validated |
 | 5 | Context-aware appraisal: appraisal = f(perception, goals, self-state, expectations, history, available actions) | v1: proximity, approach speed, novelty/habituation, threat memory (`ContextualAppraiser`) |
 | 6 | Physical experience (near-falls, slips, saturation) feeding appraisal and PAD | near-fall from tilt feeds appraisal in the reactive loop |
 | 7 | Multiple locomotion skills | not started |
@@ -16,7 +16,7 @@ This is the long-term research trajectory. It is **not** a task list. Items are 
 | 10 | Expressive reference motion (animation, mocap, acted, designed) | not started |
 | 11 | Imitation learning: "move like this" + RL "while staying stable" | via Placo references per style (R1) in S1 |
 | 12 | Social perception (presence, distance, approach velocity, orientation, interaction state) | simulated detector (ground-truth positions); real vision next |
-| 13 | Human proximity and interaction behaviour | approach, inspect, watch, freeze, retreat (`nerva/action_selection.py`); retreat limited by weak backward walking |
+| 13 | Human proximity and interaction behaviour | approach, inspect, watch, freeze, retreat (`nerva/behaviour/selection.py`); retreat limited by weak backward walking |
 | 14 | Appraisal based on context and goals (extends 5) | not started |
 | 15 | Human evaluation of perceived expression | not started; the only route to emotional labels |
 | 16 | Sim-to-real | not started |

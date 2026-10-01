@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from nerva.interfaces import BehaviourCommand
-from nerva.open_duck_sim import OpenDuckSim
+from nerva.sim.open_duck import OpenDuckSim
 
 
 def render(policy: Path, output: Path, seconds: float, vx: float) -> dict[str, float | bool | str]:

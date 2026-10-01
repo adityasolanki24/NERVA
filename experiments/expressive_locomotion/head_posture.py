@@ -2,7 +2,7 @@
 
 Head posture h ∈ [-1, 1] (+1 = head up) is applied as a head_pitch offset on top of
 the walking policy, the way the Open Duck hardware runtime applies gamepad head
-commands (nerva/open_duck_sim.py:set_head_offset). No retraining.
+commands (nerva/sim/open_duck.py:set_head_offset). No retraining.
 
     head_pitch offset = -0.5·h  (h ≥ 0, head up)     = -0.3·h  (h < 0, head down)
     (negative head_pitch raises the head; verified by rendering. Range stays inside
@@ -37,8 +37,8 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import run as base  # noqa: E402
 
-from nerva import gait_metrics as gm  # noqa: E402
-from nerva.open_duck_sim import to_arrays  # noqa: E402
+from nerva.analysis import gait_metrics as gm  # noqa: E402
+from nerva.sim.open_duck import to_arrays  # noqa: E402
 
 HEADS = (-1.0, -0.5, 0.0, 0.5, 1.0)
 STYLES = base.STYLES

@@ -18,7 +18,8 @@ import json
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--mjcf", required=True)
+parser.add_argument("--mjcf", default="", help="unused fallback: Isaac's MJCF importer creates no bodies for Open Duck")
+parser.add_argument("--robot-mesh", required=True, help="export_robot_mesh.py output (visual geometry per body)")
 parser.add_argument("--replay", required=True)
 parser.add_argument("--out", required=True)
 parser.add_argument("--start", type=int, default=0, help="first replay frame")
@@ -37,7 +38,7 @@ import numpy as np  # noqa: E402
 import omni.kit.commands  # noqa: E402
 import omni.replicator.core as rep  # noqa: E402
 import omni.usd  # noqa: E402
-from pxr import Gf, Usd, UsdGeom, UsdLux  # noqa: E402
+from pxr import Gf, UsdGeom, UsdLux  # noqa: E402
 
 CHARACTERS = {"person": "/Isaac/People/Characters/F_Business_02/F_Business_02.usd",
               "person_b": "/Isaac/People/Characters/male_adult_construction_05_new/male_adult_construction_05_new.usd"}
@@ -74,28 +75,30 @@ sun.CreateIntensityAttr(900.0)
 sun.CreateAngleAttr(1.0)
 UsdGeom.Xformable(sun).AddRotateXYZOp(UsdGeom.XformOp.PrecisionDouble).Set(Gf.Vec3d(-50.0, 0.0, 35.0))
 
-status, cfg = omni.kit.commands.execute("MJCFCreateImportConfig")
-cfg.fix_base = False
-cfg.make_default_prim = False
-omni.kit.commands.execute("MJCFCreateAsset", mjcf_path=args.mjcf, import_config=cfg, prim_path="/World/duck")
-
+# Robot: one top-level Xform per MuJoCo body, holding that body's visual meshes at their local poses.
 replay = np.load(args.replay)
 names = [str(n) for n in replay["body_names"]]
-# Find each MuJoCo body's prim anywhere in the stage (the importer's layout is not documented); prefer
-# rigid bodies, accept exact names or names ending in "/<body>" after sanitising.
-from pxr import UsdPhysics  # noqa: E402
+geo = np.load(args.robot_mesh)
+from pxr import Vt  # noqa: E402
 
-all_prims = list(Usd.PrimRange(stage.GetPseudoRoot()))
-log["prim_tree"] = [f"{p.GetPath()} [{p.GetTypeName()}]" for p in all_prims if not str(p.GetPath()).startswith(("/World/Ground", "/Render", "/OmniverseKit"))][:400]
 prims = {}
-for name in names:
-    candidates = [p for p in all_prims if p.GetName() == name and p.IsA(UsdGeom.Xformable)]
-    rigid = [p for p in candidates if p.HasAPI(UsdPhysics.RigidBodyAPI)]
-    if rigid or candidates:
-        prims[name] = (rigid or candidates)[0]
-log["bodies_found"] = {n: str(p.GetPath()) for n, p in sorted(prims.items())}
+UsdGeom.Xform.Define(stage, "/World/duck")
+for i, body in enumerate(str(b) for b in geo["body"]):
+    if body not in prims:
+        prims[body] = UsdGeom.Xform.Define(stage, f"/World/duck/{body}").GetPrim()
+    mesh = UsdGeom.Mesh.Define(stage, f"/World/duck/{body}/geom_{i}")
+    v0, nv = int(geo["vert_start"][i]), int(geo["vert_count"][i])
+    f0, nf = int(geo["face_start"][i]), int(geo["face_count"][i])
+    mesh.CreatePointsAttr(Vt.Vec3fArray.FromNumpy(geo["verts"][v0:v0 + nv]))
+    mesh.CreateFaceVertexCountsAttr(Vt.IntArray([3] * nf))
+    mesh.CreateFaceVertexIndicesAttr(Vt.IntArray.FromNumpy(geo["faces"][f0:f0 + nf].reshape(-1)))
+    mesh.CreateSubdivisionSchemeAttr(UsdGeom.Tokens.none)
+    rgba = geo["rgba"][i]
+    mesh.CreateDisplayColorAttr(Vt.Vec3fArray([Gf.Vec3f(*(float(c) for c in rgba[:3]))]))
+    set_local(mesh.GetPrim(), matrix(geo["pos"][i], geo["quat"][i]))
+log["bodies_found"] = sorted(prims)
 log["bodies_missing"] = sorted(set(names) - set(prims))
-ordered = sorted(prims.values(), key=lambda p: len(str(p.GetPath()).split("/")))  # parents first
+log["bodies_without_geometry"] = sorted(set(names) - set(prims))
 
 try:
     from isaacsim.storage.native import get_assets_root_path
@@ -123,16 +126,9 @@ look = None
 n_total = len(replay["t"])
 for i in range(args.frames):
     k = min(args.start + i * args.stride, n_total - 1)
-    world = {}
-    xcache = UsdGeom.XformCache()
-    for prim in ordered:
-        name = prim.GetName()
+    for name, prim in prims.items():  # flat hierarchy: the body Xform's local pose is its world pose
         j = names.index(name)
-        target = matrix(replay["body_pos"][k, j], replay["body_quat"][k, j])
-        parent = prim.GetParent()
-        parent_world = world.get(str(parent.GetPath())) or xcache.GetLocalToWorldTransform(parent)
-        set_local(prim, target * parent_world.GetInverse())
-        world[str(prim.GetPath())] = target
+        set_local(prim, matrix(replay["body_pos"][k, j], replay["body_quat"][k, j]))
     for key, prim in people.items():
         pos, quat = replay[f"{key}_pos"][k], replay[f"{key}_quat"][k]
         set_local(prim, matrix((pos[0], pos[1], 0.0), quat))

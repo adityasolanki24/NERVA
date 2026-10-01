@@ -96,7 +96,7 @@ echo "selected image: ${IMAGE:-none}" | tee "$OUT/selected_image.txt"
 if [ -n "$IMAGE" ]; then
   phase "rendering replay"
   echo "== replay render with $IMAGE (45 min limit)" > "$OUT/render.log"
-  timeout 45m "${RUN[@]}" "$IMAGE" /nerva_isaac/render_replay.py --mjcf /mjcf/open_duck_mini_v2.xml     --replay /nerva_isaac/replays/memory_s1.npz --out /out --frames ${ISAAC_FRAMES:-750} --stride 2 --start ${ISAAC_START:-0} >> "$OUT/render.log" 2>&1
+  timeout 45m "${RUN[@]}" "$IMAGE" /nerva_isaac/render_replay.py --robot-mesh /nerva_isaac/assets/open_duck_visual.npz     --replay /nerva_isaac/replays/memory_s1.npz --out /out --frames ${ISAAC_FRAMES:-3375} --stride 1 --start ${ISAAC_START:-0} >> "$OUT/render.log" 2>&1
   echo "render exit=$?" >> "$OUT/render.log"
 fi
 cp -r /work/isaac_logs "$OUT/kit_logs" 2>/dev/null || true

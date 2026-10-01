@@ -4,6 +4,95 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Stages E, F, G (implementation), safety module, trace comparison; scenario evaluations preregistered
+
+**Stage E: self state, goals, appraisal frames.**
+- `nerva/world/self_state.py`:
+  - tilt and angular speed (IMU-type quantities) and speed (estimator-type);
+  - foot contact and escape room left `None` (not measured / not computed, rather than invented);
+  - `stability_risk`, a derived heuristic, ramps from 10° to 30° tilt or 2 to 6 rad/s.
+- `nerva/behaviour/goals.py`: standing goals (remain upright 1.0, keep distance 0.5, explore 0.4) plus
+  goals from the current behaviour (approach/inspect 0.7; retreat and keep distance 0.9 toward a feared
+  target).
+- `nerva/affect/frames.py`, `FrameAppraiser`:
+  - wraps the v1/v2 appraiser; every event kind maps to an explicit hypothesis (`near_collision`,
+    `adverse_interaction`, `benign_interaction`, `threat_recedes`, `novel_stimulus`, `stability_loss`, …);
+  - an unmapped kind raises an error;
+  - likelihood is the hypothesis's probability;
+  - relevance × 0.3 if none of the hypothesis's goals is active;
+  - for physically adverse hypotheses, stability risk lowers controllability and raises relevance;
+  - nominal context reproduces the wrapped numbers (tested).
+- **Scenario check [measured]:** `appraisal_mode="frames"`.
+  - S1 (simulated detector) trace identical to legacy.
+  - B2 vision trace first differs at 61.7 s: a person appraisal made while tilted > 10° (B2's gait tilts
+    up to ~16°). Relevance 0.538 → 0.542, controllability 0.50 → 0.496; the trajectory diverges after.
+
+**Stage F: world model.**
+- `SensorEvidence`, `WorldEntity`, `WorldRelation`, `WorldModelState` in `interfaces.py`.
+- `nerva/world/model.py`: nodes for self, people/objects and places; seven relations, each with
+  confidence, timestamp and source; linear confidence decay over per-relation TTLs.
+- Track node "track:<tid>" is renamed to the entity ID once identity is known (track ≠ entity, tested).
+- Built every perception frame in the scenario (`sim.world`); no behaviour reads it yet.
+- Modular sensor evidence in `EntityMemory.resolve`: **not done yet**.
+
+**Stage G: Model B** (`nerva/affect/model_b.py`, `DimensionalAffectModel`):
+- Appraisal features (pos, neg, unexpected, novelty, control) feed decaying drive traces; PAD follows
+  dx/dt = −Λ(x − x0) + W z, clipped to [−1, 1].
+- Tendencies are continuous functions of the traces, with no category thresholds. withdraw = neg · (1 −
+  control), so harm the robot can't control leads to disengagement. No emotion labels anywhere (tested).
+- W was set in **one calibration pass** on two reference appraisals (a strong rapid approach and a gentle
+  touch), so PAD peaks are of Model A's order. On these: A V −0.44 / A +0.31 / D −0.32, B −0.45 / +0.36 /
+  −0.30; touch A +0.23 / +0.09 / +0.20, B +0.22 / +0.08 / +0.16. Nothing was tuned on the comparison
+  scenarios.
+- **Fixed-trace comparison** (`experiments/affect_models/compare_traces.py`, the affect-prototype
+  timeline). The criteria were written in the script before its first run; this log entry was written
+  after it.
+
+  | criterion | A | B |
+  |---|---|---|
+  | bounded | yes | yes |
+  | recovers within 60 s | 18.1 s | 14.3 s |
+
+  - **Valence sign agreement: 5/7, criterion not met.** The slow approach is −0.004 (counts as no
+    change) in A vs +0.021 in B. The obstacle is +0.003 in A vs −0.181 in B: A's distress pull was
+    cancelled by its ongoing recovery from the near-fall 13 s earlier.
+  - Pearson correlation V 0.975, A 0.796, D 0.970.
+  - B's peaks are larger on this back-to-back sequence (V 0.57 vs 0.39), because its linear drive sums
+    the lunge and the near-fall.
+
+**Safety module** (`nerva/safety.py`):
+- Deterministic stop (zero velocity, neutral head) at tilt ≥ 25° or stability risk ≥ 0.75, held until
+  tilt ≤ 12° for 0.5 s.
+- Its signature takes only the command and the self state: no affect, tendency or memory input (tested,
+  including a large approach tendency that cannot suppress a stop).
+- Always on between behaviour and policy; it has not triggered in any recorded run (max tilt 16°).
+- What is enforced where is listed in the module (hardware e-stop and motor limits: not yet).
+
+**Regression with defaults [measured]:** all three stage A traces are byte-identical with safety and the
+world model on. 199 tests pass, 2 skipped; Ruff clean.
+
+**Preregistered scenario evaluations** (B2, neutral style, backlash scene, vision, 5 seeds, criteria
+unchanged). For Model B, the habituation criterion uses the exploration tendency in place of the
+`interest` label; the two are identical under Model A.
+
+| # | evaluation | settings | reading |
+|---|---|---|---|
+| E1 | default scenario | frames + Model A | regression: expected to keep 5/5 on curiosity, fear, habituation, safety |
+| G1 | default scenario | frames + **Model B** | RQ8: if all four pass, discrete categories are not necessary *for these behaviours*; if any fails where E1 passes, they matter here |
+| G2 | two-person memory | grounded memory + frames + Model A | comparator for G3 |
+| G3 | two-person memory | grounded memory + frames + **Model B** | same reading as G1 on the four memory criteria |
+
+**Stage H preregistration** (`experiments/event_learning/run.py`, protocol in its docstring, fixed
+before running):
+- **Data:** default, memory and together scenarios × seeds 0–5; B2, simulated detector.
+- **Method:** prediction-error boundaries → ≤ 12 online prototypes.
+- **Metric:** run-level prequential Brier score for "adverse outcome within 3 s" and "benign contact
+  within 3 s". Context = most recent prototype (learned) vs most recent appraised event label
+  (hand-coded) within 2 s, plus the base rate.
+- **RQ9 reading:** supported if learned ≤ hand-coded on both targets; falsified if worse on either.
+
+---
+
 ## 2026-10-02 — Refactor stage D results: grounded memory passes the two-person criteria, fails "engages B" in the together scenario
 
 Preregistered in the previous entry. Code at `453a9b9`; vision; criteria unchanged. Results folders

@@ -16,6 +16,14 @@ memory_learning (refactor stage D): "legacy" (default, the recorded baseline) le
 associations from the elicited emotions; "grounded" learns them only from measured outcomes
 (nerva/world/outcomes.py: near_collision, stability_loss, benign_contact), attributed through the same
 identity binding. Outcomes are detected in both modes and returned on `sim.outcomes` for analysis.
+
+Refactor stages E-G (defaults reproduce the recorded baselines):
+  appraisal_mode  "legacy" (AppraisalState from the v1/v2 appraiser) or "frames" (AppraisalFrame over an
+                  explicit outcome hypothesis, relative to the explicit SelfState and GoalState)
+  affect_model    "A" (CategoricalAffectModel) or "B" (DimensionalAffectModel, no emotion labels; needs
+                  memory_learning="grounded" when memory is used, since legacy memory learns from labels)
+Always on: the world model (nerva/world/model.py, returned as sim.world) and the deterministic safety
+supervisor (nerva/safety.py) between behaviour and the policy.
 """
 
 from __future__ import annotations
@@ -32,6 +40,12 @@ from nerva.memory.episodic import EpisodicMemory
 from nerva.memory.entity import EntityMemory
 from nerva.memory.spatial import PlaceMemory
 from nerva.world.outcomes import OutcomeMonitor
+from nerva.affect.frames import FrameAppraiser
+from nerva.affect.model_b import DimensionalAffectModel
+from nerva.behaviour.goals import active_goals
+from nerva.safety import SafetySupervisor
+from nerva.world.model import WorldModel
+from nerva.world.self_state import estimate_self_state
 from nerva.interfaces import ActionTendencyState, Event, StyleVector, TENDENCIES
 from nerva.sim.open_duck import SCENE, SCENE_BACKLASH, OpenDuckSim
 from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
@@ -218,11 +232,13 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
-        memory_learning: str = "legacy"):
+        memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A"):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
     """Simulate the closed loop. Returns (sim, rows, frames, fired); frames = qpos + mocap snapshots."""
+    if affect_model == "B" and use_memory and memory_learning != "grounded":
+        raise ValueError("Model B has no emotion labels; legacy memory learns from labels: use memory_learning='grounded'")
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
                       scene_extender=extend_scene, scene=SCENE_BACKLASH if backlash_scene else SCENE)
@@ -237,12 +253,17 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     memory = EntityMemory(learning=memory_learning) if use_memory else None
     binder = IdentityBinder(memory) if use_memory else None
     appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
+    frames_mode = appraisal_mode == "frames"
+    if frames_mode:
+        appraiser = FrameAppraiser(appraiser)
+    world_model, safety = WorldModel(), SafetySupervisor()
+    self_state, goals = None, None
     episodic = EpisodicMemory() if use_memory else None
     places = PlaceMemory(learning=memory_learning) if (use_memory if use_spatial is None else use_spatial) else None
     monitor, outcomes_log, memory_trace = OutcomeMonitor(), [], []
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
-    affect = CategoricalAffectModel()
+    affect = {"A": CategoricalAffectModel, "B": DimensionalAffectModel}[affect_model]()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
     if head_moves_while_walking:
         behaviour = behaviour_cls(walking_head_limit=None)
@@ -287,6 +308,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             if binder is not None:
                 appraiser.identity = binder.update(t, tracks, perception)
             outcomes = monitor.proximity(t, tracks)
+            self_state = estimate_self_state(t, d.qpos, d.qvel, behaviour.mode)
+            goals = active_goals(behaviour.mode, behaviour.target)
             for name, agent in agents.items():  # simulated touch sensing: gentle contact while petted
                 if (agent.action == "pet" and np.linalg.norm(agent.xy - robot_xy) < TOUCH_REACH
                         and t - last_touch >= TOUCH_PERIOD_S):
@@ -311,10 +334,11 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                     episodic.encode_outcome(t, oc, who_oc.eid if who_oc else None, robot_xy, affect.pad.arousal)
             for ev in events:
                 behaviour.notice(t, ev.kind, ev.source)
-                a = appraiser.appraise(ev, t, tracks)
+                a = (appraiser.appraise(ev, t, tracks, self_state, goals) if frames_mode
+                     else appraiser.appraise(ev, t, tracks))
                 if a is not None:
                     new = affect.add(a)
-                    elicited = [(e.label, e.intensity) for e in new]
+                    elicited = [(e.label, e.intensity) for e in new] if affect_model == "A" else []
                     fired.append((t, ev.kind, a, elicited))
                     about = ev.source or None  # the track this event is about
                     if binder is not None and about and not ev.kind.endswith("_lost"):
@@ -327,7 +351,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                         episodic.encode(t, ev.kind, who_ev.eid if who_ev else None, robot_xy, elicited,
                                         a.relevance, affect.pad.arousal, 1.0 - a.expectedness,
                                         appraiser.novelty(about) if about else 0.0)
-            for kind, a in appraiser.observe(t, tracks, 1.0 / FRAME_HZ):
+            observed = (appraiser.observe(t, tracks, 1.0 / FRAME_HZ, self_state, goals) if frames_mode
+                        else appraiser.observe(t, tracks, 1.0 / FRAME_HZ))
+            for kind, a in observed:
                 affect.add(a)
             if episodic is not None:  # consolidation ("sleep") when nothing has been in view for a while
                 if any(tr.visible for tr in tracks):
@@ -346,8 +372,14 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             threats = ({tid: rec.threat for tid, rec in appraiser.identity.items() if rec.kind == "person"}
                        if use_memory else None)
             decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats)
-            sim.set_behaviour(neutralised(decision.command) if neutral_style else decision.command)
-            sim.set_head_offset(*decision.head)
+            command, head, safety_reason = safety.filter(decision.command, decision.head, self_state)
+            sim.set_behaviour(neutralised(command) if neutral_style else command)
+            sim.set_head_offset(*head)
+            touching = next((ev.source for ev in events if ev.kind == "touch_gentle"), "")
+            world_model.update(t, robot_xy, robot_yaw, tracks,
+                               {tid: rec.eid for tid, rec in appraiser.identity.items()} if use_memory else None,
+                               touching=touching,
+                               interacting=(decision.target or "") if decision.mode in ("approach", "inspect") else "")
         sim.step_physics(10)
         pad = affect.pad
         tilt = float(gm.tilt_deg(d.qpos[3:7][None])[0])
@@ -358,9 +390,10 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         who = appraiser.identity.get(nearest) if use_memory else None
         rows.append({
             "t": round(t + CTRL_DT, 3), "valence": pad.valence, "arousal": pad.arousal, "dominance": pad.dominance,
-            **{lbl: sum(e.intensity for e in affect.emotions if e.label == lbl) for lbl in EMOTIONS},  # logging only
+            **{lbl: sum(e.intensity for e in getattr(affect, "emotions", []) if e.label == lbl)
+               for lbl in EMOTIONS},  # logging only (Model A); zero for Model B
             **{f"tend_{k}": getattr(affect.tendencies, k) for k in TENDENCIES},
-            "mode": decision.mode, "reason": decision.reason, "target": decision.target or "",
+            "mode": decision.mode, "reason": safety_reason or decision.reason, "target": decision.target or "",
             "cmd_vx": decision.command.vx, "cmd_yaw": decision.command.yaw_rate,
             "e_tempo": decision.command.style_vector.tempo, "e_torso_pitch": decision.command.style_vector.torso_pitch,
             "head_pitch": decision.head[1], "head_yaw": decision.head[2], "head_roll": decision.head[3],
@@ -385,5 +418,6 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         sim.memory, sim.episodic, sim.sleep_log = memory, episodic, sleep_log  # for inspection by callers
         sim.memory_trace = memory_trace
     sim.outcomes = outcomes_log
+    sim.world, sim.safety_interventions = world_model, safety.interventions
     sim.places = places
     return sim, rows, frames, fired

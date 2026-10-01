@@ -32,14 +32,18 @@ def window(rows, key, t0, t1):
 
 
 def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=None,
-                  perception_mode: str = "simulated", backlash: bool = False, neutral: bool = False) -> dict:
+                  perception_mode: str = "simulated", backlash: bool = False, neutral: bool = False,
+                  appraisal_mode: str = "legacy", affect_model: str = "A") -> dict:
     _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector, walking_head_limit=head_limit,
                                      perception_mode=perception_mode, backlash_scene=backlash,
-                                     neutral_style=neutral)
+                                     neutral_style=neutral, appraisal_mode=appraisal_mode, affect_model=affect_model)
     ball = window(rows, "dist_ball", BALL_T + 0.1, 30.0)
     person_after = window(rows, "dist_person", LUNGE_END_T, LUNGE_END_T + 3.0)
     modes_after = {r["mode"] for r in rows if LUNGE_T <= r["t"] < LUNGE_T + 5.0}
-    interest = [window(rows, "interest", t, t + 5.0).max() for t in PERSON_APPEARS]
+    # "interest" is Model A's label; for a model without labels the same criterion uses the exploration
+    # tendency (identical to interest under Model A, nerva/affect/tendencies.py)
+    key = "interest" if affect_model == "A" else "tend_explore"
+    interest = [window(rows, key, t, t + 5.0).max() for t in PERSON_APPEARS]
     result = {
         "seed": seed,
         "ball_start_m": float(ball[0]), "ball_min_m": float(ball.min()),
@@ -66,12 +70,14 @@ def main() -> None:
     ap.add_argument("--neutral-style", action="store_true", help="policy trained on the neutral style only (B1/B2)")
     ap.add_argument("--head-limit", choices=("s1", "s3"), default="s1",
                     help="walking head-offset limit for the policy (S3 tolerates more head motion)")
+    ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
+    ap.add_argument("--affect", choices=("A", "B"), default="A")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
     args = ap.parse_args()
     from nerva.behaviour.modes import S1_WALKING_HEAD_LIMIT, S3_WALKING_HEAD_LIMIT
     limit = {"s1": S1_WALKING_HEAD_LIMIT, "s3": S3_WALKING_HEAD_LIMIT}[args.head_limit]
-    results = [evaluate_seed(args.policy, s, args.selector, limit, args.perception, args.backlash, args.neutral_style)
-               for s in range(args.seeds)]
+    results = [evaluate_seed(args.policy, s, args.selector, limit, args.perception, args.backlash, args.neutral_style,
+                             args.appraisal, args.affect) for s in range(args.seeds)]
     summary = {c: f"{sum(r[c] for r in results)}/{len(results)}" for c in ("curiosity", "fear", "habituation", "safe")}
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "evaluation.json").write_text(json.dumps({"summary": summary, "seeds": results}, indent=1) + "\n",

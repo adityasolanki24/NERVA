@@ -1,0 +1,195 @@
+{
+ "bounded": {
+  "A": true,
+  "B": true
+ },
+ "recovery_s_after_last_event": {
+  "A": 18.1,
+  "B": 14.3
+ },
+ "recovers_within_60s": {
+  "A": true,
+  "B": true
+ },
+ "valence_sign_agreement": "5/7",
+ "pearson": {
+  "valence": 0.975,
+  "arousal": 0.796,
+  "dominance": 0.97
+ },
+ "peak_abs": {
+  "A": [
+   0.392,
+   0.339,
+   0.25
+  ],
+  "B": [
+   0.574,
+   0.643,
+   0.428
+  ]
+ },
+ "events": [
+  {
+   "t": 2.0,
+   "event": "successful_walking",
+   "dV_A": 0.047,
+   "dV_B": 0.031,
+   "agree": true,
+   "peak_tendencies_A": {
+    "approach": 0.078,
+    "explore": 0.0,
+    "avoid": 0.0,
+    "orient": 0.0,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   },
+   "peak_tendencies_B": {
+    "approach": 0.078,
+    "explore": 0.02,
+    "avoid": 0.0,
+    "orient": 0.002,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   }
+  },
+  {
+   "t": 8.0,
+   "event": "successful_walking",
+   "dV_A": 0.017,
+   "dV_B": 0.028,
+   "agree": true,
+   "peak_tendencies_A": {
+    "approach": 0.095,
+    "explore": 0.0,
+    "avoid": 0.0,
+    "orient": 0.0,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   },
+   "peak_tendencies_B": {
+    "approach": 0.095,
+    "explore": 0.024,
+    "avoid": 0.0,
+    "orient": 0.002,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   }
+  },
+  {
+   "t": 15.0,
+   "event": "person_approaching_slowly",
+   "dV_A": -0.004,
+   "dV_B": 0.021,
+   "agree": false,
+   "peak_tendencies_A": {
+    "approach": 0.06,
+    "explore": 0.0,
+    "avoid": 0.0,
+    "orient": 0.0,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   },
+   "peak_tendencies_B": {
+    "approach": 0.063,
+    "explore": 0.121,
+    "avoid": 0.0,
+    "orient": 0.033,
+    "freeze": 0.0,
+    "withdraw": 0.0
+   }
+  },
+  {
+   "t": 25.0,
+   "event": "person_approaching_rapidly",
+   "dV_A": -0.292,
+   "dV_B": -0.215,
+   "agree": true,
+   "peak_tendencies_A": {
+    "approach": 0.0,
+    "explore": 0.0,
+    "avoid": 0.582,
+    "orient": 0.903,
+    "freeze": 0.525,
+    "withdraw": 0.0
+   },
+   "peak_tendencies_B": {
+    "approach": 0.005,
+    "explore": 0.352,
+    "avoid": 0.582,
+    "orient": 0.803,
+    "freeze": 0.467,
+    "withdraw": 0.446
+   }
+  },
+  {
+   "t": 27.0,
+   "event": "near_fall",
+   "dV_A": -0.144,
+   "dV_B": -0.331,
+   "agree": true,
+   "peak_tendencies_A": {
+    "approach": 0.0,
+    "explore": 0.0,
+    "avoid": 0.582,
+    "orient": 0.903,
+    "freeze": 0.525,
+    "withdraw": 0.0
+   },
+   "peak_tendencies_B": {
+    "approach": 0.003,
+    "explore": 0.352,
+    "avoid": 0.582,
+    "orient": 0.803,
+    "freeze": 0.467,
+    "withdraw": 0.446
+   }
+  },
+  {
+   "t": 40.0,
+   "event": "obstacle_blocking_goal",
+   "dV_A": 0.003,
+   "dV_B": -0.181,
+   "agree": false,
+   "peak_tendencies_A": {
+    "approach": 0.0,
+    "explore": 0.0,
+    "avoid": 0.015,
+    "orient": 0.0,
+    "freeze": 0.0,
+    "withdraw": 0.39
+   },
+   "peak_tendencies_B": {
+    "approach": 0.0,
+    "explore": 0.209,
+    "avoid": 0.413,
+    "orient": 0.181,
+    "freeze": 0.075,
+    "withdraw": 0.179
+   }
+  },
+  {
+   "t": 52.0,
+   "event": "successful_walking",
+   "dV_A": 0.062,
+   "dV_B": 0.095,
+   "agree": true,
+   "peak_tendencies_A": {
+    "approach": 0.078,
+    "explore": 0.0,
+    "avoid": 0.0,
+    "orient": 0.0,
+    "freeze": 0.0,
+    "withdraw": 0.019
+   },
+   "peak_tendencies_B": {
+    "approach": 0.078,
+    "explore": 0.03,
+    "avoid": 0.021,
+    "orient": 0.002,
+    "freeze": 0.0,
+    "withdraw": 0.009
+   }
+  }
+ ]
+}

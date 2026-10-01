@@ -73,14 +73,33 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   - *Falsified if* the grounded path fails the existing, unchanged memory criteria where the legacy path
     passes, or if an entity's adverse association still grows across sightings with no new adverse
     outcome.
+  - **Result (2026-10-02): partly falsified.**
+    - Grounded passes all four two-person criteria (S1 and B2, 5/5).
+    - A's threat never grows without a new adverse outcome.
+    - It fails "engages B" in the together scenario (0/3 vs legacy 3/3). The likely cause, not tested, is
+      the selector's global fear gate combined with grounded memory's larger threat.
 - **RQ8, are discrete emotion categories necessary?** Model A (appraisal → labels → PAD) vs Model B
   (appraisal → PAD directly, tendencies from appraisal features), behind the same contract.
   - *Comparison:* fixed appraisal traces (boundedness, decay, sign agreement) and the reactive scenario
     criteria.
   - *Reading:* if Model B passes the same criteria, the categories are not necessary *for these
     behaviours*; it does not show either model matches human emotion.
+  - **Result (2026-10-02):**
+    - *Fixed trace:* both bounded and recovering; valence-sign agreement 5/7, so that criterion is not met.
+    - *Default scenario:* Model B passes all four criteria (5/5).
+    - *Two-person scenario:* Model B first made B2 fall in 5/5 seeds. Its withdraw tendency triggers a
+      "look away" head posture (yaw −0.8) that B2 cannot hold (measured: 4/4 falls standing).
+    - *With B2's measured-safe head envelope* (pitch ≥ −0.2, |yaw| ≤ 0.4), Model B passes all four memory
+      criteria with no falls, and Model A still passes the default scenario.
+    - *Reading:* for these behaviours the discrete categories were not necessary. Model B exposed a body
+      limit that Model A never reached.
 - **RQ9, learned events.** Do event prototypes found by prediction-error segmentation and online
   clustering of world/self state predict grounded outcomes at least as well as the hand-coded event
   labels, in the same simulated scenarios?
   - *Falsified if* the prototypes predict outcomes worse than the hand-coded labels on the predefined
     metric. Prototypes are not claimed to be emotions or human concepts.
+  - **Result (2026-10-02): falsified for this design.**
+    - Brier score, adverse within 3 s: prototypes 0.0249, hand-coded labels 0.0215, base rate 0.0246.
+    - Brier score, benign within 3 s: prototypes 0.0575, hand-coded labels 0.0297, base rate 0.0583.
+    - Most boundaries marked tracking/gait fluctuations. Other features or segmentation would be a new,
+      separately preregistered experiment.

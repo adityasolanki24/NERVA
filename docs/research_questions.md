@@ -1,6 +1,9 @@
 # Research questions
 
-Only RQ1 is active. The rest are recorded so later work stays aimed, and are not being worked on.
+Status (2026-10-02): RQ1–RQ1c are answered for the pretrained policy; the style-conditioned policies
+(S1–S6) continued RQ1 (`style_policy_design.md`). The **active questions are RQ7–RQ9** below, which tie
+the architecture refactor (`architecture.md` §2) to falsifiable comparisons instead of feature
+accumulation. Each criterion is fixed before the corresponding run and recorded in the development log.
 
 ## RQ1 (active): expressive conditioning of locomotion
 
@@ -47,7 +50,7 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
   - speed, stride length, heavy-footedness and arm swing (Montepare et al. 1987)
   - Laban Effort qualities: time, weight, space and flow (applied to robots by Knight & Simmons 2014)
 - **Hypothesis to test next:** a small vector (tempo, step amplitude, torso posture, possibly smoothness) captures more of the expressive space than one scalar. Each component must be independently controllable, which the current policy cannot provide for posture or amplitude.
-- **Head-posture feasibility (2026-09-28): negative for runtime modulation.**
+- **Head-posture feasibility (2026-09-28): negative for runtime modulation.** (Labels corrected 2026-10-02: the study's "head up" is face down; see `experiments/expressive_locomotion/README.md`.)
   - Head posture changes as intended, but it reduces walking speed by up to 84% and reshapes the gait.
   - The effect comes from the physical head movement, not from the observed command.
   - So independent posture dimensions need a policy trained with them varying.
@@ -56,7 +59,28 @@ Only RQ1 is active. The rest are recorded so later work stays aimed, and are not
 ## Later questions (not active)
 
 - **RQ2, affect → style.** Can a persistent PAD state, updated over time, drive `style` (and later more style dimensions) in a way that is stable and interpretable?
-- **RQ3, appraisal → affect.** *(v0 prototype built; see `docs/affect_model.md`)* Does an EMA-inspired appraisal of synthetic events (successful walking, near fall, person approaching slowly or rapidly, obstacle blocking goal), mapped to PAD by an explicit, replaceable rule, produce sensible affect trajectories? The mapping is our hypothesis, not psychology.
+- **RQ3, appraisal → affect.** *(Model A v0.2 built and used in the reactive loop; see `docs/affect_model.md`; continued as RQ8)* Does an EMA-inspired appraisal of synthetic events (successful walking, near fall, person approaching slowly or rapidly, obstacle blocking goal), mapped to PAD by an explicit, replaceable rule, produce sensible affect trajectories? The mapping is our hypothesis, not psychology.
 - **RQ4, perception by people.** Do human observers perceive the style differences, and do they attribute the intended emotional qualities to them? This is the only route by which labels like "confident" could be justified.
 - **RQ5, imitation of expressive references.** Does conditioning on expressive reference motions (animation, motion capture, designed motion) produce more natural-looking styles than parameter modulation, at acceptable stability cost?
 - **RQ6, failure-aware behaviour.** Can appraisal of near-falls and failures change behaviour (e.g. more cautious gait) while safety remains deterministic?
+
+## Architecture questions (active)
+
+- **RQ7, grounded memory.** Does learning person and place associations from measurable outcomes
+  (`OutcomeSignal`: near-collision, benign contact, loss of stability) instead of from the affect
+  model's own emotion labels (a) keep the person-specific behaviour of the existing two-person
+  ablations, and (b) remove self-reinforcement?
+  - *Falsified if* the grounded path fails the existing, unchanged memory criteria where the legacy path
+    passes, or if an entity's adverse association still grows across sightings with no new adverse
+    outcome.
+- **RQ8, are discrete emotion categories necessary?** Model A (appraisal → labels → PAD) vs Model B
+  (appraisal → PAD directly, tendencies from appraisal features), behind the same contract.
+  - *Comparison:* fixed appraisal traces (boundedness, decay, sign agreement) and the reactive scenario
+    criteria.
+  - *Reading:* if Model B passes the same criteria, the categories are not necessary *for these
+    behaviours*; it does not show either model matches human emotion.
+- **RQ9, learned events.** Do event prototypes found by prediction-error segmentation and online
+  clustering of world/self state predict grounded outcomes at least as well as the hand-coded event
+  labels, in the same simulated scenarios?
+  - *Falsified if* the prototypes predict outcomes worse than the hand-coded labels on the predefined
+    metric. Prototypes are not claimed to be emotions or human concepts.

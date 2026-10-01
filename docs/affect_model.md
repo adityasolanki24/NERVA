@@ -13,9 +13,13 @@ Event ─appraise()─▶ AppraisalState ─categorise()─▶ emotion instances
       nerva/affect/appraisal.py            (label, intensity)                  (ALMA)        (ALMA-style dynamics)
 ```
 
-The labels (joy, fear, …) are an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly. Nothing outside `nerva/affect/emotions.py` may depend on emotion labels.
+The labels (joy, fear, …) are meant to be an implementation detail of Model A, **not a required NERVA layer**. A planned **Model B** maps appraisal to PAD directly.
 
-## 1. Appraisal v0: `nerva/affect/appraisal.py` [NERVA design values]
+> **Audit 2026-10-02:** this is not yet true in the code. Behaviour (`nerva/behaviour/`), entity memory, place memory and episodic replay consume the emotion labels directly (`architecture.md` §1.2–1.3). Removing that dependency is refactor stage C/D.
+
+## 1. Appraisal v0 table: `nerva/affect/appraisal.py` [NERVA design values]
+
+(The reactive loop uses the contextual appraiser v1 and the memory-based v2 in the same file; the v0 table remains as a fallback and for the scripted demos.)
 
 The *variables* come from EMA (Marsella & Gratch 2009, §2.3.3). The *values* are our judgement for a small walking robot. `Event.magnitude` scales desirability.
 

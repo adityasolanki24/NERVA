@@ -1,6 +1,15 @@
 # Design proposal: an evolving, brain-inspired memory for NERVA
 
-Status: M1–M4 implemented 2026-10-01 (`nerva/memory/entity.py`, `nerva/memory/episodic.py`, `nerva/memory/spatial.py`) (`nerva/memory/entity.py`, `MemoryAppraiser`, `IdentityBinder` in `experiments/reactive/scenario.py`; results in the development log). M5 (face/body identity from real vision) proposed.
+Status: M1–M4 implemented 2026-10-01 (`nerva/memory/entity.py`, `episodic.py`, `spatial.py`;
+`MemoryAppraiser` in `nerva/affect/appraisal.py`; `IdentityBinder` in `experiments/reactive/scenario.py`;
+results in the development log, measured with S1 in the plain scene). M5 (face/body identity from real
+vision) proposed.
+
+> **Audit 2026-10-02: known problem in the implemented version.** Entity memory, place memory and sleep
+> replay learn threat and warmth from the *emotion labels* that Model A elicited, not from grounded
+> outcomes. A remembered threat therefore re-elicits fear, which is learned as more threat (recorded in
+> the development log as self-regeneration). Refactor stage D adds an outcome-grounded learning path and
+> keeps this one as the legacy baseline (`architecture.md` §1.3, §2.3).
 Claim labels: **[theory]** established finding or model from the literature; **[design]** NERVA choice;
 **[hw]** hardware consideration.
 

@@ -1,5 +1,10 @@
 # Design: reactive, affect-driven behaviour in a simulated scene (stage 1)
 
+> **Historical design for stage 1 (2026-09-30).** Kept as written. Since then: perception uses colour +
+> depth vision with multi-person tracking, behaviour uses utility selection (`nerva/behaviour/selection.py`),
+> memory M1–M4 exists, and B2 walks backward, so the fear criterion now passes (5/5). Current state and the
+> target architecture: `architecture.md`; results: `experiments/reactive/README.md`.
+
 Status: design, 2026-09-30. User decision: stay in MuJoCo for now, make the robot genuinely react to its
 environment through the emotion model, and show complex behaviours (curiosity, fear with stepping back);
 Isaac Sim is a later stage.

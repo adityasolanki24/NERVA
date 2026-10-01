@@ -183,6 +183,14 @@ The run took about 4 minutes. `results/speed_matched-20260928-192454` was genera
 
 **Question.** Can head posture be a style dimension that is *independent* of the gait-clock tempo, applied at runtime without retraining?
 
+> **Correction (2026-10-02, measured; `docs/development_log.md`).** The sign assumption below is wrong.
+> With both the upstream policy and B2, **positive** head_pitch tilts the robot-eye camera (the face) up,
+> and negative tilts it down and slightly lowers the head: camera elevation −13.2° / +5.2° / +38.0° for
+> head_pitch −0.4 / 0 / +0.4 (upstream policy, standing, backlash scene). So in this study "head up"
+> (h > 0, negative offset) is actually **face down**, and "head down" is face up. The measurements below
+> are kept unchanged; only the labels h = "up/down" are inverted. The conclusions about independence
+> from tempo and the speed cost do not depend on the label.
+
 ## Method
 - **Head posture h ∈ [−1, 1]** (+1 = head up) is a head_pitch offset on top of the policy's head target: −0.5·h rad for head up and −0.3·h for head down. Negative head_pitch raises the head, which was verified by rendering.
 - **The offset is applied exactly as the Open Duck hardware runtime applies gamepad head commands** (`v2_rl_walk_mujoco.py:310`): it is written into the observation's command slots and added to the head motor targets after the speed limit. In simulation this is `OpenDuckSim.set_head_offset`, which defaults to zero; the upstream-equivalence test still passes.

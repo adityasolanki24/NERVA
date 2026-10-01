@@ -6,24 +6,34 @@ NERVA is built **on top of** [Open Duck Mini v2](https://github.com/apirrone/Ope
 
 ## Architecture
 
+Today the loop is a graph rather than a chain: perception feeds appraisal, behaviour and identity
+binding; appraisal reads memory; memory and behaviour read the affect model's output.
+
 ```
-PERCEPTION → CONTEXT-AWARE APPRAISAL → AFFECT (emotions → PAD) → BEHAVIOUR (what + how)
-          → LEARNED LOCOMOTION POLICY π(s, c, e) → DETERMINISTIC SAFETY / CONTROL
+camera images, touch, body tilt ─▶ PERCEPTION (vision + multi-object tracker) ─▶ tracks + events
+        ─▶ APPRAISAL (contextual, memory-based) ─▶ AFFECT (Model A: emotions → persistent PAD)
+        ─▶ BEHAVIOUR (utility selection: WHAT + HOW) ─▶ LOCOMOTION POLICY π(s, c, e) ─▶ MuJoCo
+   MEMORY (entity, episodic, place) is read by appraisal and behaviour, and learns from events
 ```
-PAD never drives joints directly, and no LLM is in the control or safety loop. Details: `docs/architecture.md`.
+PAD never drives joints directly, and no LLM is in the control or safety loop. A staged refactor
+toward a target architecture (world model, self state, goals, grounded outcomes, action tendencies,
+a replaceable affect model) is under way. Current vs target, and the known problems that motivate
+it: `docs/architecture.md`.
 
 ## Status (October 2026, simulation only)
 
 | Area | State |
 |---|---|
 | Baseline | Open Duck policy reproduced bit for bit in a NERVA harness (`docs/open_duck_baseline.md`) |
-| Expressive locomotion on the pretrained policy | RQ1/RQ1b/RQ1c done (`experiments/expressive_locomotion/`) |
-| Style-conditioned policy (PPO + imitation, cloud GPUs) | S1 expresses tempo and torso pitch, not step height; S2/S3 variants evaluated (`docs/style_policy_design.md`) |
-| Affect | Affect model v0.2: EMA-inspired appraisal → emotions (incl. interest) → persistent PAD (`docs/affect_model.md`) |
-| Reactive behaviour | Scene with a person and a ball, simulated head-camera perception, contextual appraisal, emotion-modulated action selection (`docs/reactive_behaviour_design.md`, `experiments/reactive/`) |
-| Perception | Colour + depth vision from the robot's head camera (`nerva/perception/vision.py`) |
-| Memory | Entity memory M1: person-specific familiarity, threat, warmth, trust; identity kept by track continuity; ablation shows it is causal (`docs/memory_design.md`) |
-| Human evaluation | Not started; no behaviour is claimed to *look* emotional |
+| Expressive locomotion on the pretrained policy | RQ1/RQ1b/RQ1c done (`experiments/expressive_locomotion/`); RQ1c's head-posture labels are inverted (positive head_pitch tilts the face up, measured 2026-10-02) |
+| Style-conditioned policies (PPO + imitation, cloud GPUs) | S1 expresses tempo and torso pitch, not step height (preregistered verdict: fail); S2–S6 variants did not solve it; S5/S6 collapsed to standing (`docs/style_policy_design.md`) |
+| Backward walking | B2 (neutral, feet-height cost) walks backward at −0.113 m/s commanded −0.15, in the backlash training scene |
+| Perception | colour + depth vision from the robot's head camera; multi-person tracking with track IDs (`nerva/perception/`) |
+| Affect | Model A v0.2: EMA-inspired appraisal → emotions (incl. interest) → persistent PAD (`docs/affect_model.md`) |
+| Reactive behaviour | emotion-modulated utility selection; B2 + vision + backlash: curiosity, fear, habituation, safety 5/5 seeds each (`experiments/reactive/`) |
+| Memory | M1–M4: entity, episodic with consolidation, place memory; two-person ablation memory 5/5 vs none 0/5, measured with S1 in the plain scene (`docs/memory_design.md`) |
+| Isaac Sim | kinematic replay of MuJoCo runs with realistic rendering and the robot's-eye camera (`experiments/isaac/`); not used for physics |
+| Human evaluation | not started; no behaviour is claimed to *look* emotional |
 
 The detailed record of every run, measurement and correction is `docs/development_log.md`. Long-term trajectory: `docs/roadmap.md`.
 
@@ -52,8 +62,8 @@ On Windows, enable long-path support first; a transitive dependency has paths lo
 
 ## Layout
 
-The package follows the architecture: one folder per layer, data passed between layers only through
-the types in `nerva/interfaces.py`.
+The package has one folder per layer. The typed contracts between layers live in `nerva/interfaces.py`;
+where layers still exchange other data (e.g. emotion labels), `docs/architecture.md` §1.2 lists it.
 
 ```
 nerva/                      the NERVA package

@@ -4,6 +4,60 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Architecture refactor stage A: audit and docs truth pass
+
+A new handoff (from ChatGPT) asked for an architecture refactor: action tendencies, outcome-grounded
+memory, self state, goals, appraisal frames, a world model, Model B and learned events. Stage A
+audited the live repo first.
+
+**Baseline [measured]:** `main` clean at `a62fd2f`; 138 tests pass, 2 skipped; Ruff clean. Per-step
+regression traces were recorded (local, not committed) for three seeded runs:
+- default scenario, S1, simulated detector: 4.3 s CPU;
+- default scenario, B2, vision, backlash scene: 21.6 s;
+- two-person memory scenario, S1, vision: 29.4 s.
+
+Two runs of the first were byte-identical, so the loop is deterministic and later stages can be checked
+for exact equivalence.
+
+**Discrepancies found and recorded:**
+- **Memory ablations used S1 in the plain scene, not B2.** `evaluate_memory.py` has no backlash or
+  neutral-style option. The "memory 5/5 vs 0/5" and "together 3/3 vs 0/3" results are S1/plain-scene
+  results; the Isaac demo with B2 is a single run, not an evaluation.
+- **Emotion labels leak outside Model A.** Behaviour (both selectors), entity memory, place memory and
+  episodic sleep replay consume `fear`, `interest`, `hope`, `joy`, `surprise`, `distress`. The docs claimed
+  nothing outside `emotions.py` depended on them.
+- **Self-reinforcing memory:** entity and place memory, and sleep replay, learn threat/warmth from the
+  elicited emotions.
+- **The layer types are not the only coupling:** behaviour also reads tracks, novelty and remembered
+  threat directly; appraisal reads memory.
+- **No NERVA safety module:** limits come from the MuJoCo model and the upstream rate limit; near-falls
+  are only detected as appraisal events.
+- **Stale docs:** README status ("M1 only"), `experiments/reactive/README.md` ("fear 0/5", "no
+  image-based detection"), `experiments/isaac/README.md`, `architecture.md` ("interface only" rows),
+  roadmap and research questions.
+
+**Head-pitch sign settled [measured]:** standing 3 s at zero velocity, backlash scene, robot-eye camera
+elevation:
+
+| head_pitch | −0.4 | 0 | +0.4 |
+|---|---|---|---|
+| upstream policy | −13.2° | +5.2° | +38.0° |
+| B2 (neutral style) | −7.9° | +20.4° | +39.8° |
+
+Positive head_pitch tilts the face up, as `nerva/behaviour/modes.py` assumes. RQ1c
+(`head_posture.py`) and the first demo video assumed the opposite, so their "head up" labels mean face
+down. The measurements stand; correction notes were added instead of rewriting them.
+
+**Docs updated:** `architecture.md` (Part 1: live dependency graph and known problems; Part 2:
+target architecture and migration stages A–I), README architecture/status, `experiments/reactive` and
+`experiments/isaac` READMEs, roadmap (refactor stages), research questions (new active RQ7–RQ9 with
+falsification criteria), `memory_design.md` and `affect_model.md` (audit notes),
+`style_policy_design.md` (S1–S6, B2, curriculum next), historical notes in
+`reactive_behaviour_design.md`, `experiments/demo_video/README.md` and the RQ1c section. No code
+changed in this stage.
+
+---
+
 ## 2026-10-01 — Isaac render with B2 motion, the robot's-eye view and NERVA's data
 
 Feedback on the first render: the backward walk looked bad (it was S1), and the data and robot point of view of the MuJoCo demo were missing.

@@ -27,7 +27,7 @@ The `near_fall` event at 27 s coincides with a **real sideways push of 0.6 m/s**
 - **WHAT:** walk forward at 0.13 m/s. Stop for 6 s when the goal is blocked; pause while arousal > 0.2.
 - **HOW:**
   - tempo style = clip(4·arousal, −1, 1): the gait clock (RQ1)
-  - head posture = clip(1.25·(valence + dominance), −0.5, 0.5), where + is head up
+  - head posture = clip(1.25·(valence + dominance), −0.5, 0.5), where + was intended as head up. **Correction (2026-10-02):** it uses RQ1c's sign convention, which is inverted (positive head_pitch tilts the face up), so in this video + actually lowered the face. Kept as recorded.
   - Head posture is limited to ±0.5 because RQ1c showed that head offsets slow the walk (by 15–25% at ±0.5).
 
 ## What happens in this run [measured, `results/timeline.csv`]

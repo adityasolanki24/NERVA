@@ -120,3 +120,72 @@ class DimensionalAffectModel:
 
         return ActionTendencyState(approach=b(pos), explore=b(novelty), avoid=b(neg), orient=b(unexpected),
                                    freeze=b(unexpected * neg), withdraw=b(neg * (1.0 - c_bar)))
+
+
+class AttractorAffectModel(DimensionalAffectModel):
+    """Model B v2 (`affect_model="Bv2"`): appraisal sets a bounded PAD *target*; PAD relaxes toward it.
+
+    Fixes Model B's saturation (development log 2026-10-02): re-appraising an unchanged, ongoing
+    situation (the persistent `*_in_view` frames, every 2 s) used to add a new impulse each time, so PAD
+    grew with the re-appraisal rate rather than with the situation.
+
+      contextual  one slot per source track holds the features of its LATEST persistent appraisal
+                  (replaced, not added); full weight while it keeps being re-appraised (age since the last
+                  refresh ≤ HOLD_S, longer than the 2 s re-appraisal period), then fading as
+                  exp(−(age − HOLD_S) / TAU_CONTEXT_S); so the re-appraisal rate does not change the input
+      phasic      discrete events (non-persistent appraisals) add decaying traces, as in Model B
+      target      x* = x0 + tanh(G·W·(u_context + z_phasic)),  G = diag(τ_V, τ_A, τ_D)
+                  (G converts Model B's per-second weights to the same steady-state gain; W is unchanged)
+      dynamics    dx/dt = −Λ (x − x*); with no input x* = x0, so PAD returns to baseline
+
+    Bounded by construction (|tanh| < 1, no clipping needed while x0 = 0). Repeating an identical
+    persistent appraisal converges, at any re-appraisal rate. Action tendencies are computed exactly as in
+    Model B (unchanged, so behaviour sees the same tendency signal).
+    """
+
+    TAU_CONTEXT_S = 3.0
+    HOLD_S = 2.5  # > IN_VIEW_PERIOD_S (2 s) of the appraisers
+
+    def __init__(self, cfg: AffectBConfig | None = None, tau_context_s: float | None = None):
+        super().__init__(cfg)
+        self.tau_ctx = tau_context_s or self.TAU_CONTEXT_S
+        self.t = 0.0
+        self.context: dict[str, tuple[np.ndarray, float]] = {}  # source -> (features, time of last refresh)
+        self.z_phasic = np.zeros(len(FEATURES))
+        self._gain = np.array(self.cfg.tau_pad_s, dtype=float)
+
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> np.ndarray:
+        persistent = isinstance(appraisal, AppraisalFrame) and appraisal.persistent
+        if isinstance(appraisal, AppraisalFrame):
+            source = source or appraisal.hypothesis.subject
+        u = super().add(appraisal, source)  # tendency traces, unchanged from Model B
+        if persistent:
+            self.context[source] = (u, self.t)
+        else:
+            self.z_phasic = self.z_phasic + u
+        return u
+
+    def _weight(self, t_last: float) -> float:
+        age = self.t - t_last
+        return 1.0 if age <= self.HOLD_S else math.exp(-(age - self.HOLD_S) / self.tau_ctx)
+
+    def context_input(self) -> np.ndarray:
+        total = np.zeros(len(FEATURES))
+        for u, t_last in self.context.values():
+            total += u * self._weight(t_last)
+        return total
+
+    def target(self) -> np.ndarray:
+        x0 = np.array(self.cfg.baseline)
+        return x0 + np.tanh(self._gain * (self._w @ (self.context_input() + self.z_phasic)))
+
+    def step(self, dt: float) -> PADState:
+        x_star = self.target()
+        self.x = np.clip(x_star + (self.x - x_star) * np.exp(-self._lam * dt), -1.0, 1.0)
+        self.t += dt
+        k = np.exp(-dt / self._tau_z)
+        self.z = self.z * k
+        self.z_phasic = self.z_phasic * k
+        self.z_by_source = {s: z * k for s, z in self.z_by_source.items() if float(np.max(np.abs(z))) > 1e-4}
+        self.context = {s: (u, tl) for s, (u, tl) in self.context.items() if self._weight(tl) > 1e-3}
+        return self.pad

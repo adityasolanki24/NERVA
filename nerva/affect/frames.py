@@ -69,7 +69,7 @@ def hypothesis_kind(event_kind: str, appraisal: AppraisalState) -> str:
 
 
 def frame_from(event_kind: str, a: AppraisalState, subject: str, self_state: SelfState | None,
-               goals: GoalState | None) -> AppraisalFrame:
+               goals: GoalState | None, persistent: bool = False) -> AppraisalFrame:
     kind = hypothesis_kind(event_kind, a)
     predicts, goal_kinds, adverse = HYPOTHESIS_KINDS[kind]
     relevance, controllability = a.relevance, a.controllability
@@ -82,7 +82,7 @@ def frame_from(event_kind: str, a: AppraisalState, subject: str, self_state: Sel
         relevance += SELF_RELEVANCE * risk * (1.0 - relevance)
     hyp = OutcomeHypothesis(kind, subject=subject, probability=a.likelihood, predicts=predicts)
     return AppraisalFrame(hyp, relevance=relevance, desirability=a.desirability, expectedness=a.expectedness,
-                          controllability=controllability, goals=active)
+                          controllability=controllability, goals=active, persistent=persistent)
 
 
 class FrameAppraiser:
@@ -107,5 +107,6 @@ class FrameAppraiser:
 
     def observe(self, t: float, tracks, dt: float, self_state: SelfState | None = None,
                 goals: GoalState | None = None) -> list[tuple[str, AppraisalFrame]]:
-        return [(kind, frame_from(kind, a, subject, self_state, goals))
+        # in-view appraisals re-evaluate an ongoing situation: marked persistent
+        return [(kind, frame_from(kind, a, subject, self_state, goals, persistent=True))
                 for kind, a, subject in self.inner.observe_with_subjects(t, tracks, dt)]

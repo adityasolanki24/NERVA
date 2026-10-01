@@ -373,7 +373,9 @@ class AppraisalFrame:
     """Appraisal of ONE explicit hypothesis. Likelihood is the hypothesis's probability, so it always has
     a referent. Same five dimensions and ranges as AppraisalState.
 
-      goals   goal kinds this hypothesis bears on (empty = none active)
+      goals       goal kinds this hypothesis bears on (empty = none active)
+      persistent  True = re-appraisal of an ongoing, unchanged situation (e.g. "<kind>_in_view" every 2 s);
+                  False = a discrete event. Affect models may treat the two differently (Model B v2 does).
     """
 
     hypothesis: OutcomeHypothesis
@@ -382,6 +384,7 @@ class AppraisalFrame:
     expectedness: float = 1.0
     controllability: float = 1.0
     goals: tuple[str, ...] = ()
+    persistent: bool = False
 
     def __post_init__(self) -> None:
         _check_range("relevance", self.relevance, 0.0, 1.0)

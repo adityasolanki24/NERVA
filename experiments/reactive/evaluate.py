@@ -20,6 +20,8 @@ from pathlib import Path
 
 import numpy as np
 
+from nerva.analysis.pad_metrics import pad_stats, pooled
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import scenario  # noqa: E402
 
@@ -60,6 +62,7 @@ def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=
         "events": [(round(te, 1), kind) for te, kind, *_ in fired],
     }
     result["safe"] = result["max_tilt_deg"] < 45.0
+    result["pad"] = pad_stats(rows)
     return result
 
 
@@ -76,7 +79,7 @@ def main() -> None:
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2",
                     help="v2: policy capabilities, grounded memory, frames, targeted arbitration, world-model queries")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B"), default=None, help="default: B for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: B for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")
@@ -87,6 +90,7 @@ def main() -> None:
                              args.appraisal, args.affect, args.head_pitch_down, args.head_yaw_max, args.profile)
                for s in range(args.seeds)]
     summary = {c: f"{sum(r[c] for r in results)}/{len(results)}" for c in ("curiosity", "fear", "habituation", "safe")}
+    summary["pad_pooled"] = pooled([r["pad"] for r in results])
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "evaluation.json").write_text(json.dumps({"summary": summary, "seeds": results}, indent=1) + "\n",
                                               encoding="utf-8")

@@ -54,7 +54,7 @@ from nerva.memory.spatial import PlaceMemory
 from nerva.world.outcomes import OutcomeMonitor
 from nerva.sim.capabilities import capabilities_for
 from nerva.affect.frames import FrameAppraiser
-from nerva.affect.model_b import DimensionalAffectModel
+from nerva.affect.model_b import AttractorAffectModel, DimensionalAffectModel
 from nerva.behaviour.goals import active_goals
 from nerva.safety import SafetySupervisor
 from nerva.world.model import WorldModel
@@ -272,7 +272,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         backlash_scene = capabilities.training_scene == "backlash"
         neutral_style = capabilities.style_input == "neutral_only"
         appraisal_mode, memory_learning = "frames", "grounded"
-    if affect_model == "B" and use_memory and memory_learning != "grounded":
+    if affect_model != "A" and use_memory and memory_learning != "grounded":
         raise ValueError("Model B has no emotion labels; legacy memory learns from labels: use memory_learning='grounded'")
     agents = agents or default_scenario()
     sim = OpenDuckSim(raw_accel=True, obs_noise=True, init_joint_noise=0.02, seed=seed, policy_path=policy,
@@ -299,7 +299,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     world_state = None
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
-    affect = {"A": CategoricalAffectModel, "B": DimensionalAffectModel}[affect_model]()
+    affect = {"A": CategoricalAffectModel, "B": DimensionalAffectModel, "Bv2": AttractorAffectModel}[affect_model]()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
     if head_moves_while_walking:
         behaviour = behaviour_cls(walking_head_limit=None)

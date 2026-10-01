@@ -83,6 +83,13 @@ reported.
    - standard deviation ≥ 0.05 for V and A (dominance reported);
    - max |V| ≥ 0.2 and max |A| ≥ 0.2 in every scenario.
 
+**Implementation note (before any evaluation run):**
+- The first implementation faded each context slot from the moment of its refresh. A unit test then
+  showed the average weight depends on the refresh rate (steady states at 1 s vs 2 s differed by 0.06).
+- That contradicts the stated intent, so the slot now holds full weight for 2.5 s after a refresh (longer
+  than the appraisers' 2 s in-view period), then fades with τ = 3 s.
+- No scenario or preregistered trace had been run at that point.
+
 **Decision rule:** Bv2 replaces old B as the default affect model if it meets every criterion above. If
 it fails any, the default stays as is and the failure is reported. **PAD is not connected to style in
 any case until Bv2 (or a successor) meets the dynamic-range criteria.**

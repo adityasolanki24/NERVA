@@ -26,6 +26,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import scenario  # noqa: E402
 
+from nerva.analysis.pad_metrics import pad_stats, pooled  # noqa: E402
+
 WARY = {"watch", "retreat", "freeze"}
 
 
@@ -57,6 +59,7 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
         "b_welcomed": bool(set(return_b) & {"approach", "inspect"}),
         "max_tilt_deg": max(r["tilt_deg"] for r in rows),
         "fell": max(r["tilt_deg"] for r in rows) > 45.0,
+        "pad": pad_stats(rows),
     }
     if use_memory:
         recs = sorted(sim.memory.records.values(), key=lambda r: r.eid)
@@ -89,7 +92,8 @@ def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = 
     return {"seed": seed, "memory": use_memory,
             "avoids_a": min(r["dist_person"] for r in w) >= 1.0 and bool(ms & WARY),
             "engages_b": bool(ms & {"approach", "inspect"}) and mean_b < mean_a,
-            "mean_dist_a": round(mean_a, 2), "mean_dist_b": round(mean_b, 2), "fell": tilt > 45.0}
+            "mean_dist_a": round(mean_a, 2), "mean_dist_b": round(mean_b, 2), "fell": tilt > 45.0,
+            "pad": pad_stats(rows)}
 
 
 def main() -> None:
@@ -103,7 +107,7 @@ def main() -> None:
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B"), default=None, help="default: B for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2"), default=None, help="default: B for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")
@@ -115,6 +119,7 @@ def main() -> None:
                    for m in mems for s in range(args.seeds)]
         summary = {("memory" if m else "no_memory"): {k: f"{sum(r[k] for r in results if r['memory'] == m)}/{args.seeds}"
                                                      for k in ("avoids_a", "engages_b")} for m in mems}
+        summary["pad_pooled_memory"] = pooled([r["pad"] for r in results if r["memory"]])
         for r in results:
             print(r)
         print("SUMMARY", json.dumps(summary))
@@ -131,6 +136,7 @@ def main() -> None:
         rs = [r for r in results if r["memory"] == m]
         keys = ["b_not_blamed", "a_remembered", "b_welcomed"] + (["touch_to_b"] if m else [])
         summary["memory" if m else "no_memory"] = {k: f"{sum(r[k] for r in rs)}/{len(rs)}" for k in keys}
+    summary["pad_pooled_memory"] = pooled([r["pad"] for r in results if r["memory"]])
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "evaluation.json").write_text(json.dumps({"summary": summary, "runs": results}, indent=1) + "\n",
                                               encoding="utf-8")

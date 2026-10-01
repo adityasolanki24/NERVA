@@ -19,6 +19,7 @@ import traceback
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--urdf", required=True)
+parser.add_argument("--mjcf", default="", help="NERVA's MuJoCo model (preferred import route)")
 parser.add_argument("--out", required=True)
 parser.add_argument("--replay", default="", help="optional .npz from experiments/isaac/export_replay.py")
 parser.add_argument("--frames", type=int, default=60)
@@ -70,18 +71,52 @@ def _():
     return "ok"
 
 
-@step("import_urdf")
+@step("import_robot")
 def _():
-    status, cfg = omni.kit.commands.execute("URDFCreateImportConfig")
-    cfg.fix_base = False
-    cfg.merge_fixed_joints = False
-    cfg.make_default_prim = False
-    cfg.import_inertia_tensor = True
-    status, path = omni.kit.commands.execute("URDFParseAndImportFile", urdf_path=args.urdf,
-                                             import_config=cfg, get_articulation_root=True)
-    state["robot"] = path
+    """Try several import routes and keep the first that works; every error is recorded."""
+    attempts = {}
+    if args.mjcf:  # the exact MuJoCo model NERVA uses
+        try:
+            status, cfg = omni.kit.commands.execute("MJCFCreateImportConfig")
+            cfg.fix_base = False
+            cfg.make_default_prim = False
+            omni.kit.commands.execute("MJCFCreateAsset", mjcf_path=args.mjcf, import_config=cfg,
+                                      prim_path="/World/duck")
+            if stage.GetPrimAtPath("/World/duck").IsValid():
+                state["robot"] = "/World/duck"
+            attempts["mjcf_command"] = "ok" if "robot" in state else "no prim"
+        except Exception as e:
+            attempts["mjcf_command"] = repr(e)
+    if "robot" not in state:
+        try:
+            from isaacsim.asset.importer.urdf import _urdf
+            urdf = _urdf.acquire_urdf_interface()
+            cfg = _urdf.ImportConfig()
+            cfg.fix_base = False
+            cfg.merge_fixed_joints = False
+            cfg.make_default_prim = False
+            folder, name = os.path.split(args.urdf)
+            parsed = urdf.parse_urdf(folder, name, cfg)
+            path = urdf.import_robot(folder, name, parsed, cfg, "", True)
+            attempts["urdf_interface"] = path
+            if path and stage.GetPrimAtPath(path).IsValid():
+                state["robot"] = path
+        except Exception as e:
+            attempts["urdf_interface"] = repr(e)
+    if "robot" not in state:
+        try:
+            status, cfg = omni.kit.commands.execute("URDFCreateImportConfig")
+            cfg.fix_base = False
+            cfg.merge_fixed_joints = False
+            status, path = omni.kit.commands.execute("URDFParseAndImportFile", urdf_path=args.urdf,
+                                                     import_config=cfg, get_articulation_root=True)
+            attempts["urdf_command"] = [status, path]
+            if path:
+                state["robot"] = path
+        except Exception as e:
+            attempts["urdf_command"] = repr(e)
     joints = [p.GetName() for p in stage.Traverse() if p.GetTypeName().endswith("Joint")]
-    return {"status": status, "prim": path, "joints": joints}
+    return {"robot": state.get("robot"), "attempts": attempts, "joints": joints[:40]}
 
 
 @step("assets_root")
@@ -103,8 +138,10 @@ def _():
     for c in candidates:
         try:
             prim = add_reference_to_stage(state["assets"] + c, "/World/Person")
-            UsdGeom.XformCommonAPI(prim).SetTranslate(Gf.Vec3d(1.5, 0.0, 0.0))
-            UsdGeom.XformCommonAPI(prim).SetRotate(Gf.Vec3f(0, 0, 180))
+            xf = UsdGeom.Xformable(prim)
+            xf.ClearXformOpOrder()
+            xf.AddTranslateOp(UsdGeom.XformOp.PrecisionDouble).Set(Gf.Vec3d(1.5, 0.0, 0.0))
+            xf.AddRotateXYZOp(UsdGeom.XformOp.PrecisionDouble).Set(Gf.Vec3d(0.0, 0.0, 180.0))
             return {"loaded": c}
         except Exception as e:  # try the next one
             last = repr(e)
@@ -124,7 +161,7 @@ def _():
     writer.attach([rp])
     replay = np.load(args.replay) if args.replay else None
     art = None
-    if replay is not None:
+    if replay is not None and state.get("robot"):
         from isaacsim.core.prims import SingleArticulation
         art = SingleArticulation(state["robot"])
         art.initialize()

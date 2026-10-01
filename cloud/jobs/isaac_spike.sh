@@ -12,7 +12,7 @@
 # that leaves time to sync results before the VM's hard cap.
 set -uo pipefail
 : "${ISAAC_ACCEPT_EULA:?the user has not accepted the NVIDIA Omniverse License Agreement}"
-IMAGES=${ISAAC_IMAGES:-"nvcr.io/nvidia/isaac-sim:5.1.0 nvcr.io/nvidia/isaac-sim:5.0.0"}
+IMAGES=${ISAAC_IMAGES:-"nvcr.io/nvidia/isaac-sim:5.1.0"}  # 5.1 renders with driver 570 (attempt 4)
 OUT=/work/out/isaac
 sync_isaac() { gsutil -q -m rsync -r "$OUT" "gs://$NERVA_BUCKET/runs/$NERVA_RUN_ID/out/isaac" || true; }
 mkdir -p "$OUT" /work/isaac_cache/{kit,ov,glcache,computecache} /work/isaac_logs
@@ -36,6 +36,11 @@ if ! docker info 2>/dev/null | grep -qi nvidia; then
 fi
 
 git clone -q -b v2 --depth 1 https://github.com/apirrone/Open_Duck_Mini.git /work/odm
+git clone -q https://github.com/apirrone/Open_Duck_Playground.git /work/odp
+UPSTREAM=$(curl -sf -H "Metadata-Flavor: Google" \
+  http://metadata.google.internal/computeMetadata/v1/instance/attributes/nerva-upstream-sha)
+git -C /work/odp checkout -q "$UPSTREAM"
+MJCF_DIR=/work/odp/playground/open_duck_mini_v2/xmls
 ROBOT=/work/odm/mini_bdx/robots/open_duck_mini_v2
 sed 's#package:///##g' "$ROBOT/robot.urdf" > "$ROBOT/robot_local.urdf"
 
@@ -50,7 +55,7 @@ sync_isaac
 
 RUN=(docker run --rm --gpus all --network host
      -e ACCEPT_EULA=Y -e PRIVACY_CONSENT=N -e NVIDIA_DRIVER_CAPABILITIES=all
-     -v /work/NERVA/experiments/isaac:/nerva_isaac:ro -v "$ROBOT":/robot:ro -v "$OUT":/out
+     -v /work/NERVA/experiments/isaac:/nerva_isaac:ro -v "$ROBOT":/robot:ro -v "$MJCF_DIR":/mjcf:ro -v "$OUT":/out
      -v /work/isaac_cache/kit:/isaac-sim/kit/cache -v /work/isaac_cache/ov:/root/.cache/ov
      -v /work/isaac_cache/glcache:/root/.cache/nvidia/GLCache
      -v /work/isaac_cache/computecache:/root/.nv/ComputeCache
@@ -77,7 +82,7 @@ echo "selected image: ${IMAGE:-none}" | tee "$OUT/selected_image.txt"
 
 if [ -n "$IMAGE" ]; then
   echo "== spike with $IMAGE (35 min limit)" > "$OUT/spike.log"
-  timeout 35m "${RUN[@]}" "$IMAGE" /nerva_isaac/isaac_spike.py --urdf /robot/robot_local.urdf --out /out \
+  timeout 35m "${RUN[@]}" "$IMAGE" /nerva_isaac/isaac_spike.py --urdf /robot/robot_local.urdf --mjcf /mjcf/open_duck_mini_v2.xml --out /out \
     --frames 120 --replay /nerva_isaac/replays/memory_s1.npz >> "$OUT/spike.log" 2>&1
   echo "spike exit=$?" >> "$OUT/spike.log"
 fi

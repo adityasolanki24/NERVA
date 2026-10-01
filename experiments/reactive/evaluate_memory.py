@@ -43,11 +43,12 @@ def _threat_at(sim, eid: str, t: float):
 
 def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
              neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str = "A",
-             head_pitch_down=None) -> dict:
+             head_pitch_down=None, head_yaw_max=None) -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
                                    perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                    backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
-                                   affect_model=affect_model, head_pitch_down=head_pitch_down)
+                                   affect_model=affect_model, head_pitch_down=head_pitch_down,
+                                   head_yaw_max=head_yaw_max)
     first_b, return_a, return_b = modes(rows, 46, 58), modes(rows, 94, 106), modes(rows, 120, 130)
     result = {
         "seed": seed, "memory": use_memory,
@@ -100,6 +101,7 @@ def main() -> None:
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
     ap.add_argument("--affect", choices=("A", "B"), default="A")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
+    ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")
     args = ap.parse_args()
     if args.together:
@@ -117,7 +119,7 @@ def main() -> None:
         return
     mems = (True,) if args.no_ablation else (True, False)
     results = [evaluate(args.policy, s, m, args.learning, args.backlash, args.neutral_style, args.appraisal, args.affect,
-                        args.head_pitch_down)
+                        args.head_pitch_down, args.head_yaw_max)
                for m in mems for s in range(args.seeds)]
     summary = {}
     for m in mems:

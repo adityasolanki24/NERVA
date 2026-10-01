@@ -233,7 +233,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
         memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A",
-        safety_supervisor: bool = True, head_pitch_down: float | None = None):
+        safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -274,6 +274,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         behaviour = behaviour_cls()
     if head_pitch_down is not None:
         behaviour.head_pitch_down = head_pitch_down
+    if head_yaw_max is not None:
+        behaviour.head_yaw_max = head_yaw_max
     cam = sim.model.camera("robot_eye").id
     decision = behaviour.step(0.0, 0.1, affect.pad, ActionTendencyState(), ())
     sim.set_behaviour(decision.command)

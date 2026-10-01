@@ -13,9 +13,9 @@ often.
 | 3 | Expressive style representation: scalar vs small style vector | done: style vector e = (tempo, step height, torso pitch) |
 | 4 | PAD → expressive style | hand-designed v0 (`nerva/behaviour/pad_style.py`); not validated |
 | 5 | Context-aware appraisal | v1 contextual and v2 memory-based (`nerva/affect/appraisal.py`); goals and self state still implicit |
-| 6 | Physical experience (near-falls, slips, saturation) feeding appraisal and PAD | near-fall from tilt feeds appraisal; nothing else yet |
+| 6 | Physical experience (near-falls, slips, saturation) feeding appraisal and PAD | near-fall from tilt feeds appraisal; self state (tilt, angular speed, stability risk) modulates appraisal frames; outcomes feed grounded memory |
 | 7 | Multiple locomotion skills | not started |
-| 8 | Failure-aware behaviour ("I fell" vs "I am becoming unstable") | not started |
+| 8 | Failure-aware behaviour ("I fell" vs "I am becoming unstable") | deterministic stop on instability (safety module, not fall prevention); B2 head-offset envelope measured; behaviour-level adaptation not started |
 | 9 | Style-conditioned RL policy π(s, c, e) | S1–S6 trained and evaluated: tempo and torso pitch work, step height does not; S5/S6 collapsed to standing; next: curriculum design (separate motor-learning thread) |
 | 10 | Expressive reference motion (animation, mocap, acted, designed) | not started |
 | 11 | Imitation learning: "move like this" + RL "while staying stable" | via Placo references per style (R1) in S1 |
@@ -41,10 +41,10 @@ entry, docs, commit.
 | B | Typed contracts + adapters (`SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState`) | done 2026-10-02 |
 | C | Behaviour consumes action tendencies, not emotion labels | done 2026-10-02 |
 | D | Outcome-grounded memory learning (legacy path kept as baseline) | done 2026-10-02; together-scenario "engages B" fails (diagnosis: global fear gate) |
-| E | Self state, goals, appraisal frames over explicit hypotheses | planned |
-| F | Compact world model / scene graph, modular sensor evidence | planned |
-| G | Model B (appraisal → PAD directly) vs Model A | planned |
-| H | Learned event prototypes vs hand-coded events (simulation) | planned |
+| E | Self state, goals, appraisal frames over explicit hypotheses | done 2026-10-02 |
+| F | Compact world model / scene graph, modular sensor evidence | done 2026-10-02; not yet read by behaviour |
+| G | Model B (appraisal → PAD directly) vs Model A | done 2026-10-02; see RQ8 |
+| H | Learned event prototypes vs hand-coded events (simulation) | done 2026-10-02; RQ9 falsified for this design |
 | I | Optional typed semantic cues from speech | deferred |
 
 After the refactor, in this order: decide whether action selection stays utility-based or becomes

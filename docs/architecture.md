@@ -4,7 +4,11 @@ This document has two parts. **Part 1** is what the code does today (verified ag
 **Part 2** is the target architecture and the staged migration toward it. Nothing in Part 2 is
 implemented unless its stage is marked done in §2.3.
 
-## 1. Current implementation (as of the 2026-10-02 audit)
+## 1. Current implementation
+
+§1.1–1.4 describe the code as audited on 2026-10-02, before the refactor; §1.5 lists what the refactor
+changed. The scenario defaults still run the audited path (for reproducibility); the new paths are
+selected by parameters.
 
 ### 1.1 The loop that actually runs
 
@@ -88,6 +92,32 @@ So the cognitive side is **already a graph**, not the strict chain the older doc
 
 ## 2. Target architecture [design]
 
+### 1.5 After the refactor (stages B–H, 2026-10-02)
+
+| Problem (§1.3) | Status | How |
+|---|---|---|
+| 1. Model A not replaceable | **fixed** | behaviour reads `ActionTendencyState`; Model A translates labels in `affect/tendencies.py` only; Model B (`affect/model_b.py`) runs behaviour and grounded memory without labels |
+| 2. memory learns from its own emotions | **alternative path** | `memory_learning="grounded"`: entity/place memory learn only from `OutcomeSignal`s (`world/outcomes.py`); sleep replay restores but adds no evidence. Legacy remains the default |
+| 3. no explicit self state / goals | **added** | `world/self_state.py`, `behaviour/goals.py`; used by appraisal frames and the safety supervisor |
+| 4. likelihood without referent | **fixed in the frames path** | `appraisal_mode="frames"`: every appraisal is an `AppraisalFrame` over an explicit `OutcomeHypothesis`; unmapped events are errors |
+| 5. perception emits interpretations | **unchanged** | legacy events (`person_approaching_rapidly`, …) remain the baseline vocabulary; outcomes and the world model work from measurements |
+| 6. no world model | **added** | `world/model.py`: self, people/objects (track ≠ entity ID), places, seven relations with confidence and provenance; built every frame, not yet read by behaviour |
+
+Also added: a deterministic safety supervisor (`nerva/safety.py`, stop on instability, no affect inputs),
+and identity from modular sensor evidence (`EntityMemory.resolve_evidence`).
+
+**Selecting the new paths** in `experiments/reactive/scenario.run` (and `evaluate*.py`):
+`memory_learning="grounded"`, `appraisal_mode="frames"`, `affect_model="B"`, `head_pitch_down`.
+
+**Measured outcomes of the refactor:**
+- With defaults, all regression traces are byte-identical to the pre-refactor code.
+- The new paths pass most preregistered criteria. Negative results: grounded memory fails "engages B" in
+  the together scenario; Model B made the robot fall in the two-person scenario (withdraw posture); learned
+  event prototypes predict outcomes worse than hand-coded events.
+- Found during the audit: B2 falls with some head offsets (pitch −0.35 with yaw), including one
+  pre-existing fall.
+- Details: `development_log.md`, 2026-10-02 entries.
+
 ### 2.1 Diagram
 
 ```
@@ -140,14 +170,14 @@ motion policy → actuation), with safety able to override it.
 
 | Stage | Content | Status |
 |---|---|---|
-| A | Audit; docs describe the live code; abstraction leaks documented | done (this document) |
+| A | Audit; docs describe the live code; abstraction leaks documented | done 2026-10-02 |
 | B | Typed contracts: `SelfState`, `GoalState`, `OutcomeSignal`, `OutcomeHypothesis`, `AppraisalFrame`, `ActionTendencyState` + adapters | done 2026-10-02 |
 | C | Behaviour consumes `ActionTendencyState`; Model A produces it; labels for logging only | done 2026-10-02 |
 | D | Outcome-grounded memory learning path; legacy path kept as a baseline | done 2026-10-02 (grounded passes the two-person criteria; fails "engages B" in the together scenario, see log) |
-| E | Explicit self state, goals and appraisal frames | planned |
-| F | Compact world model / scene graph + modular sensor evidence | planned |
-| G | Model B (appraisal → PAD directly), compared with Model A | planned |
-| H | Learned event prototypes (simulation experiment), compared with hand-coded events | planned |
+| E | Explicit self state, goals and appraisal frames | done 2026-10-02 (frames path; nominal context reproduces legacy numbers) |
+| F | Compact world model / scene graph + modular sensor evidence | done 2026-10-02 (not yet consumed by behaviour) |
+| G | Model B (appraisal → PAD directly), compared with Model A | done 2026-10-02 (passes default scenario; fell in two-person scenario; see log) |
+| H | Learned event prototypes (simulation experiment), compared with hand-coded events | done 2026-10-02 (RQ9 falsified for this design) |
 | I | Optional semantic cues from speech | deferred until a concrete experiment exists |
 
 ## 3. Safety rule (non-negotiable)
@@ -157,8 +187,11 @@ Fall detection, torque and joint limits, motor speed limits and emergency stop s
 sit below behaviour.
 
 **Today [fact]:** force and control ranges come from the MuJoCo model, and the 5.24 rad/s target
-rate limit from the upstream control loop. The reactive scenario only *detects* near-falls (tilt >
-20°) as an event for appraisal. A dedicated NERVA safety module is required before hardware.
+rate limit from the upstream control loop. `nerva/safety.py` (stage B–H refactor) is a deterministic
+stop-on-instability override between behaviour and the policy: zero velocity and neutral head at tilt ≥
+25° or stability risk ≥ 0.75. It takes no affect, tendency or memory input. It is a stop rule, not fall
+prevention: in the recorded B2 falls it neither caused nor prevented the fall. Hardware still needs an
+emergency stop, motor torque/temperature limits and fall-triggered motor disable.
 
 **Dual pathway for physical events.** A near-fall triggers deterministic recovery or stop (safety
 pathway: fast, rule-based, never learned) and may also be appraised (affective pathway: slower,

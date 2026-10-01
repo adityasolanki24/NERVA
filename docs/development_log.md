@@ -4,6 +4,46 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Follow-up F1 (B2 head pitch −0.2) and the head-yaw envelope; F2 preregistered
+
+**F1 results** (preregistered in the previous entry; `experiments/reactive/results_f1/`) [measured]:
+
+| # | evaluation | result |
+|---|---|---|
+| F1.1 | default scenario, simulated detector, seeds 0–5 | 0/6 falls (max tilt 14.0–15.0°; seed 3 fell at −0.35) |
+| F1.2 | default scenario, vision, Model A | curiosity, fear, habituation, safety 5/5 each (the ball stays tracked at −0.2: closest 0.53–0.58 m) |
+| F1.3 | two-person, grounded + frames + Model B | **still falls in 5/5 seeds**; memory criteria not meaningful |
+
+**Why F1.3 still fell [measured]:**
+- Before the fall, the robot stands in withdraw with the head at pitch −0.2 and yaw **−0.8** for about
+  3 s; tilt oscillates 5–14°, then diverges.
+- Standing B2, 15 s, seeds 0–3:
+
+  | head pitch | yaw −0.8 | yaw −0.4 | yaw +0.4 | yaw +0.8 |
+  |---|---|---|---|---|
+  | 0 | **4/4 fall** | 0/4 | 0/4 | 0/4 |
+  | −0.2 | **4/4 fall** | 0/4 | 0/4 | 0/4 |
+
+- **B2 cannot hold head yaw −0.8; it can hold +0.8.** This asymmetry is measured, not explained.
+- Withdraw "looks away" at −sign(threat bearing) × 0.8, so it fails whenever the threat is on the
+  robot's left. Model A rarely withdraws, which is why this was never seen before.
+- `ReactiveBehaviour.head_yaw_max` (default 1.3, keeping recorded results; `--head-yaw-max`) now limits
+  gaze, retreat glances, withdraw and the exploration scan. All three regression traces are still
+  byte-identical with defaults.
+
+**F2, preregistered now** (B2, neutral style, backlash scene; `head_pitch_down −0.2`,
+`head_yaw_max 0.4`, the measured standing-safe envelope; criteria unchanged; fall = tilt > 45°):
+1. Two-person, vision, grounded + frames + Model B, 5 seeds: no falls expected; then the four memory
+   criteria (RQ8 for this scenario).
+2. Default scenario, vision, frames + Model B, 5 seeds: the four criteria.
+3. Default scenario, vision, Model A (legacy appraisal), 5 seeds: the four criteria. This checks that the
+   narrower envelope keeps the baseline behaviour.
+4. Default scenario, simulated detector, Model A, seeds 0–5: falls.
+
+This is the last envelope iteration in this session. Whatever F2 shows is reported as is.
+
+---
+
 ## 2026-10-02 — Stage E/G/H results; B2 falls found; head-pitch envelope measured
 
 Preregistered in the previous entry. Code at `e7ea38e`; B2, neutral style, backlash scene [measured].

@@ -6,7 +6,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 # Core dependencies are deliberately minimal: interfaces, appraisal, affect and
 # gait metrics need only NumPy. MuJoCo/Open Duck are needed only by
-# nerva/open_duck_sim.py and are installed separately (see README).
+# nerva/sim/open_duck.py and are installed separately (see README).
 dependencies = ["numpy"]
 
 [project.optional-dependencies]

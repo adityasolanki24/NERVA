@@ -4,6 +4,28 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-01 — Isaac render with B2 motion, the robot's-eye view and NERVA's data
+
+Feedback on the first render: the backward walk looked bad (it was S1), and the data and robot point of view of the MuJoCo demo were missing.
+
+**Changes:**
+- **Replay:** `replays/memory_b2.npz` (B2, neutral style, backlash scene, memory scenario).
+- **Sidecar:** `export_replay.py` writes `memory_b2.json` with:
+  - per-frame affect, behaviour and memory values;
+  - perception events with their appraisals and emotions;
+  - the vision boxes from the robot camera;
+  - the robot-eye pose per frame.
+- **Robot's-eye camera:** `render_replay.py` adds a `RobotEye` camera at MuJoCo's `robot_eye` pose (same 70° vertical field of view, 4:3, 480×360), written to `frames_eye/`.
+- **Composer:** `compose.py` (local) builds the video: the Isaac scene view, the eye view with the vision boxes, the emotion/PAD chart, event and appraisal captions, and behaviour and memory status.
+
+**Run:** `isaac_spike-20261001-191549`, L4 [measured]:
+- Setup: driver install 6 min, image pull 8 min.
+- Rendering both cameras: 09:31–09:45 UTC, about 14 min for 3,375 frames each.
+- A spot-checked eye frame shows the person from the robot's height. The boxes come from MuJoCo vision with the same camera pose, so they align only as closely as the two renderers' geometry matches [not measured].
+- **Teardown:** the VM self-deleted; the waiter removed the NAT. `audit`: no instances, disks, addresses or routers (the results bucket remains, pending the user's decision).
+
+---
+
 ## 2026-10-01 — First Isaac Sim render with the robot (kinematic replay)
 
 `isaac_spike-20261001-180054`, L4, Ubuntu 22.04 + driver 570, Isaac Sim 5.1 [measured]:

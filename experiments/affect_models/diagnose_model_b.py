@@ -1,12 +1,23 @@
-"""Attribute Model B's PAD drive to appraisal features and to event vs in-view appraisals (diagnosis only)."""
+"""Attribute Model B's PAD drive to appraisal features and to event vs in-view appraisals (diagnosis only).
+
+Default scenario, vision, seed 0, profile v2 with the old Model B. Results: development log 2026-10-02.
+Usage: python experiments/affect_models/diagnose_model_b.py --policy B2.onnx
+"""
+# ruff: noqa: E302, E305, E402
+import argparse
 import sys
+from pathlib import Path
+
 import numpy as np
-sys.path.insert(0, r"C:\Users\24adi\OneDrive\NERVA\experiments\reactive")
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "reactive"))
 import scenario
 from nerva.affect import model_b as mb
 
-B2 = r"C:\Users\24adi\OneDrive\NERVA\experiments\cloud_runs\b2_neutral-20260930-163257\checkpoints\2026_09_30_083416_300482560.onnx"
-log = []  # (t?, kind, features)
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--policy", required=True)
+B2 = _ap.parse_args().policy
+log = []  # (kind, source, features, appraisal, origin)
 orig_add = mb.DimensionalAffectModel.add
 current = {"kind": "?"}
 def add(self, appraisal, source=""):

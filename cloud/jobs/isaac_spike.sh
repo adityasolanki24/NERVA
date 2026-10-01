@@ -2,6 +2,8 @@
 # Isaac Sim feasibility spike on an L4 (experiments/isaac/isaac_spike.py). Requires the user's explicit
 # acceptance of the NVIDIA Omniverse License Agreement: the launcher passes ISAAC_ACCEPT_EULA only then.
 #
+# Attempt 3 found the cause: the Deep Learning image's driver has no Vulkan at all on the host. The
+# launcher now starts isaac_* jobs from plain Ubuntu 22.04 and this script installs nvidia-driver-570.
 # Attempt 1 (2026-10-01) hung silently until the VM cap (output buffered by `tail`; root-owned mounts while
 # the container runs as uid 1234). Attempt 2 started Isaac but rendering failed: "vkCreateInstance failed
 # ... ERROR_INCOMPATIBLE_DRIVER" (no Vulkan inside the container). This version: streamed logs, owned
@@ -15,6 +17,12 @@ OUT=/work/out/isaac
 sync_isaac() { gsutil -q -m rsync -r "$OUT" "gs://$NERVA_BUCKET/runs/$NERVA_RUN_ID/out/isaac" || true; }
 mkdir -p "$OUT" /work/isaac_cache/{kit,ov,glcache,computecache} /work/isaac_logs
 
+# Full NVIDIA driver with the graphics (Vulkan/OpenGL) components: the VM is plain Ubuntu 22.04.
+if ! command -v nvidia-smi >/dev/null || ! ls /usr/share/vulkan/icd.d/nvidia_icd.json >/dev/null 2>&1; then
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update -qq && apt-get install -y -qq "linux-headers-$(uname -r)" nvidia-driver-570 >/dev/null
+  modprobe nvidia || true
+fi
 if ! command -v docker >/dev/null; then
   apt-get update -qq && apt-get install -y -qq docker.io >/dev/null
 fi

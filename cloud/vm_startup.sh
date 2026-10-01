@@ -50,7 +50,7 @@ trap finish EXIT
 ( while true; do sleep 600; sync_out; done ) &
 
 # 1. GPU driver (Deep Learning VM images install it at first boot; wait up to 15 min)
-if lspci | grep -qi nvidia; then
+if lspci | grep -qi nvidia && [[ "$JOB" != isaac_* ]]; then  # isaac jobs install the full driver themselves
   for i in $(seq 1 90); do nvidia-smi >/dev/null 2>&1 && break; sleep 10; done
   nvidia-smi || { echo "ERROR: NVIDIA driver not available"; exit 10; }
 fi

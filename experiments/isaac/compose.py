@@ -84,7 +84,7 @@ def main() -> None:
             y = TOP + MAIN_H
             if recent:
                 e = recent[-1]
-                em = ", ".join(f"{lbl} {v:.2f}" for lbl, v in e["emotions"]) or "no emotion"
+                em = ", ".join(f"{lbl} {v:.2f}" for lbl, v in e["emotions"]) or "(no emotion labels: affect Model B)"
                 draw.rectangle([0, y, frame.width, y + 58], fill=(255, 243, 205))
                 draw.text((12, y + 6), f"t = {e['t']:.1f} s   PERCEIVED: {e['kind'].replace('_', ' ')}",
                           fill=(120, 60, 0), font=f_big)

@@ -33,8 +33,9 @@ def window(rows, key, t0, t1):
 
 def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=None,
                   perception_mode: str = "simulated", backlash: bool = False, neutral: bool = False,
-                  appraisal_mode: str = "legacy", affect_model: str = "A", head_pitch_down=None, head_yaw_max=None,
-                  profile: str = "legacy") -> dict:
+                  appraisal_mode: str = "legacy", affect_model: str | None = None, head_pitch_down=None,
+                  head_yaw_max=None, profile: str = "v2") -> dict:
+    affect_model = affect_model or ("B" if profile == "v2" else "A")
     _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector, walking_head_limit=head_limit,
                                      perception_mode=perception_mode, backlash_scene=backlash,
                                      neutral_style=neutral, appraisal_mode=appraisal_mode, affect_model=affect_model,
@@ -72,10 +73,10 @@ def main() -> None:
     ap.add_argument("--neutral-style", action="store_true", help="policy trained on the neutral style only (B1/B2)")
     ap.add_argument("--head-limit", choices=("s1", "s3"), default="s1",
                     help="walking head-offset limit for the policy (S3 tolerates more head motion)")
-    ap.add_argument("--profile", choices=("legacy", "v2"), default="legacy",
+    ap.add_argument("--profile", choices=("legacy", "v2"), default="v2",
                     help="v2: policy capabilities, grounded memory, frames, targeted arbitration, world-model queries")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B"), default="A")
+    ap.add_argument("--affect", choices=("A", "B"), default=None, help="default: B for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results")

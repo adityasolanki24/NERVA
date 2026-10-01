@@ -73,6 +73,9 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   - *Falsified if* the grounded path fails the existing, unchanged memory criteria where the legacy path
     passes, or if an entity's adverse association still grows across sightings with no new adverse
     outcome.
+  - **Update (consolidation, 2026-10-02):** with target-conditioned arbitration (profile v2), grounded
+    memory passes the together scenario too (avoids A 5/5, engages B 5/5; legacy with B2: 1/5, 3/5).
+    The earlier failure came from the global fear gate, as diagnosed.
   - **Result (2026-10-02): partly falsified.**
     - Grounded passes all four two-person criteria (S1 and B2, 5/5).
     - A's threat never grows without a new adverse outcome.
@@ -93,6 +96,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
       criteria with no falls, and Model A still passes the default scenario.
     - *Reading:* for these behaviours the discrete categories were not necessary. Model B exposed a body
       limit that Model A never reached.
+    - *Consolidation (v2, 2026-10-02):* Model B passes all reactive, two-person and together criteria
+      with no falls, and is now the default.
+    - *Caveat:* its PAD saturates under sustained input (dominance > 0.9 for 31% of the default
+      scenario). This is not a behavioural criterion, but it matters before PAD drives style.
 - **RQ9, learned events.** Do event prototypes found by prediction-error segmentation and online
   clustering of world/self state predict grounded outcomes at least as well as the hand-coded event
   labels, in the same simulated scenarios?

@@ -4,6 +4,59 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Consolidation results: v2 passes everything legacy passes; defaults switched to v2 + Model B
+
+Preregistered in the previous entry. Code at `1f06847`; B2; `experiments/reactive/results_consolidation/`
+[measured].
+
+| # | evaluation | result |
+|---|---|---|
+| C1 | default scenario, v2 / A | curiosity, fear, habituation, safety 5/5 each |
+| C2 | default scenario, v2 / B | 5/5 each |
+| C3 | two-person, v2 / A | memory: 5/5 on all four; memory off: b_not_blamed 0/5, a_remembered 0/5, b_welcomed 5/5 |
+| C4 | two-person, v2 / B | 5/5 on all four |
+| C5 | together, v2 / A | memory: avoids A 5/5, engages B 5/5; memory off: avoids A 0/5, engages B 4/5 |
+| C5L | together, **legacy** / A (first B2 run) | memory: avoids A **1/5**, engages B **3/5**; memory off: 0/5, 5/5 |
+| C6 | together, v2 / B | avoids A 5/5, engages B 5/5 |
+| C7 | default scenario, simulated detector, seeds 0–5, v2 / A and v2 / B | 6/6 on every criterion each, no falls (legacy: 1/6 fell) |
+
+**Readings:**
+- **Target-conditioned arbitration fixes the together scenario.** Stage D's "engages B" failure (grounded,
+  global fear gate) is gone: v2 5/5. Memory is clearly causal there: avoids A 5/5 vs 0/5 without memory.
+- **The legacy profile with B2 does poorly in the together scenario** (1/5, 3/5). The 3/3 recorded on
+  2026-10-01 was with S1 in the plain scene.
+- **The capability envelope removes the pre-existing B2 fall** (C7).
+
+**Defaults decision (preregistered rule):**
+- v2 + Model A passes every criterion legacy passes in the same setups, with no falls, so **v2 becomes the
+  default profile**.
+- v2 + Model B does too, so **Model B becomes the default affect model**.
+- `scenario.run` now defaults to `profile="v2"` (affect B). `evaluate*.py` default to `--profile v2`.
+- `--profile legacy` (affect A) reproduces every earlier result. The three stage A traces are still
+  byte-identical with `profile="legacy"`, and a default `evaluate.py` run reproduces C2 seed 0 exactly.
+- The event-learning experiment keeps its preregistered legacy setup explicitly.
+
+**Caveat found after the suite, not covered by its criteria [measured]:** Model B's PAD saturates under
+sustained input. Default scenario, vision, seed 0:
+
+| model | max V / A / D | mean V / A / D | share of time with dominance > 0.9 |
+|---|---|---|---|
+| A | 0.20 / 0.20 / 0.24 | 0.11 / 0.12 / 0.14 | 0% |
+| B | 0.61 / 0.99 / 1.00 | 0.19 / 0.39 / 0.72 | 31% |
+
+- Cause [hypothesis]: the in-view appraisals every 2 s keep adding to Model B's linear drive. The
+  calibration and the fixed-trace comparison used isolated events only.
+- Behaviour was unaffected: it reads tendencies. Dominance only sets the social stop distance, which is
+  floored at 0.7 m.
+- **This must be fixed before PAD conditions expressive style e_t.** Candidates: normalise or saturate
+  repeated in-view drive, or recalibrate W on a sustained-exposure trace. The fix would be preregistered.
+
+**Charts:** with Model B, the demo charts and the Isaac composer plot action tendencies instead of
+emotion intensities. Event captions say "no emotion labels: affect Model B". The replay export includes
+tendencies.
+
+---
+
 ## 2026-10-02 — Consolidation phase: capabilities, targeted arbitration, world-model queries, risk vs outcome; suite and defaults rule preregistered
 
 Requested next step (review of the refactor): consolidate before deciding defaults.

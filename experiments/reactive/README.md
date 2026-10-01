@@ -15,6 +15,23 @@ Only the people and the ball follow scripts. Design: `docs/reactive_behaviour_de
 - `render.py`: video with scene view, robot's-eye detections and live affect charts
   (cloud: `cloud/jobs/reactive_demo.sh`)
 
+## Defaults
+
+Since 2026-10-02 `scenario.run` and the evaluators default to **profile v2 with affect Model B** (policy
+capabilities set the scene, style handling and head envelope). Use `--profile legacy` (affect A) to
+reproduce anything recorded earlier.
+
+## Consolidation suite (v2, B2) [measured]
+
+| scenario | v2 + A | v2 + B | legacy |
+|---|---|---|---|
+| default (vision) | 5/5 on all four | 5/5 on all four | 5/5 on all four |
+| two-person memory | 5/5 on all four; memory off 0/5 blame/remember | 5/5 on all four | 5/5; off 0/5 |
+| together | avoids A 5/5, engages B 5/5; off 0/5, 4/5 | 5/5, 5/5 | 1/5, 3/5 |
+| default, simulated detector, 6 seeds | 6/6, no falls | 6/6, no falls | 1/6 fell |
+
+Results: `results_consolidation/`.
+
 ## Latest results [measured, see `docs/development_log.md`]
 
 | Evaluation | Setup | Result |

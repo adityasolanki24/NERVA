@@ -40,6 +40,8 @@ MODE_COLOURS = {"explore": "#bbbbbb", "orient": "#8ecae6", "approach": "#90be6d"
 EMO_COLOURS = {"joy": "#2a9d8f", "hope": "#8ab17d", "fear": "#e76f51", "distress": "#6d597a",
                "surprise": "#f4a261", "interest": "#3a86ff"}
 PAD_COLOURS = {"valence": "#2a7ab9", "arousal": "#d1492e", "dominance": "#3b9a57"}
+TEND_COLOURS = {"tend_approach": "#2a9d8f", "tend_explore": "#3a86ff", "tend_avoid": "#e76f51",
+                "tend_orient": "#f4a261", "tend_freeze": "#9d4edd", "tend_withdraw": "#6d597a"}
 
 
 def font(size):
@@ -56,9 +58,11 @@ def chart(rows, fired, duration):
     fig, axes = plt.subplots(3, 1, figsize=(W / 100, H / 100), dpi=100, sharex=True,
                              gridspec_kw={"height_ratios": [1.1, 1, 0.9]})
     ax1, ax2, ax3 = axes
-    for lbl, c in EMO_COLOURS.items():
-        ax1.plot(t, np.minimum([r[lbl] for r in rows], 1.5), color=c, lw=1.3, label=lbl)
-    ax1.set_ylabel("emotion\nintensity", fontsize=8)
+    labelled = any(r.get(lbl) for r in rows for lbl in EMO_COLOURS)  # Model A; Model B has no emotion labels
+    series = EMO_COLOURS if labelled or "tend_avoid" not in rows[0] else TEND_COLOURS
+    for lbl, c in series.items():
+        ax1.plot(t, np.minimum([r[lbl] or 0.0 for r in rows], 1.5), color=c, lw=1.3, label=lbl.replace("tend_", ""))
+    ax1.set_ylabel("emotion\nintensity" if series is EMO_COLOURS else "action\ntendency", fontsize=8)
     ax1.set_ylim(-0.02, 1.5)
     ax1.legend(fontsize=6.5, ncol=6, loc="upper left", frameon=False)
     for key, c in PAD_COLOURS.items():
@@ -243,7 +247,7 @@ def main() -> None:
             recent = [f for f in fired if f[0] <= t < f[0] + 4.0]
             if recent:
                 te, kind, a, emos = recent[-1]
-                em = ", ".join(f"{lbl} {v:.2f}" for lbl, v in emos) or "no emotion"
+                em = ", ".join(f"{lbl} {v:.2f}" for lbl, v in emos) or "(no emotion labels: affect Model B)"
                 draw.rectangle([0, H, W * 2, H + 58], fill=(255, 243, 205))
                 draw.text((12, H + 6), f"t = {te:.1f} s   PERCEIVED: {kind.replace('_', ' ')}", fill=(120, 60, 0),
                           font=f_big)

@@ -42,8 +42,8 @@ def _threat_at(sim, eid: str, t: float):
 
 
 def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
-             neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str = "A",
-             head_pitch_down=None, head_yaw_max=None, profile: str = "legacy") -> dict:
+             neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
+             head_pitch_down=None, head_yaw_max=None, profile: str = "v2") -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
                                    perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                    backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
@@ -72,8 +72,8 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
 
 
 def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
-                      neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str = "A",
-                      profile: str = "legacy") -> dict:
+                      neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
+                      profile: str = "v2") -> dict:
     """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
     avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
     occurs and B comes closer than A on average."""
@@ -101,9 +101,9 @@ def main() -> None:
     ap.add_argument("--backlash", action="store_true", help="evaluate in the scene the policies were trained in")
     ap.add_argument("--neutral-style", action="store_true", help="policy trained on the neutral style only (B1/B2)")
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
-    ap.add_argument("--profile", choices=("legacy", "v2"), default="legacy")
+    ap.add_argument("--profile", choices=("legacy", "v2"), default="v2")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--affect", choices=("A", "B"), default="A")
+    ap.add_argument("--affect", choices=("A", "B"), default=None, help="default: B for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")

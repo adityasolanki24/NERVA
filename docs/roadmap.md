@@ -47,9 +47,20 @@ entry, docs, commit.
 | H | Learned event prototypes vs hand-coded events (simulation) | done 2026-10-02; RQ9 falsified for this design |
 | I | Optional typed semantic cues from speech | deferred |
 
-After the refactor, in this order: decide whether action selection stays utility-based or becomes
-learned (compared experimentally); optional semantic cues. Separate threads continue independently:
-locomotion/style curriculum, Isaac person animation and detectors, human evaluation.
+**Consolidation (2026-10-02), done:**
+- policy capability layer;
+- target-conditioned arbitration;
+- world model as the query source;
+- RiskEstimate vs OutcomeSignal;
+- suite re-run and defaults switched to v2 + Model B.
+
+**Next, in this order:**
+1. Fix Model B's PAD saturation (preregistered), so PAD can give a meaningful expressive condition e_t.
+2. Return to expressive movement: π(s, c, e) with continuous expressive conditioning / reference motion
+   (curriculum design: robust locomotion first, then expressive objectives), evaluated on monotonic
+   control, cross-talk and task performance.
+3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
+   detectors; human evaluation.
 
 ## Planned comparisons
 

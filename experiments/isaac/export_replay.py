@@ -79,7 +79,8 @@ def main() -> None:
                         eye_fovy=float(model.cam_fovy[eye]))
     keep = ("t", "valence", "arousal", "dominance", "joy", "hope", "fear", "distress", "surprise", "interest",
             "mode", "reason", "identity", "mem_threat", "mem_warmth", "dist_person", "dist_person_b",
-            "cmd_vx", "cmd_yaw", "e_tempo", "e_torso_pitch", "head_pitch", "head_yaw", "tilt_deg")
+            "cmd_vx", "cmd_yaw", "e_tempo", "e_torso_pitch", "head_pitch", "head_yaw", "tilt_deg",
+            "tend_approach", "tend_explore", "tend_avoid", "tend_orient", "tend_freeze", "tend_withdraw")
     side = {
         "fps": FPS, "vision_size": [scenario.EYE_H, scenario.EYE_W],
         "rows": [{k: (None if isinstance(r.get(k), float) and r[k] != r[k] else r.get(k)) for k in keep}

@@ -33,9 +33,9 @@ it: `docs/architecture.md`.
 | Reactive behaviour | emotion-modulated utility selection; B2 + vision + backlash: curiosity, fear, habituation, safety 5/5 seeds each (`experiments/reactive/`) |
 | Memory | M1–M4: entity, episodic with consolidation, place memory; two-person ablation memory 5/5 vs none 0/5, measured with S1 in the plain scene (`docs/memory_design.md`) |
 | Isaac Sim | kinematic replay of MuJoCo runs with realistic rendering and the robot's-eye camera (`experiments/isaac/`); not used for physics |
-| Architecture refactor (2026-10-02) | action tendencies (behaviour no longer reads emotion labels), outcome-grounded memory, self state, goals, appraisal frames over explicit hypotheses, world model, modular sensor evidence, affect Model B, deterministic safety stop; defaults reproduce the earlier results exactly, new paths are opt-in (`docs/architecture.md` §1.5) |
+| Architecture (2026-10-02) | default profile "v2": policy capability layer, action tendencies conditioned on their target, outcome-grounded memory (near misses kept apart as risk estimates), self state, goals, appraisal frames over explicit hypotheses, world model as the query source, affect Model B, deterministic safety stop. B2 v2 suite: all reactive, two-person and together criteria pass, no falls. `--profile legacy` reproduces earlier results exactly (`docs/architecture.md` §1.5–1.6) |
 | Affect Model B | appraisal → PAD and tendencies without emotion categories; passes the same reactive and two-person memory criteria as Model A once B2's head limits are respected (RQ8) |
-| B2 body limits | B2 falls with some head postures (yaw −0.8; pitch −0.35 with yaw); safe envelope measured: pitch ≥ −0.2, \|yaw\| ≤ 0.4 (`--head-pitch-down -0.2 --head-yaw-max 0.4`) |
+| B2 body limits | B2 falls with some head postures (yaw −0.8; pitch −0.35 with yaw); the measured safe envelope (pitch ≥ −0.2, \|yaw\| ≤ 0.4) is in B2's capability record (`nerva/sim/capabilities.py`) and applied automatically |
 | Learned events | prediction-error prototypes predicted outcomes worse than the hand-coded events (RQ9 falsified for this design) |
 | Human evaluation | not started; no behaviour is claimed to *look* emotional |
 

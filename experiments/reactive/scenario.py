@@ -33,7 +33,9 @@ profile="v2" (consolidation, 2026-10-02) bundles the new paths:
   - the world model is updated right after identity binding and is the source that touch attribution,
     appraisal identity and the behaviour's inputs (tracks, remembered threat per entity) query
   - near misses are RiskEstimates, kept apart from actual OutcomeSignals (also in legacy runs' logs)
-profile="legacy" (default) is the recorded pre-consolidation behaviour, byte-for-byte.
+profile="v2" with affect Model B is the DEFAULT since 2026-10-02 (preregistered consolidation suite,
+development log). profile="legacy" (affect A by default) reproduces the pre-refactor behaviour byte-for-byte;
+pass it explicitly to reproduce any result recorded before that date.
 """
 
 from __future__ import annotations
@@ -254,9 +256,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
-        memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str = "A",
+        memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str | None = None,
         safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None,
-        profile: str = "legacy"):
+        profile: str = "v2"):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -264,6 +266,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     if profile not in ("legacy", "v2"):
         raise ValueError("profile must be 'legacy' or 'v2'")
     v2 = profile == "v2"
+    affect_model = affect_model or ("B" if v2 else "A")  # defaults decided 2026-10-02 (development log)
     capabilities = capabilities_for(policy) if v2 else None
     if v2:
         backlash_scene = capabilities.training_scene == "backlash"

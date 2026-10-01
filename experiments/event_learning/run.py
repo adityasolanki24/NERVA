@@ -63,7 +63,7 @@ def collect(policy: str, name: str, seed: int) -> dict:
     make, duration = SCENARIOS[name]
     sim, rows, frames, fired = scenario.run(policy, seed=seed, duration=duration, agents=make(),
                                             record_every=scenario.PERCEIVE_EVERY, backlash_scene=True,
-                                            neutral_style=True)
+                                            neutral_style=True, profile="legacy")  # as preregistered
     touches = [t for t, kind, *_ in fired if kind == "touch_gentle"]
     xs, ts = [], []
     for i, fr in enumerate(frames):

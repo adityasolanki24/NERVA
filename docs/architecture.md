@@ -7,8 +7,8 @@ implemented unless its stage is marked done in §2.3.
 ## 1. Current implementation
 
 §1.1–1.4 describe the code as audited on 2026-10-02, before the refactor; §1.5 lists what the refactor
-changed. The scenario defaults still run the audited path (for reproducibility); the new paths are
-selected by parameters.
+changed; §1.6 the consolidation. Since 2026-10-02 the scenario default is the v2 profile with affect
+Model B; `profile="legacy"` runs the audited path.
 
 ### 1.1 The loop that actually runs
 
@@ -117,6 +117,28 @@ and identity from modular sensor evidence (`EntityMemory.resolve_evidence`).
 - Found during the audit: B2 falls with some head offsets (pitch −0.35 with yaw), including one
   pre-existing fall.
 - Details: `development_log.md`, 2026-10-02 entries.
+
+### 1.6 Consolidation (profile "v2", 2026-10-02)
+
+- **Policy capabilities.** Behaviour takes its head envelope and walking head limit from the policy's
+  measured `PolicyCapabilities` (`nerva/sim/capabilities.py`), and the scenario takes the training scene
+  and style handling from it. B2: pitch (−0.2, 0.6), yaw (−0.4, 0.4).
+- **Target-conditioned tendencies.** Affect models attribute tendencies to the track an appraisal is
+  about (`tendencies_for`). Behaviour gates approach to *k* by avoidance directed at *k*, and
+  watch/retreat by the focal person's avoidance.
+- **World model as query source.** It is updated right after identity binding. Appraisal identity, the
+  tracks behaviour sees, remembered threat per entity and touch attribution are all queries on it.
+- **Risk vs outcome.** `RiskEstimate` (`collision_risk`: an estimated near miss) is separate from
+  `OutcomeSignal` (`stability_loss`, `contact_impact`, `benign_contact`: what actually happened).
+  Grounded memory keeps `risk` and `adverse` apart; threat = max(adverse, risk).
+
+`profile="v2"` turns all of this on, together with grounded memory and appraisal frames. **Since the
+consolidation suite (2026-10-02), v2 with affect Model B is the default.** `profile="legacy"` (affect A)
+is byte-identical to the pre-refactor code and reproduces every earlier result.
+
+Open issue: Model B's PAD saturates under sustained input (dominance > 0.9 for 31% of the default
+scenario). Behaviour reads tendencies and is unaffected, but this must be fixed before PAD conditions
+expressive style.
 
 ### 2.1 Diagram
 

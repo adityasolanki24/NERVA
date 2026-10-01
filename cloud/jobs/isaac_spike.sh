@@ -81,10 +81,9 @@ done
 echo "selected image: ${IMAGE:-none}" | tee "$OUT/selected_image.txt"
 
 if [ -n "$IMAGE" ]; then
-  echo "== spike with $IMAGE (35 min limit)" > "$OUT/spike.log"
-  timeout 35m "${RUN[@]}" "$IMAGE" /nerva_isaac/isaac_spike.py --urdf /robot/robot_local.urdf --mjcf /mjcf/open_duck_mini_v2.xml --out /out \
-    --frames 120 --replay /nerva_isaac/replays/memory_s1.npz >> "$OUT/spike.log" 2>&1
-  echo "spike exit=$?" >> "$OUT/spike.log"
+  echo "== replay render with $IMAGE (45 min limit)" > "$OUT/render.log"
+  timeout 45m "${RUN[@]}" "$IMAGE" /nerva_isaac/render_replay.py --mjcf /mjcf/open_duck_mini_v2.xml     --replay /nerva_isaac/replays/memory_s1.npz --out /out --frames ${ISAAC_FRAMES:-750} --stride 2 >> "$OUT/render.log" 2>&1
+  echo "render exit=$?" >> "$OUT/render.log"
 fi
 cp -r /work/isaac_logs "$OUT/kit_logs" 2>/dev/null || true
 sync_isaac

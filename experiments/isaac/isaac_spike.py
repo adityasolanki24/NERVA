@@ -115,7 +115,9 @@ def _():
                 state["robot"] = path
         except Exception as e:
             attempts["urdf_command"] = repr(e)
-    joints = [p.GetName() for p in stage.Traverse() if p.GetTypeName().endswith("Joint")]
+    from pxr import Usd
+    everything = list(Usd.PrimRange(stage.GetPseudoRoot(), Usd.TraverseInstanceProxies()))
+    joints = [p.GetName() for p in everything if p.GetTypeName().endswith("Joint")]
     return {"robot": state.get("robot"), "attempts": attempts, "joints": joints[:40]}
 
 
@@ -148,6 +150,15 @@ def _():
     raise RuntimeError(f"no character loaded: {last}")
 
 
+def articulation_root(under: str) -> str | None:
+    """The prim carrying the articulation root (importers put it on a child of the imported prim)."""
+    from pxr import Usd, UsdPhysics
+    for prim in Usd.PrimRange(stage.GetPrimAtPath(under), Usd.TraverseInstanceProxies()):
+        if prim.HasAPI(UsdPhysics.ArticulationRootAPI):
+            return str(prim.GetPath())
+    return None
+
+
 @step("render_frames")
 def _():
     from isaacsim.core.api import World
@@ -160,22 +171,35 @@ def _():
     writer.initialize(output_dir=os.path.join(args.out, "frames"), rgb=True)
     writer.attach([rp])
     replay = np.load(args.replay) if args.replay else None
-    art = None
+    info = {"articulation_root": None, "replay_driven": False, "replay_error": None}
+    art, cols = None, []
     if replay is not None and state.get("robot"):
-        from isaacsim.core.prims import SingleArticulation
-        art = SingleArticulation(state["robot"])
-        art.initialize()
-        names = list(art.dof_names)
-        cols = [list(replay["joint_names"]).index(n) if n in list(replay["joint_names"]) else -1 for n in names]
+        try:
+            from isaacsim.core.prims import SingleArticulation
+            info["articulation_root"] = articulation_root(state["robot"])
+            art = SingleArticulation(info["articulation_root"] or state["robot"])
+            art.initialize()
+            names = list(art.dof_names)
+            replay_names = list(replay["joint_names"])
+            cols = [replay_names.index(n) if n in replay_names else -1 for n in names]
+            info["dof_names"] = names
+            info["replay_driven"] = True
+        except Exception as e:  # render without driving the robot rather than not at all
+            info["replay_error"] = repr(e)
+            art = None
     for i in range(args.frames):
         if art is not None:
             k = min(i, len(replay["t"]) - 1)
-            q = np.array([replay["joints"][k, c] if c >= 0 else 0.0 for c in cols])
-            art.set_joint_positions(q)
-            art.set_world_pose(position=replay["base_pos"][k], orientation=replay["base_quat"][k])
+            try:
+                art.set_joint_positions(np.array([replay["joints"][k, c] if c >= 0 else 0.0 for c in cols]))
+                art.set_world_pose(position=replay["base_pos"][k], orientation=replay["base_quat"][k])
+            except Exception as e:
+                info["replay_error"] = repr(e)
+                art = None
         world.step(render=True)
         rep.orchestrator.step()
-    return {"frames": args.frames, "replay": bool(args.replay)}
+    info["frames"] = args.frames
+    return info
 
 
 app.close()

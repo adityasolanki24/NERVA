@@ -288,6 +288,7 @@ def cmd_launch(a):
                 "install-nvidia-driver=True", f"nerva-job={job}", f"nerva-bucket={BUCKET}",
                 f"nerva-run-id={run_id}", f"nerva-code-sha={sha}", f"nerva-upstream-sha={UPSTREAM_SHA}",
                 f"nerva-input-uri={input_uri}" if input_uri else "",
+                "nerva-isaac-eula=Y" if getattr(a, "accept_isaac_eula", False) else "",
             ])),
         ]
         if a.spot:
@@ -498,6 +499,8 @@ def main():
     s.add_argument("--teardown", action="store_true",
                    help="with --wait, also delete the dedicated bucket and runner account")
     s.add_argument("--poll-seconds", type=int, default=30, help=argparse.SUPPRESS)
+    s.add_argument("--accept-isaac-eula", action="store_true",
+                   help="only after the user has explicitly accepted the NVIDIA Omniverse License Agreement")
 
     s = command("wait", cmd_wait)
     s.add_argument("run")

@@ -29,6 +29,7 @@ OUT_GS="gs://$BUCKET/runs/$RUN_ID"
 export NERVA_BUCKET="$BUCKET"
 export NERVA_RUN_ID="$RUN_ID"
 export NERVA_INPUT_URI="$INPUT_URI"
+if [ "$(meta nerva-isaac-eula || true)" = "Y" ]; then export ISAAC_ACCEPT_EULA=Y; fi
 
 mkdir -p /work/out && cd /work
 exec > >(tee -a /work/out/vm.log) 2>&1
@@ -63,7 +64,7 @@ mkdir -p /work/NERVA && tar -xzf /work/nerva.tar.gz -C /work/NERVA
 export HOME=/root
 curl -LsSf https://astral.sh/uv/install.sh | sh
 export PATH="$HOME/.local/bin:$PATH"
-if [ "$JOB" != "r0_references" ] && [ "$JOB" != "r1_references" ]; then
+if [ "$JOB" != "r0_references" ] && [ "$JOB" != "r1_references" ] && [[ "$JOB" != isaac_* ]]; then
   git clone -q https://github.com/apirrone/Open_Duck_Playground.git /work/Open_Duck_Playground || exit 12
   git -C /work/Open_Duck_Playground checkout -q "$UPSTREAM_SHA" || exit 12
   uv venv --python 3.12 /work/venv || exit 13

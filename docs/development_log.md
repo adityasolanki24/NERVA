@@ -4,6 +4,91 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-02 — Model B saturation: diagnosis, mapping review, preregistration of the fix
+
+**Diagnosis [measured]:** default scenario, B2, vision, seed 0, Model B. Every appraisal's features were
+logged and split into the repeated `*_in_view` appraisals (re-evaluated every 2 s per visible track) and
+discrete events.
+
+| origin | count | summed drive W·u to V / A / D |
+|---|---|---|
+| in-view | 42 | 0.75 / **3.20** / **2.31** |
+| events | 13 | −0.12 / 1.68 / 0.33 |
+
+- **Dominance comes from the `control` feature r·(2c − 1).**
+  - In-view appraisals have a constant controllability of 0.8, so each adds control +0.25 on average.
+  - Re-adding it every 2 s into a trace with τ = 4 s holds 2.54× a single impulse; the 8 s dominance leak
+    integrates that again.
+  - Predicted steady dominance from mean in-view input alone: **1.12**, i.e. saturation.
+- **Novelty raises dominance only indirectly:** in-view relevance = 0.2 + 0.4·novelty scales the control
+  impulse. W has no novelty → D term.
+- **Arousal:** the in-view `unexpected` (mean 0.134) and `novelty` (0.224) terms with the same repetition
+  gain; predicted steady arousal 0.77.
+- **Structural cause:** an appraisal of an *unchanged, ongoing* situation is added as a new independent
+  impulse each time it is re-evaluated, so PAD scales with the re-appraisal rate rather than with the
+  situation.
+
+**Mapping review** (W rows V, A, D; columns pos = r·d⁺·l, neg = r·d⁻·l, unexpected = r(1−e)², novelty =
+r(1−e)(1−d⁻), control = r(2c−1)):
+
+| term | weight | justification | flag |
+|---|---|---|---|
+| pos → V | +0.25 | a desirable likely outcome is pleasant (appraisal theory: goal congruence → valence) | — |
+| neg → V | −0.47 | an undesirable likely outcome is unpleasant | magnitude asymmetry vs pos comes only from calibration to Model A's fear anchor; weak |
+| novelty → V | +0.08 | novel and harmless is mildly pleasant ("interest") | moderate; a NERVA choice |
+| pos → A | +0.05 | — | weak; very small, little justification either way |
+| neg → A | +0.25 | threat is arousing | — |
+| unexpected → A | +0.40 | surprise is arousing | — |
+| novelty → A | +0.10 | novelty is arousing | **redundant with unexpected**: both are functions of (1 − e), so the same quantity drives arousal twice |
+| neg → D | −0.10 | threat lowers felt control | partly overlaps with control → D |
+| control → D | +0.22 | controllability ↔ dominance (the usual appraisal/PAD link) | conceptually sound as a **level**; wrong as an integrated **impulse** (the saturation mechanism) |
+
+No term maps novelty to dominance directly. The high dominance under prolonged novelty is the
+control-impulse mechanism above.
+
+**Planned fix: Model B v2, `affect_model="Bv2"`.** Old Model B stays as "B" (reproducible).
+- `AppraisalFrame` gets `persistent: bool` (contract). `FrameAppraiser.observe` marks in-view appraisals
+  persistent; events are not.
+- **Contextual channel:** one slot per source track, holding that source's *latest* persistent appraisal
+  features. They are replaced, not added, and fade with τ_ctx = 3 s after the last refresh (longer than
+  the 2 s re-appraisal period).
+- **Phasic channel:** discrete events add decaying traces, as in Model B.
+- **Target:** x* = tanh(G (W u_ctx + W z_ph)), with G = diag(τ_V, τ_A, τ_D) = diag(8, 4, 8). G converts
+  the old per-second weights into the same steady-state gain the old model had for a single input; this
+  is a unit conversion, not a new calibration.
+- **Dynamics:** dx/dt = −Λ (x − x*), the same Λ as Model B. With no input, x* = 0, so x returns to the
+  baseline.
+- **W is unchanged:** the flagged terms are documented, not retuned. The fix is purely structural.
+- **Tendencies are unchanged from Model B** (trace-based, all appraisals). They are bounded in practice
+  (2.54× one impulse) and behaviour was calibrated on them. They share the impulse structure; revisit
+  later.
+
+**Preregistered evaluation.** Thresholds are design choices fixed now; A, old B and Bv2 are all
+reported.
+
+1. **Fixed trace** (affect-prototype timeline):
+   - bounded;
+   - recovery to ‖PAD‖ < 0.05 within 60 s of the last event;
+   - **event response direction**: the effect of each event, measured as the difference at +2 s between
+     runs with and without that event (isolating it from ongoing recovery), must have the same sign as
+     its desirability for every event with desirability ≠ 0. Arousal must rise for events with
+     expectedness < 0.3.
+2. **Convergence:** one identical persistent appraisal (r 0.6, d 0, l 0.5, e 0.3, c 0.8) from one source.
+   - Repeated every 2 s for 120 s: |x(120) − x(60)| < 0.02 on each dimension, and max |x| < 0.9.
+   - **Rate invariance:** the steady state at a 1 s re-appraisal period must be within 0.05 of the 2 s
+     steady state (an unchanged situation re-evaluated more often must not mean more).
+3. **Full scenarios, profile v2, B2, 5 seeds each** (default with vision, two-person, together):
+   - all existing behavioural criteria pass, with no falls;
+   - **PAD dynamic range per dimension** (pooled over runs): time with |x| > 0.9 ≤ 5%;
+   - standard deviation ≥ 0.05 for V and A (dominance reported);
+   - max |V| ≥ 0.2 and max |A| ≥ 0.2 in every scenario.
+
+**Decision rule:** Bv2 replaces old B as the default affect model if it meets every criterion above. If
+it fails any, the default stays as is and the failure is reported. **PAD is not connected to style in
+any case until Bv2 (or a successor) meets the dynamic-range criteria.**
+
+---
+
 ## 2026-10-02 — Consolidation results: v2 passes everything legacy passes; defaults switched to v2 + Model B
 
 Preregistered in the previous entry. Code at `1f06847`; B2; `experiments/reactive/results_consolidation/`

@@ -36,3 +36,4 @@ experiments/reactive/results*/
 
 # Demo outputs are regenerated (videos are large); the current demo is rendered in the cloud
 experiments/demo_video/results*/
+HANDOFF_TO_CHATGPT.md

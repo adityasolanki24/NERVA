@@ -4,6 +4,44 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-06 — In-view controllability from the reaction margin: preregistration
+
+**Problem** (flag from the Bv2 evaluation): dominance under Model B v2 is one-sided (−0.04 … 0.88).
+- The in-view appraisal gives every visible thing a constant controllability of 0.8 (0.8 − 0.4·threat with
+  memory).
+- So a person lunging at the robot is, while in view, appraised as fully controllable. Only the single
+  phasic lunge event carries low controllability (0.25), and the in-view context outweighs it.
+
+**Change (frames path only, so the legacy profile is untouched):** `FrameAppraiser.observe` replaces the
+in-view controllability c of a **person** with min(c, ĉ), where
+
+  ĉ = clip(TTC / TTC_SAFE, C_MIN, 0.8) · (1 − 0.5 · stability_risk),
+  TTC = distance / ego-corrected closing speed (∞ when not closing),
+  TTC_SAFE = 3 s, C_MIN = 0.1.
+
+- **Rationale [design]:** control over an interaction with an autonomous agent is the margin the robot
+  has to react before contact. A slow, friendly approach (0.25 m/s at 1 m: TTC 4 s) or standing beside
+  the robot to pet it (not closing) keeps full control. A fast approach does not.
+- The robot's own instability lowers control (the same stability risk as in the frames).
+- **Objects** keep c: they do not act.
+- Remembered threat still enters through the wrapped appraiser's c.
+- Constants are NERVA design choices, fixed now.
+
+**Preregistered criteria** (profile v2, Bv2, B2, vision; 5 seeds; default, two-person and together
+scenarios):
+1. All existing behavioural criteria pass, with no falls. The legacy-profile traces stay byte-identical.
+2. The saturation criteria still hold: time with |x| > 0.9 ≤ 5% per dimension; std ≥ 0.05 for V and A.
+3. **Dominance becomes informative:**
+   - (a) pooled min D ≤ −0.10;
+   - (b) mean D over 46.5–49.5 s (the lunge) in the default scenario < 0 in ≥ 4/5 seeds;
+   - (c) in the two-person scenario, mean D while A returns (94–106 s) < mean D while B returns
+     (120–130 s) in ≥ 4/5 seeds;
+   - (d) pooled std of D ≥ 0.05.
+
+**Decision:** adopt in the frames path (and so the default) if 1–3 all hold; otherwise revert and report.
+
+---
+
 ## 2026-10-02 — Model B v2 fixes the saturation; now the default affect model
 
 Preregistered in the previous entry. Code at `6eb2054`; results in `experiments/affect_models/results/`

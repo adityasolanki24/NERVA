@@ -189,3 +189,29 @@ class AttractorAffectModel(DimensionalAffectModel):
         self.z_by_source = {s: z * k for s, z in self.z_by_source.items() if float(np.max(np.abs(z))) > 1e-4}
         self.context = {s: (u, tl) for s, (u, tl) in self.context.items() if self._weight(tl) > 1e-3}
         return self.pad
+
+
+class OnsetAttractorAffectModel(AttractorAffectModel):
+    """Model B v3 (`affect_model="Bv3"`): Model B v2 with fast onset, slow return.
+
+    Bv2 relaxed toward its target with one time constant per dimension (8 / 4 / 8 s), so a sudden threat
+    could not move dominance within seconds (development log 2026-10-06). Here, per dimension, the rate is
+    1/TAU_ONSET_S while the response is building (the target lies further from baseline than x, on the
+    side x is moving to) and 1/τ (Bv2's) otherwise. Same structure as Model A: fast pull, slow return.
+    """
+
+    TAU_ONSET_S = 1.0
+
+    def step(self, dt: float) -> PADState:
+        x_star = self.target()
+        x0 = np.array(self.cfg.baseline)
+        building = (np.abs(x_star - x0) > np.abs(self.x - x0)) & (np.sign(x_star - x0) == np.sign(x_star - self.x))
+        lam = np.where(building, 1.0 / self.TAU_ONSET_S, self._lam)
+        self.x = np.clip(x_star + (self.x - x_star) * np.exp(-lam * dt), -1.0, 1.0)
+        self.t += dt
+        k = np.exp(-dt / self._tau_z)
+        self.z = self.z * k
+        self.z_phasic = self.z_phasic * k
+        self.z_by_source = {s: z * k for s, z in self.z_by_source.items() if float(np.max(np.abs(z))) > 1e-4}
+        self.context = {s: (u, tl) for s, (u, tl) in self.context.items() if self._weight(tl) > 1e-3}
+        return self.pad

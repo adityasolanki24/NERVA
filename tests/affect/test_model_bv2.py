@@ -62,3 +62,18 @@ def test_tendencies_are_those_of_model_b():
         m.add(IN_VIEW)
         m.step(0.1)
     assert a.tendencies == b.tendencies and a.tendencies_for("person-0") == b.tendencies_for("person-0")
+
+
+def test_bv3_builds_fast_and_returns_slowly():
+    from nerva.affect.model_b import OnsetAttractorAffectModel
+
+    slow, fast = AttractorAffectModel(), OnsetAttractorAffectModel()
+    for m in (slow, fast):
+        m.add(LUNGE)
+    v_slow = [slow.step(0.1).dominance for _ in range(20)]
+    v_fast = [fast.step(0.1).dominance for _ in range(20)]
+    assert min(v_fast) < min(v_slow) - 0.1  # responds within 2 s
+    for _ in range(600):
+        fast.step(0.1)
+    assert np.all(np.abs(fast.x) < 0.01)  # still returns to baseline
+    assert isinstance(fast, AffectSystem)

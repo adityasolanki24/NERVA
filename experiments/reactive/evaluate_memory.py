@@ -60,6 +60,8 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
         "max_tilt_deg": max(r["tilt_deg"] for r in rows),
         "fell": max(r["tilt_deg"] for r in rows) > 45.0,
         "pad": pad_stats(rows),
+        "d_a_return": sum(r["dominance"] for r in rows if 94 <= r["t"] < 106) / max(1, len(return_a)),
+        "d_b_return": sum(r["dominance"] for r in rows if 120 <= r["t"] < 130) / max(1, len(return_b)),
     }
     if use_memory:
         recs = sorted(sim.memory.records.values(), key=lambda r: r.eid)

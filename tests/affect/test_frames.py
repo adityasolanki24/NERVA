@@ -57,3 +57,22 @@ def test_context_selects_the_social_hypothesis():
     adverse = dataclasses.replace(benign.as_appraisal_state(), desirability=-0.3)
     assert benign.hypothesis.kind == "benign_interaction"
     assert frame_from("person_appeared", adverse, "p", None, None).hypothesis.kind == "adverse_interaction"
+
+
+def test_agent_controllability_is_the_reaction_margin():
+    from nerva.affect.frames import C_MAX, C_MIN, agent_controllability
+
+    assert agent_controllability(Track("person", 0.0, 1.0, approach_speed=0.0), None) == C_MAX  # petting
+    assert agent_controllability(Track("person", 0.0, 1.0, approach_speed=0.25), None) == C_MAX  # TTC 4 s
+    lunge = agent_controllability(Track("person", 0.0, 1.0, approach_speed=1.8), None)
+    assert C_MIN <= lunge < 0.25
+    shaky = agent_controllability(Track("person", 0.0, 1.0, approach_speed=1.8), SelfState(stability_risk=1.0))
+    assert abs(shaky - 0.5 * lunge) < 1e-12
+
+
+def test_in_view_frames_of_people_use_the_margin_and_objects_do_not():
+    fa = FrameAppraiser(ContextualAppraiser())
+    tracks = (Track("person", 0.0, 1.0, approach_speed=1.8, tid="person-0"), Track("ball", 0.5, 1.0, tid="ball-0"))
+    frames = {f.hypothesis.subject: f for _, f in fa.observe(10.0, tracks, 0.1)}
+    assert frames["person-0"].controllability < 0.3 and frames["ball-0"].controllability == 0.8
+    assert all(f.persistent for f in frames.values())

@@ -20,9 +20,13 @@ numbers exactly (tested). All mappings and constants are NERVA design choices.
 
 from __future__ import annotations
 
+import dataclasses
+
 from nerva.interfaces import AppraisalFrame, AppraisalState, Event, GoalState, OutcomeHypothesis, SelfState
 
 NO_GOAL_RELEVANCE = 0.3
+TTC_SAFE_S = 3.0  # reaction margin at which an approaching agent no longer reduces control
+C_MIN, C_MAX = 0.1, 0.8
 SELF_CONTROL_LOSS = 0.5
 SELF_RELEVANCE = 0.5
 
@@ -85,6 +89,17 @@ def frame_from(event_kind: str, a: AppraisalState, subject: str, self_state: Sel
                           controllability=controllability, goals=active, persistent=persistent)
 
 
+def agent_controllability(track, self_state: SelfState | None) -> float:
+    """Controllability of an interaction with an autonomous agent = the robot's reaction margin:
+    clip(TTC / TTC_SAFE_S, C_MIN, C_MAX), TTC = distance / closing speed (inf when not closing), lowered by
+    the robot's own instability (development log 2026-10-06; NERVA design)."""
+    closing = track.approach_speed
+    ttc = track.distance / closing if closing > 1e-6 else float("inf")
+    c = min(C_MAX, max(C_MIN, ttc / TTC_SAFE_S))
+    risk = self_state.stability_risk if self_state is not None else 0.0
+    return c * (1.0 - 0.5 * risk)
+
+
 class FrameAppraiser:
     """Same calls as the wrapped appraiser, but returns AppraisalFrames and takes self state and goals.
     Other attributes (identity, novelty(), memory, ...) are those of the wrapped appraiser."""
@@ -107,6 +122,13 @@ class FrameAppraiser:
 
     def observe(self, t: float, tracks, dt: float, self_state: SelfState | None = None,
                 goals: GoalState | None = None) -> list[tuple[str, AppraisalFrame]]:
-        # in-view appraisals re-evaluate an ongoing situation: marked persistent
-        return [(kind, frame_from(kind, a, subject, self_state, goals, persistent=True))
-                for kind, a, subject in self.inner.observe_with_subjects(t, tracks, dt)]
+        # in-view appraisals re-evaluate an ongoing situation: marked persistent. For a PERSON, controllability
+        # is at most the reaction margin (agent_controllability); objects do not act and keep theirs.
+        by_tid = {tr.tid: tr for tr in tracks}
+        out = []
+        for kind, a, subject in self.inner.observe_with_subjects(t, tracks, dt):
+            tr = by_tid.get(subject)
+            if tr is not None and tr.kind == "person":
+                a = dataclasses.replace(a, controllability=min(a.controllability, agent_controllability(tr, self_state)))
+            out.append((kind, frame_from(kind, a, subject, self_state, goals, persistent=True)))
+        return out

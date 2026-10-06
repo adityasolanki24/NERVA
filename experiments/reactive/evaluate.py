@@ -63,6 +63,7 @@ def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=
     }
     result["safe"] = result["max_tilt_deg"] < 45.0
     result["pad"] = pad_stats(rows)
+    result["d_lunge_mean"] = float(window(rows, "dominance", LUNGE_T, LUNGE_T + 3.0).mean())
     return result
 
 

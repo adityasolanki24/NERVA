@@ -167,6 +167,11 @@ PAD     dx/dt = −Λ (x − x*)
   its relevance), not from a novelty → D weight; there is none.
 - **Open:** the appraiser's constant in-view controllability (0.8) keeps dominance mostly positive.
 
+**Experimental, not default (2026-10-06):** Model B v3 (`Bv3`: fast onset, slow return), reaction-margin
+controllability for people in view, and ongoing touch as context. Together they make dominance
+two-sided and responsive: min −0.69, and −0.57 within 3 s of a lunge. But valence saturates 8.2% of the
+time, because the in-view and contact contexts of the same person are summed. See `development_log.md`.
+
 ## Action tendencies (refactor stage C)
 
 Behaviour reads `ActionTendencyState`, not labels. Model A's translation is in

@@ -4,6 +4,55 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-06 — Ongoing touch as context: dominance goals met, valence saturation 8.2%; round closed, default stays Bv2
+
+Preregistered in the previous entry. Code at `9ad6618`; `experiments/affect_models/results_touch/`
+[measured]. Configuration: Bv3 + margin controllability + touch context.
+
+| criterion | result |
+|---|---|
+| trace/convergence (`saturation.py`) | pass: bounded, recovery 18.3 s, directions 7/7, converges, rate-invariant |
+| behaviour (default, two-person, together), no falls | pass |
+| saturation ≤ 5% per dimension | **fail**: V 8.2%; A 0.1%, D 3.9% pass |
+| std V, A ≥ 0.05; response in every scenario | pass (std V 0.537, A 0.234) |
+| 3a. pooled min D ≤ −0.10 | pass (−0.69) |
+| 3b′. min D within 3 s after the detected rapid approach < 0, ≥ 4/5 | pass, 5/5 (−0.57 to −0.58) |
+| 3c. D while A returns < D while B returns, ≥ 4/5 | pass, 5/5 (−0.04 … 0.08 vs 0.72) |
+| 3d. pooled std of D ≥ 0.05 | pass (0.326) |
+
+The old window criterion (mean D over 46.5–49.5 s) still reads +0.21 to +0.23; the window starts before
+the detection.
+
+**Decision (preregistered):** not adopted, because of the one failed criterion. **The default stays Bv2.**
+This ends the round. The configuration remains available with
+`--affect Bv3 --margin-controllability --touch-context`.
+
+**Where valence still saturates [measured, seed 0]:**
+- Only in the two-person scenario (the default scenario has none):
+  - negative, 24.0–28.5 s, after the lunge (rapid approach, then person close);
+  - positive, 61.7–72.7 s, during the petting.
+- The repeated-touch accumulation is gone.
+- What remains is that the toucher contributes **two context slots at once**: "B in view", whose
+  desirability rises with B's grounded warmth, and "B in ongoing contact". Bv3 **sums** context slots,
+  so one person in one situation is counted twice.
+- Together with the target gain G (8 for valence), strong but legitimate situations reach the bound.
+
+**Candidate next step (not run; preregister before running):** combine a source's simultaneous context
+facets into one (e.g. the mean, or the strongest facet) instead of summing. This is a structural
+double-count fix, not a gain reduction. Lowering G or relaxing the 5% threshold would be tuning after
+seeing the result, and is not proposed.
+
+**Summary of the round (2026-10-06):** three preregistered attempts.
+- Each removed a measured structural cause:
+  - constant in-view controllability → reaction margin;
+  - single slow time constant → fast onset, slow return;
+  - touch as repeated events → contact as context.
+- Dominance is now two-sided and responsive in the experimental configuration.
+- One criterion still fails, from a fourth identified cause (per-source double counting).
+- PAD → style remains blocked until a configuration passes all criteria.
+
+---
+
 ## 2026-10-06 — Ongoing touch as context: preregistration (last iteration of this round)
 
 **Change** (frames path; Bv2 and the legacy profile are untouched):

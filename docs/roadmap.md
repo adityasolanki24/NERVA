@@ -57,8 +57,10 @@ entry, docs, commit.
 **Next, in this order:**
 1. ~~Fix Model B's PAD saturation~~ Done 2026-10-02: Model B v2 (bounded attractor), default.
    **Two-sided dominance:** reaction-margin controllability and Model B v3 (fast onset) were tried on
-   2026-10-06 and failed their preregistered criteria. Cause: ongoing touch reaches affect as an event per
-   second. Next: touch as persistent context, then re-evaluate.
+   2026-10-06 and failed their preregistered criteria. Then touch as persistent context: every dominance
+   criterion passed, but valence saturation is 8.2% (> 5%), because a person's in-view and contact contexts
+   are summed. Default stays Bv2. Next: combine a source's simultaneous context facets instead of summing
+   (preregistered), then re-evaluate.
 2. Return to expressive movement: π(s, c, e) with continuous expressive conditioning / reference motion
    (curriculum design: robust locomotion first, then expressive objectives), evaluated on monotonic
    control, cross-talk and task performance.

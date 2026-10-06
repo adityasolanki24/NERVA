@@ -4,6 +4,57 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-06 — Model B v3 + reaction-margin controllability: criteria failed; default stays Bv2
+
+Preregistered in the previous entry. Code at `3cb1f0c`; `experiments/affect_models/results_bv3/`
+[measured].
+
+**Trace and convergence** (`saturation.py`, Bv3): bounded; recovery 18.3 s; event directions 7/7;
+converges (max 0.56); rate-invariant. **All pass.**
+
+**Scenario suite** (Bv3 + margin, 5 seeds each):
+
+| criterion | result |
+|---|---|
+| behaviour (default, two-person, together), no falls | pass |
+| saturation ≤ 5% per dimension | **fail**: V 11.0%, A 0.0%, D 8.1% |
+| std V and A ≥ 0.05; response in every scenario | pass (std V 0.554, A 0.235) |
+| 3a. pooled min D ≤ −0.10 | pass (−0.69) |
+| 3b. mean D over 46.5–49.5 s < 0 in ≥ 4/5 | **fail**: +0.21 to +0.23 in all 5 |
+| 3c. D while A returns < D while B returns | pass, 5/5 (0.08–0.10 vs 0.72) |
+| 3d. pooled std of D ≥ 0.05 | pass (0.380) |
+
+**Decision (preregistered):** not adopted. The default stays Bv2 without margin controllability. Bv3 and
+the margin option remain available (`--affect Bv3 --margin-controllability`).
+
+**Where it fails [measured, seed 0]:**
+- **Saturation occurs only in the two-person scenario:**
+  - valence 23.9–28.8 s (negative, after the lunge);
+  - valence and dominance 61.7–76.7 s, which is **the petting**: 9 `touch_gentle` events, one per
+    second.
+  - The default scenario does not saturate.
+- **Continuous contact reaches affect as a discrete event every second:** repeated impulses into the
+  phasic channel. This is the same structural problem Bv2 fixed for the in-view appraisals, now in the
+  touch path.
+- Bv2's single slow time constant had kept x away from the resulting high targets. Bv3's fast onset
+  reaches them.
+- **The lunge window:** dominance falls from +0.62 to −0.52 within 46.5–49.5 s, so the fast onset does
+  what was intended. But the window starts about 1 s before the rapid-approach event is detected, so its
+  mean stays positive. The criterion was weakly chosen; it is **not** reinterpreted here.
+
+**Proposed next step (not run; to be preregistered):**
+- (a) Treat ongoing touch as a persistent contextual appraisal of the toucher (onset as a phasic event,
+  continuation as context), like in-view.
+- (b) Define a new, separately preregistered lunge criterion anchored to the detected rapid-approach
+  event (e.g. minimum D within 3 s after it < 0).
+- (c) Re-evaluate Bv3 + margin against all criteria.
+
+**Status for expressive style:** Bv2 (the default) keeps dynamic range without saturation, but its
+dominance is one-sided and slow. PAD → style still waits until dominance is both two-sided and
+non-saturating under the same criteria.
+
+---
+
 ## 2026-10-06 — Reaction-margin controllability: criteria failed, reverted; cause found; follow-up (Model B v3) preregistered
 
 **Result** (code at `0086282`; `experiments/affect_models/results_controllability/`) [measured]:

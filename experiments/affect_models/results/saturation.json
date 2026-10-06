@@ -295,5 +295,104 @@
    ],
    "rate_invariant": true
   }
+ },
+ "Bv3": {
+  "fixed_trace": {
+   "bounded": true,
+   "recovery_s": 18.299999999999997,
+   "recovers_within_60s": true,
+   "direction_ok": "7/7",
+   "events": [
+    {
+     "t": 2.0,
+     "event": "successful_walking",
+     "dV": 0.1095,
+     "dA": 0.0163,
+     "dD": 0.1768,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 8.0,
+     "event": "successful_walking",
+     "dV": 0.073,
+     "dA": 0.0133,
+     "dD": 0.1161,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 15.0,
+     "event": "person_approaching_slowly",
+     "dV": 0.0611,
+     "dA": 0.0521,
+     "dD": 0.0974,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 25.0,
+     "event": "person_approaching_rapidly",
+     "dV": -0.6039,
+     "dA": 0.4749,
+     "dD": -0.579,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 27.0,
+     "event": "near_fall",
+     "dV": -0.3295,
+     "dA": 0.3406,
+     "dD": -0.3138,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 40.0,
+     "event": "obstacle_blocking_goal",
+     "dV": -0.394,
+     "dA": 0.325,
+     "dD": -0.0067,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    },
+    {
+     "t": 52.0,
+     "event": "successful_walking",
+     "dV": 0.0301,
+     "dA": 0.0079,
+     "dD": 0.2373,
+     "valence_direction_ok": true,
+     "arousal_ok": true
+    }
+   ]
+  },
+  "convergence": {
+   "steady_2s": [
+    0.263,
+    0.564,
+    0.561
+   ],
+   "steady_1s": [
+    0.263,
+    0.564,
+    0.561
+   ],
+   "drift_60_to_120": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "converges": true,
+   "max_abs": 0.564,
+   "below_0_9": true,
+   "rate_gap": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rate_invariant": true
+  }
  }
 }

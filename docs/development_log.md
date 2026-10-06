@@ -4,6 +4,33 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-06 — Ongoing touch as context: preregistration (last iteration of this round)
+
+**Change** (frames path; Bv2 and the legacy profile are untouched):
+- **Touch:** `FrameAppraiser` appraises the first `touch_gentle` from a source as a discrete event.
+  Further touches from the same source within 1.5 s of the previous one become a persistent frame with
+  the new hypothesis kind `ongoing_contact` (predicts `benign_contact`; goals approach, keep_distance).
+  Ongoing contact is a situation, not a series of events.
+- **Bv3 context slots** are keyed by (source, hypothesis kind), so a person's in-view context and
+  ongoing-contact context coexist instead of overwriting each other.
+
+**Criteria** (Bv3 + margin controllability + touch context; B2, vision, 5 seeds; default, two-person,
+together). All as preregistered for Bv3, except that 3b is **replaced** by a new criterion anchored to the
+detected event; the old window criterion stays reported:
+- trace/convergence (`saturation.py`) as before;
+- behaviour: all criteria, no falls;
+- saturation ≤ 5% per dimension; std V and A ≥ 0.05; max |V| and |A| ≥ 0.2 in every scenario;
+- 3a. pooled min D ≤ −0.10;
+- **3b′. minimum D within 3 s after the detected `person_approaching_rapidly` event < 0 in ≥ 4/5
+  default-scenario seeds** (new);
+- 3c. D while A returns < D while B returns in ≥ 4/5;
+- 3d. pooled std of D ≥ 0.05.
+
+**Decision:** adopt as the default if every criterion holds. Otherwise the default stays Bv2, and this
+round ends with a report.
+
+---
+
 ## 2026-10-06 — Model B v3 + reaction-margin controllability: criteria failed; default stays Bv2
 
 Preregistered in the previous entry. Code at `3cb1f0c`; `experiments/affect_models/results_bv3/`

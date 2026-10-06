@@ -4,6 +4,49 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-06 — Reaction-margin controllability: criteria failed, reverted; cause found; follow-up (Model B v3) preregistered
+
+**Result** (code at `0086282`; `experiments/affect_models/results_controllability/`) [measured]:
+
+| criterion | result |
+|---|---|
+| 1. behaviour (default, two-person, together; 5 seeds) | all pass, no falls; legacy traces byte-identical |
+| 2. saturation and range | 0% with \|x\| > 0.9; std V 0.359, A 0.198 |
+| 3a. pooled min D ≤ −0.10 | **fail** (−0.05) |
+| 3b. mean D during the lunge < 0 in ≥ 4/5 seeds | **fail** (+0.45 to +0.46 in all 5) |
+| 3c. D while A returns < D while B returns, ≥ 4/5 seeds | pass, 5/5 (0.08–0.10 vs 0.40–0.41) |
+| 3d. pooled std of D ≥ 0.05 | pass (0.256) |
+
+**Decision (preregistered):** not adopted. It stays behind `margin_controllability` (off by default); the
+default reproduces the Bv2 suite exactly.
+
+**Cause [measured, seed 0, around the lunge]:**
+- The estimate works at the target level. The person's in-view contribution to the dominance
+  pre-activation flips from +0.46 to −0.49 as the lunge closes in, and the dominance target falls from
+  +0.45 (46.5 s) to **−0.88** (48.0 s).
+- Actual dominance follows with Bv2's single time constant τ_D = 8 s: +0.56 → +0.27 by 49.5 s, +0.05 by
+  51.5 s.
+- Bv2 uses the same slow rate for building a response as for recovering from one, so a sudden threat
+  cannot move dominance within the 3 s window. This is a flaw of the Bv2 dynamics, not of the
+  controllability estimate.
+
+**Follow-up, preregistered now: Model B v3** (`affect_model="Bv3"`; Bv2 stays reproducible).
+- Bv2 plus two-rate dynamics per dimension: the rate is 1/τ_on (τ_on = 1.0 s for V, A and D) while
+  |x* − x0| > |x − x0| and x* − x0 has the sign of (x* − x), i.e. the response is building away from
+  baseline. Otherwise it is 1/τ (8 / 4 / 8 s), returning.
+- This mirrors Model A's structure (fast pull toward active emotions, slow return).
+- Evaluated **with** reaction-margin controllability.
+
+Criteria, all fixed now:
+- `saturation.py` for Bv3: bounded; recovery ≤ 60 s; event directions 7/7; converges with max |x| < 0.9;
+  rate-invariant.
+- Scenario suite (5 seeds each): all behavioural criteria, no falls; saturation ≤ 5%; std V and A ≥ 0.05;
+  max |V| and |A| ≥ 0.2 in every scenario; dominance criteria 3a–3d as above.
+- **Decision:** Bv3 + margin controllability becomes the default if every criterion holds; otherwise the
+  default stays Bv2 without margin and the failure is reported.
+
+---
+
 ## 2026-10-06 — In-view controllability from the reaction margin: preregistration
 
 **Problem** (flag from the Bv2 evaluation): dominance under Model B v2 is one-sided (−0.04 … 0.88).

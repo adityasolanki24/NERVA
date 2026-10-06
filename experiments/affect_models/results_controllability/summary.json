@@ -1,0 +1,81 @@
+{
+ "Bv2": {
+  "criteria": {
+   "behaviour": true,
+   "saturation_le_5pct": true,
+   "range_std_V_A_ge_0_05": true,
+   "response_every_scenario": true,
+   "dominance_two_sided": false,
+   "dominance_low_in_lunge": false,
+   "dominance_A_below_B": true,
+   "dominance_std": true
+  },
+  "all_pass": false,
+  "pooled_pad": {
+   "valence": {
+    "frac_sat": 0.0,
+    "std": 0.359,
+    "min": -0.61,
+    "max": 0.841
+   },
+   "arousal": {
+    "frac_sat": 0.0,
+    "std": 0.1984,
+    "min": 0.0,
+    "max": 0.765
+   },
+   "dominance": {
+    "frac_sat": 0.0,
+    "std": 0.2557,
+    "min": -0.049,
+    "max": 0.875
+   }
+  },
+  "scenarios": {
+   "default": {
+    "behaviour": "curiosity 5/5, fear 5/5, habituation 5/5, safe 5/5, falls 0",
+    "max_abs_V": 0.413,
+    "max_abs_A": 0.678,
+    "d_lunge_mean": [
+     0.463,
+     0.463,
+     0.447,
+     0.459,
+     0.456
+    ]
+   },
+   "memory": {
+    "behaviour": "b_not_blamed 5/5, a_remembered 5/5, b_welcomed 5/5, touch_to_b 5/5, falls 0",
+    "max_abs_V": 0.841,
+    "max_abs_A": 0.765,
+    "d_a_vs_b": [
+     [
+      0.097,
+      0.406
+     ],
+     [
+      0.089,
+      0.4
+     ],
+     [
+      0.085,
+      0.405
+     ],
+     [
+      0.087,
+      0.407
+     ],
+     [
+      0.079,
+      0.395
+     ]
+    ]
+   },
+   "together": {
+    "behaviour": "avoids_a 5/5, engages_b 5/5, falls 0",
+    "max_abs_V": 0.841,
+    "max_abs_A": 0.765
+   }
+  }
+ }
+}

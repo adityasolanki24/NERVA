@@ -104,8 +104,11 @@ class FrameAppraiser:
     """Same calls as the wrapped appraiser, but returns AppraisalFrames and takes self state and goals.
     Other attributes (identity, novelty(), memory, ...) are those of the wrapped appraiser."""
 
-    def __init__(self, inner):
+    def __init__(self, inner, margin_controllability: bool = False):
+        """margin_controllability: in-view controllability of people = reaction margin (2026-10-06; off by
+        default: its preregistered evaluation failed, development log)."""
         object.__setattr__(self, "inner", inner)
+        object.__setattr__(self, "margin_controllability", margin_controllability)
 
     def __getattr__(self, name):
         return getattr(self.inner, name)
@@ -128,7 +131,7 @@ class FrameAppraiser:
         out = []
         for kind, a, subject in self.inner.observe_with_subjects(t, tracks, dt):
             tr = by_tid.get(subject)
-            if tr is not None and tr.kind == "person":
+            if self.margin_controllability and tr is not None and tr.kind == "person":
                 a = dataclasses.replace(a, controllability=min(a.controllability, agent_controllability(tr, self_state)))
             out.append((kind, frame_from(kind, a, subject, self_state, goals, persistent=True)))
         return out

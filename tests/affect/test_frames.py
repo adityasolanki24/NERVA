@@ -71,8 +71,9 @@ def test_agent_controllability_is_the_reaction_margin():
 
 
 def test_in_view_frames_of_people_use_the_margin_and_objects_do_not():
-    fa = FrameAppraiser(ContextualAppraiser())
+    fa = FrameAppraiser(ContextualAppraiser(), margin_controllability=True)
     tracks = (Track("person", 0.0, 1.0, approach_speed=1.8, tid="person-0"), Track("ball", 0.5, 1.0, tid="ball-0"))
+    assert {f.controllability for _, f in FrameAppraiser(ContextualAppraiser()).observe(10.0, tracks, 0.1)} == {0.8}
     frames = {f.hypothesis.subject: f for _, f in fa.observe(10.0, tracks, 0.1)}
     assert frames["person-0"].controllability < 0.3 and frames["ball-0"].controllability == 0.8
     assert all(f.persistent for f in frames.values())

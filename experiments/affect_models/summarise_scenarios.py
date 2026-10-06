@@ -6,11 +6,16 @@ Per model (A, B, Bv2), over the default (vision), two-person and together scenar
   range       pooled std ≥ 0.05 for valence and arousal (dominance reported)
   response    max |V| ≥ 0.2 and max |A| ≥ 0.2 in every scenario
 
-Usage: python experiments/affect_models/summarise_scenarios.py
+With --root results_controllability --models Bv2 it also applies the 2026-10-06 dominance criteria:
+pooled min D ≤ −0.10; mean D over the lunge (46.5–49.5 s) < 0 in ≥ 4/5 default seeds; mean D while A returns
+< while B returns in ≥ 4/5 two-person seeds; pooled std of D ≥ 0.05.
+
+Usage: python experiments/affect_models/summarise_scenarios.py [--root DIR] [--models A B Bv2]
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -42,8 +47,14 @@ def behaviour(sc: str, runs) -> tuple[bool, str]:
 
 
 def main() -> None:
+    global ROOT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--root", default="results_scenarios")
+    ap.add_argument("--models", nargs="+", default=["A", "B", "Bv2"])
+    args = ap.parse_args()
+    ROOT = Path(__file__).resolve().parent / args.root
     report = {}
-    for model in ("A", "B", "Bv2"):
+    for model in args.models:
         data = load(model)
         weights, stats = [], []
         per_sc = {}
@@ -72,6 +83,15 @@ def main() -> None:
             "range_std_V_A_ge_0_05": pooled["valence"]["std"] >= 0.05 and pooled["arousal"]["std"] >= 0.05,
             "response_every_scenario": all(v["max_abs_V"] >= 0.2 and v["max_abs_A"] >= 0.2 for v in per_sc.values()),
         }
+        if "d_lunge_mean" in data["default"][0]:
+            lunge = [r["d_lunge_mean"] for r in data["default"]]
+            mem = [r for r in data["memory"] if r.get("memory", True)]
+            crit["dominance_two_sided"] = pooled["dominance"]["min"] <= -0.10
+            crit["dominance_low_in_lunge"] = sum(x < 0 for x in lunge) >= 4
+            crit["dominance_A_below_B"] = sum(r["d_a_return"] < r["d_b_return"] for r in mem) >= 4
+            crit["dominance_std"] = pooled["dominance"]["std"] >= 0.05
+            per_sc["default"]["d_lunge_mean"] = [round(x, 3) for x in lunge]
+            per_sc["memory"]["d_a_vs_b"] = [(round(r["d_a_return"], 3), round(r["d_b_return"], 3)) for r in mem]
         report[model] = {"criteria": crit, "all_pass": all(crit.values()), "pooled_pad": pooled, "scenarios": per_sc}
     (ROOT / "summary.json").write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")
     for model, r in report.items():
@@ -79,7 +99,9 @@ def main() -> None:
         for d, v in r["pooled_pad"].items():
             print(f"   {d:9s} min {v['min']:+.2f} max {v['max']:+.2f} std {v['std']:.3f} |x|>0.9 {100 * v['frac_sat']:.1f}%")
         for sc, v in r["scenarios"].items():
-            print(f"   {sc:8s} {v['behaviour']}  max|V| {v['max_abs_V']:.2f} max|A| {v['max_abs_A']:.2f}")
+            print(f"   {sc:8s} {v['behaviour']}  max|V| {v['max_abs_V']:.2f} max|A| {v['max_abs_A']:.2f}"
+                  + (f"  D lunge {v['d_lunge_mean']}" if "d_lunge_mean" in v else "")
+                  + (f"  D A vs B {v['d_a_vs_b']}" if "d_a_vs_b" in v else ""))
 
 
 if __name__ == "__main__":

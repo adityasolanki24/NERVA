@@ -1,0 +1,529 @@
+{
+ "summary": {
+  "curiosity": "5/5",
+  "fear": "5/5",
+  "habituation": "5/5",
+  "safe": "5/5",
+  "pad_pooled": {
+   "valence": {
+    "min": -0.332,
+    "max": 0.413,
+    "frac_sat": 0.0,
+    "std": 0.1694
+   },
+   "arousal": {
+    "min": 0.0,
+    "max": 0.678,
+    "frac_sat": 0.0,
+    "std": 0.1956
+   },
+   "dominance": {
+    "min": -0.049,
+    "max": 0.681,
+    "frac_sat": 0.0,
+    "std": 0.162
+   }
+  }
+ },
+ "seeds": [
+  {
+   "seed": 0,
+   "ball_start_m": 1.2908999254275713,
+   "ball_min_m": 0.5588855463063637,
+   "curiosity": true,
+   "person_at_lunge_end_m": 0.45153454352191363,
+   "person_3s_later_m": 0.5339993866154489,
+   "modes_after_lunge": [
+    "approach",
+    "orient",
+    "retreat"
+   ],
+   "fear": true,
+   "peak_interest_first_second": [
+    1.3741372120548583,
+    0.5283552943362798
+   ],
+   "habituation": true,
+   "max_tilt_deg": 14.176957212260149,
+   "events": [
+    [
+     4.0,
+     "ball_appeared"
+    ],
+    [
+     30.0,
+     "person_appeared"
+    ],
+    [
+     31.2,
+     "person_approaching_slowly"
+    ],
+    [
+     46.7,
+     "person_approaching_rapidly"
+    ],
+    [
+     47.5,
+     "person_close"
+    ],
+    [
+     52.8,
+     "person_lost"
+    ],
+    [
+     53.2,
+     "person_appeared"
+    ],
+    [
+     53.3,
+     "person_close"
+    ],
+    [
+     70.5,
+     "person_lost"
+    ],
+    [
+     72.0,
+     "person_appeared"
+    ],
+    [
+     73.7,
+     "person_approaching_slowly"
+    ],
+    [
+     89.2,
+     "person_lost"
+    ],
+    [
+     95.8,
+     "person_appeared"
+    ]
+   ],
+   "safe": true,
+   "pad": {
+    "valence": {
+     "min": -0.318,
+     "max": 0.394,
+     "mean": 0.1091,
+     "std": 0.1683,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.675,
+     "mean": 0.3588,
+     "std": 0.1942,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.039,
+     "max": 0.664,
+     "mean": 0.3672,
+     "std": 0.1671,
+     "frac_sat": 0.0
+    }
+   },
+   "d_lunge_mean": 0.463229616545732
+  },
+  {
+   "seed": 1,
+   "ball_start_m": 1.2926540066740435,
+   "ball_min_m": 0.5476992153660013,
+   "curiosity": true,
+   "person_at_lunge_end_m": 0.4519563962939621,
+   "person_3s_later_m": 0.5318057619136473,
+   "modes_after_lunge": [
+    "approach",
+    "orient",
+    "retreat"
+   ],
+   "fear": true,
+   "peak_interest_first_second": [
+    1.4973172626209927,
+    0.5405071253354117
+   ],
+   "habituation": true,
+   "max_tilt_deg": 14.790277217262075,
+   "events": [
+    [
+     4.0,
+     "ball_appeared"
+    ],
+    [
+     30.0,
+     "person_appeared"
+    ],
+    [
+     31.1,
+     "person_approaching_slowly"
+    ],
+    [
+     46.7,
+     "person_approaching_rapidly"
+    ],
+    [
+     47.5,
+     "person_close"
+    ],
+    [
+     52.8,
+     "person_lost"
+    ],
+    [
+     53.4,
+     "person_appeared"
+    ],
+    [
+     53.5,
+     "person_close"
+    ],
+    [
+     70.6,
+     "person_lost"
+    ],
+    [
+     72.0,
+     "person_appeared"
+    ],
+    [
+     73.8,
+     "person_approaching_slowly"
+    ],
+    [
+     89.2,
+     "person_lost"
+    ],
+    [
+     95.6,
+     "person_appeared"
+    ],
+    [
+     99.9,
+     "person_close"
+    ]
+   ],
+   "safe": true,
+   "pad": {
+    "valence": {
+     "min": -0.313,
+     "max": 0.413,
+     "mean": 0.113,
+     "std": 0.1711,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.678,
+     "mean": 0.3671,
+     "std": 0.1988,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.04,
+     "max": 0.681,
+     "mean": 0.3686,
+     "std": 0.1716,
+     "frac_sat": 0.0
+    }
+   },
+   "d_lunge_mean": 0.46289229283682176
+  },
+  {
+   "seed": 2,
+   "ball_start_m": 1.292903271973531,
+   "ball_min_m": 0.543262712276876,
+   "curiosity": true,
+   "person_at_lunge_end_m": 0.4524533822601638,
+   "person_3s_later_m": 0.5551100266327763,
+   "modes_after_lunge": [
+    "approach",
+    "orient",
+    "retreat"
+   ],
+   "fear": true,
+   "peak_interest_first_second": [
+    1.3120187266743342,
+    0.5252994559861683
+   ],
+   "habituation": true,
+   "max_tilt_deg": 14.950965729229745,
+   "events": [
+    [
+     4.0,
+     "ball_appeared"
+    ],
+    [
+     30.0,
+     "person_appeared"
+    ],
+    [
+     31.1,
+     "person_approaching_slowly"
+    ],
+    [
+     46.7,
+     "person_approaching_rapidly"
+    ],
+    [
+     47.5,
+     "person_close"
+    ],
+    [
+     53.1,
+     "person_lost"
+    ],
+    [
+     54.1,
+     "person_appeared"
+    ],
+    [
+     54.2,
+     "person_close"
+    ],
+    [
+     70.6,
+     "person_lost"
+    ],
+    [
+     72.0,
+     "person_appeared"
+    ],
+    [
+     73.7,
+     "person_approaching_slowly"
+    ],
+    [
+     89.0,
+     "person_lost"
+    ],
+    [
+     95.8,
+     "person_appeared"
+    ]
+   ],
+   "safe": true,
+   "pad": {
+    "valence": {
+     "min": -0.325,
+     "max": 0.393,
+     "mean": 0.1096,
+     "std": 0.1678,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.673,
+     "mean": 0.3613,
+     "std": 0.1944,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": 0.0,
+     "max": 0.66,
+     "mean": 0.3873,
+     "std": 0.1465,
+     "frac_sat": 0.0
+    }
+   },
+   "d_lunge_mean": 0.4467884557167289
+  },
+  {
+   "seed": 3,
+   "ball_start_m": 1.2935023913751675,
+   "ball_min_m": 0.5448309992165591,
+   "curiosity": true,
+   "person_at_lunge_end_m": 0.45234949849910555,
+   "person_3s_later_m": 0.5314519740548856,
+   "modes_after_lunge": [
+    "approach",
+    "orient",
+    "retreat"
+   ],
+   "fear": true,
+   "peak_interest_first_second": [
+    1.4739195800209905,
+    0.5308843230246609
+   ],
+   "habituation": true,
+   "max_tilt_deg": 14.088968843550218,
+   "events": [
+    [
+     4.1,
+     "ball_appeared"
+    ],
+    [
+     30.0,
+     "person_appeared"
+    ],
+    [
+     31.2,
+     "person_approaching_slowly"
+    ],
+    [
+     46.7,
+     "person_approaching_rapidly"
+    ],
+    [
+     47.4,
+     "person_close"
+    ],
+    [
+     53.0,
+     "person_lost"
+    ],
+    [
+     53.3,
+     "person_appeared"
+    ],
+    [
+     53.4,
+     "person_close"
+    ],
+    [
+     70.6,
+     "person_lost"
+    ],
+    [
+     72.0,
+     "person_appeared"
+    ],
+    [
+     73.7,
+     "person_approaching_slowly"
+    ],
+    [
+     89.0,
+     "person_lost"
+    ],
+    [
+     95.8,
+     "person_appeared"
+    ]
+   ],
+   "safe": true,
+   "pad": {
+    "valence": {
+     "min": -0.324,
+     "max": 0.405,
+     "mean": 0.111,
+     "std": 0.1707,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.675,
+     "mean": 0.3627,
+     "std": 0.1981,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.049,
+     "max": 0.675,
+     "mean": 0.3627,
+     "std": 0.1733,
+     "frac_sat": 0.0
+    }
+   },
+   "d_lunge_mean": 0.45941791766117374
+  },
+  {
+   "seed": 4,
+   "ball_start_m": 1.2922126423416842,
+   "ball_min_m": 0.5511255811911131,
+   "curiosity": true,
+   "person_at_lunge_end_m": 0.4522780164849806,
+   "person_3s_later_m": 0.5648470538997314,
+   "modes_after_lunge": [
+    "approach",
+    "orient",
+    "retreat"
+   ],
+   "fear": true,
+   "peak_interest_first_second": [
+    1.3751317172394752,
+    0.5327732887424719
+   ],
+   "habituation": true,
+   "max_tilt_deg": 15.287554631481528,
+   "events": [
+    [
+     4.0,
+     "ball_appeared"
+    ],
+    [
+     30.0,
+     "person_appeared"
+    ],
+    [
+     31.2,
+     "person_approaching_slowly"
+    ],
+    [
+     46.7,
+     "person_approaching_rapidly"
+    ],
+    [
+     47.4,
+     "person_close"
+    ],
+    [
+     53.4,
+     "person_lost"
+    ],
+    [
+     54.6,
+     "person_appeared"
+    ],
+    [
+     54.7,
+     "person_close"
+    ],
+    [
+     70.6,
+     "person_lost"
+    ],
+    [
+     72.0,
+     "person_appeared"
+    ],
+    [
+     73.7,
+     "person_approaching_slowly"
+    ],
+    [
+     89.2,
+     "person_lost"
+    ],
+    [
+     95.3,
+     "person_appeared"
+    ]
+   ],
+   "safe": true,
+   "pad": {
+    "valence": {
+     "min": -0.332,
+     "max": 0.397,
+     "mean": 0.1109,
+     "std": 0.169,
+     "frac_sat": 0.0
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.673,
+     "mean": 0.362,
+     "std": 0.1922,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": 0.0,
+     "max": 0.667,
+     "mean": 0.3946,
+     "std": 0.1468,
+     "frac_sat": 0.0
+    }
+   },
+   "d_lunge_mean": 0.45593467836331364
+  }
+ ]
+}

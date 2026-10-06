@@ -258,7 +258,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
         memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str | None = None,
         safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None,
-        profile: str = "v2", margin_controllability: bool = False):
+        profile: str = "v2", margin_controllability: bool = False, touch_context: bool = False):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -290,7 +290,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     appraiser = MemoryAppraiser(memory) if use_memory else ContextualAppraiser()
     frames_mode = appraisal_mode == "frames"
     if frames_mode:
-        appraiser = FrameAppraiser(appraiser, margin_controllability=margin_controllability)
+        appraiser = FrameAppraiser(appraiser, margin_controllability=margin_controllability, touch_context=touch_context)
     world_model, safety = WorldModel(), SafetySupervisor()
     self_state, goals = None, None
     episodic = EpisodicMemory() if use_memory else None

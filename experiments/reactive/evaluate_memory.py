@@ -45,12 +45,14 @@ def _threat_at(sim, eid: str, t: float):
 
 def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
              neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
-             head_pitch_down=None, head_yaw_max=None, profile: str = "v2", margin_controllability: bool = False) -> dict:
+             head_pitch_down=None, head_yaw_max=None, profile: str = "v2", margin_controllability: bool = False,
+             touch_context: bool = False) -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
                                    perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                    backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
                                    affect_model=affect_model, head_pitch_down=head_pitch_down,
-                                   head_yaw_max=head_yaw_max, profile=profile, margin_controllability=margin_controllability)
+                                   head_yaw_max=head_yaw_max, profile=profile, margin_controllability=margin_controllability,
+                                   touch_context=touch_context)
     first_b, return_a, return_b = modes(rows, 46, 58), modes(rows, 94, 106), modes(rows, 120, 130)
     result = {
         "seed": seed, "memory": use_memory,
@@ -78,7 +80,7 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
 
 def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
                       neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
-                      profile: str = "v2", margin_controllability: bool = False) -> dict:
+                      profile: str = "v2", margin_controllability: bool = False, touch_context: bool = False) -> dict:
     """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
     avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
     occurs and B comes closer than A on average."""
@@ -86,7 +88,7 @@ def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = 
                                  perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                  backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
                                  affect_model=affect_model, profile=profile,
-                                 margin_controllability=margin_controllability)
+                                 margin_controllability=margin_controllability, touch_context=touch_context)
     tilt = max(r["tilt_deg"] for r in rows)
     w = [r for r in rows if 100 <= r["t"] < 125]
     ms = {r["mode"] for r in w}
@@ -110,6 +112,7 @@ def main() -> None:
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
+    ap.add_argument("--touch-context", action="store_true", help="continued touch = persistent context (2026-10-06)")
     ap.add_argument("--margin-controllability", action="store_true",
                     help="in-view controllability of people = reaction margin (2026-10-06)")
     ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3"), default=None, help="default: Bv2 for v2, A for legacy")
@@ -120,7 +123,8 @@ def main() -> None:
     if args.together:
         mems = (True,) if args.no_ablation else (True, False)
         results = [evaluate_together(args.policy, s, m, args.learning, args.backlash, args.neutral_style,
-                                     args.appraisal, args.affect, args.profile, args.margin_controllability)
+                                     args.appraisal, args.affect, args.profile, args.margin_controllability,
+                                     args.touch_context)
                    for m in mems for s in range(args.seeds)]
         summary = {("memory" if m else "no_memory"): {k: f"{sum(r[k] for r in results if r['memory'] == m)}/{args.seeds}"
                                                      for k in ("avoids_a", "engages_b")} for m in mems}
@@ -134,7 +138,8 @@ def main() -> None:
         return
     mems = (True,) if args.no_ablation else (True, False)
     results = [evaluate(args.policy, s, m, args.learning, args.backlash, args.neutral_style, args.appraisal, args.affect,
-                        args.head_pitch_down, args.head_yaw_max, args.profile, args.margin_controllability)
+                        args.head_pitch_down, args.head_yaw_max, args.profile, args.margin_controllability,
+                        args.touch_context)
                for m in mems for s in range(args.seeds)]
     summary = {}
     for m in mems:

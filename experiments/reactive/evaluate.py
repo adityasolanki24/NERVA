@@ -36,13 +36,14 @@ def window(rows, key, t0, t1):
 def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=None,
                   perception_mode: str = "simulated", backlash: bool = False, neutral: bool = False,
                   appraisal_mode: str = "legacy", affect_model: str | None = None, head_pitch_down=None,
-                  head_yaw_max=None, profile: str = "v2", margin_controllability: bool = False) -> dict:
+                  head_yaw_max=None, profile: str = "v2", margin_controllability: bool = False,
+                  touch_context: bool = False) -> dict:
     affect_model = affect_model or ("Bv2" if profile == "v2" else "A")
     _, rows, _, fired = scenario.run(policy, seed=seed, selector=selector, walking_head_limit=head_limit,
                                      perception_mode=perception_mode, backlash_scene=backlash,
                                      neutral_style=neutral, appraisal_mode=appraisal_mode, affect_model=affect_model,
                                      head_pitch_down=head_pitch_down, head_yaw_max=head_yaw_max, profile=profile,
-                                     margin_controllability=margin_controllability)
+                                     margin_controllability=margin_controllability, touch_context=touch_context)
     ball = window(rows, "dist_ball", BALL_T + 0.1, 30.0)
     person_after = window(rows, "dist_person", LUNGE_END_T, LUNGE_END_T + 3.0)
     modes_after = {r["mode"] for r in rows if LUNGE_T <= r["t"] < LUNGE_T + 5.0}
@@ -65,6 +66,8 @@ def evaluate_seed(policy: str, seed: int, selector: str = "utility", head_limit=
     result["safe"] = result["max_tilt_deg"] < 45.0
     result["pad"] = pad_stats(rows)
     result["d_lunge_mean"] = float(window(rows, "dominance", LUNGE_T, LUNGE_T + 3.0).mean())
+    rapid = [te for te, kind, *_ in fired if kind == "person_approaching_rapidly"]
+    result["d_min_after_rapid"] = float(window(rows, "dominance", rapid[0], rapid[0] + 3.0).min()) if rapid else None
     return result
 
 
@@ -81,6 +84,7 @@ def main() -> None:
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2",
                     help="v2: policy capabilities, grounded memory, frames, targeted arbitration, world-model queries")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
+    ap.add_argument("--touch-context", action="store_true", help="continued touch = persistent context (2026-10-06)")
     ap.add_argument("--margin-controllability", action="store_true",
                     help="in-view controllability of people = reaction margin (2026-10-06)")
     ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3"), default=None, help="default: Bv2 for v2, A for legacy")
@@ -92,7 +96,7 @@ def main() -> None:
     limit = {"s1": S1_WALKING_HEAD_LIMIT, "s3": S3_WALKING_HEAD_LIMIT}[args.head_limit]
     results = [evaluate_seed(args.policy, s, args.selector, limit, args.perception, args.backlash, args.neutral_style,
                              args.appraisal, args.affect, args.head_pitch_down, args.head_yaw_max, args.profile,
-                             args.margin_controllability)
+                             args.margin_controllability, args.touch_context)
                for s in range(args.seeds)]
     summary = {c: f"{sum(r[c] for r in results)}/{len(results)}" for c in ("curiosity", "fear", "habituation", "safe")}
     summary["pad_pooled"] = pooled([r["pad"] for r in results])

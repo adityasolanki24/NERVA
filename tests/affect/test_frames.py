@@ -77,3 +77,15 @@ def test_in_view_frames_of_people_use_the_margin_and_objects_do_not():
     frames = {f.hypothesis.subject: f for _, f in fa.observe(10.0, tracks, 0.1)}
     assert frames["person-0"].controllability < 0.3 and frames["ball-0"].controllability == 0.8
     assert all(f.persistent for f in frames.values())
+
+
+def test_continued_touch_is_an_ongoing_contact_situation():
+    fa = FrameAppraiser(ContextualAppraiser(), touch_context=True)
+    touch = Event("touch_gentle", source="person-1")
+    first = fa.appraise(touch, 10.0, ())
+    second = fa.appraise(touch, 11.0, ())
+    later = fa.appraise(touch, 20.0, ())
+    assert not first.persistent and first.hypothesis.kind == "benign_interaction"
+    assert second.persistent and second.hypothesis.kind == "ongoing_contact" and second.hypothesis.subject == "person-1"
+    assert not later.persistent  # a new contact after a pause starts with an event again
+    assert not FrameAppraiser(ContextualAppraiser()).appraise(touch, 11.0, ()).persistent  # off by default

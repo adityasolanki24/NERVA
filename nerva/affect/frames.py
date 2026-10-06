@@ -25,6 +25,7 @@ import dataclasses
 from nerva.interfaces import AppraisalFrame, AppraisalState, Event, GoalState, OutcomeHypothesis, SelfState
 
 NO_GOAL_RELEVANCE = 0.3
+TOUCH_CONTINUATION_S = 1.5  # a touch this soon after the previous one from the same source continues it
 TTC_SAFE_S = 3.0  # reaction margin at which an approaching agent no longer reduces control
 C_MIN, C_MAX = 0.1, 0.8
 SELF_CONTROL_LOSS = 0.5
@@ -40,6 +41,7 @@ HYPOTHESIS_KINDS = {
     "stability_loss": (("stability_loss",), ("remain_upright",), True),
     "locomotion_progress": ((), ("follow_command", "remain_upright"), False),
     "goal_blocked": ((), ("follow_command",), False),
+    "ongoing_contact": (("benign_contact",), ("approach", "keep_distance"), False),  # continued touch (2026-10-06)
 }
 
 
@@ -104,11 +106,15 @@ class FrameAppraiser:
     """Same calls as the wrapped appraiser, but returns AppraisalFrames and takes self state and goals.
     Other attributes (identity, novelty(), memory, ...) are those of the wrapped appraiser."""
 
-    def __init__(self, inner, margin_controllability: bool = False):
+    def __init__(self, inner, margin_controllability: bool = False, touch_context: bool = False):
         """margin_controllability: in-view controllability of people = reaction margin (2026-10-06; off by
-        default: its preregistered evaluation failed, development log)."""
+        default: its preregistered evaluation failed, development log).
+        touch_context: a touch that continues an ongoing contact (within TOUCH_CONTINUATION_S of the previous
+        touch from the same source) is a persistent "ongoing_contact" frame, not a new event (2026-10-06)."""
         object.__setattr__(self, "inner", inner)
         object.__setattr__(self, "margin_controllability", margin_controllability)
+        object.__setattr__(self, "touch_context", touch_context)
+        object.__setattr__(self, "_last_touch", {})
 
     def __getattr__(self, name):
         return getattr(self.inner, name)
@@ -121,7 +127,15 @@ class FrameAppraiser:
         a = self.inner.appraise(event, t, tracks)
         if a is None:
             return None
-        return frame_from(event.kind, a, event.source, self_state, goals)
+        frame = frame_from(event.kind, a, event.source, self_state, goals)
+        if self.touch_context and event.kind == "touch_gentle":
+            last = self._last_touch.get(event.source)
+            self._last_touch[event.source] = t
+            if last is not None and t - last <= TOUCH_CONTINUATION_S:
+                predicts, _, _ = HYPOTHESIS_KINDS["ongoing_contact"]
+                frame = dataclasses.replace(frame, persistent=True, hypothesis=dataclasses.replace(
+                    frame.hypothesis, kind="ongoing_contact", predicts=predicts))
+        return frame
 
     def observe(self, t: float, tracks, dt: float, self_state: SelfState | None = None,
                 goals: GoalState | None = None) -> list[tuple[str, AppraisalFrame]]:

@@ -202,6 +202,20 @@ class OnsetAttractorAffectModel(AttractorAffectModel):
 
     TAU_ONSET_S = 1.0
 
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> np.ndarray:
+        """As Bv2, but context slots are keyed by (source, hypothesis kind), so one person's in-view context
+        and ongoing-contact context coexist (2026-10-06)."""
+        persistent = isinstance(appraisal, AppraisalFrame) and appraisal.persistent
+        key_kind = appraisal.hypothesis.kind if isinstance(appraisal, AppraisalFrame) else ""
+        if isinstance(appraisal, AppraisalFrame):
+            source = source or appraisal.hypothesis.subject
+        u = DimensionalAffectModel.add(self, appraisal, source)
+        if persistent:
+            self.context[f"{source}|{key_kind}"] = (u, self.t)
+        else:
+            self.z_phasic = self.z_phasic + u
+        return u
+
     def step(self, dt: float) -> PADState:
         x_star = self.target()
         x0 = np.array(self.cfg.baseline)

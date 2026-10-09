@@ -59,10 +59,10 @@ def require_archive(path, metadata, tree=None):
                     raise ValueError("archive literal bytes mismatch")
 
 
-def run(root, raw, output):
+def admit_inputs(root):
     import jax
     from brax.training.acme import running_statistics
-    from brax.training.agents.ppo import checkpoint, networks, train
+    from brax.training.agents.ppo import checkpoint, train
     from nerva.training.neutral_reference import verified_references
 
     if (jax.process_count() != 1 or jax.local_device_count() != 1
@@ -107,18 +107,25 @@ def run(root, raw, output):
     batch = jax.tree.map(lambda x: jax.random.permutation(keys["permutation"], x), batch)
     if count_value(updated.count) != 8 or fingerprint(batch) != capture["minibatch_tree_sha256"]:
         raise ValueError("updated count/minibatch mismatch")
+    return params, updated, batch, keys, {
+        "prior_report_hashes": {name: hashlib.sha256((prior / name).read_bytes()).hexdigest() for name in names},
+        "source_hashes": sources, "versions": versions, "network": NETWORK_CONFIG,
+        "variance_eps": .0001, "seed": 7, "normalization_count": [0, 8],
+        "original_environment_transitions": 8, "new_environment_transitions": 0,
+        "input_admission_pass": True, "weights_sha256": fingerprint(params[1:]),
+        "batch_sha256": fingerprint(batch), "checkpoint_hashes": checkpoint_hashes(location)}
+
+
+def run(root, raw, output):
+    from brax.training.acme import running_statistics
+    from brax.training.agents.ppo import networks
+    params, updated, batch, keys, admission = admit_inputs(root)
     write_json(output / "protocol.json", {
         "preregistration_commit": PREREGISTRATION,
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "runner_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "shared_runner_source_sha256": hashlib.sha256(Path(inspect.getfile(evaluate_cases)).read_bytes()).hexdigest(),
-        "prior_report_hashes": {name: hashlib.sha256((prior / name).read_bytes()).hexdigest() for name in names},
-        "source_hashes": sources, "versions": versions, "network": NETWORK_CONFIG,
-        "variance_eps": .0001, "seed": 7, "normalization_count": [0, 8],
-        "original_environment_transitions": 8, "new_environment_transitions": 0, "optimizer_updates": 0,
-        "wall_cap_s": 180, "cloud_work": False, "input_admission_pass": True,
-        "weights_sha256": fingerprint(params[1:]), "batch_sha256": fingerprint(batch),
-        "checkpoint_hashes": checkpoint_hashes(location)})
+        **admission, "optimizer_updates": 0, "wall_cap_s": 180, "cloud_work": False})
     print("retained inputs admitted; replaying old then updated statistics", flush=True)
     shape = {"state": (101,), "privileged_state": (212,)}
     factory = functools.partial(networks.make_ppo_networks, **NETWORK_CONFIG)

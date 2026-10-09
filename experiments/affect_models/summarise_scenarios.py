@@ -91,11 +91,11 @@ def main() -> None:
             crit["dominance_A_below_B"] = sum(r["d_a_return"] < r["d_b_return"] for r in mem) >= 4
             crit["dominance_std"] = pooled["dominance"]["std"] >= 0.05
             per_sc["default"]["d_lunge_mean"] = [round(x, 3) for x in lunge]
-            if data["default"][0].get("d_min_after_rapid") is not None:
+            if "d_min_after_rapid" in data["default"][0]:
                 after = [r["d_min_after_rapid"] for r in data["default"]]
-                crit["dominance_low_after_rapid_event"] = sum(x < 0 for x in after) >= 4
+                crit["dominance_low_after_rapid_event"] = sum(x is not None and x < 0 for x in after) >= 4
                 crit.pop("dominance_low_in_lunge")  # replaced by the event-anchored criterion (2026-10-06)
-                per_sc["default"]["d_min_after_rapid"] = [round(x, 3) for x in after]
+                per_sc["default"]["d_min_after_rapid"] = [round(x, 3) if x is not None else None for x in after]
             per_sc["memory"]["d_a_vs_b"] = [(round(r["d_a_return"], 3), round(r["d_b_return"], 3)) for r in mem]
         report[model] = {"criteria": crit, "all_pass": all(crit.values()), "pooled_pad": pooled, "scenarios": per_sc}
     (ROOT / "summary.json").write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")

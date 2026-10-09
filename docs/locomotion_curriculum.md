@@ -54,8 +54,11 @@ imitation is disabled; lateral tracking has a 0.10 m/s tolerance; the inspected
 generator fails known-yaw velocity probes. Causes of learned behaviour remain
 unproven. A [motor-only candidate design](neutral_motor_candidate.md) requires
 verified reference derivatives/frames, symmetric tracking and explicit rest
-semantics. Next: preregister a validator and small reference subset before any
-candidate implementation or training.
+semantics. The corrected seven-reference subset then failed 0/7; timing
+alignment reduces velocity error but does not meet the fixed absolute limit.
+Shared rest/phase conformance passes as isolated infrastructure. Next:
+preregister derivative-consistent fitting, static contact semantics and knee
+initialization checks before further generation or candidate training.
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

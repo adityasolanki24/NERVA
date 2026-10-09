@@ -13,3 +13,7 @@ inference adapter and JAX training adapter. It is not wired to B2, any historica
 policy, existing reward or deterministic safety. No rollout, PPO or motor
 readiness evaluation took place. The failed reference subset still blocks
 candidate environment training and adoption. These are infrastructure results.
+
+Final verification across these phases: 272 tests including slow tests passed;
+Ruff clean. Two existing JAX cast warnings in unchanged training tests.
+Public-content checks passed; raw artifacts remain ignored.

@@ -1,5 +1,10 @@
 # Neutral motor baseline candidate (design only)
 
+Status update 2026-10-09: seven-point corrected subset evaluated, 0/7 pass;
+derivative alignment improves fit errors but is insufficient. Shared rest/phase
+contract is implemented as isolated infrastructure and passes NumPy/JAX
+conformance. No candidate environment, trained policy or reference adoption.
+
 Grounding: [neutral motor audit](neutral_motor_audit.md) and longer-turn
 measurements. This is a proposed package, not an implemented fix or training
 authorisation. B2, S1–S6 and historical defaults remain reproducible. The audit
@@ -59,10 +64,12 @@ displacement criteria. Passing one-minute rest descriptions alone is insufficien
 
 ## Next phase and spending boundary
 
-Next safe local work is a separately preregistered velocity/frame validator and
-small reference subset experiment. Do not rerun completed R0 or S1–S6. Then
-implement/test the candidate's shared rest/phase contract and a tiny CPU
-environment smoke under explicit local step/time limits. Verify checkpoint
+The velocity/frame validator and seven-motion subset are complete; the subset
+fails. Shared rest/phase infrastructure (`nerva.motor_contract`) passes
+conformance but is not wired into historical policies. Next safe local work is
+a preregistered derivative-consistent fitting and contact-label investigation,
+including positive-knee initialization. Do not rerun R0 or S1–S6. Candidate
+environment/PPO smoke waits for valid references and its own limits. Verify checkpoint
 restore compatibility before planning continuation. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.

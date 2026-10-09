@@ -1,0 +1,8 @@
+{
+ "preregistration_commit": "b24aed2",
+ "implementation_commit": "0d42391c6bfc1e4cd6363b021eddfe3dcbd58f42",
+ "original_report_sha256": "08d9ff0cdf78b786d2f5117fcde8bbe560c99347aa67c1af55f2f8c3c38c6cb1",
+ "input_hashes_verified": true,
+ "wall_cap_s": 120,
+ "cloud_work": false
+}

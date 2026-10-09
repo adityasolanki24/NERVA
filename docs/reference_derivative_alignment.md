@@ -1,5 +1,9 @@
 # Reference derivative time-alignment diagnostic: preregistration
 
+Completed: **timing alone insufficient**. Interval alignment reduces error by
+more than half but all six moving fits remain above 0.5 rad/s.
+[Results](../experiments/locomotion_curriculum/results_derivative_alignment/README.md).
+
 The seven-reference subset failed; keep its criteria/results unchanged. This
 follow-up uses exactly those saved recordings and five-harmonic fits, no new
 generation, tuning, increased harmonics, repairs, policy changes or training.

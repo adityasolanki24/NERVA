@@ -4,6 +4,68 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Corrected reference subset, shared motor contract, derivative alignment
+
+Three consecutive preregistered safe-local phases, no paid work or PPO.
+1. Subset protocol `7800728`, code `1e0a42d`, results `009bb5c`.
+2. Contract protocol `009bb5c`, code `88c6074`, results `b24aed2`.
+3. Alignment protocol `b24aed2`, code `0d42391`.
+Reports under `experiments/locomotion_curriculum/results_reference_subset/`,
+`results_contract/` and `results_derivative_alignment/`.
+
+**Subset: 0/7 pass, adoption blocked.** Seven eight-second recordings, two
+workers, one attempt each, completed in 92.81 s under 180 s per-process / 900 s
+wall caps. WSL generator interpreter reused; no dependency installation,
+upstream edits, full-grid regeneration, repairs or substitutions. Isolated
+wrapper removes unconditional yaw-step bias and records actual timestamps.
+New kinematics reconstruct current-body linear/angular derivatives and joint
+velocities; known pure/mixed rotation checks pass 12/12. Five-harmonic periodic
+schema fits on [2,4), evaluates once on [4,6); no silent nearest-gait lookup.
+
+All held-out position and body-velocity fits pass, but all six moving joint
+velocity fits fail: maximum per-component RMSE 1.928–1.974 rad/s (limit 0.5).
+Static contact fit is 66% (limit 90%): upstream stand freezes poses but labels
+remain walking-phase labels. Left turn also fails positive-knee and lateral
+command criteria: right knee min -1.941 rad, lateral mean +0.036 m/s. Its yaw
+mean +0.604 tracks correctly. Six moving conditions report knee-limit
+exceedances, informational per unchanged protocol. All failed raw artifacts
+and fits preserved in ignored storage; public reports include hashes only.
+
+**Shared contract: passes all 2,180 NumPy/JAX ticks.** Rest uses separate planar
+0.005 m/s and yaw 0.02 rad/s thresholds; canonical motion slots zero at rest,
+head slots retained; phase freezes at [1,0], rest-to-move resets index zero,
+subsequent movement advances modulo period. One backend-parametric function
+feeds future training and inference adapters. Periods 27 and 20, seed 123,
+1,090 commands each; max feature discrepancy 3.07e-7, canonical command error
+zero. Symmetric planar tracking penalises vx/vy drift equally. Evaluation
+1.55 s under 120 s watchdog. Infrastructure only; not wired to B2 or any
+historical policy, reward, safety or default. Dynamic readiness untested.
+
+**Alignment: timing alone insufficient.** Original input/output hashes verified
+and endpoint metrics reproduced exactly. Same five-harmonic coefficients:
+midpoint derivative RMSE 0.827–0.857, interval-average RMSE 0.814–0.843 rad/s.
+Both reduce error by >50%, but neither meets 0.5; all six conditions fail
+aggregate timing-accounted support. Four known sinusoid/static checks pass.
+No refit, threshold change or new generation. Original subset stays 0/7.
+
+Next: preregister derivative-consistent fitting, static geometry/contact label
+validation and deterministic knee-branch initialization before another small
+subset. Candidate environment/PPO smoke and checkpoint continuation wait for
+valid references; expressive learning waits for a robust neutral motor gate.
+Bv4 affect default, B2 reactive role and original failed gate unchanged.
+Validation: **272 tests passed**, including slow tests, in 226.11 s; 14 new
+kinematics, saved-signal and contract tests. Ruff and diff checks clean. The
+same two existing JAX cast-overflow warnings occurred in unchanged training
+tests. Public JSON/content checks pass; total small reports about 36 KB,
+no secrets, account identifiers, personal paths or large artifacts added.
+Upstream generator checkout remains clean; no recorder processes remain.
+Versions preserved in subset environment.json; dependencies unchanged.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots. Results bucket and runner identity intentionally retained;
+no paid runs, spending or deletions.
+
+---
+
 ## 2026-10-09 — Neutral motor audit: tracking tolerance and generator derivative defects
 
 Preregistered `fa22d19` after source inspection; implementation `a3d1220`.

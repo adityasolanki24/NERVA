@@ -39,7 +39,7 @@ it: `docs/architecture.md`.
 | Learned events | prediction-error prototypes predicted outcomes worse than the hand-coded events (RQ9 falsified for this design) |
 | Human evaluation | not started; no behaviour is claimed to *look* emotional |
 
-**Affect default (2026-10-09):** Bv4 combines simultaneous context facets per source. With reaction margin and ongoing-touch context, all criteria pass (15 runs, no falls; saturation V/A/D 2.02/0/0.37%). Historical Bv2/Bv3 paths remain available. The neutral B2 curriculum gate fails pure-turn translation (10/10 turns), despite 115 trials without falls. Next: a local turn-centre/reference diagnostic before expressive training (`docs/locomotion_curriculum.md`).
+**Affect default (2026-10-09):** Bv4 combines simultaneous context facets per source. With reaction margin and ongoing-touch context, all criteria pass (15 runs, no falls; saturation V/A/D 2.02/0/0.37%). Historical Bv2/Bv3 paths remain available. The neutral B2 curriculum gate fails pure-turn translation; longer zero-command controls migrate. Corrected reference subset: 0/7 pass, derivative alignment alone insufficient. Shared neutral rest/phase infrastructure passes NumPy/JAX conformance but is not adopted by existing policies. Next: preregister derivative-consistent fitting, static contact semantics and positive-knee initialization before candidate training (`docs/locomotion_curriculum.md`).
 
 The detailed record of every run, measurement and correction is `docs/development_log.md`. Long-term trajectory: `docs/roadmap.md`.
 

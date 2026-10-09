@@ -20,8 +20,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   aggregate-inconclusive; longer zero-command controls migrate in COM and foot
   region, all five seeds (`b2_long_turn_experiment.md`). The neutral motor audit
   confirms lateral tolerance and an inspected generator derivative bug;
-  behavioural causation remains unproven. Next is a preregistered reference
-  velocity/frame validator and small subset (`neutral_motor_candidate.md`);
+  behavioural causation remains unproven. The corrected seven-reference subset
+  fails 0/7; alignment alone is insufficient. Shared rest/phase infrastructure
+  passes conformance. Next is preregistered derivative-consistent fitting,
+  contact semantics and knee initialization (`neutral_motor_candidate.md`);
   expressive curriculum remains blocked.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?

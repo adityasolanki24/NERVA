@@ -29,11 +29,31 @@ six conditions pass knee sign checks; the other moving conditions pass their
 mean command tracking checks. All joint-limit exceedances remain reported.
 These kinematic results make no dynamic stability/readiness claim.
 
+| Condition | Mean vx/vy/yaw | Max joint-velocity RMSE, rad/s |
+|---|---|---:|
+| stand | 0 / 0 / 0 | 0 |
+| forward | +0.07288 / +0.01476 / 0 | 1.953 |
+| backward | -0.07249 / +0.01477 / 0 | 1.954 |
+| left | +0.00016 / +0.08779 / 0 | 1.974 |
+| right | +0.00023 / -0.05829 / 0 | 1.960 |
+| turn left | +0.00302 / +0.03600 / +0.60369 | 1.928 |
+| turn right | -0.00282 / -0.00712 / -0.60368 | 1.929 |
+
+Planar units are m/s and yaw rad/s. Left-turn lateral mean exceeds 0.02 m/s;
+its right knee reaches -1.941 rad. All six moving fits report knee-limit
+exceedances (informational, unchanged protocol).
+
 The seven-point set is not a Cartesian training grid. The new schema rejects
 unsupported command lookup and remains experimental. Existing B2's motor gate
 is still failed; no references, rewards or policy defaults were adopted.
 
-Next: isolate derivative time alignment/fitting and static contact-label
-semantics under a new protocol before generating anything more. Shared rest
-and phase infrastructure may be tested independently, but no motor training
-or expressive objectives are justified by these results.
+The subsequent [alignment diagnostic](../results_derivative_alignment/README.md)
+reduces error by more than half but remains above the fixed absolute limit.
+Shared rest/phase [conformance](../results_contract/README.md) passes independently.
+Next: preregister derivative-consistent fitting, validated static contact
+semantics and positive-knee initialization before any new generation. No motor
+training or expressive objectives are justified by these results.
+
+Final verification across these phases: 272 tests including slow tests passed;
+Ruff clean. Two existing JAX cast warnings in unchanged training tests.
+Public-content checks passed; raw artifacts remain ignored.

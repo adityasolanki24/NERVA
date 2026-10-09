@@ -1,0 +1,17 @@
+{
+ "recording": {
+  "python": "3.10.12",
+  "placo": "0.6.3",
+  "numpy": "1.26.4",
+  "scipy": "1.15.3"
+ },
+ "validation_and_conformance": {
+  "python": "3.12.4",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "jax": "0.5.3",
+  "mujoco": "3.3.0",
+  "onnxruntime": "1.21.0"
+ },
+ "note": "Versions inspected after evaluation; no dependencies changed during these phases."
+}

@@ -1,5 +1,9 @@
 # Corrected neutral reference subset: preregistration
 
+Completed: **0/7 pass**, no adoption. Known kinematics checks 12/12 pass;
+all moving joint-velocity fits fail, static contact labels fail, and left turn
+also fails knee/command checks. [Results](../experiments/locomotion_curriculum/results_reference_subset/README.md).
+
 New local experiment, not a repeat of the completed 240-gait R0 or S1–S6.
 Inspecting generator code found both angular double-angle differentiation and
 an unconditional +0.00955 yaw-step bias. Preserve historical files unchanged.

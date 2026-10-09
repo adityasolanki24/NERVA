@@ -1,5 +1,8 @@
 # Shared neutral motor contract: preregistration
 
+Completed: all fixed criteria pass across 2,180 NumPy/JAX ticks. Infrastructure
+only; existing policies unchanged. [Results](../experiments/locomotion_curriculum/results_contract/README.md).
+
 Reference subset failed 0/7; do not adopt it or train a candidate. This phase
 implements independent contract infrastructure, not motor-performance claims.
 

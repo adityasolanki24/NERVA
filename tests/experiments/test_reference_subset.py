@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from experiments.locomotion_curriculum.record_reference import adapt
+from experiments.locomotion_curriculum.record_reference import adapt, adapt_engine, static_support
 from experiments.locomotion_curriculum.reference_subset import known_pose_checks, validate
 
 
@@ -32,3 +32,28 @@ def test_known_rotations_pass_at_all_fixed_headings_and_intervals():
 def test_recorder_adaptation_is_fail_closed():
     with pytest.raises(ValueError):
         adapt("unexpected upstream source")
+
+
+def test_static_support_requires_both_feet_on_floor():
+    left, right = np.eye(4), np.eye(4)
+    assert static_support(left, right) == [1, 1]
+    right[2, 3] = .01
+    with pytest.raises(ValueError):
+        static_support(left, right)
+    with pytest.raises(ValueError):
+        adapt_engine("unexpected engine")
+
+
+def test_repaired_validator_enforces_bounds_and_joint_order():
+    from nerva.training.reference_validation import REFERENCE_JOINTS
+    data = recording()
+    data["Joints"] = list(REFERENCE_JOINTS)
+    limits = {name: (-2., 2.) for name in REFERENCE_JOINTS}
+    result, ref = validate(data, [.074, 0, 0], joint_limits=limits)
+    assert result["all_pass"] and ref["version"] == 2
+    limits["left_knee"] = (.01, 1.)
+    result, _ = validate(data, [.074, 0, 0], joint_limits=limits)
+    assert not result["criteria"]["joint_limits"]
+    data["Joints"].reverse()
+    with pytest.raises(ValueError):
+        validate(data, [.074, 0, 0], joint_limits=limits)

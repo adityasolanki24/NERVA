@@ -42,3 +42,32 @@ def test_static_reference_and_unsupported_commands():
 def test_invalid_timestamps_are_rejected():
     with pytest.raises(ValueError):
         pose_velocities([0, 0], np.zeros((2, 3)), np.tile([0, 0, 0, 1], (2, 1)), np.zeros((2, 16)))
+
+
+def test_v2_joint_positions_and_interval_derivatives_share_coefficients():
+    t = np.arange(1, 401) * .02
+    start = t - .02
+    omega = 2 * np.pi * 11 / .54
+    def q(times):
+        return .1 * np.sin(omega * times[:, None]) * np.ones((1, 16))
+    velocity = (q(t) - q(start)) / .02
+    ref = fit_reference(t, q(t), np.ones((400, 2)), np.zeros((400, 3)), np.zeros((400, 3)),
+                        .54, interval_start=start, joint_velocity=velocity)
+    assert ref["version"] == 2 and ref["harmonics"] == 12
+    values = sample_reference(ref, t)
+    np.testing.assert_allclose(values["joint_position"], q(t), atol=1e-10)
+    np.testing.assert_allclose(values["joint_velocity"], .1 * omega * np.cos(omega * t[:, None]) *
+                               np.ones((1, 16)), atol=1e-8)
+    interval = (values["joint_position"] - sample_reference(ref, start)["joint_position"]) / .02
+    np.testing.assert_allclose(interval, velocity, atol=1e-8)
+
+
+def test_invalid_intervals_and_nonfinite_coefficients_fail_closed():
+    t = np.arange(100) * .02
+    inputs = (t, np.ones((100, 16)), np.ones((100, 2)), np.zeros((100, 3)), np.zeros((100, 3)), .54)
+    with pytest.raises(ValueError):
+        fit_reference(*inputs, interval_start=t, joint_velocity=np.zeros((100, 16)))
+    ref = fit_reference(*inputs)
+    ref["coefficients"]["joint_position"][0][0] = float("nan")
+    with pytest.raises(ValueError):
+        sample_reference(ref, t)

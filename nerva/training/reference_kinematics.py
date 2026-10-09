@@ -31,12 +31,12 @@ def pose_velocities(t, xyz, quat_xyzw, joints):
             "joint_velocity": np.diff(joints, axis=0) / dt}
 
 
-def basis(t, period, derivative=False):
+def basis(t, period, derivative=False, harmonics=HARMONICS):
     t = np.asarray(t)
-    if period <= 0:
+    if not np.isfinite(period) or period <= 0 or harmonics not in (5, 12):
         raise ValueError("period must be positive")
     columns = [np.zeros_like(t) if derivative else np.ones_like(t)]
-    for k in range(1, HARMONICS + 1):
+    for k in range(1, harmonics + 1):
         omega = 2 * np.pi * k / period
         angle = omega * t
         columns.extend((-omega * np.sin(angle), omega * np.cos(angle)) if derivative
@@ -44,31 +44,58 @@ def basis(t, period, derivative=False):
     return np.column_stack(columns)
 
 
-def fit_reference(t, joints, contact, linear, angular, period, static=False):
+def fit_reference(t, joints, contact, linear, angular, period, static=False, *, interval_start=None,
+                  joint_velocity=None):
+    t = np.asarray(t, dtype=float)
+    joints, contact, linear, angular = (np.asarray(v, dtype=float) for v in (joints, contact, linear, angular))
+    if (t.ndim != 1 or not len(t) or not np.isfinite(t).all() or np.any(np.diff(t) <= 0)
+            or any(y.shape != (len(t), width) or not np.isfinite(y).all()
+                   for y, width in ((joints, 16), (contact, 2), (linear, 3), (angular, 3)))):
+        raise ValueError("malformed reference samples")
+    version = 2 if interval_start is not None else 1
+    harmonics = 12 if version == 2 else HARMONICS
     values = {"joint_position": joints, "contacts": contact, "linear_body": linear, "angular_body": angular}
-    design = basis(t, period)
+    design = basis(t, period, harmonics=harmonics)
+    if version == 2:
+        start = np.asarray(interval_start)
+        if (start.shape != np.asarray(t).shape or np.any(np.asarray(t) <= start)
+                or not np.isfinite(start).all() or joint_velocity is None
+                or np.asarray(joint_velocity).shape != joints.shape or not np.isfinite(joint_velocity).all()):
+            raise ValueError("malformed joint intervals")
+        intervals = (design - basis(start, period, harmonics=harmonics)) / (np.asarray(t) - start)[:, None]
     coefficients = {}
     for name, y in values.items():
         if static:
             coeff = np.zeros((design.shape[1], y.shape[1]))
             coeff[0] = y.mean(axis=0) if name in ("joint_position", "contacts") else 0
         else:
-            coeff, _, rank, _ = np.linalg.lstsq(design, y, rcond=None)
+            x, target = design, y
+            if version == 2 and name == "joint_position":
+                x = np.vstack([design, .02 * intervals])
+                target = np.vstack([y, .02 * np.asarray(joint_velocity)])
+            coeff, _, rank, _ = np.linalg.lstsq(x, target, rcond=None)
             if rank != design.shape[1]:
                 raise ValueError("deficient phase coverage")
         coefficients[name] = coeff.tolist()
-    return {"version": 1, "basis": "periodic_fourier", "harmonics": HARMONICS,
+    return {"version": version, "basis": "periodic_fourier", "harmonics": harmonics,
             "period_s": float(period), "velocity_frame": "current_body", "pose_quaternion": "xyzw",
             "static": static, "coefficients": coefficients}
 
 
 def sample_reference(reference, t):
-    if (reference.get("version") != 1 or reference.get("basis") != "periodic_fourier"
-            or reference.get("harmonics") != HARMONICS or reference.get("velocity_frame") != "current_body"):
+    harmonics = {1: 5, 2: 12}.get(reference.get("version"))
+    if (harmonics is None or reference.get("basis") != "periodic_fourier"
+            or reference.get("harmonics") != harmonics or reference.get("velocity_frame") != "current_body"):
         raise ValueError("unsupported reference schema")
     period = reference["period_s"]
-    design, derivative = basis(t, period), basis(t, period, derivative=True)
+    design = basis(t, period, harmonics=harmonics)
+    derivative = basis(t, period, derivative=True, harmonics=harmonics)
     c = {name: np.asarray(value) for name, value in reference["coefficients"].items()}
+    expected = {"joint_position": 16, "contacts": 2, "linear_body": 3, "angular_body": 3}
+    if (set(c) != set(expected) or any(c[name].shape != (2 * harmonics + 1, width)
+                                     or not np.isfinite(c[name]).all() for name, width in expected.items())
+            or not np.isfinite(t).all()):
+        raise ValueError("malformed reference coefficients or times")
     result = {name: design @ value for name, value in c.items()}
     result["joint_velocity"] = derivative @ c["joint_position"]
     return result

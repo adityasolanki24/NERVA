@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import subprocess
 import time
+import xml.etree.ElementTree as ET
 
 import numpy as np
 
@@ -23,7 +24,7 @@ def wsl_path(path):
     return "/mnt/" + path.drive[0].lower() + path.as_posix()[2:]
 
 
-def validate(recording, command, static=False):
+def validate(recording, command, static=False, *, joint_limits=None):
     frames = np.asarray(recording["Frames"], dtype=float)
     t = np.asarray(recording["FrameTimes"], dtype=float)
     offsets = recording["Frame_offset"][0]
@@ -38,15 +39,24 @@ def validate(recording, command, static=False):
     train, held = (t >= 2) & (t < 4), (t >= 4) & (t < 6)
     if train.sum() < 80 or held.sum() < 80 or abs(period - .54) > 1e-6:
         raise ValueError("period or interval coverage mismatch")
+    options = {} if joint_limits is None else {"interval_start": np.asarray(recording["FrameTimes"])[:-1][train],
+                                               "joint_velocity": velocities["joint_velocity"][train]}
     ref = fit_reference(t[train], joints[train], contact[train], velocities["linear_body"][train],
-                        velocities["angular_body"][train], period, static)
+                        velocities["angular_body"][train], period, static, **options)
     pred = sample_reference(ref, t[held])
+    if joint_limits is not None:
+        ref["joint_names"] = recording["Joints"]
+        ref["contact_semantics"] = "static_geometric_support" if static else "planned_support"
+        ref["joint_velocity_semantics"] = "analytic_instantaneous"
+        starts = np.asarray(recording["FrameTimes"])[:-1][held]
+        pred["joint_velocity"] = (pred["joint_position"] - sample_reference(ref, starts)["joint_position"]) / (t[held] - starts)[:, None]
     errors = {}
     for name, actual in (("joint_position", joints), ("joint_velocity", velocities["joint_velocity"]),
                          ("linear_body", velocities["linear_body"]), ("angular_body", velocities["angular_body"])):
         errors[name] = np.sqrt(np.mean((pred[name] - actual[held]) ** 2, axis=0)).tolist()
     contact_agree = float(np.mean((pred["contacts"] > .5) == (contact[held] > .5)))
-    cycle = sample_reference(ref, np.arange(100) / 100 * period)["joint_position"]
+    cycle_samples = 100 if joint_limits is None else 1000
+    cycle = sample_reference(ref, np.arange(cycle_samples) / cycle_samples * period)["joint_position"]
     scored = (t >= 2) & (t < 6)
     knee_min = np.minimum(joints[scored][:, [3, 14]].min(0), cycle[:, [3, 14]].min(0))
     mean = np.r_[velocities["linear_body"][held].mean(0)[:2], velocities["angular_body"][held].mean(0)[2]]
@@ -65,6 +75,13 @@ def validate(recording, command, static=False):
                 "linear_fit": max(errors["linear_body"]) <= .03,
                 "angular_fit": max(errors["angular_body"]) <= .10,
                 "contact_fit": contact_agree >= .90, "command_tracking": bool(command_ok)}
+    if joint_limits is not None:
+        from nerva.training.reference_validation import REFERENCE_JOINTS
+        if tuple(recording["Joints"]) != REFERENCE_JOINTS:
+            raise ValueError("unexpected joint order")
+        low, high = np.array([joint_limits[name] for name in REFERENCE_JOINTS]).T
+        positions = np.vstack([joints[scored], cycle])
+        criteria["joint_limits"] = bool(np.all(positions >= low - 1e-5) and np.all(positions <= high + 1e-5))
     return {"criteria": criteria, "all_pass": all(criteria.values()), "rmse_per_component": errors,
             "contact_agreement": contact_agree, "knee_min_rad": knee_min.tolist(),
             "knee_limit_exceeded": bool(np.abs(cycle[:, [3, 14]]).max() > 1.5708),
@@ -95,9 +112,13 @@ def known_pose_checks():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--generator-python", required=True, help="existing Linux Python interpreter with Placo")
-    ap.add_argument("--out", type=Path, default=Path("experiments/locomotion_curriculum/results_reference_subset"))
-    ap.add_argument("--raw-dir", type=Path, default=Path("experiments/cloud_runs/neutral-reference-subset"))
+    ap.add_argument("--repair", action="store_true")
+    ap.add_argument("--out", type=Path)
+    ap.add_argument("--raw-dir", type=Path)
     args = ap.parse_args()
+    suffix = "repair" if args.repair else "subset"
+    args.out = args.out or Path(f"experiments/locomotion_curriculum/results_reference_{suffix}")
+    args.raw_dir = args.raw_dir or Path(f"experiments/cloud_runs/neutral-reference-{suffix}")
     if args.out.exists() or args.raw_dir.exists():
         raise FileExistsError("never overwrite prior outputs")
     if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
@@ -106,13 +127,24 @@ def main():
     source = root / "open_duck_reference_motion_generator/gait_generator.py"
     preset_path = source.parent / "robots/open_duck_mini_v2/placo_presets/medium.json"
     preset = json.loads(preset_path.read_text(encoding="utf-8"))
+    limits = None
+    if args.repair:
+        preset.update(walk_com_height=.215, walk_foot_height=.020, walk_foot_rise_ratio=.30)
+        urdf = source.parent / "robots/open_duck_mini_v2/open_duck_mini_v2.urdf"
+        limits = {joint.attrib["name"]: (float(joint.find("limit").attrib["lower"]),
+                                        float(joint.find("limit").attrib["upper"]))
+                  for joint in ET.parse(urdf).getroot().findall("joint") if joint.find("limit") is not None}
+        for name in ("left_knee", "right_knee"):
+            limits[name] = (.01, np.pi / 2)
     args.out.mkdir(parents=True)
     args.raw_dir.mkdir(parents=True)
-    write_json(args.out / "protocol.json", {"preregistration_commit": "7800728",
+    write_json(args.out / "protocol.json", {"preregistration_commit": "1b86c37" if args.repair else "7800728",
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "upstream_commit": subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip(),
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         "preset_sha256": hashlib.sha256(preset_path.read_bytes()).hexdigest(), "conditions": CONDITIONS,
+        "engine_sha256": hashlib.sha256(source.with_name("placo_walk_engine.py").read_bytes()).hexdigest(),
+        "effective_preset": preset, "repair": args.repair,
         "workers": 2, "per_recording_cap_s": 180, "wall_cap_s": 900, "cloud_work": False})
     start = time.monotonic()
 
@@ -134,6 +166,8 @@ def main():
                         "--output_dir", wsl_path(directory), "--length", "8"]
         if name == "stand":
             command_line.append("--stand")
+        if args.repair:
+            command_line.append("--repair")
         try:
             with (directory / "generate.log").open("w", encoding="utf-8") as stream:
                 subprocess.run(command_line, stdout=stream, stderr=subprocess.STDOUT, check=True,
@@ -142,7 +176,7 @@ def main():
             if len(files) != 1:
                 raise ValueError("missing recording")
             recording = json.loads(files[0].read_text(encoding="utf-8"))
-            result, ref = validate(recording, command, name == "stand")
+            result, ref = validate(recording, command, name == "stand", joint_limits=limits)
             write_json(directory / "reference.json", ref)
             return {"condition": name, "command": list(command), "recording_sha256":
                     hashlib.sha256(files[0].read_bytes()).hexdigest(), "reference_sha256":

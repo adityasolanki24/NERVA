@@ -1,5 +1,10 @@
 # Neutral motor-target audit
 
+Completed: stationary dispatch/tolerance checks confirmed; inspected generator
+fails both known-yaw derivative probes. Causation of B2 behaviour remains
+unproven. [Results](../experiments/locomotion_curriculum/results_motor_audit/README.md)
+and [candidate design](neutral_motor_candidate.md).
+
 Preregistered after source inspection but before numerical probes. This audit
 checks current formulas and reference targets; it cannot establish why B2
 learned a particular behaviour. No policy, reward, reference or gate changes.

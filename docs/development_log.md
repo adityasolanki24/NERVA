@@ -4,6 +4,60 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Neutral motor audit: tracking tolerance and generator derivative defects
+
+Preregistered `fa22d19` after source inspection; implementation `a3d1220`.
+Reports: `experiments/locomotion_curriculum/results_motor_audit/`; candidate
+**design only**: `neutral_motor_candidate.md`. Seven actual 27-phase float32
+reference lookups, five synthetic reward-dispatch cases, 108 tracking probes,
+18 height cases and two known-yaw helper probes. No physics, training, policy,
+reward, reference, deterministic safety or gate changes. Bv4 unaffected.
+
+Imitation is exactly zero at zero motion including head-only commands. The
+nearest stop reference `(0,-0.037,-0.074)` has mean lateral velocity -0.039775
+m/s, but its imitation reward is disabled: this does not establish a direct
+zero-command imitation incentive. Neither lateral nor yaw grid contains zero.
+At norm exactly 0.010, strict inequality gates enable neither imitation nor
+stand-still; 0.011 enables imitation. Stationary pose/velocity cost is active.
+
+Lateral tracking gives identical reward for vy errors 0, 0.05 and 0.10 m/s;
+0.11 reduces it. This target tolerance conflicts with the stricter pure-turn
+horizontal gate. At stop, isolated vx 0.013 reduces scaled linear reward by
+0.041895; yaw 0.033 reduces scaled angular reward by 0.619080. These are formula
+sensitivities, not inferred total rewards from B2 trajectories.
+
+Height cost is zero without touchdown and at a 40 mm target touchdown;
+a single 20 mm touchdown costs -7.5 at both stop and forward. It is a cost,
+not a reward for starting to step or a cost for never stepping. B2 has no
+S6 air-time reward. Phase still advances at zero command; no stationary
+world-position anchor is active. Behavioural causation remains unproven.
+
+**Inspected generator derivative bug confirmed:** a +0.60 rad/s pure yaw
+at dt 0.02 yields +0.0072 rad/s at initial yaw 0 and 1. The helper multiplies
+`as_rotvec()` by its angle a second time; quaternion ordering is consistent.
+Its relative vector is in prior body axes despite the world-velocity name.
+Fitted 40-signal velocity slices match reward indexing, but angular world/body
+conventions and world linear targets versus randomized initial yaw need an
+explicit frame contract. The mistaken reference-quaternion slice feeds an
+inactive orientation term. Historical shipped-pickle provenance and causes
+of learned B2 drift cannot be inferred from this source audit.
+
+Proposed motor-only package: verified velocity/frames and exact zero grid
+entries, explicit rest/phase semantics shared with inference, symmetric planar
+tracking and no height/air-time objectives initially. Design only; next local
+phase must preregister a validator and small reference subset, not repeat R0
+or S1–S6. Existing B2 readiness gate remains failed; expressive training blocked.
+Five new meaningful probe/dispatch tests. Complete suite including slow tests:
+**258 passed** in 222.52 s; the same two existing JAX cast-overflow warnings in
+unchanged training tests. Ruff, diff and audit-completeness checks clean.
+Public-content scan passed; approximately 59 KB reports, no secrets, account
+identifiers, personal paths or large artifacts added. Final read-only cloud
+audit: no instances, disks, addresses, forwarding rules, routers or snapshots.
+Results bucket and runner identity intentionally retained; no launches,
+spending or deletions.
+
+---
+
 ## 2026-10-09 — Longer B2 turns: aggregate inconclusive; zero-command controls migrate
 
 Preregistered `dec8fba`, implemented `7f18b7f`; reports in

@@ -1,0 +1,24 @@
+{
+ "preregistration_commit": "fa22d19",
+ "implementation_commit": "a3d12204daaa86f2f5c564b07f18280d13deff9f",
+ "source_sha256": {
+  "reference": "5850c0610ed89e2860e7047f9ee27d8412462e1199752952c3c2a0efd2cb7a25",
+  "generator": "bf93bd9fccddba039901bab788ba02e97c43f3d9bc5ec0fd5947e52c92e7163a",
+  "fitter": "81753310afa3ffcce7b597e42ba95d3b7b234a83379d14da9ad0a0bfb0bdcbbd",
+  "style_env": "72e80b9cdefd840c39477042526658cb1ff3f5190aab3e39f90e3c2b0a93a8d8",
+  "training_runner": "5ad2f7e9723a7dde6bb086a27f3951178d5725854b4d976b6dbb06db82234017",
+  "b2_job": "ecc95470a87d3e42cee3832600e79d8012a1c40c628d762c026820e750d9fa41",
+  "b1_job": "6e7ffd746806d9e7044ba78a77ce557394801ca55f7596e049030aa592ae0582",
+  "rewards": "739e79fe05db2552c025e3fcb4eff061514bc17e22638125a7e64e287d4faa0f",
+  "imitation": "1d430d4097f5154585b048bfd7b95fa87459e30cd2158e5275ea0b651ebfb129",
+  "joystick": "92e1f468f60de88829538bd521c5a67d037b7243ed9e220dc5e09ba5ce3e5494",
+  "base": "9bc5fbd2fd62d53c96a4af1434e264fe5b3f8eedb48a5f527d1658ade84a6d81",
+  "reference_parser": "e694a801b1b5f60ca7ae8a12b34bb917108b729f410531924e49479f735b9f05"
+ },
+ "upstream_revisions": {
+  "playground": "b9be205ac64488c23504ca42e5ec790337adeec3",
+  "generator": "3d7bc6fd80e6c35587b2a5279314d946cf63456b"
+ },
+ "synthetic_only": true,
+ "cloud_work": false
+}

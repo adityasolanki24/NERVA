@@ -65,8 +65,9 @@ entry, docs, commit.
    (curriculum design: robust locomotion first, then expressive objectives;
    `locomotion_curriculum.md`: B2 gate failed pure-turn translation, 2026-10-09;
    short/long turn diagnostics completed, aggregate inconclusive; long zero-command
-   controls migrate in COM/foot region; next a preregistered neutral motor-target
-   audit and motor-only baseline design before training), evaluated on monotonic
+   controls migrate in COM/foot region; motor audit and candidate design complete;
+   next a preregistered reference velocity/frame validator and small subset
+   before motor-only baseline implementation/training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

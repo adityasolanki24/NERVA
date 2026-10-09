@@ -49,9 +49,13 @@ with corresponding foot-region displacement. Local turn-region support is
 3/5 left and 2/5 right, below the fixed 4/5 requirement. No falls or shadow
 interventions occurred. The original motor gate remains failed.
 
-Next: preregister a neutral motor-target audit covering zero-command reference
-selection, stored velocity slices and active stationary reward terms, then
-design a motor-only baseline candidate addressing stop and turn errors.
+The [neutral motor-target audit](neutral_motor_audit.md) is complete: zero
+imitation is disabled; lateral tracking has a 0.10 m/s tolerance; the inspected
+generator fails known-yaw velocity probes. Causes of learned behaviour remain
+unproven. A [motor-only candidate design](neutral_motor_candidate.md) requires
+verified reference derivatives/frames, symmetric tracking and explicit rest
+semantics. Next: preregister a validator and small reference subset before any
+candidate implementation or training.
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

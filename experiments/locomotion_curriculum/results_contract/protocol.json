@@ -1,0 +1,10 @@
+{
+ "preregistration_commit": "009bb5c",
+ "implementation_commit": "88c60747ca44faff1a2f88be61cd59a652bb2434",
+ "stream_sha256": "bcb64c009c069019b81ec624e8d10070ce154e37726c11ef77c2a9aa8e4cb8ce",
+ "seed": 123,
+ "wall_cap_s": 120,
+ "cloud_work": false,
+ "dynamics": false,
+ "training": false
+}

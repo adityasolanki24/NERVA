@@ -1,0 +1,51 @@
+{
+ "all_pass": true,
+ "periods": [
+  {
+   "period_steps": 27,
+   "ticks": 1090,
+   "criteria": {
+    "index_parity": true,
+    "mode_parity": true,
+    "phase_parity": true,
+    "command_parity": true,
+    "unit_phase": true,
+    "rest_index_zero": true,
+    "movement_onset_zero": true,
+    "index_range": true,
+    "finite": true
+   },
+   "all_pass": true,
+   "max_phase_error": 2.212483648511565e-07,
+   "max_command_error": 0.0,
+   "rest_ticks": 150
+  },
+  {
+   "period_steps": 20,
+   "ticks": 1090,
+   "criteria": {
+    "index_parity": true,
+    "mode_parity": true,
+    "phase_parity": true,
+    "command_parity": true,
+    "unit_phase": true,
+    "rest_index_zero": true,
+    "movement_onset_zero": true,
+    "index_range": true,
+    "finite": true
+   },
+   "all_pass": true,
+   "max_phase_error": 3.063276601267262e-07,
+   "max_command_error": 0.0,
+   "rest_ticks": 150
+  }
+ ],
+ "symmetric_tracking": {
+  "pass": true,
+  "vx_reward": 0.7788007830714049,
+  "vy_reward": 0.7788007830714049,
+  "rest_reward": 1.0
+ },
+ "wall_seconds": 1.55,
+ "motor_readiness": "not evaluated"
+}

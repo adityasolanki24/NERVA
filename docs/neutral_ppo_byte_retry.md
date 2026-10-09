@@ -28,3 +28,9 @@ New outputs: `results_neutral_ppo_bytes/`; ignored logs/checkpoints in
 artifacts. Stop on any original failure condition; preserve partial outputs.
 No further retry is preregistered here. Normalization-control research remains
 a separate prospective phase before larger neutral training.
+
+Outcome: implementation/protocol snapshot `6f10e30`; all criteria pass in
+203.19 s, 32 transitions. Both 21-leaf live/restored trees and warm initialization
+agree byte-for-byte; twenty deterministic/same-key action probes agree exactly.
+Both networks update, normalizer count 16->32, finite metrics match the original
+run except timing/throughput. No learned readiness or loss-stability claim.

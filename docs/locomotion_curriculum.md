@@ -69,7 +69,11 @@ stages in 193.47 s: finite updates to both networks, normalization count 16->32,
 exact action restoration and warm initialization. Adam/RNG/counters restart;
 this is not full training-state continuation. The live comparison checked
 numeric equality; subsequent literal-byte audit covers saved-tree reserialization,
-so the original live bitwise criterion is not fully evidenced. Fresh value loss
+so the original live bitwise criterion was not fully evidenced. The separately
+[preregistered strict retry](neutral_ppo_byte_retry.md) closes that gap: all
+criteria pass, 32 transitions in 203.19 s, every live-before-save/restored leaf
+and warm initialization agree in literal bytes, 20 exact restored-action probes.
+Fresh value loss
 8.842e8/KL 1.552e11 are preserved, despite warm loss 0.0612/KL 0.1214.
 [Normalization audit](neutral_normalization_audit.md) finds six policy and
 seventeen privileged slots at the 1e-6 std floor; fixed synthetic probes amplify

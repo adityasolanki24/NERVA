@@ -5,8 +5,9 @@ insufficient. A preregistered smooth/limited repair passes 6/7; geometric pivot
 correction passes both turns, yielding seven hash-verified candidate targets.
 `NeutralJoystick` and explicit inference contract opt-in are implemented. The
 80-step CPU smoke passes, with no terminations or zero-clipped rewards. A local
-32-transition PPO check updates networks and restores actions; live byte
-verification needs the declared retry. No validated learned motor-readiness result.
+32-transition PPO check updates networks and restores actions; a separately
+preregistered 32-transition retry passes strict live-byte checks in 203.19 s.
+No validated learned motor-readiness result.
 
 Grounding: [neutral motor audit](neutral_motor_audit.md) and longer-turn
 measurements. This is an implemented candidate environment, not evidence of

@@ -4,6 +4,71 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Local neutral PPO, warm-start compatibility and normalization diagnosis
+
+Preregistered bounded local PPO smoke `4243988`, implementation `9bffa12`.
+Candidate-only autoreset now restores environment-owned motor info alongside
+first data/observations; RNG advances and wrapper accounting is retained.
+Mixed-row JIT test covers termination, phase/action history and accounting.
+Historical wrappers, B2/S policies, affect and deterministic safety are unchanged.
+
+Pinned Brax supports policy/value/normalizer parameter warm start, but initializes
+Adam, RNG, environment and counters anew. Contract sidecar checks observation
+shapes, network, normalization, reference hashes and source hashes before load.
+Preflight caught two compatibility defects without optimizer work: Orbax 0.11.24
+expects monitoring APIs absent in JAX 0.5.3, including in UInt64 device leaves;
+Brax's config loader tries to look up null initializer names. Save plain Flax
+state dictionaries with identical host NumPy arrays and omit default-null
+initializer entries. Actual disk/inference tests pass; no dependency upgrades
+or edits to external repositories.
+
+Initial smoke: two 16-transition stages, seed 7, two CPU environments, tiny
+(32,32) networks, fixed upstream candidate rewards, 900 s parent watchdog;
+**32 transitions complete in 193.47 s**. Policy/value update in both stages,
+normalization count 16->32, warm initialization and ten restored-action probes
+per stage agree exactly. Fresh value loss 884221440 / KL 155226423296 and warm
+value loss 0.061235 / KL 0.121367 are preserved. Finite updates are plumbing
+evidence, not learning stability or motor quality.
+
+Review found the original live equality check was numeric, not literal-byte
+equality for signed zero. Original machine reports remain unchanged; that one
+preregistered criterion was incompletely evidenced. Strict comparator/tests
+`2218811` distinguish signed zero. A separately preregistered unchanged-settings
+retry (`6f10e30`, `neutral_ppo_byte_retry.md`) closes the live-verification gap:
+**all criteria pass, 32 transitions in 203.19 s**, including live-before-save
+and restored bytes across 21 leaves, warm initialization, both network updates
+and 20 exact restored-action probes. Normalization count 16->32. Loss/KL values
+match the original run. Total optimizer work this batch: 64 transitions across
+two separately documented attempts, no additional optimizer diagnostic. No loss criterion was
+tuned or added after observing metrics.
+
+Saved-checkpoint diagnosis: protocol `7a3b7c5`, code `2218811`, **all integrity
+checks pass in 2.88 s**, zero rollouts/optimizer updates. Both saved normalizers
+have six policy and seventeen privileged slots at the 1e-6 standard-deviation
+floor. Fixed synthetic probes reach normalized magnitude 449070 and some
+saturated actions; largest value magnitude 12401. NumPy/Brax normalization
+agrees, mean probe normalizes to zero, and saved-tree reserialization preserves
+all 21 leaves byte-for-byte. Susceptibility is observed; probes need not be
+physical states and do not establish causes of the fresh PPO metrics.
+
+Reports: `results_neutral_ppo/`, `results_neutral_normalization/` and the separate
+strict retry under `experiments/locomotion_curriculum/`. Original and retry
+checkpoints/logs are retained in ignored local storage. No deployment, ONNX
+export, continuous-command admission or expressive learning. Next: separately
+preregister a normalization-stability control before larger equal-step neutral
+learning and its long rest/turn/transition/push gate. No paid work is authorized.
+
+Verification: **285 tests passed including slow MJX tests in 233.15 s**,
+four new tests; Ruff/diff checks clean. The same two existing JAX cast-overflow
+warnings in historical training tests remain. Public-content/JSON/size scans
+find no private paths, account identifiers, credentials or large artifacts.
+All external Open Duck checkouts are clean; no test/training workers remain.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots. Results bucket and runner identity intentionally retained;
+no launches, cloud spending or artifact/resource deletions.
+
+---
+
 ## 2026-10-09 — Reference repairs, geometric turns and opt-in neutral motor environment
 
 Completed the remaining safe-local reference/environment blockers in one batch.

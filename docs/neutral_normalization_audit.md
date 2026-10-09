@@ -40,3 +40,10 @@ Stop on any mismatch, nonfinite output, timeout or API error; preserve partial
 reports/logs. Results may justify a separately preregistered normalization-control
 smoke before larger neutral training. They do not authorize paid work, new reward
 weights or expressive objectives.
+
+Outcome: all integrity checks pass in 2.88 s. Both checkpoints have six policy
+and seventeen privileged slots at the floor, maximum inverse std 1e6. Synthetic
+probes reach magnitude 449070, saturated actions and value magnitude 12401;
+mean probes normalize to zero and manual/Brax results agree. Saved-tree
+reserialization preserves all 21 leaves literally. No new optimizer transitions,
+rollouts or causal proof. Reports: `results_neutral_normalization/`.

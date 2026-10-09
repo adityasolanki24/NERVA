@@ -75,3 +75,14 @@ same Brax API. Brax also fails to load explicit null kernel initializer names;
 omit those default-null entries from the saved network configuration. Both
 repairs are covered by a real checkpoint roundtrip and ten inference comparisons
 before optimization. No dependencies, numerical parameters or criteria change.
+
+Outcome: original 32-transition run completed in 193.47 s, finite updates and
+identical restored actions. Review found its numeric comparison did not fully
+establish live literal-byte equality; original outputs are preserved unchanged.
+The separately preregistered retry (`neutral_ppo_byte_retry.md`, `6f10e30`)
+passes all original criteria in 203.19 s with strict live-byte comparisons,
+32 transitions, normalization count 16->32 and twenty exact action probes.
+Adam/RNG/counters are newly initialized in both warm stages. Fresh value loss
+8.842e8 and KL 1.552e11 repeat; no post-hoc threshold is added. Saved-normalizer
+diagnosis demonstrates amplification susceptibility, not causal attribution.
+Next is a normalization-stability control before larger neutral learning.

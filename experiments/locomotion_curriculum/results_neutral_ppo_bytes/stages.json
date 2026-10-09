@@ -1,0 +1,127 @@
+[
+ {
+  "stage": "fresh",
+  "criteria": {
+   "steps": true,
+   "finite": true,
+   "policy_updates": true,
+   "value_updates": true,
+   "normalizer_updates": true,
+   "roundtrip": true,
+   "action_parity": true
+  },
+  "all_pass": true,
+  "callback_steps": [
+   0,
+   16
+  ],
+  "normalizer_count": 16,
+  "policy_max_update": 0.00019999593496322632,
+  "value_max_update": 0.00018068961799144745,
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "metrics": {
+   "training/sps": 0.27534043912697936,
+   "training/walltime": 58.109880447387695,
+   "training/entropy_loss": -0.0006866820622235537,
+   "training/kl_mean": 155226423296.0,
+   "training/learning_rate": 9.999999747378752e-05,
+   "training/policy_dist_max_loc": 1.4933180809020996,
+   "training/policy_dist_max_std": 1.2378201484680176,
+   "training/policy_dist_mean_loc": -0.05065985396504402,
+   "training/policy_dist_mean_std": 0.7073743343353271,
+   "training/policy_dist_min_loc": -1.7289636135101318,
+   "training/policy_dist_min_std": 0.32526835799217224,
+   "training/policy_loss": 0.2952120304107666,
+   "training/total_loss": 884221440.0,
+   "training/v_loss": 884221440.0
+  },
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "7ad614ed85e4ec20bbae9d2174e83aaeee5b8d543af8fa0fce61a4635630e57a",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/2bcc8d73d6a2b5414168927eff4b6d02": "630ab15228e9a622e7b81721021318e7a284adef5427eb5d78bbbffb21497973",
+   "manifest.ocdbt": "e3fe0e3987e005f6e90b4c6c183453ae4726bce6d90de45579b25aefa45b1e12",
+   "nerva_contract.json": "45ef516399fa4e0d054c5fef8e6381b071259654cdbd82cf6b819bd660aaaf43",
+   "ocdbt.process_0/d/4509c495a620ea59b9844bc8c69e0efc": "87c31e766bd21b3cc549e6dca44368c6f048279081656c5fa6e09b4953b9d9fd",
+   "ocdbt.process_0/d/5c8f8ce7629f5ddf7294e714753532f4": "eaf7c65453c36c3efdd0f76307cc22f2b43346289f7794bd001713bee8d45c5b",
+   "ocdbt.process_0/d/65842b82ae0205a34dbfe2d66868cad1": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/6689d40ef6a6a39a92661c68bdb7f1f4": "e344f888ffbbf7b58958043a4040a0917fc98f07e3289fb09f4ee7082f30e9ab",
+   "ocdbt.process_0/d/779dc21d7dab564216b15a280fac2e9c": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/manifest.ocdbt": "a27e6df4ed6a7303e9fd33cb44acda5bb37fdab5b3b7d9ae0656ae66a1d8d5da",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "wall_seconds": 100.11
+ },
+ {
+  "stage": "warm",
+  "criteria": {
+   "steps": true,
+   "finite": true,
+   "policy_updates": true,
+   "value_updates": true,
+   "normalizer_updates": true,
+   "roundtrip": true,
+   "action_parity": true
+  },
+  "all_pass": true,
+  "callback_steps": [
+   0,
+   16
+  ],
+  "normalizer_count": 32,
+  "policy_max_update": 0.00020013749599456787,
+  "value_max_update": 0.00020013749599456787,
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "metrics": {
+   "training/sps": 0.3172801800339961,
+   "training/walltime": 50.42861485481262,
+   "training/entropy_loss": -0.0007444922812283039,
+   "training/kl_mean": 0.1213671863079071,
+   "training/learning_rate": 9.999999747378752e-05,
+   "training/policy_dist_max_loc": 1.2297039031982422,
+   "training/policy_dist_max_std": 1.2564940452575684,
+   "training/policy_dist_mean_loc": 0.00985742174088955,
+   "training/policy_dist_mean_std": 0.7255765795707703,
+   "training/policy_dist_min_loc": -0.9966961741447449,
+   "training/policy_dist_min_std": 0.3180120587348938,
+   "training/policy_loss": 0.21845358610153198,
+   "training/total_loss": 0.2789442539215088,
+   "training/v_loss": 0.06123518571257591
+  },
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "6e13f49d1a3592b537635d76e68d77a733eb0d219fdcd5a130f53514ac3d2148",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/db80c096515798df5b1907da5b531580": "62c3ab9f86e6c18474345d31a979e4e0383aa67f3d4448e1a321022680424bd5",
+   "manifest.ocdbt": "bc73cce9912f7f7c846198459eb54511e8926cc9f38a44334aa31b2252e8e074",
+   "nerva_contract.json": "45ef516399fa4e0d054c5fef8e6381b071259654cdbd82cf6b819bd660aaaf43",
+   "ocdbt.process_0/d/54e73fd27e2603e39d102f314dfe2db9": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/916c9f2c4a60d4cc6e6e4311e0ff8e02": "e344f888ffbbf7b58958043a4040a0917fc98f07e3289fb09f4ee7082f30e9ab",
+   "ocdbt.process_0/d/aa1b4d4cdef3b7734b58e32a06313243": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/f56609efe8f98ae3e169c4c37c7f7c77": "fb9b5f2530a6ffa9f362aaa01fea02887b4cf1ab0fc75081646cd76efa287ce7",
+   "ocdbt.process_0/manifest.ocdbt": "58fef7f9be139eef61eaafbeb75f2069f7d6aa4b6d2a5313ceff6f3aefa8e5be",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "wall_seconds": 92.56
+ }
+]

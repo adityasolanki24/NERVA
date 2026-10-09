@@ -1,0 +1,9 @@
+{
+ "all_pass": true,
+ "optimization_transitions": 32,
+ "wall_seconds": 192.67,
+ "warm_initialization_equal": true,
+ "optimizer_rng_and_counters_resumed": false,
+ "learned_motor_readiness": false,
+ "cloud_work": false
+}

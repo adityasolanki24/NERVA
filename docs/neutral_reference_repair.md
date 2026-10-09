@@ -48,3 +48,37 @@ symmetric planar tracking, no foot-height/air-time objectives, rest-only pose
 cost. Keep historical environments/defaults unchanged. Before any dynamic smoke,
 record its exact protocol and cap. This does not establish learned robustness;
 PPO training and long motor-readiness gates are separate phases.
+
+## Result and follow-up registration
+
+Protocol `1b86c37`, implementation `df51807`: 6/7 pass in 83.75 s. All fit,
+contact, knee and joint-limit criteria pass. Moving interval-velocity RMSE
+maxima are 0.217–0.353 rad/s. Left turn alone fails off-axis translation:
+mean body vy +0.037961 m/s, limit 0.020. Right turn vy -0.006964; yaw means
+±0.603689. No training adoption or candidate dynamics yet.
+
+Before another evaluation, preregister a geometric pivot correction for the
+two pure turns. The repetitive planner composes foot translation and then yaw
+(see [Placo opposite_frame source](https://github.com/Rhoban/placo/blob/v0.6.4/src/placo/humanoid/humanoid_parameters.cpp)).
+This suggests that a base forward offset from the foot midpoint contributes
+body lateral velocity during yaw; this is a hypothesis, not a measured cause.
+The installed 0.6.3 build has no matching Git tag; verify its actual opposite
+frame operation against the formula before generation, rather than assuming
+the adjacent 0.6.4 source matches.
+
+After initial IK, define c as the planar base-position minus foot-midpoint
+offset, expressed in the initial yaw frame. For a requested pure turn with
+step angle theta, add internal planner translation `(I - Rz(theta)) c`.
+Keep requested command labels zero translation and ±0.60 yaw; record the
+offset and actual internal step in raw metadata. Do not translate recorded
+poses or change fit/reward targets after generation. Analytic known-geometry
+tests must show a fixed pivot after rotation; reject nonfinite/malformed
+inputs. Zero yaw returns zero correction; both signs must be checked.
+
+Generate only two new eight-second turns, one attempt each, two workers,
+180 s each and 420 s total. Use the repaired preset, fit and every unchanged
+criterion above. Retain the five passing nonturn references by verified hash;
+this is explicitly a mixed-provenance subset, not seven newly rerun results.
+Both turns must pass to admit the subset to candidate-only testing. Preserve
+the 6/7 failure and stop adoption on any failure. No empirical parameter
+tuning or paid work. An admitted subset is still not a trained motor policy.

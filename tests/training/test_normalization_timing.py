@@ -41,7 +41,8 @@ def test_offline_batch_archive_admission_checks_schema_hashes_and_signed_zero(tm
     data = Transition(observation={"state": np.zeros((2, 4, 3), np.float32)},
                       next_observation={"state": np.ones((2, 4, 3), np.float32)},
                       action=np.zeros((2, 4, 2), np.float32), reward=np.zeros((2, 4), np.float32),
-                      discount=np.ones((2, 4), np.float32), extras={})
+                      discount=np.ones((2, 4), np.float32),
+                      extras={"state_extras": {"episode_metrics": {"cost/action_rate": np.zeros((2, 4), np.float32)}}})
     path = tmp_path / "batch.npz"
     metadata = archive(path, data)
     restored = load_batch(path)

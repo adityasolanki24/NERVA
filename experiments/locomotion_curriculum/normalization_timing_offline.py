@@ -22,7 +22,7 @@ from experiments.locomotion_curriculum.normalization_timing import (
 )
 from nerva.training.parameter_checkpoint import checkpoint_hashes, count_value, tree_finite
 
-PREREGISTRATION = "619b142"
+PREREGISTRATION = "75cf8ed"
 
 
 def load_batch(path):
@@ -32,7 +32,7 @@ def load_batch(path):
     state = {}
     with np.load(path, allow_pickle=False) as saved:
         for name in saved.files:
-            parts = re.findall(r"\['([a-z_]+)'\]", name)
+            parts = re.findall(r"\['([a-z_]+(?:/[a-z_]+)*)'\]", name)
             if not parts or "".join(f"['{part}']" for part in parts) != name:
                 raise ValueError("unsupported archive key")
             cursor = state
@@ -135,8 +135,8 @@ def main():
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     root = Path.cwd()
-    raw = root / "experiments/cloud_runs/normalization-timing-offline"
-    output = root / "experiments/locomotion_curriculum/results_normalization_timing_offline"
+    raw = root / "experiments/cloud_runs/normalization-timing-offline-schema"
+    output = root / "experiments/locomotion_curriculum/results_normalization_timing_offline_schema"
     if args.worker:
         try:
             run(root, raw, output)

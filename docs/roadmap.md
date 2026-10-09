@@ -71,9 +71,12 @@ entry, docs, commit.
    candidate targets; opt-in motor environment passes 80-step CPU smoke;
    32-transition PPO/warm-start plumbing completed; saved-checkpoint audit finds
    normalization amplification; variance-epsilon control lowers amplification
-   but fails the fresh KL screen (1489 >1); next preregister a fixed-weight
-   normalization-timing replay diagnostic, then a neutral policy comparison/gate
-   before expressive training), evaluated on monotonic
+   but fails the fresh KL screen (1489 >1); fixed-weight same-batch timing replay
+   passes integrity and shows statistics replacement alone raises KL from
+   0.000140 to 10.297 with no optimizer update. Preserve both earlier integrity
+   aborts. Next preregister a normalization schedule/representation comparison
+   that measures deployed-policy drift as well as training KL, then a neutral
+   policy comparison/gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.
@@ -95,10 +98,3 @@ entry, docs, commit.
   event-driven appraisal, with PAD slowest.
 - **No PAD → joint angles.** Affect reaches the body only through behaviour.
 - **No LLM or foundation model in motor control or safety.**
-
-Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
-old-control log-probability integrity check on eight saved transitions, with
-zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
-the failure; next preregister an offline replay using the same captured batch
-and weights, with explicit compiled inputs and unchanged criteria, before
-larger neutral learning or expressive objectives.

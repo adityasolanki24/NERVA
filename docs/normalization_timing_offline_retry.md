@@ -69,3 +69,30 @@ replay implementation remains unchanged. Use fresh output
 `results_normalization_timing_offline_schema/` and ignored raw directory
 `normalization-timing-offline-schema/`; no overwrites or unregistered retry.
 No physical transitions, gradients, optimizer updates, cloud work or promotions.
+
+## Completed schema-corrected replay
+
+Preregistration `75cf8ed`, implementation `63937e7`; completes in 6.41 s under
+180 s. All input admission and original integrity criteria pass, including
+independent log probabilities and KL, literal 21-leaf old/updated checkpoint
+roundtrips and unchanged batch/weight hashes. No new physical transitions or
+optimizer updates. Statistics count 0->8 on the eight retained transitions.
+
+**Timing hypothesis supported on this batch:** official KL 0.000140131 with
+old statistics versus 10.296526 with updated statistics (>1). Conventional
+analytic old self-KL 9.53e-12; updated conventional KL 10.296356, max 37.773238.
+Manual stabilized updated KL 10.296525 agrees with the official result. Old
+behavior logits max error 9.54e-7, log probabilities max error 9.06e-6.
+Independent log probabilities agree in both cases, max error <=9.54e-7.
+
+Descriptive drift: deterministic tanh action maximum change 0.957049, raw-action
+log-probability max change 31.303122, value max change 0.980274. Value loss
+0.089507->20.853298; observation normalized maxima 21.367878->2.644543 in both
+policy/privileged streams. These are not additional acceptance criteria.
+Public reports: `results_normalization_timing_offline_schema/`. Raw checkpoints
+and replays retained ignored; neither prior abort was overwritten.
+
+No validated schedule fix, general learning stability, motor readiness or
+expressive-training result. Next compare normalization treatment under a new
+preregistration, requiring both optimization and deployed-policy drift checks;
+moving a statistics update after SGD alone can still change deployed behavior.

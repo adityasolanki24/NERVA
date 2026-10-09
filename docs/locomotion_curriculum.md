@@ -84,8 +84,17 @@ and amplification criteria pass, peak synthetic magnitude <=81.904, but overall
 fails fresh KL 1489.402 >1; fresh value loss 10.4402 and warm loss/KL
 0.05803/0.13245 pass. No criteria or defaults change. Pinned constant-LR PPO
 collects using old statistics then updates them before SGD; its contribution
-to KL remains untested. Next preregister a same-batch old/new-normalizer replay
-at fixed weights, before larger neutral learning and the long readiness gate.
+to KL is now demonstrated on one first batch. The original capture stopped
+at old-control integrity; a first offline retry stopped at schema admission.
+Both failures remain preserved. The separately preregistered
+[offline replay](normalization_timing_offline_retry.md) passes every integrity
+criterion: old KL 0.000140, updated KL 10.296526, deterministic action max shift
+0.957049, no gradient or optimizer update. Eight retained transitions, zero new
+transitions; 6.41 s under the 180 s cap. This isolates a preprocessing effect,
+not the entire previous two-update KL or a learning fix. Next preregister a
+normalization schedule/representation comparison, measuring deployed-policy
+drift and checkpoint compatibility as well as training KL, before larger
+neutral learning and the long readiness gate.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its
@@ -133,10 +142,3 @@ measurement. The early 95-hour projection was superseded by steady-state
 measurements, but neither projection authorises a blind 300M-step launch.
 Use the existing capped self-deleting launcher, attached result fetching,
 network cleanup and final audit. Preserve recoverable checkpoint artifacts.
-
-Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
-old-control log-probability integrity check on eight saved transitions, with
-zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
-the failure; next preregister an offline replay using the same captured batch
-and weights, with explicit compiled inputs and unchanged criteria, before
-larger neutral learning or expressive objectives.

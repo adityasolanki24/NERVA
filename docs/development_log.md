@@ -4,6 +4,54 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Same-batch fixed-weight replay isolates normalization timing drift
+
+Original capture preregistration `0901b11`, implementation `8a2f467` retains
+its failed old-control integrity result. Offline retry `619b142`/`37d5312`
+retains its admission-only parser abort. Schema-corrected retry preregistered
+`75cf8ed`, implementation `63937e7`; completes in **6.41 s under 180 s**.
+Correct generated slash-separated metric parsing and keep dataset, weights,
+loss/permutation keys, PPO options, epsilon and every threshold unchanged.
+Replay normalizer/weights/batch/key are explicit compiled inputs; regression
+checks batch changes and independent tanh-Gaussian density. Actual retained
+archive preflight validates literal bytes/file/tree hashes without replay.
+No dependency or external source changes.
+
+Both replays pass every integrity criterion: hash-admitted original sources,
+versions and references; exact frozen weight/batch fingerprints; finite outputs;
+statistics count 0->8; literal-byte 21-leaf checkpoint roundtrips; independent
+KL/log probabilities. Old logits error 9.54e-7, behavior log-probability error
+9.06e-6, conventional self-KL 9.53e-12. **Timing hypothesis supported on this
+batch:** official KL 0.000140131 old versus 10.296526 updated, exceeding >1.
+Manual stabilized updated KL 10.296525; conventional updated KL 10.296356.
+
+Descriptive measures: deterministic tanh-action max shift 0.957049,
+raw-action log-probability max shift 31.303122, value max shift 0.980274.
+Value loss 0.089507->20.853298; normalized observation maxima
+21.367878->2.644543 in both streams. Exactly eight original transitions,
+**zero new physical transitions, gradients or optimizer updates** in the offline
+attempt. This isolates preprocessing drift before SGD; it does not explain the
+whole prior 16-transition averaged KL, establish motor readiness or validate a
+schedule fix. Updating normalization after SGD can also shift deployed policy.
+Next preregister normalization schedule/representation comparison including
+explicit deployed drift and checkpoint checks before larger neutral learning.
+S1–S6 stay closed; affect and deterministic physical safety remain separate.
+
+Public reports: `results_normalization_timing_offline_schema/`; all raw batches,
+weights, checkpoints/logs and earlier aborts preserved in ignored storage.
+No paid/cloud work, artifact deletion, deployment or default policy promotion.
+Verification: **296 tests passed including slow MJX tests in 251.17 s**;
+seven focused tests also pass after the slash-key correction, including retained
+archive preflight. Ruff and diff checks pass. Same two historical cast-overflow
+warnings; no new warnings. Public changed-file checks find finite JSON, no
+credentials/account identifiers/personal paths, and every file <1 MB. Raw
+artifacts remain ignored. All four external checkouts remain clean; no local
+training/test worker remains. Final read-only cloud audit: no instances, disks,
+addresses, forwarding rules, routers or snapshots. Results bucket and runner
+identity intentionally retained; no cloud spending or resource/artifact deletion.
+
+---
+
 ## 2026-10-10 — Fixed-weight timing capture stops on replay integrity
 
 Preregistered `0901b11`, implementation `8a2f467`, baseline `82360a0`.

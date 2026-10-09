@@ -82,3 +82,9 @@ reports: `results_normalization_timing/`. Raw dataset/weights remain ignored.
 Offline old-control inspection with an explicit dynamic batch yields error
 9.06e-6. An offline retry requires a new preregistration; the original failure
 and criteria stay unchanged.
+
+A separately preregistered schema-corrected offline retry subsequently passes
+all integrity criteria on the exact retained batch/weights: updated-statistics
+KL 10.296526 versus old 0.000140131, zero new transitions or optimizer updates.
+See `normalization_timing_offline_retry.md` for the preserved admission abort,
+retry protocol, results and limits. This original capture remains invalid.

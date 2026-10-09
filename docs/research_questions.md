@@ -32,8 +32,13 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   extreme synthetic-probe amplification (`neutral_normalization_audit.md`).
   Variance-epsilon control (`neutral_normalization_control.md`) reduces probe
   magnitude to <=81.904 and fresh value loss to 10.4402, but overall fails fresh
-  KL 1489.402 >1; warm stage passes. Next: fixed-weight normalization-timing replay,
-  before larger neutral learning/comparison. Expressive curriculum remains blocked;
+  KL 1489.402 >1; warm stage passes. Fixed-weight timing replay on the retained
+  eight-transition batch passes integrity: statistics replacement alone gives
+  KL 10.297 versus old 0.000140, with zero optimizer updates
+  (`normalization_timing_offline_retry.md`). Original capture and parser aborts
+  remain preserved. Next: preregister normalization schedule/representation
+  comparison with deployed drift checks, before larger neutral learning.
+  Expressive curriculum remains blocked;
   no general-stability or motor-quality claim.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
@@ -138,10 +143,3 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
     - Brier score, benign within 3 s: prototypes 0.0575, hand-coded labels 0.0297, base rate 0.0583.
     - Most boundaries marked tracking/gait fluctuations. Other features or segmentation would be a new,
       separately preregistered experiment.
-
-Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
-old-control log-probability integrity check on eight saved transitions, with
-zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
-the failure; next preregister an offline replay using the same captured batch
-and weights, with explicit compiled inputs and unchanged criteria, before
-larger neutral learning or expressive objectives.

@@ -1,0 +1,30 @@
+{
+ "integrity_pass": true,
+ "criteria": {
+  "finite": true,
+  "statistics_count": true,
+  "fixed_weights": true,
+  "fixed_batch": true,
+  "checkpoint_roundtrips": true,
+  "manual_kl_agreement": true,
+  "manual_log_prob_agreement": true,
+  "old_logits": true,
+  "old_log_prob": true,
+  "old_conventional_self_kl": true
+ },
+ "old_statistics_kl": 0.00014013051986694336,
+ "updated_statistics_kl": 10.296525955200195,
+ "timing_effect_exceeds_screen": true,
+ "hypothesis_supported": true,
+ "environment_transitions": 8,
+ "optimizer_updates": 0,
+ "general_learning_stability_established": false,
+ "learned_motor_readiness": false,
+ "cloud_work": false,
+ "deterministic_action_max_shift": 0.9570494294166565,
+ "value_max_shift": 0.980274498462677,
+ "log_prob_max_shift": 31.30312156677246,
+ "original_environment_transitions": 8,
+ "new_environment_transitions": 0,
+ "retry_of_integrity_invalid_capture": true
+}

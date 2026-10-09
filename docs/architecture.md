@@ -251,8 +251,12 @@ with a hash/shape/config contract; Adam, RNG and counters restart on restore.
 No learned-readiness claim. Saved-checkpoint normalization audit finds floor
 slots and extreme synthetic-probe amplification. Explicit runner variance epsilon
 is recorded in checkpoint contracts; default epsilon stays zero. An opt-in 1e-4
-control reduces amplification but fails the fresh KL screen; isolate normalization
-timing before larger learning. Affect and deterministic safety are separate and unchanged.
+control reduces amplification but fails the fresh KL screen. Fixed-weight,
+same-batch replay shows statistics replacement alone raises KL from 0.000140 to
+10.297 (eight retained transitions, no optimizer updates), with integrity passing
+in the separately preregistered offline retry. No schedule change is yet validated;
+compare normalization treatment and deployed drift before larger learning.
+Affect and deterministic safety are separate and unchanged.
 
 ## 5. Timescales
 
@@ -270,10 +274,3 @@ appraisal → PAD, the slowest. PAD is never updated or used like a motor contro
 4. **Measured in this project:** only what `development_log.md` records as measured.
 5. **Hypotheses:** everything else, including that any behaviour or style reads as an emotion to people.
 6. **Future research directions:** `roadmap.md`. These are not claims.
-
-Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
-old-control log-probability integrity check on eight saved transitions, with
-zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
-the failure; next preregister an offline replay using the same captured batch
-and weights, with explicit compiled inputs and unchanged criteria, before
-larger neutral learning or expressive objectives.

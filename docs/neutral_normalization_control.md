@@ -70,3 +70,18 @@ prospective longer stability/coverage test before useful neutral learning.
 
 Run the complete suite including slow checks and Ruff, update authoritative
 docs/log, public-content checks, commit/push, and final cloud resource audit.
+
+Outcome: preregistration `1ee56c5`, implementation `d947120`, **overall fail**,
+32 transitions complete in 225.75 s under the 900 s cap. Frozen control admission,
+all plumbing and amplification criteria pass in both stages. Minimum std is
+0.01 and maximum inverse std 100; probe peaks fall from 449070 to 81.202/81.903.
+Fresh value loss falls from 884221440 to 10.440188 and KL from 155226423296 to
+1489.401733, but fresh KL fails the fixed <=1 screen. Warm value loss 0.058027
+and KL 0.132448 pass. No criterion or epsilon changes, retries or default promotion.
+`comparison.json` is the study decision; `summary.json` covers plumbing only.
+
+This supports amplification reduction for this single seed/tiny sample, not
+general learning stability or learned locomotion. Source inspection identifies
+old-stat collection followed by statistics update before SGD in the constant-LR
+path. Preregister a fixed-weight, same-batch old/new-normalizer replay diagnostic
+to isolate that timing effect before changing schedules or launching larger work.

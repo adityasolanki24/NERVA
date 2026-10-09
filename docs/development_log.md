@@ -4,6 +4,59 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Variance-floor control reduces amplification but fails the KL screen
+
+Preregistered `1ee56c5`, implementation `d947120`, baseline `22ebf72`.
+One change: Welford variance epsilon 0->1e-4, giving minimum std 0.01 after
+updates. Frozen comparator is the previous strict epsilon-zero run, not repeated
+training. Its PPO/network settings, package versions, core source/reference
+hashes and all saved checkpoint hashes match. Source SHA/protocol/report hashes
+are retained; one seed/tiny sample limits generalization.
+
+One local CPU attempt, fresh/warm stages of 16 transitions each (32 total),
+unchanged candidate rewards/reference/physics and (32,32) networks, seed 7,
+hard parent limit 900 s. **Completes in 225.75 s, overall fail.** Both stages
+pass finite updates, normalization count 16->32, live/disk 21-leaf literal bytes,
+warm initialization and twenty exact restored-action probes. Adam/RNG/counters
+restart on warm load. Regression test verifies saved epsilon affects future
+statistics updates, with JIT host-array placement matching training.
+
+Amplification criteria pass in both stages: minimum std 0.01, inverse gain 100,
+peak synthetic normalized magnitude 81.202/81.903 versus 449070 control, below
+the declared <=100 and >=100-fold reduction requirements. Manual/Brax agrees;
+mean probes normalize to zero. These probes need not be physically achievable.
+Fresh value loss falls from 884221440 to 10.440188; KL from 155226423296 to
+1489.401733. Both relative reduction criteria pass, but **fresh KL fails <=1.0**.
+Warm value loss 0.058027 and KL 0.132448 pass the fixed screens. Preserve every
+criterion; do not retune epsilon, thresholds or claim overall success from
+amplification improvement. No default normalization or policy promotion.
+
+The shared runner accepts explicit epsilon/reporting and records mode/variance
+epsilon in new checkpoint contracts. Historical default epsilon remains zero.
+`comparison.json` is the study decision; `summary.json` is plumbing only.
+Public reports in `results_normalization_control/`; raw checkpoints/logs retained
+in ignored storage. No new dependencies, upstream edits, deployment, expressive
+objectives, paid/cloud work or artifact deletion.
+
+Source inspection shows the constant-LR PPO path collects with old statistics,
+then updates statistics before SGD. This identifies a possible normalization
+timing confound, not a demonstrated cause. Next: preregister capture/replay of
+the same on-policy batch at fixed weights with old versus updated normalizers,
+before changing schedules or undertaking larger neutral learning/readiness tests.
+
+Verification: **289 tests passed including slow MJX tests in 276.13 s**, four
+additional cases (three prospective-decision/admission checks and nonzero-epsilon
+checkpoint continuation). Ruff/diff checks pass; same two existing cast-overflow
+warnings in historical training tests. Tests ran alongside the local control;
+timing is not a dedicated throughput measurement. Public JSON/content/size checks
+find no credentials, account identifiers, personal paths or large artifacts.
+External Open Duck checkouts remain clean; no training/test workers remain.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots. Results bucket and runner identity intentionally retained;
+no cloud launch, spending or artifact/resource deletion.
+
+---
+
 ## 2026-10-09 — Local neutral PPO, warm-start compatibility and normalization diagnosis
 
 Preregistered bounded local PPO smoke `4243988`, implementation `9bffa12`.

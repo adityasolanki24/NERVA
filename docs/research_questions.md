@@ -30,8 +30,11 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   optimizer state (`neutral_ppo_restore_smoke.md`). Saved-checkpoint audit finds
   six policy and seventeen privileged slots at the 1e-6 std floor, causing
   extreme synthetic-probe amplification (`neutral_normalization_audit.md`).
-  Next: normalization-control smoke, then a neutral learned-policy comparison/gate;
-  expressive curriculum remains blocked. No loss-causation or motor-quality claim.
+  Variance-epsilon control (`neutral_normalization_control.md`) reduces probe
+  magnitude to <=81.904 and fresh value loss to 10.4402, but overall fails fresh
+  KL 1489.402 >1; warm stage passes. Next: fixed-weight normalization-timing replay,
+  before larger neutral learning/comparison. Expressive curriculum remains blocked;
+  no general-stability or motor-quality claim.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 

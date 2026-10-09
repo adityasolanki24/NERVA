@@ -1,0 +1,52 @@
+{
+ "all_required_pass": false,
+ "stages": [
+  {
+   "stage": "fresh",
+   "criteria": {
+    "plumbing": true,
+    "diagnostic_integrity": true,
+    "std_floor": true,
+    "inverse_std_bound": true,
+    "probe_magnitude_bound": true,
+    "probe_reduction": true,
+    "value_loss_screen": true,
+    "kl_screen": false,
+    "fresh_value_loss_reduction": true,
+    "fresh_kl_reduction": true
+   },
+   "all_pass": false,
+   "value_loss": 10.44018840789795,
+   "kl": 1489.4017333984375,
+   "peak_normalized": 81.20236206054688,
+   "control_peak_normalized": 449070.0,
+   "control_value_loss": 884221440.0,
+   "control_kl": 155226423296.0
+  },
+  {
+   "stage": "warm",
+   "criteria": {
+    "plumbing": true,
+    "diagnostic_integrity": true,
+    "std_floor": true,
+    "inverse_std_bound": true,
+    "probe_magnitude_bound": true,
+    "probe_reduction": true,
+    "value_loss_screen": true,
+    "kl_screen": true
+   },
+   "all_pass": true,
+   "value_loss": 0.05802708864212036,
+   "kl": 0.13244791328907013,
+   "peak_normalized": 81.90335083007812,
+   "control_peak_normalized": 449070.0,
+   "control_value_loss": 0.06123518571257591,
+   "control_kl": 0.1213671863079071
+  }
+ ],
+ "new_optimization_transitions": 32,
+ "frozen_control": true,
+ "learned_motor_readiness": false,
+ "general_learning_stability_established": false,
+ "cloud_work": false
+}

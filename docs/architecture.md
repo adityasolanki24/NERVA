@@ -249,8 +249,10 @@ Candidate-only autoreset restores motor info alongside first data/observations;
 historical wrappers stay unchanged. Checkpoints retain policy/value/normalizer,
 with a hash/shape/config contract; Adam, RNG and counters restart on restore.
 No learned-readiness claim. Saved-checkpoint normalization audit finds floor
-slots and extreme synthetic-probe amplification; address this before larger
-learning. Affect and deterministic safety are separate and unchanged.
+slots and extreme synthetic-probe amplification. Explicit runner variance epsilon
+is recorded in checkpoint contracts; default epsilon stays zero. An opt-in 1e-4
+control reduces amplification but fails the fresh KL screen; isolate normalization
+timing before larger learning. Affect and deterministic safety are separate and unchanged.
 
 ## 5. Timescales
 

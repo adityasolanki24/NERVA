@@ -78,8 +78,14 @@ Fresh value loss
 [Normalization audit](neutral_normalization_audit.md) finds six policy and
 seventeen privileged slots at the 1e-6 std floor; fixed synthetic probes amplify
 to 449,070 and saturate actions. This does not prove rollout loss causation.
-Next: preregister a normalization-control smoke with strict live-byte checks,
-then an equal-step motor-only comparison with the long rest/turn readiness gate.
+[Variance-floor control](neutral_normalization_control.md) is complete: 32
+transitions in 225.75 s, epsilon 1e-4, frozen epsilon-zero comparator. Checkpoint
+and amplification criteria pass, peak synthetic magnitude <=81.904, but overall
+fails fresh KL 1489.402 >1; fresh value loss 10.4402 and warm loss/KL
+0.05803/0.13245 pass. No criteria or defaults change. Pinned constant-LR PPO
+collects using old statistics then updates them before SGD; its contribution
+to KL remains untested. Next preregister a same-batch old/new-normalizer replay
+at fixed weights, before larger neutral learning and the long readiness gate.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its

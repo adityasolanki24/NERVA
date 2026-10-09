@@ -70,8 +70,9 @@ entry, docs, commit.
    passes 6/7 and geometric correction passes both turns, giving seven verified
    candidate targets; opt-in motor environment passes 80-step CPU smoke;
    32-transition PPO/warm-start plumbing completed; saved-checkpoint audit finds
-   normalization amplification; next preregister a normalization-control smoke,
-   then a neutral policy comparison/gate
+   normalization amplification; variance-epsilon control lowers amplification
+   but fails the fresh KL screen (1489 >1); next preregister a fixed-weight
+   normalization-timing replay diagnostic, then a neutral policy comparison/gate
    before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and

@@ -1,0 +1,198 @@
+{
+ "all_pass": true,
+ "control_implementation_commit": "6f10e30d83584dd62a119a56080c0a6b3d310705",
+ "input_report_hashes": {
+  "protocol.json": "49a39d4e7832b4c0212b3e9d92fa0b7bd42b9be1bc9a678039acd2596c25d121",
+  "stages.json": "f5f3ffb69992be735ca3ccc04a739328d8e85a9bbfab283a38f4ccc87a855268",
+  "reference_manifest.json": "4cd02845c1a6031857de1e5d3c747bb39f094bac55e45382972013a58b2f7a79"
+ },
+ "normalization_diagnostics": [
+  {
+   "std": {
+    "privileged_state": {
+     "slots": 212,
+     "floor_count": 17,
+     "floor_indices": [
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      174,
+      176,
+      177,
+      178,
+      179,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195
+     ],
+     "min": 9.999999974752427e-07,
+     "median": 0.2996489405632019,
+     "max": 6.460186004638672,
+     "max_inverse_std": 1000000.0
+    },
+    "state": {
+     "slots": 101,
+     "floor_count": 6,
+     "floor_indices": [
+      6,
+      7,
+      9,
+      10,
+      11,
+      12
+     ],
+     "min": 9.999999974752427e-07,
+     "median": 0.3290974199771881,
+     "max": 6.460186004638672,
+     "max_inverse_std": 1000000.0
+    }
+   },
+   "probes": [
+    {
+     "index": 0,
+     "normalized_max_abs": {
+      "privileged_state": 349070.0,
+      "state": 19.11027717590332
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 1,
+     "normalized_max_abs": {
+      "privileged_state": 249070.015625,
+      "state": 100000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 2,
+     "normalized_max_abs": {
+      "privileged_state": 449070.0,
+      "state": 100000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 3,
+     "normalized_max_abs": {
+      "privileged_state": 219212.1875,
+      "state": 176000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 4,
+     "normalized_max_abs": {
+      "privileged_state": 0.0,
+      "state": 0.0
+     },
+     "manual_agreement": true
+    }
+   ],
+   "variance_eps": 0.0,
+   "peak_normalized": 449070.0,
+   "integrity_pass": true
+  },
+  {
+   "std": {
+    "privileged_state": {
+     "slots": 212,
+     "floor_count": 17,
+     "floor_indices": [
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      174,
+      176,
+      177,
+      178,
+      179,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195
+     ],
+     "min": 9.999999974752427e-07,
+     "median": 0.308586061000824,
+     "max": 6.575585842132568,
+     "max_inverse_std": 1000000.0
+    },
+    "state": {
+     "slots": 101,
+     "floor_count": 6,
+     "floor_indices": [
+      6,
+      7,
+      9,
+      10,
+      11,
+      12
+     ],
+     "min": 9.999999974752427e-07,
+     "median": 0.3221834897994995,
+     "max": 6.575585842132568,
+     "max_inverse_std": 1000000.0
+    }
+   },
+   "probes": [
+    {
+     "index": 0,
+     "normalized_max_abs": {
+      "privileged_state": 349070.0,
+      "state": 20.699663162231445
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 1,
+     "normalized_max_abs": {
+      "privileged_state": 249070.015625,
+      "state": 100000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 2,
+     "normalized_max_abs": {
+      "privileged_state": 449070.0,
+      "state": 100000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 3,
+     "normalized_max_abs": {
+      "privileged_state": 219212.1875,
+      "state": 176000.0
+     },
+     "manual_agreement": true
+    },
+    {
+     "index": 4,
+     "normalized_max_abs": {
+      "privileged_state": 0.0,
+      "state": 0.0
+     },
+     "manual_agreement": true
+    }
+   ],
+   "variance_eps": 0.0,
+   "peak_normalized": 449070.0,
+   "integrity_pass": true
+  }
+ ],
+ "preregistration_commit": "1ee56c5",
+ "normalization_source_sha256": "9591566ebcd151d35dd1a9167de3b1b00df92100892b5889bc9514252fb8c0c4",
+ "control_runner_source_sha256": "99e898667006bb8d5e41107015a202cf0fbe778a2dff4aa1796cf8a190dc14bf"
+}

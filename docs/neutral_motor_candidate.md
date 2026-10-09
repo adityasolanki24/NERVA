@@ -79,8 +79,9 @@ wired to the candidate and a matching-policy-hash inference opt-in; historical
 policies retain their clock. Two local 16-transition PPO/warm-start stages now
 complete (`neutral_ppo_restore_smoke.md`), with identical restored actions and
 fresh optimizer/RNG/counters. The saved-checkpoint audit finds normalization
-floor susceptibility; next preregister a normalization-control smoke and strict
-live-byte checks before an equal-step motor-only comparison/readiness gate.
+floor susceptibility. The 1e-4 variance-epsilon control passes amplification and
+strict byte checks but fails fresh KL <=1; no default promotion. Next preregister
+fixed-weight, same-batch normalization-timing replay before larger motor learning.
 These tiny artifacts are not validated controllers. Do not rerun R0 or S1–S6. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.

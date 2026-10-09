@@ -10,6 +10,7 @@ def test_leaf_comparison_handles_serialized_list_tuple_and_rejects_shape_dtype_a
     tree = (np.array([1, 2], dtype=np.float32), {"count": np.int32(16)})
     assert leaf_comparison(tree, list(tree))["equal"]
     assert not leaf_comparison(tree, [tree[0], {"other": np.int32(16)}])["equal"]
+    assert not leaf_comparison(np.array([0.], dtype=np.float32), np.array([-0.], dtype=np.float32))["equal"]
     assert not leaf_comparison(tree, [np.array([[1, 2]], dtype=np.float32), tree[1]])["equal"]
     assert not leaf_comparison(tree, [np.array([1, 2], dtype=np.float64), tree[1]])["equal"]
     bad = [np.array([1, np.nan], dtype=np.float32), tree[1]]
@@ -41,6 +42,8 @@ def test_pinned_brax_checkpoint_roundtrip_and_inference_match(tmp_path):
     network = factory(shape, 14, preprocess_observations_fn=running_statistics.normalize)
     keys = jax.random.split(jax.random.PRNGKey(7), 2)
     params = (normalizer, network.policy_network.init(keys[0]), network.value_network.init(keys[1]))
+    # Signed zero must survive the actual pinned serialization API, not just a comparison helper.
+    params[0].mean["state"] = params[0].mean["state"].at[0].set(-0.)
     save_parameters(tmp_path, 16, params, checkpoint.network_config(shape, 14, True, factory))
     location = tmp_path / "000000000016"
     restored = checkpoint.load(location)

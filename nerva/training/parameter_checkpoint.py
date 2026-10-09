@@ -20,7 +20,7 @@ def leaf_comparison(expected, actual):
         if x.shape != y.shape or x.dtype != y.dtype:
             return {"equal": False, "finite": False, "max_error": None, "leaves": len(left)}
         finite &= bool(np.isfinite(x).all() and np.isfinite(y).all())
-        equal &= bool(np.array_equal(x, y))
+        equal &= x.tobytes(order="C") == y.tobytes(order="C")
         if x.size:
             max_error = max(max_error, float(np.max(np.abs(x.astype(float) - y.astype(float)))))
     return {"equal": equal, "finite": finite, "max_error": max_error, "leaves": len(left)}

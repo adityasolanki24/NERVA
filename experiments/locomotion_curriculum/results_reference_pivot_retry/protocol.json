@@ -1,0 +1,77 @@
+{
+ "preregistration_commit": "f8728dc",
+ "implementation_commit": "bc176bbbe8d6907d319f11c42885f7f60df1d5aa",
+ "upstream_commit": "3d7bc6fd80e6c35587b2a5279314d946cf63456b",
+ "source_sha256": "bf93bd9fccddba039901bab788ba02e97c43f3d9bc5ec0fd5947e52c92e7163a",
+ "preset_sha256": "cc1442d24a102ed865cadafdac7f7d1270e4aa9eee918b215173798ad708320e",
+ "conditions": {
+  "turn_left": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "turn_right": [
+   0.0,
+   0.0,
+   -0.6
+  ]
+ },
+ "engine_sha256": "5d2727c94d6f00bf4919a11a48dac908917c3de61633568c597e91c2755810c7",
+ "effective_preset": {
+  "dx": 0.0,
+  "dy": 0.0,
+  "dtheta": 0.0,
+  "duration": 8,
+  "hardware": true,
+  "double_support_ratio": 0.5,
+  "startend_double_support_ratio": 1.0,
+  "planned_timesteps": 48,
+  "replan_timesteps": 10,
+  "walk_com_height": 0.215,
+  "walk_foot_height": 0.02,
+  "walk_trunk_pitch": -4,
+  "walk_foot_rise_ratio": 0.3,
+  "single_support_duration": 0.18,
+  "single_support_timesteps": 10,
+  "foot_length": 0.06,
+  "feet_spacing": 0.16,
+  "zmp_margin": 0.0,
+  "foot_zmp_target_x": 0.0,
+  "foot_zmp_target_y": -0.03,
+  "walk_max_dtheta": 1.0,
+  "walk_max_dy": 0.1,
+  "walk_max_dx_forward": 0.08,
+  "walk_max_dx_backward": 0.03,
+  "joints": [
+   "left_hip_yaw",
+   "left_hip_roll",
+   "left_hip_pitch",
+   "left_knee",
+   "left_ankle",
+   "neck_pitch",
+   "head_pitch",
+   "head_yaw",
+   "head_roll",
+   "left_antenna",
+   "right_antenna",
+   "right_hip_yaw",
+   "right_hip_roll",
+   "right_hip_pitch",
+   "right_knee",
+   "right_ankle"
+  ],
+  "joint_angles": {
+   "neck_pitch": 20,
+   "head_pitch": -26,
+   "head_yaw": 0,
+   "head_roll": 0,
+   "left_antenna": 0,
+   "right_antenna": 0
+  }
+ },
+ "repair": true,
+ "workers": 2,
+ "per_recording_cap_s": 180,
+ "wall_cap_s": 420,
+ "cloud_work": false
+}

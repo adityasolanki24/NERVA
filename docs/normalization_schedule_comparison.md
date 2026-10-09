@@ -74,3 +74,33 @@ new separately preregistered bounded local on-policy identity-preprocessing
 smoke using the trainer's normalize_observations=False; it does not authorize
 large training, replace B2, or begin expressive objectives. The pinned Welford
 operator ignores until_count, so that option is not a freeze implementation.
+
+## Completed outcome
+
+Preregistration `e241208`, implementation `d42b541`: finishes in 11.09 s under
+180 s, exactly two independent offline Adam updates, zero new transitions.
+All admission/control/gradient/checkpoint/density integrity requirements pass.
+Forty deterministic/same-key restored-action probes have zero error.
+
+| Deployment arm | Official KL | Value loss |
+|---|---:|---:|
+| native | 10.292988 | 21.143976 |
+| fixed | 0.023703 | 0.088133 |
+| deferred | 10.288106 | 20.937843 |
+| rebased | 0.023703 | 0.088133 |
+
+Fixed preprocessing passes its screen. Deferred deployment drift hypothesis is
+supported: the same one-step weights pass while optimizing with old statistics
+but fail KL <=1 after statistics replacement. Rebase inference hypothesis also
+passes: captured current/next observations plus five synthetic probes have max
+logits/value error 1.91e-6/3.87e-7, deterministic/sampled action error
+7.45e-7/5.37e-7, pairwise analytic KL mean <=2.64e-11. Non-first-layer leaves
+remain literal-identical; independent float64 formula and dtypes/shapes pass.
+No Adam moment rebase or post-rebase training equivalence is claimed.
+
+Public reports `results_normalization_schedule/`; checkpoints/gradients/replays
+retained ignored. No default promotion, expressive objectives or paid work.
+Next is a separately preregistered identity-preprocessing on-policy smoke,
+using normalize_observations=False with unchanged PPO/reference/physics settings.
+This uses the simple fixed-preprocessing treatment instead of claiming the
+experimental rebase is ready for continued optimization.

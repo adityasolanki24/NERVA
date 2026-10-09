@@ -91,10 +91,12 @@ Both failures remain preserved. The separately preregistered
 criterion: old KL 0.000140, updated KL 10.296526, deterministic action max shift
 0.957049, no gradient or optimizer update. Eight retained transitions, zero new
 transitions; 6.41 s under the 180 s cap. This isolates a preprocessing effect,
-not the entire previous two-update KL or a learning fix. Next preregister a
-normalization schedule/representation comparison, measuring deployed-policy
-drift and checkpoint compatibility as well as training KL, before larger
-neutral learning and the long readiness gate.
+not the entire previous two-update KL or a learning fix. The subsequent
+[offline schedule comparison](normalization_schedule_comparison.md) passes:
+fixed preprocessing KL 0.023703, deferred deployment KL 10.288106; affine
+first-layer inference rebase preserves policy/value outputs, but does not
+transform Adam. Next preregister a bounded identity-preprocessing on-policy
+smoke before larger neutral learning and the long readiness gate.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its

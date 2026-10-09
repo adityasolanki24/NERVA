@@ -1,0 +1,52 @@
+[
+ {
+  "arm": "native",
+  "pre_update_metrics": {
+   "entropy_loss": -0.0007328232168219984,
+   "kl_mean": 10.296525955200195,
+   "policy_dist_max_loc": 0.8903408646583557,
+   "policy_dist_max_std": 1.089057207107544,
+   "policy_dist_mean_loc": -0.0009433995001018047,
+   "policy_dist_mean_std": 0.7050854563713074,
+   "policy_dist_min_loc": -0.8928307294845581,
+   "policy_dist_min_std": 0.4899935722351074,
+   "policy_loss": 0.20050062239170074,
+   "total_loss": 21.05306625366211,
+   "v_loss": 20.85329818725586
+  },
+  "gradient_global_norm": 10.80922794342041,
+  "policy_max_update": 0.00010000169277191162,
+  "value_max_update": 0.00010000169277191162,
+  "artifact": {
+   "file_sha256": "8799913096d6d02b4e74d61a3e0f7e673f5d977c3d78cd2f20309ce62c5201b4",
+   "tree_sha256": "c26859ffe9785f288ec19e7c862b13e4e03ed6765bfc01a0ad71f30f4ae19641",
+   "bytes": 190169,
+   "leaves": 49
+  }
+ },
+ {
+  "arm": "fixed",
+  "pre_update_metrics": {
+   "entropy_loss": -0.0003370557969901711,
+   "kl_mean": 0.00014013051986694336,
+   "policy_dist_max_loc": 1.4521170854568481,
+   "policy_dist_max_std": 3.14847993850708,
+   "policy_dist_mean_loc": -0.10619251430034637,
+   "policy_dist_mean_std": 0.8447256684303284,
+   "policy_dist_min_loc": -3.5030856132507324,
+   "policy_dist_min_std": 0.030067838728427887,
+   "policy_loss": 2.682209014892578e-07,
+   "total_loss": 0.0891701728105545,
+   "v_loss": 0.08950696140527725
+  },
+  "gradient_global_norm": 32.1749267578125,
+  "policy_max_update": 0.00010000169277191162,
+  "value_max_update": 0.00010000169277191162,
+  "artifact": {
+   "file_sha256": "bc2ceab2b002ba79e51ca7bd2b64eea04e6d3f8c630842e916f08131804393a2",
+   "tree_sha256": "7f06a72002bc5194c9070c20d045b72a9aa73b831c88b96c683004501ab50935",
+   "bytes": 192604,
+   "leaves": 49
+  }
+ }
+]

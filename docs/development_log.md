@@ -4,6 +4,45 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Offline optimization/deployment comparison supports fixed preprocessing
+
+Preregistered `e241208`, implementation `d42b541`, baseline `61a0a0b`.
+Exactly two independent fresh-state Adam updates on the same hash-admitted
+retained batch: one old-statistics, one updated-statistics gradient. Deferred
+and rebased deployment reuse the exact old-statistics optimized weights.
+No new physical transitions; **11.09 s under the 180 s cap**. All controls,
+finite gradients/states, literal four-checkpoint roundtrips, independent
+KL/log densities and forty restored-action probes pass (max restore error 0).
+
+Post-update/deployment KL/value loss: native 10.292988/21.143976;
+fixed 0.023703/0.088133; deferred 10.288106/20.937843;
+rebased 0.023703/0.088133. **Fixed screen and deferred-drift hypothesis pass.**
+Moving statistics replacement after optimization alone hides deployment drift.
+Affine first-layer rebase passes inference-preservation criteria across captured
+current/next observations and five synthetic probes: max logits/value drift
+1.91e-6/3.87e-7, deterministic/sampled action drift 7.45e-7/5.37e-7,
+pairwise analytic KL <=2.64e-11. Other leaves/dtypes/shapes and independent
+float64 formula pass. Adam moments are not transformed: no continued-training
+or general learning equivalence claim. Raw-observation preprocessing is the
+simpler next local treatment; native Welford ignores until_count.
+
+Common offline input admission extracted without weakening any old checks.
+New tests cover affine preservation under unequal scales, literal unaffected
+leaves, invalid scales and prospective deployment/rebase decisions. New public
+reports `results_normalization_schedule/`; raw gradients/checkpoints/replays
+and every earlier failure preserved ignored. No dependency/upstream edits,
+paid/cloud work, artifact deletion, deployment or defaults changed.
+Next preregister identity-preprocessing on-policy numerical/restore smoke;
+neutral learned readiness and expressive objectives remain unestablished.
+Verification: **301 full tests including slow MJX checks pass in 220.42 s**,
+12 focused comparison/admission tests pass; Ruff/diff and public-content/size/
+finite-JSON checks pass. Two existing cast warnings. Final read-only cloud
+audit: no instances, disks, addresses, forwarding rules, routers or snapshots.
+Results bucket and runner identity intentionally retained; no paid work or
+resource/artifact deletion.
+
+---
+
 ## 2026-10-10 — Same-batch fixed-weight replay isolates normalization timing drift
 
 Original capture preregistration `0901b11`, implementation `8a2f467` retains

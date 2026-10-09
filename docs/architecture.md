@@ -254,8 +254,11 @@ is recorded in checkpoint contracts; default epsilon stays zero. An opt-in 1e-4
 control reduces amplification but fails the fresh KL screen. Fixed-weight,
 same-batch replay shows statistics replacement alone raises KL from 0.000140 to
 10.297 (eight retained transitions, no optimizer updates), with integrity passing
-in the separately preregistered offline retry. No schedule change is yet validated;
-compare normalization treatment and deployed drift before larger learning.
+in the separately preregistered offline retry. An offline one-step comparison
+passes fixed preprocessing (KL 0.0237), detects deferred deployment drift
+(KL 10.288), and validates affine inference rebase on the declared probes.
+Adam rebase/continuation is unvalidated. Next test identity preprocessing
+on-policy before larger learning.
 Affect and deterministic safety are separate and unchanged.
 
 ## 5. Timescales

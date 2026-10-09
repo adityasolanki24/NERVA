@@ -36,8 +36,11 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   eight-transition batch passes integrity: statistics replacement alone gives
   KL 10.297 versus old 0.000140, with zero optimizer updates
   (`normalization_timing_offline_retry.md`). Original capture and parser aborts
-  remain preserved. Next: preregister normalization schedule/representation
-  comparison with deployed drift checks, before larger neutral learning.
+  remain preserved. Offline schedule comparison passes: fixed preprocessing
+  KL 0.0237 versus deferred deployment KL 10.288; affine inference rebase
+  preserves outputs, without Adam-continuation validation
+  (`normalization_schedule_comparison.md`). Next: identity-preprocessing
+  on-policy numerical/restore smoke before larger neutral learning.
   Expressive curriculum remains blocked;
   no general-stability or motor-quality claim.
 

@@ -74,8 +74,9 @@ entry, docs, commit.
    but fails the fresh KL screen (1489 >1); fixed-weight same-batch timing replay
    passes integrity and shows statistics replacement alone raises KL from
    0.000140 to 10.297 with no optimizer update. Preserve both earlier integrity
-   aborts. Next preregister a normalization schedule/representation comparison
-   that measures deployed-policy drift as well as training KL, then a neutral
+   aborts. Offline schedule comparison now passes: fixed preprocessing KL 0.0237,
+   deferred deployment KL 10.288, affine inference rebase preserves outputs.
+   Next preregister an identity-preprocessing on-policy smoke, then a neutral
    policy comparison/gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and

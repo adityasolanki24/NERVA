@@ -1,0 +1,30 @@
+{
+ "integrity_pass": true,
+ "integrity": {
+  "input_admission": true,
+  "control_match": true,
+  "fixed_initial_weights": true,
+  "fixed_batch": true,
+  "finite": true,
+  "case_checks": true
+ },
+ "fixed_preprocessing_screen_pass": true,
+ "deferred_deployment_drift_supported": true,
+ "rebase_support": true,
+ "rebase_checks": {
+  "other_leaves_literal": true,
+  "dtypes_shapes": true,
+  "independent_affine_formula": true,
+  "logits": true,
+  "value": true,
+  "deterministic": true,
+  "sampled": true,
+  "analytic_kl": true
+ },
+ "optimizer_updates": 2,
+ "new_environment_transitions": 0,
+ "original_environment_transitions": 8,
+ "learned_motor_readiness": false,
+ "optimizer_rebase_equivalence": false,
+ "cloud_work": false
+}

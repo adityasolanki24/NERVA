@@ -1,0 +1,222 @@
+[
+ {
+  "arm": "native",
+  "metrics": {
+   "entropy_loss": -0.0007330019143410027,
+   "kl_mean": 10.292987823486328,
+   "policy_dist_max_loc": 0.8894016146659851,
+   "policy_dist_max_std": 1.0889525413513184,
+   "policy_dist_mean_loc": -0.0010977471247315407,
+   "policy_dist_mean_std": 0.7050255537033081,
+   "policy_dist_min_loc": -0.8905946016311646,
+   "policy_dist_min_std": 0.4893963932991028,
+   "policy_loss": 0.19180771708488464,
+   "total_loss": 21.335050582885742,
+   "v_loss": 21.14397621154785
+  },
+  "checks": {
+   "manual_kl": true,
+   "manual_log_prob": true,
+   "roundtrip": true,
+   "action_restore": true
+  },
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "manual_kl_mean": 10.292986021255217,
+  "manual_log_prob_max_error": 8.213267861378881e-07,
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "02ebdfa2bfcc370285123886ab36c4553073257fc67f877762fa6f4e792f5495",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/ec4b78995f5f554abc18d78eb2f4a9cd": "3bf22a6240d3980efd1044bd60a4b8a56542ebdf961b152499ef8dffc4d034eb",
+   "manifest.ocdbt": "af495cd0ea83d8f9cf79959cf1432f76e07658ff5d8814421e1e414117965802",
+   "nerva_contract.json": "91e7b8429e463c8231c70cff21c7a85fef42d4330423f8b4869abf5e64245d4b",
+   "ocdbt.process_0/d/36a585dadd477104511efa5ed291bd0d": "ef8e44e884ff7716aa493f810cc2ef6ac55a879ce05cdbfb7b1e66674be92e96",
+   "ocdbt.process_0/d/aa9e374c65693550d12f92a20a289842": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/c6c9450981b460f470aed7f99d6781c0": "4c0446d37b184efebde13aee0e07e96b14fd2fc66104b7e3da8f5ace2bc35f52",
+   "ocdbt.process_0/d/f6974f45081c9980ffe8516904bb3d8d": "11e5b1a2ccd9b4244ed8781de747ecd41774a413dff3fabd1feb79600bbc84df",
+   "ocdbt.process_0/manifest.ocdbt": "6db11266499943497f6e6d8428f142cfe82ced00709c90f75f76f5c62e02089a",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "artifact": {
+   "file_sha256": "45fd5c8b1f1aec00c6bff0ce496591e2f7dfbde0f9de9eb214d6011544210f67",
+   "tree_sha256": "be549ee4650991af5f160c9d3b0e19e906882cbc643f34fde1eab0a49617e47a",
+   "bytes": 11899,
+   "leaves": 18
+  }
+ },
+ {
+  "arm": "fixed",
+  "metrics": {
+   "entropy_loss": -0.00033298684866167605,
+   "kl_mean": 0.023703113198280334,
+   "policy_dist_max_loc": 1.4627457857131958,
+   "policy_dist_max_std": 3.161499261856079,
+   "policy_dist_mean_loc": -0.10523039847612381,
+   "policy_dist_mean_std": 0.8454662561416626,
+   "policy_dist_min_loc": -3.510550022125244,
+   "policy_dist_min_std": 0.030149739235639572,
+   "policy_loss": -0.06778693199157715,
+   "total_loss": 0.020013445988297462,
+   "v_loss": 0.08813336491584778
+  },
+  "checks": {
+   "manual_kl": true,
+   "manual_log_prob": true,
+   "roundtrip": true,
+   "action_restore": true
+  },
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "manual_kl_mean": 0.023702925183734055,
+  "manual_log_prob_max_error": 2.3038766254757093e-06,
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "af6dfd58e52e852b941ef14677772a32926096e5ebac41bccca840919830d4d0",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/9d758e250f6388005075d2ca1a5f50ab": "b2faacbae3ec975260930ba09d1d76ea09f567b87e4ee66f858b3ff507905568",
+   "manifest.ocdbt": "b38f4a6e648f56a0e576b23c9bab194a56c9051eb58af2f72c249d705f500688",
+   "nerva_contract.json": "ee021f79de9f6ce3647c1de1880a8b6a89b84847430b7b30d861f19e4a0f2335",
+   "ocdbt.process_0/d/455cc6994ed95c8ca18001f83efba83d": "d373e65b9927ecafc0bd188cf3bf51aa31370d48e864006c00f18129aa53c894",
+   "ocdbt.process_0/d/a93d3cbaf2c9b75c01a5968f649ea45a": "2dd195f6080c46d92b87133e0b2fb5ec92db99b1558ecaf6d2706087a636072e",
+   "ocdbt.process_0/d/d2dbfaa31d1d6dd6bf74e99273c3d151": "203b8bccebfd3fa552a15c8f833e865c19e6be7c15f8d0ee3f72bbb96a949575",
+   "ocdbt.process_0/d/e8b6700a787befde667d4bcc69aedded": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/manifest.ocdbt": "2522f1efb818ff3d204ae2df3962fa20ebf0d726391a93235aaf9f9137fbf941",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "artifact": {
+   "file_sha256": "3677868c3c7d9b0a3f2970fdb4dfc43876059cce26372cb1080379c6d41329a9",
+   "tree_sha256": "250cfe899e1b47ff8b1e2f25627e544380da65cca17c91800d2a4291e68db00c",
+   "bytes": 11544,
+   "leaves": 18
+  }
+ },
+ {
+  "arm": "deferred",
+  "metrics": {
+   "entropy_loss": -0.0007323517347685993,
+   "kl_mean": 10.288105964660645,
+   "policy_dist_max_loc": 0.8913025259971619,
+   "policy_dist_max_std": 1.090327501296997,
+   "policy_dist_mean_loc": -0.0007133107865229249,
+   "policy_dist_mean_std": 0.7051672339439392,
+   "policy_dist_min_loc": -0.8959711790084839,
+   "policy_dist_min_std": 0.48939049243927,
+   "policy_loss": 0.20057518780231476,
+   "total_loss": 21.137685775756836,
+   "v_loss": 20.937843322753906
+  },
+  "checks": {
+   "manual_kl": true,
+   "manual_log_prob": true,
+   "roundtrip": true,
+   "action_restore": true
+  },
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "manual_kl_mean": 10.2881055665991,
+  "manual_log_prob_max_error": 2.392723843058775e-06,
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "d44ee71e914332f5bf6de9a52a8b13124457fde452dfe3abed4aff324c3526af",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/dd13fcd8c6546dbee88feeefa69ef2c2": "cc3966cf042cbdfd1e7497b7ba8c0e04c1fc257dfd40852bd4eea1da2e7fa929",
+   "manifest.ocdbt": "753ed49acee411ba2df96cc5cb4b65d5a05ff9c1540220b541740178dea96e53",
+   "nerva_contract.json": "ccfb10040a05b7ec6106270858b46c08b64ffd6c5b422fb404a7877ba85fcb5b",
+   "ocdbt.process_0/d/1924e4dbac928fe2fd7685979c8cf0f4": "f6a86fbf7364f1b7ebef01408860b78da3a3579a2aea4ada0901574bcdc1ae97",
+   "ocdbt.process_0/d/25e443b6aad0abc1123d4dd9f0440b08": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/73276b9956ed7d6ca667b55357637411": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/cedfafb83a74523a6058417dd7a6ab7b": "e344f888ffbbf7b58958043a4040a0917fc98f07e3289fb09f4ee7082f30e9ab",
+   "ocdbt.process_0/manifest.ocdbt": "9f31efc9614a316ccd47ccf50c5dcfe189722fda64faf28e5c520d6a606010d5",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "artifact": {
+   "file_sha256": "0572d0fefefe2712d0b006a0bb8b772a7ffec362bb4b0ab40c4d8a8d0a041d4c",
+   "tree_sha256": "04a2ee59ad485f6e517c12a5f625f7369ba9d03031eefd8fdcb57a199377e914",
+   "bytes": 11904,
+   "leaves": 18
+  }
+ },
+ {
+  "arm": "rebased",
+  "metrics": {
+   "entropy_loss": -0.00033298658672720194,
+   "kl_mean": 0.023703157901763916,
+   "policy_dist_max_loc": 1.462746262550354,
+   "policy_dist_max_std": 3.1615002155303955,
+   "policy_dist_mean_loc": -0.1052304357290268,
+   "policy_dist_mean_std": 0.8454662561416626,
+   "policy_dist_min_loc": -3.510551929473877,
+   "policy_dist_min_std": 0.030149726197123528,
+   "policy_loss": -0.06778609752655029,
+   "total_loss": 0.02001430280506611,
+   "v_loss": 0.08813338726758957
+  },
+  "checks": {
+   "manual_kl": true,
+   "manual_log_prob": true,
+   "roundtrip": true,
+   "action_restore": true
+  },
+  "roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "action_parity": {
+   "probes": 10,
+   "finite_bounded": true,
+   "max_action_error": 0.0,
+   "all_pass": true
+  },
+  "manual_kl_mean": 0.023703004671135813,
+  "manual_log_prob_max_error": 3.922694765456924e-06,
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "749983fc7b22ccd49e52ea069ada7ada053f289a4a58e05f1093a9e56c0ed9df",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/4855c17097e636803ffd3301d83fc7d7": "cef7195ba6e1ae253c09905dfb35e2457705f229987988a7d74c1273c3f5aef2",
+   "manifest.ocdbt": "3930ab0f96a05386eb36df836afa01529da0b265c66a2f91a117297d86230f1d",
+   "nerva_contract.json": "644047e31154b6e22b0472be4c8a743f8ff43fb5fd962c298dfbf1ed4d95d58a",
+   "ocdbt.process_0/d/37744a7a148b23481218b769246f9012": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/7d9dc38cb639ce570dce089f65469b80": "fbe82b394310a67b2ad2197a3080f8e01029b89658942078e7e27a4b63b9225f",
+   "ocdbt.process_0/d/cc7ec3bde03860949030622c64d9c1a7": "d373e65b9927ecafc0bd188cf3bf51aa31370d48e864006c00f18129aa53c894",
+   "ocdbt.process_0/d/edb76cf8a20a445642a63371933fcfb2": "fbfe4c8969be0c9dc77bfe6401d69e0ec6ecb5518c6d6bf6d3a84cd925358a73",
+   "ocdbt.process_0/manifest.ocdbt": "ff97df84dd60eda1c4cd97c19bec188638e95ae22adcd241a8047b9c5c38f512",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "artifact": {
+   "file_sha256": "7ff6a74504c06809e4f2337a004012e8ef4ab2ed50b6aa7a973d5fb44e92c9e6",
+   "tree_sha256": "f6fb27390f967a220cb85a3e827ef0f29248c792aacf10b9327bbe7401d36339",
+   "bytes": 11926,
+   "leaves": 18
+  }
+ }
+]

@@ -53,7 +53,8 @@ def action_parity(make_policy, params, loaded_policy):
             "all_pass": finite and maximum <= 1e-6}
 
 
-def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243988", stage_observer=None):
+def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243988", stage_observer=None,
+        normalize_observations=True, stage_validator=None, initial_validator=None):
     import jax
     from brax.training import checkpoint as common_checkpoint
     from brax.training.agents.ppo import checkpoint, networks, train
@@ -66,10 +67,12 @@ def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243
                               neutral_joystick, neutral_reference, neutral_wrapper, parameter_checkpoint)}
     records, manifest = neutral_reference.verified_references(root)
     options = dict(PPO_CONFIG)
+    options["normalize_observations"] = normalize_observations
     if normalization_eps:
         options["normalize_observations_std_eps"] = normalization_eps
     contract = {"contract": neutral_reference.CONTRACT, "observation_size": {"state": [101], "privileged_state": [212]},
-                "action_size": 14, "network": NETWORK_CONFIG, "normalize_observations": True,
+                "action_size": 14, "network": NETWORK_CONFIG, "normalize_observations": normalize_observations,
+                "preprocessing": "running_statistics" if normalize_observations else "identity_statistics_unused",
                 "normalization_mode": "welford", "normalization_variance_eps": normalization_eps,
                 "references": [row["reference_sha256"] for row in manifest["references"]],
                 "source_hashes": sources, "restoration": "parameters_only_optimizer_rng_and_counters_restart"}
@@ -83,6 +86,7 @@ def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243
                 "checkpoint_storage": "plain_state_dict_host_numpy_default_none_initializers_omitted",
                 "wall_cap_s": 900, "max_optimization_transitions": 32, "cloud_work": False,
                 "normalization_mode": "welford", "normalize_observations_std_eps": normalization_eps,
+                "preprocessing": "running_statistics" if normalize_observations else "identity_statistics_unused",
                 "num_resets_per_eval": 0, "use_pmap_on_reset": True, "max_grad_norm": None,
                 "learning_rate_schedule": None, "domain_randomization": False}
     write_json(output / "protocol.json", protocol)
@@ -108,6 +112,8 @@ def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243
                 stage_initial.append(params)
                 if stage_name == "warm" and not leaf_comparison(expected, params)["equal"]:
                     raise ValueError("warm initialization differs from checkpoint")
+                if initial_validator is not None:
+                    initial_validator(stage_name, params)
             print(stage_name, "callback", int(step), flush=True)
             write_json(output / "progress.json", {"stage": stage_name, "callback_steps": stage_steps,
                                                  "wall_seconds": round(time.monotonic() - total_start, 2)})
@@ -140,7 +146,7 @@ def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243
         location = raw / "checkpoints" / name
         save_parameters(location, 16, params, checkpoint.network_config(
             observation_size={"state": (101,), "privileged_state": (212,)}, action_size=14,
-            normalize_observations=True, network_factory=network))
+            normalize_observations=normalize_observations, network_factory=network))
         path = location / "000000000016"
         write_contract(path, contract)
         require_contract(path, contract)
@@ -160,6 +166,8 @@ def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243
         write_json(output / "stages.json", stages)
         if not row["all_pass"]:
             raise ValueError("checkpoint criteria failed")
+        if stage_validator is not None:
+            stage_validator(row)
         if name == "fresh":
             fresh_params, fresh_path = params, path
         print(name, "pass", row["all_pass"], flush=True)

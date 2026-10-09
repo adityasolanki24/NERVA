@@ -1,6 +1,7 @@
 # Robust locomotion before expressive objectives (design, 2026-10-09)
 
-Status: design only; no new training or cloud run. S1–S6 remain closed results.
+Status: local B2 motor gate evaluated; overall fail (2026-10-09). No new
+training or cloud run. S1–S6 remain closed results.
 
 ## Why the order changes
 
@@ -28,6 +29,25 @@ at least half of nonzero commanded speed in each translational direction;
 quantified push recovery and a declared head envelope. Freeze push magnitudes,
 timing, stationary-speed threshold, seeds and tracking limits before observing
 results. Existing B0/B2 reports are historical comparators, not new training jobs.
+
+## Local gate result (2026-10-09)
+
+Fixed protocol: `b2_robustness_gate.md`, preregistration `14a139c`, evaluator
+`e8e3f34`. Reports: `experiments/locomotion_curriculum/results_b2/`.
+B2 **fails** the all-required readiness decision because both in-place turn
+commands exceed the 0.03 m/s horizontal translation RMS limit in all five
+seeds each (left 0.0330–0.0379; right 0.0416–0.0439 m/s). Yaw tracking itself
+passes. All other criteria pass: no falls in 115 trials, starts/stops and
+reversals, no standing solution, all 40 modest pushes recovered (max 1.78 s),
+and the standing/walking head checks. No shadow safety interventions occurred.
+
+The next phase is a separately preregistered local pure-turn diagnostic, before
+checkpoint continuation or expressive training: distinguish base motion about
+an offset turning centre from sustained global translation, and inspect the
+reference/command lookup (the known grid lacks exact zero lateral velocity).
+Neither mechanism is established by this result. Do not relax the gate or
+train another reward variant in response to its outcome. B2 retains its
+previously verified reactive role; the affect default remains Bv4.
 
 ## Training stages after that gate
 

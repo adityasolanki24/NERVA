@@ -1,0 +1,6167 @@
+[
+ {
+  "trial": "steady_forward_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.189264277659953,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.10529313807009794,
+     -0.005186676531877181,
+     -0.039381174526111465
+    ],
+    "signed_axis_mean": 0.10529313807009796,
+    "axis_tracking_rmse": 0.04475328642481741,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009217564568384125,
+    "horizontal_rms": 0.10586485893071249,
+    "yaw_rms": 0.047818288303147806,
+    "lift_mm": [
+     36.65688698465451,
+     37.01045819889851
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_forward_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.376391571713931,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.10478160520315481,
+     -0.0033048044194911056,
+     -0.029169232496973434
+    ],
+    "signed_axis_mean": 0.10478160520315481,
+    "axis_tracking_rmse": 0.045458973828991354,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008353848777526781,
+    "horizontal_rms": 0.10512780188216715,
+    "yaw_rms": 0.03516056090508418,
+    "lift_mm": [
+     36.535556787558924,
+     36.63513715700504
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_forward_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.23338661713539,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.10456964309545566,
+     -0.005380773379696548,
+     -0.024269204999944706
+    ],
+    "signed_axis_mean": 0.10456964309545573,
+    "axis_tracking_rmse": 0.046131105888554146,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010098977319543944,
+    "horizontal_rms": 0.10453932733093729,
+    "yaw_rms": 0.02644115741468625,
+    "lift_mm": [
+     36.693973924246905,
+     36.86611195272558
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_forward_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.704443494822204,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.1037635692839551,
+     -0.0051297228337670335,
+     -0.028839490427418273
+    ],
+    "signed_axis_mean": 0.10376356928395522,
+    "axis_tracking_rmse": 0.0464585923369095,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009488425506946209,
+    "horizontal_rms": 0.10426944984091017,
+    "yaw_rms": 0.03919303255048584,
+    "lift_mm": [
+     36.313244055477305,
+     36.48938839280531
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_forward_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.416526785893092,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.10598854159047469,
+     -0.005948030916292556,
+     -0.029940487621076334
+    ],
+    "signed_axis_mean": 0.10598854159047477,
+    "axis_tracking_rmse": 0.044360465170097764,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010099568524934276,
+    "horizontal_rms": 0.10643150736838604,
+    "yaw_rms": 0.03543526995787643,
+    "lift_mm": [
+     37.02868028211653,
+     36.374581000274226
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_backward_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.853529820741883,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.1122496201132704,
+     -0.00014030860125797346,
+     0.06438084372777948
+    ],
+    "signed_axis_mean": 0.11224962011327035,
+    "axis_tracking_rmse": 0.03787812046640827,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008934520322038095,
+    "horizontal_rms": 0.11297929025766028,
+    "yaw_rms": 0.07531255455996747,
+    "lift_mm": [
+     42.35653022995117,
+     36.25130536769893
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_backward_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.919822458874238,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.1129103005357444,
+     -0.0005193216644274287,
+     0.03508109595112304
+    ],
+    "signed_axis_mean": 0.11291030053574454,
+    "axis_tracking_rmse": 0.03708068578569015,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008401678938461239,
+    "horizontal_rms": 0.11335620088223293,
+    "yaw_rms": 0.03818345015683328,
+    "lift_mm": [
+     42.996551581874854,
+     35.34147503276801
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_backward_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.13667915910799,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.11166036480995514,
+     -0.0025413001633780535,
+     0.04962931764092732
+    ],
+    "signed_axis_mean": 0.11166036480995535,
+    "axis_tracking_rmse": 0.038556916282840116,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009529234548678605,
+    "horizontal_rms": 0.11220184162754925,
+    "yaw_rms": 0.05554555263808485,
+    "lift_mm": [
+     42.53730516740156,
+     35.25686270803666
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_backward_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.10704636429755,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.11270220569248575,
+     -0.0006696620729025449,
+     0.04503725480410306
+    ],
+    "signed_axis_mean": 0.11270220569248575,
+    "axis_tracking_rmse": 0.037073249048151506,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010157124770362427,
+    "horizontal_rms": 0.11366593519385111,
+    "yaw_rms": 0.056311084271003765,
+    "lift_mm": [
+     42.60681320557723,
+     35.673236914599045
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_backward_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.298075921684132,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.11361085268909989,
+     0.002732194899297665,
+     0.04707698697703378
+    ],
+    "signed_axis_mean": 0.11361085268909998,
+    "axis_tracking_rmse": 0.03682120173026886,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009145582090422853,
+    "horizontal_rms": 0.1138254644765233,
+    "yaw_rms": 0.05548965371124934,
+    "lift_mm": [
+     42.36553059086974,
+     36.13391625651967
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_left_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.230467171090732,
+  "fell": false,
+  "segments": [
+   {
+    "command": "left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.00344089949269595,
+     0.05921498581170451,
+     -0.019082212663871737
+    ],
+    "signed_axis_mean": 0.05921498581170445,
+    "axis_tracking_rmse": 0.04126698459462329,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.0045559157416022,
+    "horizontal_rms": 0.06048084358498158,
+    "yaw_rms": 0.02277183795760693,
+    "lift_mm": [
+     29.72994134114438,
+     18.283817078594623
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_left_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.742701135317732,
+  "fell": false,
+  "segments": [
+   {
+    "command": "left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.005539421213997001,
+     0.06268778240530432,
+     -0.012600972851889073
+    ],
+    "signed_axis_mean": 0.06268778240530432,
+    "axis_tracking_rmse": 0.038411507329659984,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006565231154269389,
+    "horizontal_rms": 0.0631287112508298,
+    "yaw_rms": 0.01826969073631783,
+    "lift_mm": [
+     29.33399167522909,
+     20.448024015432114
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_left_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.498321605101145,
+  "fell": false,
+  "segments": [
+   {
+    "command": "left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.004953856440945696,
+     0.06177393131426064,
+     -0.01758175019719674
+    ],
+    "signed_axis_mean": 0.06177393131426059,
+    "axis_tracking_rmse": 0.039579993630186855,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006173860928143911,
+    "horizontal_rms": 0.062228528779036514,
+    "yaw_rms": 0.021536101553393597,
+    "lift_mm": [
+     29.149402005622747,
+     20.146924374184234
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_left_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.02642610948924,
+  "fell": false,
+  "segments": [
+   {
+    "command": "left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.005253970054181035,
+     0.061091732028334414,
+     -0.017578926896001407
+    ],
+    "signed_axis_mean": 0.061091732028334456,
+    "axis_tracking_rmse": 0.03980019250348555,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006532461812019804,
+    "horizontal_rms": 0.06220318337991634,
+    "yaw_rms": 0.021958407663372294,
+    "lift_mm": [
+     29.768469877676193,
+     20.25243210732016
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_left_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.966898655419778,
+  "fell": false,
+  "segments": [
+   {
+    "command": "left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.005323518984982065,
+     0.06196167097985315,
+     -0.015706371405656123
+    ],
+    "signed_axis_mean": 0.06196167097985311,
+    "axis_tracking_rmse": 0.03889073350393773,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006238279456279,
+    "horizontal_rms": 0.06288824358500111,
+    "yaw_rms": 0.01928791886280489,
+    "lift_mm": [
+     28.941447751261972,
+     23.57597703573116
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_right_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.350769066581623,
+  "fell": false,
+  "segments": [
+   {
+    "command": "right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.004000751058782351,
+     -0.062458638824974426,
+     -0.020735529741407417
+    ],
+    "signed_axis_mean": 0.06245863882497437,
+    "axis_tracking_rmse": 0.03886391007449683,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.005209170874037424,
+    "horizontal_rms": 0.0633368649700339,
+    "yaw_rms": 0.02293393626281262,
+    "lift_mm": [
+     31.69176005916735,
+     24.17151491479568
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_right_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.386201690056211,
+  "fell": false,
+  "segments": [
+   {
+    "command": "right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.002492386954404432,
+     -0.05615460435229802,
+     -0.020608469932711492
+    ],
+    "signed_axis_mean": 0.05615460435229802,
+    "axis_tracking_rmse": 0.04402547905548583,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.003916965567970754,
+    "horizontal_rms": 0.05743191840020569,
+    "yaw_rms": 0.026212812106849594,
+    "lift_mm": [
+     30.17935494219966,
+     24.357622939804383
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_right_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.651344883256401,
+  "fell": false,
+  "segments": [
+   {
+    "command": "right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.0015789256851358338,
+     -0.0605135572923237,
+     -0.01810256516940574
+    ],
+    "signed_axis_mean": 0.060513557292323675,
+    "axis_tracking_rmse": 0.0403820073410253,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.003469124535996499,
+    "horizontal_rms": 0.06177575880273419,
+    "yaw_rms": 0.02040281610057102,
+    "lift_mm": [
+     28.11421621076384,
+     25.347243720515454
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_right_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.877387704466832,
+  "fell": false,
+  "segments": [
+   {
+    "command": "right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.0032354025470497224,
+     -0.061462477988487904,
+     -0.02465279488989436
+    ],
+    "signed_axis_mean": 0.06146247798848787,
+    "axis_tracking_rmse": 0.03995336681989751,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.004578542795330137,
+    "horizontal_rms": 0.0627397262763399,
+    "yaw_rms": 0.02784111163259182,
+    "lift_mm": [
+     29.78423709983112,
+     25.08137954931505
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_right_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.534759444961951,
+  "fell": false,
+  "segments": [
+   {
+    "command": "right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.0014687687382062397,
+     -0.05854097305364939,
+     -0.026226297699559562
+    ],
+    "signed_axis_mean": 0.05854097305364947,
+    "axis_tracking_rmse": 0.042404947659809435,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.004431920833531874,
+    "horizontal_rms": 0.05954177358528818,
+    "yaw_rms": 0.027750042083825352,
+    "lift_mm": [
+     27.928197111944055,
+     24.732894726997035
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_left_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "turn_left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.084158013270489,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.009211892534743641,
+     0.034125167389831894,
+     0.5753893055206749
+    ],
+    "signed_axis_mean": 0.5753893055206754,
+    "axis_tracking_rmse": 0.03294301754333307,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.036491093496312806,
+    "yaw_rms": 0.5732463321221398,
+    "lift_mm": [
+     39.72508315122415,
+     30.24979859276067
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_left_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "turn_left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.693431356279966,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.006666787764315002,
+     0.036218595794945976,
+     0.5584246162464602
+    ],
+    "signed_axis_mean": 0.55842461624646,
+    "axis_tracking_rmse": 0.04604422484711197,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03790723412623818,
+    "yaw_rms": 0.5598214935001128,
+    "lift_mm": [
+     38.6668930323096,
+     30.231802380312747
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_left_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "turn_left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.865165817324506,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.006276754008392186,
+     0.031297208383605016,
+     0.5576939943884834
+    ],
+    "signed_axis_mean": 0.557693994388483,
+    "axis_tracking_rmse": 0.04731727659626505,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03301100355428097,
+    "yaw_rms": 0.5558817449586675,
+    "lift_mm": [
+     39.26920965777379,
+     29.59832104217099
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_left_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "turn_left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.872839497045655,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.00562754212294937,
+     0.036095467041419166,
+     0.561383625066344
+    ],
+    "signed_axis_mean": 0.561383625066344,
+    "axis_tracking_rmse": 0.04635218504034799,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03709895985166264,
+    "yaw_rms": 0.5608542228080289,
+    "lift_mm": [
+     39.707789776274346,
+     30.213662785953083
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_left_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "turn_left",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.755939045859785,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_left",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.00645116982849738,
+     0.033162451272253986,
+     0.555791515735896
+    ],
+    "signed_axis_mean": 0.5557915157358961,
+    "axis_tracking_rmse": 0.04984544952076902,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03461181556337444,
+    "yaw_rms": 0.5580897902465664,
+    "lift_mm": [
+     39.135820078048184,
+     28.906750893651676
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_right_0",
+  "group": "steady",
+  "seed": 0,
+  "command": "turn_right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.062768620222297,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.01714317817656163,
+     -0.038656653197338645,
+     -0.5844973568041678
+    ],
+    "signed_axis_mean": 0.5844973568041676,
+    "axis_tracking_rmse": 0.026478236064709105,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04386817848157577,
+    "yaw_rms": 0.5889556792795955,
+    "lift_mm": [
+     37.89209660951939,
+     35.41059604695569
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_right_1",
+  "group": "steady",
+  "seed": 1,
+  "command": "turn_right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.140344058877442,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.016219712893447414,
+     -0.03865280359430013,
+     -0.5935526027866279
+    ],
+    "signed_axis_mean": 0.5935526027866274,
+    "axis_tracking_rmse": 0.02526040814315544,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.043540086829195086,
+    "yaw_rms": 0.5967658759568202,
+    "lift_mm": [
+     38.68480949141132,
+     35.18556492771911
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_right_2",
+  "group": "steady",
+  "seed": 2,
+  "command": "turn_right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.208806942569916,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.018369711341216528,
+     -0.03783933556816646,
+     -0.5818887901994007
+    ],
+    "signed_axis_mean": 0.5818887901994011,
+    "axis_tracking_rmse": 0.024791063214646,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.0436702282557964,
+    "yaw_rms": 0.5840925142258612,
+    "lift_mm": [
+     37.960495855583346,
+     34.86696271914502
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_right_3",
+  "group": "steady",
+  "seed": 3,
+  "command": "turn_right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.20334961363027,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.017403862811487255,
+     -0.03858869865073384,
+     -0.5825000422636792
+    ],
+    "signed_axis_mean": 0.5825000422636801,
+    "axis_tracking_rmse": 0.025111830187569118,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04372006817946363,
+    "yaw_rms": 0.5829443963768318,
+    "lift_mm": [
+     38.18017825103838,
+     34.42011889875831
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "steady_turn_right_4",
+  "group": "steady",
+  "seed": 4,
+  "command": "turn_right",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.187825562086545,
+  "fell": false,
+  "segments": [
+   {
+    "command": "turn_right",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     -0.015058592456360029,
+     -0.037284979806204425,
+     -0.5895006452788792
+    ],
+    "signed_axis_mean": 0.5895006452788792,
+    "axis_tracking_rmse": 0.03000043068199447,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.0416449533821509,
+    "yaw_rms": 0.5939708733982075,
+    "lift_mm": [
+     38.141069053947724,
+     34.84001192196534
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "transition_0",
+  "group": "transition",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.497601751871375,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     2,
+     5
+    ],
+    "mean_velocity": [
+     0.012412163150439323,
+     0.003427129055147541,
+     -0.03493109543602813
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.01681167390411599,
+    "yaw_rms": 0.03976554043817385,
+    "lift_mm": [
+     25.811299711326768,
+     16.334925274083993
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "forward",
+    "interval_s": [
+     7,
+     10
+    ],
+    "mean_velocity": [
+     0.10337618772714727,
+     -0.007817197623767652,
+     -0.02763527428967975
+    ],
+    "signed_axis_mean": 0.10337618772714724,
+    "axis_tracking_rmse": 0.047783006714261785,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008412268152271153,
+    "horizontal_rms": 0.10264191612193671,
+    "yaw_rms": 0.03171283458324482,
+    "lift_mm": [
+     36.39390025028425,
+     37.18673260680657
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "backward",
+    "interval_s": [
+     12,
+     15
+    ],
+    "mean_velocity": [
+     -0.11420834313422722,
+     -0.0018016314991010508,
+     0.03406210736090037
+    ],
+    "signed_axis_mean": 0.11420834313422719,
+    "axis_tracking_rmse": 0.036252123259034354,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00984707557971298,
+    "horizontal_rms": 0.11454951487980601,
+    "yaw_rms": 0.03314408065152608,
+    "lift_mm": [
+     43.32623555464423,
+     33.13333183410284
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "left",
+    "interval_s": [
+     17,
+     20
+    ],
+    "mean_velocity": [
+     0.004299467200999956,
+     0.058008003384956514,
+     -0.005144258825430606
+    ],
+    "signed_axis_mean": 0.05800800338495653,
+    "axis_tracking_rmse": 0.04960029307159079,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.005586827730555608,
+    "horizontal_rms": 0.05169378950483319,
+    "yaw_rms": 0.013271843950282428,
+    "lift_mm": [
+     32.730673453335285,
+     19.477364642268082
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "right",
+    "interval_s": [
+     22,
+     25
+    ],
+    "mean_velocity": [
+     -0.000996599601680045,
+     -0.07019162913674615,
+     -0.017060023385189794
+    ],
+    "signed_axis_mean": 0.07019162913674608,
+    "axis_tracking_rmse": 0.03594486987655055,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.002511844596834405,
+    "horizontal_rms": 0.06670793583804098,
+    "yaw_rms": 0.023560660498506556,
+    "lift_mm": [
+     32.868892409430764,
+     22.773446502017325
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_left",
+    "interval_s": [
+     27,
+     30
+    ],
+    "mean_velocity": [
+     -0.010483433981382597,
+     0.032134316404254966,
+     0.5682983261097235
+    ],
+    "signed_axis_mean": 0.5682983261097235,
+    "axis_tracking_rmse": 0.03588633381642806,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03672755943774247,
+    "yaw_rms": 0.5688835021383648,
+    "lift_mm": [
+     38.91019100071892,
+     30.147102011242044
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_right",
+    "interval_s": [
+     32,
+     35
+    ],
+    "mean_velocity": [
+     -0.015608587885180778,
+     -0.03847489291759777,
+     -0.5822973950525
+    ],
+    "signed_axis_mean": 0.5822973950525003,
+    "axis_tracking_rmse": 0.01503118887231382,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04751149535365542,
+    "yaw_rms": 0.5884469825825003,
+    "lift_mm": [
+     38.71334070142675,
+     34.53583809154634
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "stop",
+    "interval_s": [
+     37,
+     40
+    ],
+    "mean_velocity": [
+     0.012095645255261633,
+     0.005038937486979477,
+     -0.041709276420753894
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.014740375451279016,
+    "yaw_rms": 0.03956450425701976,
+    "lift_mm": [
+     26.520435560894253,
+     14.568087462609265
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "transition_1",
+  "group": "transition",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 15.01537893693289,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     2,
+     5
+    ],
+    "mean_velocity": [
+     0.012095915307085047,
+     0.0046069063245781465,
+     -0.03196822737250653
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.015045625855614655,
+    "yaw_rms": 0.031279128458137226,
+    "lift_mm": [
+     24.62913452789553,
+     16.033057560946986
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "forward",
+    "interval_s": [
+     7,
+     10
+    ],
+    "mean_velocity": [
+     0.10783904020226895,
+     -0.0113381220014629,
+     -0.04227076547444222
+    ],
+    "signed_axis_mean": 0.10783904020226899,
+    "axis_tracking_rmse": 0.042142835779632286,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009647845371629429,
+    "horizontal_rms": 0.10862119248458668,
+    "yaw_rms": 0.044494583327836124,
+    "lift_mm": [
+     36.770094355504305,
+     36.99970794704796
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "backward",
+    "interval_s": [
+     12,
+     15
+    ],
+    "mean_velocity": [
+     -0.11467207033227958,
+     0.00031852107371214153,
+     0.04982227591571526
+    ],
+    "signed_axis_mean": 0.1146720703322796,
+    "axis_tracking_rmse": 0.03661993678161604,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008816061870954567,
+    "horizontal_rms": 0.11387460576449127,
+    "yaw_rms": 0.042425629800989975,
+    "lift_mm": [
+     42.878557039075105,
+     34.69877028000369
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "left",
+    "interval_s": [
+     17,
+     20
+    ],
+    "mean_velocity": [
+     0.003440483156550885,
+     0.06830221386623689,
+     -0.016437494551330277
+    ],
+    "signed_axis_mean": 0.06830221386623686,
+    "axis_tracking_rmse": 0.03824165418723314,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006211702520997577,
+    "horizontal_rms": 0.06291976560633752,
+    "yaw_rms": 0.018541461464087323,
+    "lift_mm": [
+     28.54165483235507,
+     18.56406526667577
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "right",
+    "interval_s": [
+     22,
+     25
+    ],
+    "mean_velocity": [
+     -0.0030553601274668197,
+     -0.06409006975085237,
+     -0.02043560673961876
+    ],
+    "signed_axis_mean": 0.06409006975085241,
+    "axis_tracking_rmse": 0.03766546787259859,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.0026180869302117864,
+    "horizontal_rms": 0.0634411687361719,
+    "yaw_rms": 0.020361014422498547,
+    "lift_mm": [
+     33.42807129122859,
+     25.918956788656935
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_left",
+    "interval_s": [
+     27,
+     30
+    ],
+    "mean_velocity": [
+     -0.00849940759987486,
+     0.039191967085966124,
+     0.5959576460650352
+    ],
+    "signed_axis_mean": 0.5959576460650352,
+    "axis_tracking_rmse": 0.021116607182825015,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04633520154858182,
+    "yaw_rms": 0.5838424381539142,
+    "lift_mm": [
+     38.23951709673966,
+     34.523995492509165
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_right",
+    "interval_s": [
+     32,
+     35
+    ],
+    "mean_velocity": [
+     -0.015963010991565246,
+     -0.037081845874230905,
+     -0.6035536533640175
+    ],
+    "signed_axis_mean": 0.6035536533640175,
+    "axis_tracking_rmse": 0.018109856761143423,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04245009426658458,
+    "yaw_rms": 0.6095249492612059,
+    "lift_mm": [
+     38.087061943092465,
+     34.804133333023955
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "stop",
+    "interval_s": [
+     37,
+     40
+    ],
+    "mean_velocity": [
+     0.011881728387469953,
+     0.001863835131719527,
+     -0.017222974441425405
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.01503925942380729,
+    "yaw_rms": 0.013689092171004264,
+    "lift_mm": [
+     31.73021152943776,
+     16.686492398085562
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "transition_2",
+  "group": "transition",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.541120495101378,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     2,
+     5
+    ],
+    "mean_velocity": [
+     0.011071213058172893,
+     0.004054694402163365,
+     -0.03062143515568876
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.01512179162203363,
+    "yaw_rms": 0.03480588446509578,
+    "lift_mm": [
+     26.0875896135447,
+     17.47656194819071
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "forward",
+    "interval_s": [
+     7,
+     10
+    ],
+    "mean_velocity": [
+     0.10384776137531918,
+     -0.015037309133928402,
+     -0.0045108458680050995
+    ],
+    "signed_axis_mean": 0.10384776137531922,
+    "axis_tracking_rmse": 0.048538836614786605,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01289099677289208,
+    "horizontal_rms": 0.10247814231071174,
+    "yaw_rms": 0.017056356469283277,
+    "lift_mm": [
+     35.895449141105864,
+     36.518728464888504
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "backward",
+    "interval_s": [
+     12,
+     15
+    ],
+    "mean_velocity": [
+     -0.11252360825686923,
+     0.0074248659049927675,
+     0.01204499110874917
+    ],
+    "signed_axis_mean": 0.11252360825686923,
+    "axis_tracking_rmse": 0.03630032702624358,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007223080157506488,
+    "horizontal_rms": 0.11425285295717068,
+    "yaw_rms": 0.014993997684050133,
+    "lift_mm": [
+     43.35021799826121,
+     35.92744079864987
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "left",
+    "interval_s": [
+     17,
+     20
+    ],
+    "mean_velocity": [
+     0.0025267176139668578,
+     0.06175546028654941,
+     -0.012455975112745937
+    ],
+    "signed_axis_mean": 0.0617554602865494,
+    "axis_tracking_rmse": 0.04196706266092158,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.0045186365835863,
+    "horizontal_rms": 0.05916360157679082,
+    "yaw_rms": 0.011934862399953082,
+    "lift_mm": [
+     30.23924380077341,
+     16.153337158372086
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "right",
+    "interval_s": [
+     22,
+     25
+    ],
+    "mean_velocity": [
+     -0.003934369067432725,
+     -0.0648126398808711,
+     -0.028968357236069407
+    ],
+    "signed_axis_mean": 0.06481263988087109,
+    "axis_tracking_rmse": 0.03849190866589333,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.0067073338780071125,
+    "horizontal_rms": 0.06282223800335264,
+    "yaw_rms": 0.03535763316139107,
+    "lift_mm": [
+     35.12627795366412,
+     24.93105524688964
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_left",
+    "interval_s": [
+     27,
+     30
+    ],
+    "mean_velocity": [
+     -0.009143045520920321,
+     0.03776049533302416,
+     0.5681642556539833
+    ],
+    "signed_axis_mean": 0.5681642556539835,
+    "axis_tracking_rmse": 0.036118719518699605,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04336887482843359,
+    "yaw_rms": 0.5686766734910258,
+    "lift_mm": [
+     37.35142433869209,
+     32.43426383123985
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_right",
+    "interval_s": [
+     32,
+     35
+    ],
+    "mean_velocity": [
+     -0.017249877465200403,
+     -0.03750525725049351,
+     -0.5765343869857967
+    ],
+    "signed_axis_mean": 0.5765343869857965,
+    "axis_tracking_rmse": 0.01728994424884845,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.045781728337062844,
+    "yaw_rms": 0.5964460727596006,
+    "lift_mm": [
+     37.112108544288645,
+     34.41402319710625
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "stop",
+    "interval_s": [
+     37,
+     40
+    ],
+    "mean_velocity": [
+     0.011352569338035443,
+     0.006788685174359536,
+     -0.03584102155701585
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.013599770025997751,
+    "yaw_rms": 0.03577224075669861,
+    "lift_mm": [
+     25.887333129534998,
+     17.81833106979484
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "transition_3",
+  "group": "transition",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.17706341932073,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     2,
+     5
+    ],
+    "mean_velocity": [
+     0.013283830529636083,
+     0.001606146806980419,
+     -0.03495251859471091
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.0164984132350287,
+    "yaw_rms": 0.035847827308142774,
+    "lift_mm": [
+     24.533866529312416,
+     16.820182201028295
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "forward",
+    "interval_s": [
+     7,
+     10
+    ],
+    "mean_velocity": [
+     0.10498248296194986,
+     -0.008976137653930847,
+     -0.02481527324339246
+    ],
+    "signed_axis_mean": 0.10498248296194987,
+    "axis_tracking_rmse": 0.04606976385715249,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007988972389048115,
+    "horizontal_rms": 0.10431242933706136,
+    "yaw_rms": 0.046156160610614394,
+    "lift_mm": [
+     36.51222972657798,
+     36.51008577007952
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "backward",
+    "interval_s": [
+     12,
+     15
+    ],
+    "mean_velocity": [
+     -0.11041465483654825,
+     0.0008123072793660717,
+     0.040203913418963615
+    ],
+    "signed_axis_mean": 0.1104146548365483,
+    "axis_tracking_rmse": 0.03999142666488259,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007553986538720849,
+    "horizontal_rms": 0.1105373173346415,
+    "yaw_rms": 0.04717490565911848,
+    "lift_mm": [
+     43.72085438738147,
+     34.19980701378688
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "left",
+    "interval_s": [
+     17,
+     20
+    ],
+    "mean_velocity": [
+     0.0043036381912853385,
+     0.06872114113167732,
+     -0.008316808626417892
+    ],
+    "signed_axis_mean": 0.06872114113167728,
+    "axis_tracking_rmse": 0.03366885076092193,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006290804496206984,
+    "horizontal_rms": 0.06768618657236626,
+    "yaw_rms": 0.00985464612543446,
+    "lift_mm": [
+     30.513535001449565,
+     20.789185269811135
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "right",
+    "interval_s": [
+     22,
+     25
+    ],
+    "mean_velocity": [
+     -0.004960268997269779,
+     -0.06368578471975785,
+     -0.03142184179288749
+    ],
+    "signed_axis_mean": 0.06368578471975786,
+    "axis_tracking_rmse": 0.039335628217249986,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.004067411409126731,
+    "horizontal_rms": 0.06236376119368582,
+    "yaw_rms": 0.02607981510673978,
+    "lift_mm": [
+     27.116461219958182,
+     24.924215366093335
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_left",
+    "interval_s": [
+     27,
+     30
+    ],
+    "mean_velocity": [
+     -0.012362130874271588,
+     0.04118979903796507,
+     0.5622286497622204
+    ],
+    "signed_axis_mean": 0.5622286497622206,
+    "axis_tracking_rmse": 0.04651965779932776,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.045941410287886134,
+    "yaw_rms": 0.5583553248843801,
+    "lift_mm": [
+     37.912175957270755,
+     32.75936345265948
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_right",
+    "interval_s": [
+     32,
+     35
+    ],
+    "mean_velocity": [
+     -0.01617977175005531,
+     -0.033856478022347335,
+     -0.570611639382089
+    ],
+    "signed_axis_mean": 0.5706116393820887,
+    "axis_tracking_rmse": 0.018889881390700507,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.0425570535933073,
+    "yaw_rms": 0.5882831820333286,
+    "lift_mm": [
+     38.26428518677251,
+     34.635240291095286
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "stop",
+    "interval_s": [
+     37,
+     40
+    ],
+    "mean_velocity": [
+     0.011622695386033484,
+     -0.0003609544931880124,
+     -0.027247374981371374
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.017293553670819035,
+    "yaw_rms": 0.02819826176210771,
+    "lift_mm": [
+     29.446043742576382,
+     17.69772686803278
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "transition_4",
+  "group": "transition",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.238995969779896,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     2,
+     5
+    ],
+    "mean_velocity": [
+     0.011506136844316207,
+     9.896535985761572e-05,
+     -0.03994322298265252
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.014844684176473432,
+    "yaw_rms": 0.04301236687823905,
+    "lift_mm": [
+     27.350063083369882,
+     16.826034565412975
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "forward",
+    "interval_s": [
+     7,
+     10
+    ],
+    "mean_velocity": [
+     0.10929851263673605,
+     -0.012844309505870968,
+     -0.03978569488227572
+    ],
+    "signed_axis_mean": 0.109298512636736,
+    "axis_tracking_rmse": 0.039084731876946416,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010834234805625249,
+    "horizontal_rms": 0.11178398681873809,
+    "yaw_rms": 0.047135243627415106,
+    "lift_mm": [
+     38.90489115281119,
+     35.530817428556595
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "backward",
+    "interval_s": [
+     12,
+     15
+    ],
+    "mean_velocity": [
+     -0.11230772747964703,
+     0.00831415450476222,
+     0.051592685818052555
+    ],
+    "signed_axis_mean": 0.11230772747964693,
+    "axis_tracking_rmse": 0.037143192811341465,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010130448104924701,
+    "horizontal_rms": 0.11359361948918567,
+    "yaw_rms": 0.0497834921940826,
+    "lift_mm": [
+     43.704045924589764,
+     34.96287692569407
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "left",
+    "interval_s": [
+     17,
+     20
+    ],
+    "mean_velocity": [
+     0.004031346576690156,
+     0.06381531469422122,
+     -0.010297967651899522
+    ],
+    "signed_axis_mean": 0.06381531469422122,
+    "axis_tracking_rmse": 0.043762842197189115,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.006588368945126298,
+    "horizontal_rms": 0.057633833240743476,
+    "yaw_rms": 0.014832374610921628,
+    "lift_mm": [
+     27.01885148571685,
+     19.994048353666056
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "right",
+    "interval_s": [
+     22,
+     25
+    ],
+    "mean_velocity": [
+     -0.0041609785786605345,
+     -0.05162795222958201,
+     -0.023945574052608585
+    ],
+    "signed_axis_mean": 0.051627952229582025,
+    "axis_tracking_rmse": 0.05097982328278432,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.003186420371569999,
+    "horizontal_rms": 0.052047274578136904,
+    "yaw_rms": 0.022718919910830436,
+    "lift_mm": [
+     29.40091167268595,
+     24.84854722099201
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_left",
+    "interval_s": [
+     27,
+     30
+    ],
+    "mean_velocity": [
+     -0.014546828546216594,
+     0.032235794622001705,
+     0.549648714680899
+    ],
+    "signed_axis_mean": 0.5496487146808992,
+    "axis_tracking_rmse": 0.05420700540165963,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.03768839826357366,
+    "yaw_rms": 0.5509237584833551,
+    "lift_mm": [
+     40.213995504883634,
+     32.981503192949
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "turn_right",
+    "interval_s": [
+     32,
+     35
+    ],
+    "mean_velocity": [
+     -0.018148458472185214,
+     -0.03365135222711624,
+     -0.5960533760283799
+    ],
+    "signed_axis_mean": 0.5960533760283803,
+    "axis_tracking_rmse": 0.020936499710681927,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.04440152374060496,
+    "yaw_rms": 0.6011771034341089,
+    "lift_mm": [
+     38.82677543462479,
+     34.48795752812029
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": true
+   },
+   {
+    "command": "stop",
+    "interval_s": [
+     37,
+     40
+    ],
+    "mean_velocity": [
+     0.012840427602198029,
+     0.005430733722573951,
+     -0.025437054751989895
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.015565159466514216,
+    "yaw_rms": 0.0247416404243145,
+    "lift_mm": [
+     26.52328889301507,
+     17.020149743588398
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "push_forward_0_0",
+  "group": "push",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.189264277659953,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10690144853130032,
+     -0.005675188670313838,
+     -0.026388662822995176
+    ],
+    "signed_axis_mean": 0.10690144853130028,
+    "axis_tracking_rmse": 0.04348578719526151,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010060344594196429,
+    "horizontal_rms": 0.10801740211695433,
+    "yaw_rms": 0.0422255349765239,
+    "lift_mm": [
+     36.65112607796346,
+     37.032938612864605
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10986999469300673,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_0_1",
+  "group": "push",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.376391571713931,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10573365248251028,
+     -0.0041932971910695295,
+     -0.02295174644029098
+    ],
+    "signed_axis_mean": 0.10573365248251025,
+    "axis_tracking_rmse": 0.04499775328514875,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008802856724916265,
+    "horizontal_rms": 0.10627402977603846,
+    "yaw_rms": 0.036537115677632515,
+    "lift_mm": [
+     37.39874535504616,
+     36.66880398845147
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.1024329824209048,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_0_2",
+  "group": "push",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.23338661713539,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10645232390407898,
+     -0.004441203215180706,
+     -0.013878666560872248
+    ],
+    "signed_axis_mean": 0.10645232390407898,
+    "axis_tracking_rmse": 0.044222630518073396,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010724687902825027,
+    "horizontal_rms": 0.10697364965557479,
+    "yaw_rms": 0.028252453467834275,
+    "lift_mm": [
+     36.31921741401616,
+     36.745016009276
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10639927498535778,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_0_3",
+  "group": "push",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.704443494822204,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10904493073664465,
+     -0.005091850509772898,
+     -0.03071307728142984
+    ],
+    "signed_axis_mean": 0.10904493073664465,
+    "axis_tracking_rmse": 0.041882028317069206,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00972357917665976,
+    "horizontal_rms": 0.1098187796598377,
+    "yaw_rms": 0.04628613476818263,
+    "lift_mm": [
+     36.562314693643636,
+     36.500127957275055
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10924974417417363,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_0_4",
+  "group": "push",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.416526785893092,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10920264884946518,
+     -0.002372575391587032,
+     -0.031149742338804635
+    ],
+    "signed_axis_mean": 0.10920264884946522,
+    "axis_tracking_rmse": 0.04194951041897956,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008484797725156524,
+    "horizontal_rms": 0.10966464640078992,
+    "yaw_rms": 0.037909600223344886,
+    "lift_mm": [
+     36.561207668341964,
+     36.895529026131456
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10490214652043264,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_90_0",
+  "group": "push",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.245067697970002,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09954561898182546,
+     -0.003795025223133753,
+     -0.0334075054484746
+    ],
+    "signed_axis_mean": 0.09954561898182551,
+    "axis_tracking_rmse": 0.05285321516702426,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.014560354795330377,
+    "horizontal_rms": 0.10186154807582112,
+    "yaw_rms": 0.04771834915349625,
+    "lift_mm": [
+     36.8103521825071,
+     37.08839786145661
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10986999469300673,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.4600000000000009,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_90_1",
+  "group": "push",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.075059876039463,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10016832783385601,
+     0.001694036972271772,
+     -0.02388741289190601
+    ],
+    "signed_axis_mean": 0.10016832783385604,
+    "axis_tracking_rmse": 0.05185815570462277,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.015633439564755405,
+    "horizontal_rms": 0.10100064682091243,
+    "yaw_rms": 0.03615649323254567,
+    "lift_mm": [
+     36.54630629418672,
+     37.879427040217585
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.1024329824209048,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0199999999999996,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_90_2",
+  "group": "push",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.687886487349283,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09808964603762069,
+     -0.006131434626230927,
+     -0.02558573743289076
+    ],
+    "signed_axis_mean": 0.09808964603762078,
+    "axis_tracking_rmse": 0.056019503748713506,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.019518063131767023,
+    "horizontal_rms": 0.10061675321089306,
+    "yaw_rms": 0.0330608944223889,
+    "lift_mm": [
+     36.89304686085925,
+     38.02286916500825
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10639927498535778,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.58,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_90_3",
+  "group": "push",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.704443494822204,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10227970148659826,
+     0.0003855879539284064,
+     -0.01912629120919083
+    ],
+    "signed_axis_mean": 0.10227970148659825,
+    "axis_tracking_rmse": 0.049399125500126026,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01456729333605866,
+    "horizontal_rms": 0.1033809101126052,
+    "yaw_rms": 0.038070278863664764,
+    "lift_mm": [
+     36.10361377596887,
+     36.80573994781082
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10924974417417363,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.3000000000000007,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_90_4",
+  "group": "push",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.845868357408769,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09795767136208519,
+     -0.007533777026766556,
+     -0.02662435724491188
+    ],
+    "signed_axis_mean": 0.09795767136208525,
+    "axis_tracking_rmse": 0.056450932724849044,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.02451361187932253,
+    "horizontal_rms": 0.10161517685122032,
+    "yaw_rms": 0.031014594152004367,
+    "lift_mm": [
+     37.51834969500063,
+     37.0221288333183
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10490214652043264,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.540000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_180_0",
+  "group": "push",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.189264277659953,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09957865441398585,
+     -0.006750064152965314,
+     -0.061844299455846664
+    ],
+    "signed_axis_mean": 0.09957865441398582,
+    "axis_tracking_rmse": 0.05224240620852573,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.011191333202427134,
+    "horizontal_rms": 0.10131262740836126,
+    "yaw_rms": 0.08912142259578852,
+    "lift_mm": [
+     37.22437885277137,
+     37.148384262532815
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10986999469300673,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.200000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_180_1",
+  "group": "push",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.52047625243625,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09918667486591325,
+     -0.0045847556679083495,
+     -0.05247530545975158
+    ],
+    "signed_axis_mean": 0.09918667486591329,
+    "axis_tracking_rmse": 0.05446842901075805,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.011104931590229732,
+    "horizontal_rms": 0.10043372824186904,
+    "yaw_rms": 0.07925096947488047,
+    "lift_mm": [
+     36.21783236444972,
+     37.30723817235449
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.1024329824209048,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.120000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_180_2",
+  "group": "push",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.23338661713539,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.09946866777379818,
+     -0.005457814154642071,
+     -0.04124485664350579
+    ],
+    "signed_axis_mean": 0.09946866777379809,
+    "axis_tracking_rmse": 0.05325409845732924,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.011932492551952377,
+    "horizontal_rms": 0.10027784758252967,
+    "yaw_rms": 0.06628454941188448,
+    "lift_mm": [
+     36.58582594347622,
+     36.74313204121782
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10639927498535778,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.120000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_180_3",
+  "group": "push",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.704443494822204,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10141552154949071,
+     -0.005798720578228084,
+     -0.05013288288898633
+    ],
+    "signed_axis_mean": 0.10141552154949082,
+    "axis_tracking_rmse": 0.051164581942558275,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01050128054017281,
+    "horizontal_rms": 0.10231969563645489,
+    "yaw_rms": 0.07763539187331538,
+    "lift_mm": [
+     36.48831617541897,
+     36.65752550828172
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10924974417417363,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.1400000000000006,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_180_4",
+  "group": "push",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.416526785893092,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10244722833290076,
+     -0.005621952556302855,
+     -0.050784605787347545
+    ],
+    "signed_axis_mean": 0.10244722833290071,
+    "axis_tracking_rmse": 0.05055598309094879,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.011634466996420336,
+    "horizontal_rms": 0.10286481251065004,
+    "yaw_rms": 0.07775023400355864,
+    "lift_mm": [
+     36.84983422325716,
+     36.56007301907962
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10490214652043264,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0600000000000005,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_270_0",
+  "group": "push",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.366538988893641,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10286807332121177,
+     -0.008748306600083241,
+     -0.032486996836008857
+    ],
+    "signed_axis_mean": 0.1028680733212118,
+    "axis_tracking_rmse": 0.04744878853010274,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.017067794912629837,
+    "horizontal_rms": 0.10467957516462309,
+    "yaw_rms": 0.04207479228258306,
+    "lift_mm": [
+     36.892979265534166,
+     36.49363756241922
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10986999469300673,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_270_1",
+  "group": "push",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.602750749530667,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10135510976920013,
+     -0.007726454225829093,
+     -0.025987843243397514
+    ],
+    "signed_axis_mean": 0.10135510976920019,
+    "axis_tracking_rmse": 0.04994134160700577,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.018549722711888563,
+    "horizontal_rms": 0.10248716844579349,
+    "yaw_rms": 0.03488730411568651,
+    "lift_mm": [
+     36.92337465560225,
+     36.64536699610569
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.1024329824209048,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_270_2",
+  "group": "push",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.681142233932526,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10238201897370733,
+     -0.00816862051588983,
+     -0.016915571577689338
+    ],
+    "signed_axis_mean": 0.10238201897370734,
+    "axis_tracking_rmse": 0.048935102848480364,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.019187054269358277,
+    "horizontal_rms": 0.10361660348631088,
+    "yaw_rms": 0.02557797539355637,
+    "lift_mm": [
+     37.28590631035201,
+     35.62748449613702
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10639927498535778,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_270_3",
+  "group": "push",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.49195411073915,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.1032337269437687,
+     -0.010563714900675158,
+     -0.02968381545902553
+    ],
+    "signed_axis_mean": 0.10323372694376869,
+    "axis_tracking_rmse": 0.0478482148446622,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.020256424672404953,
+    "horizontal_rms": 0.1051853850955339,
+    "yaw_rms": 0.04131088075813932,
+    "lift_mm": [
+     37.29996855963674,
+     36.379952207735116
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10924974417417363,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_forward_270_4",
+  "group": "push",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.481874366751919,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.10415874120388587,
+     -0.007870577231616403,
+     -0.031388523507452554
+    ],
+    "signed_axis_mean": 0.10415874120388584,
+    "axis_tracking_rmse": 0.046685117524791285,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.018276111049150633,
+    "horizontal_rms": 0.10545611846840362,
+    "yaw_rms": 0.03510129129456357,
+    "lift_mm": [
+     37.616932367628664,
+     35.78218549516847
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": 0.10490214652043264,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_0_0",
+  "group": "push",
+  "seed": 0,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.900926732967188,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11418789632021195,
+     -0.0034508205786010215,
+     0.0423515114509648
+    ],
+    "signed_axis_mean": 0.11418789632021194,
+    "axis_tracking_rmse": 0.0358542022717402,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.011515485645829186,
+    "horizontal_rms": 0.11549811601830078,
+    "yaw_rms": 0.04973536334025017,
+    "lift_mm": [
+     42.360249314058,
+     35.675192757080325
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11463789260614055,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_0_1",
+  "group": "push",
+  "seed": 1,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.109574466748763,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11310327330224401,
+     -0.0023348411990845165,
+     0.037046666615268314
+    ],
+    "signed_axis_mean": 0.11310327330224403,
+    "axis_tracking_rmse": 0.03734465255594425,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00812690553606351,
+    "horizontal_rms": 0.11355056603448209,
+    "yaw_rms": 0.03893400448714136,
+    "lift_mm": [
+     42.61804003767205,
+     35.26609475328689
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11188586234464676,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_0_2",
+  "group": "push",
+  "seed": 2,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.13667915910799,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11171977401510629,
+     0.0015715884981286248,
+     0.05196524930197352
+    ],
+    "signed_axis_mean": 0.11171977401510634,
+    "axis_tracking_rmse": 0.038815505887467155,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009862469342431424,
+    "horizontal_rms": 0.11194709923738953,
+    "yaw_rms": 0.05544416511920564,
+    "lift_mm": [
+     42.33427882533118,
+     35.515829897755914
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.1118097402751005,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_0_3",
+  "group": "push",
+  "seed": 3,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.79174652173361,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11107666988515315,
+     -0.0031082363487055656,
+     0.027429907394097872
+    ],
+    "signed_axis_mean": 0.11107666988515316,
+    "axis_tracking_rmse": 0.03880623710041599,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010112915740376717,
+    "horizontal_rms": 0.11212042660902824,
+    "yaw_rms": 0.03622473340676335,
+    "lift_mm": [
+     43.13817240796608,
+     35.45594600905288
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11341768348080591,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_0_4",
+  "group": "push",
+  "seed": 4,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 0,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.298075921684132,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11212919257886998,
+     0.0011285488446376162,
+     0.05239902661672683
+    ],
+    "signed_axis_mean": 0.11212919257887001,
+    "axis_tracking_rmse": 0.03862930271504628,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009586902419691496,
+    "horizontal_rms": 0.11232508800277882,
+    "yaw_rms": 0.06184029014069429,
+    "lift_mm": [
+     42.42631501131809,
+     35.77811764247706
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11172855124512893,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_90_0",
+  "group": "push",
+  "seed": 0,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.700228654287038,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.1069762825870304,
+     0.0012667157824271728,
+     0.052636123414693446
+    ],
+    "signed_axis_mean": 0.10697628258703043,
+    "axis_tracking_rmse": 0.04474971016547633,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009766058080497212,
+    "horizontal_rms": 0.1080135526013278,
+    "yaw_rms": 0.05826022431745754,
+    "lift_mm": [
+     42.315336451948454,
+     36.448347312041975
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11463789260614055,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.4800000000000004,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_90_1",
+  "group": "push",
+  "seed": 1,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.29491864205917,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11156231859127104,
+     0.002990822931861334,
+     0.049256221721553646
+    ],
+    "signed_axis_mean": 0.11156231859127111,
+    "axis_tracking_rmse": 0.0388296163568929,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.013126017211862724,
+    "horizontal_rms": 0.11244637938224934,
+    "yaw_rms": 0.0529174451814006,
+    "lift_mm": [
+     42.71054508810683,
+     35.506860844531765
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11188586234464676,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_90_2",
+  "group": "push",
+  "seed": 2,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.408487386835255,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.10167806260645805,
+     -0.0063124768673288425,
+     0.02857550580472585
+    ],
+    "signed_axis_mean": 0.10167806260645805,
+    "axis_tracking_rmse": 0.05880255130146237,
+    "stationary_fraction": 0.04434589800443459,
+    "orthogonal_rms": 0.025469707420132652,
+    "horizontal_rms": 0.10793298681597019,
+    "yaw_rms": 0.048687575477498225,
+    "lift_mm": [
+     43.09092813753049,
+     35.62895878473563
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.1118097402751005,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.7799999999999994,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_90_3",
+  "group": "push",
+  "seed": 3,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 15.817390300074768,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.10456017626991324,
+     -0.0062450459394494656,
+     0.012900758792285038
+    ],
+    "signed_axis_mean": 0.10456017626991318,
+    "axis_tracking_rmse": 0.05328818028225093,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.024842811181950024,
+    "horizontal_rms": 0.1103591032965959,
+    "yaw_rms": 0.02619988502023462,
+    "lift_mm": [
+     43.44872525963494,
+     35.53370103322468
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11341768348080591,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.700000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_90_4",
+  "group": "push",
+  "seed": 4,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 90,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.292022852708369,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.10491163051293163,
+     -0.006714385118305105,
+     0.009979727459379124
+    ],
+    "signed_axis_mean": 0.10491163051293168,
+    "axis_tracking_rmse": 0.05332013004071573,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.03431058917547609,
+    "horizontal_rms": 0.11232105188379744,
+    "yaw_rms": 0.0697304621465893,
+    "lift_mm": [
+     43.58024644806726,
+     35.276787988624285
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11172855124512893,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.6400000000000006,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_180_0",
+  "group": "push",
+  "seed": 0,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.597410613948771,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11811592261290228,
+     0.0006465511733768647,
+     0.050127359785142434
+    ],
+    "signed_axis_mean": 0.11811592261290221,
+    "axis_tracking_rmse": 0.03487416358953472,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009393559270536535,
+    "horizontal_rms": 0.1213163078374413,
+    "yaw_rms": 0.058121178075648386,
+    "lift_mm": [
+     42.59699294624932,
+     35.91036723839342
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11463789260614055,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.1400000000000006,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_180_1",
+  "group": "push",
+  "seed": 1,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.953995137624176,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11972546498879541,
+     -0.0033017851315670804,
+     0.019307472342694507
+    ],
+    "signed_axis_mean": 0.11972546498879538,
+    "axis_tracking_rmse": 0.03431725185721572,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010037496762982755,
+    "horizontal_rms": 0.12193176735845039,
+    "yaw_rms": 0.0514427930598113,
+    "lift_mm": [
+     43.12327876234923,
+     34.87829623182043
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11188586234464676,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.1600000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_180_2",
+  "group": "push",
+  "seed": 2,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.1495480535088,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.12047096455847037,
+     -0.0025365651236095165,
+     0.025711807406091827
+    ],
+    "signed_axis_mean": 0.12047096455847048,
+    "axis_tracking_rmse": 0.035396812806675206,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.009955869417004458,
+    "horizontal_rms": 0.12314969483345736,
+    "yaw_rms": 0.05006965046185476,
+    "lift_mm": [
+     43.02728079754063,
+     35.45628950998396
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.1118097402751005,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.2599999999999998,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_180_3",
+  "group": "push",
+  "seed": 3,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.918443545832893,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11929608539117531,
+     -0.0030092299079690554,
+     0.006363061795075346
+    ],
+    "signed_axis_mean": 0.11929608539117549,
+    "axis_tracking_rmse": 0.034146854500061295,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00989714650326445,
+    "horizontal_rms": 0.12250165011741357,
+    "yaw_rms": 0.04444848081490768,
+    "lift_mm": [
+     43.32909177684022,
+     35.41554477658243
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11341768348080591,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.1400000000000006,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_180_4",
+  "group": "push",
+  "seed": 4,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 180,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.298075921684132,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11953995635702928,
+     0.004076200731794928,
+     0.02924652204868448
+    ],
+    "signed_axis_mean": 0.11953995635702935,
+    "axis_tracking_rmse": 0.03461694819489124,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008849107152567108,
+    "horizontal_rms": 0.12121123507062037,
+    "yaw_rms": 0.06019092622559102,
+    "lift_mm": [
+     42.269830476090185,
+     35.90652639169099
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11172855124512893,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.1600000000000001,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_270_0",
+  "group": "push",
+  "seed": 0,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.078099791696724,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11137579175995255,
+     -0.005211113172373868,
+     0.052009664824016796
+    ],
+    "signed_axis_mean": 0.11137579175995259,
+    "axis_tracking_rmse": 0.03848191354214196,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.02204606925776207,
+    "horizontal_rms": 0.1140276406317715,
+    "yaw_rms": 0.06103587839303017,
+    "lift_mm": [
+     42.91984714344629,
+     35.940565177598444
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11463789260614055,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_270_1",
+  "group": "push",
+  "seed": 1,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 15.293037506601197,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11094481635762352,
+     -0.007324147785163129,
+     0.030410468292996238
+    ],
+    "signed_axis_mean": 0.11094481635762353,
+    "axis_tracking_rmse": 0.039830858054789114,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.021388521512414802,
+    "horizontal_rms": 0.11278329681045227,
+    "yaw_rms": 0.04124419107649071,
+    "lift_mm": [
+     44.14152529799294,
+     34.977633252163386
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11188586234464676,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_270_2",
+  "group": "push",
+  "seed": 2,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.310417553005443,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11216180292580942,
+     -0.0030413044640090923,
+     0.04167832373173225
+    ],
+    "signed_axis_mean": 0.11216180292580943,
+    "axis_tracking_rmse": 0.03838319691923093,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01977207338568798,
+    "horizontal_rms": 0.11364682930776732,
+    "yaw_rms": 0.04820916275343427,
+    "lift_mm": [
+     42.97770432241207,
+     35.499724049348146
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.1118097402751005,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_270_3",
+  "group": "push",
+  "seed": 3,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.722674856149808,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.11281903178684681,
+     -0.006258701168440411,
+     0.01763533570674437
+    ],
+    "signed_axis_mean": 0.11281903178684673,
+    "axis_tracking_rmse": 0.03685215774337074,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01601411502309598,
+    "horizontal_rms": 0.11459137429309532,
+    "yaw_rms": 0.029734584385340775,
+    "lift_mm": [
+     43.51769388327656,
+     35.187045947001266
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11341768348080591,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "push_backward_270_4",
+  "group": "push",
+  "seed": 4,
+  "command": "backward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.0,
+  "push_deg": 270,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.150199176348625,
+  "fell": false,
+  "segments": [
+   {
+    "command": "backward",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.1126796820594802,
+     -0.0024614348634067374,
+     0.035261770939149194
+    ],
+    "signed_axis_mean": 0.11267968205948013,
+    "axis_tracking_rmse": 0.0379827361816512,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.020869135395531518,
+    "horizontal_rms": 0.11424102509592156,
+    "yaw_rms": 0.04748355333240856,
+    "lift_mm": [
+     43.84015892740392,
+     34.91899077420494
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ],
+  "pre_push_axis_mean": -0.11172855124512893,
+  "velocity_tolerance": 0.03,
+  "recovery_s": 1.0,
+  "recovery_ok": true
+ },
+ {
+  "trial": "standing_head_0_0",
+  "group": "standing_head",
+  "seed": 0,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.914102762271705,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.03129531553075443,
+     0.04642521884005129,
+     0.2561009887092255
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.057724752752822135,
+    "yaw_rms": 0.26721754015298793,
+    "lift_mm": [
+     32.69942804509894,
+     32.76956327491035
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_0_1",
+  "group": "standing_head",
+  "seed": 1,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.115024771574177,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.028026742346048922,
+     0.04256565617142396,
+     0.2686310679202309
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05395864971502914,
+    "yaw_rms": 0.2700984700682148,
+    "lift_mm": [
+     33.73096148288753,
+     33.487787908027656
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_0_2",
+  "group": "standing_head",
+  "seed": 2,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.287720567073091,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.03480085525152035,
+     0.044052805570012586,
+     0.2739538424482143
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.057849996693603134,
+    "yaw_rms": 0.28257041124932536,
+    "lift_mm": [
+     34.420279251327635,
+     34.275247397424614
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_0_3",
+  "group": "standing_head",
+  "seed": 3,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.712510861005109,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.024384528695886025,
+     0.04346057153306322,
+     0.228827610896399
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.050814790243417333,
+    "yaw_rms": 0.23433259202990236,
+    "lift_mm": [
+     32.66030265948706,
+     32.29762205447362
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_0_4",
+  "group": "standing_head",
+  "seed": 4,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 14.7618573108883,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.03580970583791251,
+     0.04302148865096032,
+     0.27788869670993804
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05779923560113623,
+    "yaw_rms": 0.27899788929386965,
+    "lift_mm": [
+     34.49588931984855,
+     34.89729058545392
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_1_0",
+  "group": "standing_head",
+  "seed": 0,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.773726044955435,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.06294797699064439,
+     0.03426534421212507,
+     0.05072382895405687
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.07314528954181553,
+    "yaw_rms": 0.07739344785804894,
+    "lift_mm": [
+     31.351941393547133,
+     36.46282396142793
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_1_1",
+  "group": "standing_head",
+  "seed": 1,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.82027779954514,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.06626376436750539,
+     0.03630480073143101,
+     0.08364301921862413
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.07539015282631056,
+    "yaw_rms": 0.09846151405131466,
+    "lift_mm": [
+     29.768694154301286,
+     35.09112796632404
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_1_2",
+  "group": "standing_head",
+  "seed": 2,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.23312221228484,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.06261928876875812,
+     0.0315510268994098,
+     0.04944919349603034
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.0703527456261073,
+    "yaw_rms": 0.06301240659094662,
+    "lift_mm": [
+     30.698377825316342,
+     34.706986263484
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_1_3",
+  "group": "standing_head",
+  "seed": 3,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.970801130685413,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.06482566198031575,
+     0.026797085359967315,
+     0.04007621025268185
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.07033275498475645,
+    "yaw_rms": 0.06079384072690735,
+    "lift_mm": [
+     30.08003331885513,
+     34.117972441218036
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_1_4",
+  "group": "standing_head",
+  "seed": 4,
+  "command": "stop",
+  "head_pitch": -0.2,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.050629282948076,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     0.06690965423560781,
+     0.03561110752311542,
+     0.08358991589810283
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.07656580938272269,
+    "yaw_rms": 0.10694759502248269,
+    "lift_mm": [
+     29.771721646532026,
+     34.472242849670046
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_2_0",
+  "group": "standing_head",
+  "seed": 0,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.935088478131107,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.038890727290328116,
+     0.03555969905466158,
+     -0.45330300281532276
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05168414645571025,
+    "yaw_rms": 0.45408255520229757,
+    "lift_mm": [
+     13.426026527499037,
+     36.08160198332052
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_2_1",
+  "group": "standing_head",
+  "seed": 1,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.919431965995201,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.044363484031253314,
+     0.035689154425968435,
+     -0.4413913788259763
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05580841980503962,
+    "yaw_rms": 0.4538428668762868,
+    "lift_mm": [
+     15.236770481402893,
+     35.39981285364112
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_2_2",
+  "group": "standing_head",
+  "seed": 2,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.684041661972199,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.04161328352277076,
+     0.038292405077961646,
+     -0.4762442062587202
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05548311235797594,
+    "yaw_rms": 0.4715403919203516,
+    "lift_mm": [
+     15.075218735124034,
+     37.326151394106084
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_2_3",
+  "group": "standing_head",
+  "seed": 3,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.961641609771295,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.03928026875842581,
+     0.03627228712461921,
+     -0.46932055820676477
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05441461063171532,
+    "yaw_rms": 0.4725946939079061,
+    "lift_mm": [
+     14.228959023603618,
+     37.60877626498868
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_2_4",
+  "group": "standing_head",
+  "seed": 4,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": -0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.38043534232389,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.04583364729991922,
+     0.031034959352227838,
+     -0.4562194994216145
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.056479405349726536,
+    "yaw_rms": 0.4718493408459236,
+    "lift_mm": [
+     14.855752842882161,
+     37.54230624404531
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_3_0",
+  "group": "standing_head",
+  "seed": 0,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.259354050295531,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.01718143583552762,
+     0.04912449405986083,
+     -0.126825423447272
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05174204950384834,
+    "yaw_rms": 0.16018076860107014,
+    "lift_mm": [
+     26.930784994358053,
+     17.438322379733766
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_3_1",
+  "group": "standing_head",
+  "seed": 1,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 13.127620283775487,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.01680939999639391,
+     0.048223994218882155,
+     -0.0721281061892761
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05365689846027166,
+    "yaw_rms": 0.12344246450995523,
+    "lift_mm": [
+     28.240168890030517,
+     15.844387096918023
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_3_2",
+  "group": "standing_head",
+  "seed": 2,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.435854774462994,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.014461763569540508,
+     0.05130631788256403,
+     -0.02602580706397509
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.054154541672362375,
+    "yaw_rms": 0.09845157120672958,
+    "lift_mm": [
+     26.628063005679476,
+     15.650361351074283
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_3_3",
+  "group": "standing_head",
+  "seed": 3,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.627293061237165,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.017221863259138357,
+     0.05101947116090968,
+     -0.03912013016715865
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.05608418626594724,
+    "yaw_rms": 0.08510917078340785,
+    "lift_mm": [
+     26.838094545416546,
+     17.487113888300456
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "standing_head_3_4",
+  "group": "standing_head",
+  "seed": 4,
+  "command": "stop",
+  "head_pitch": 0.6,
+  "head_yaw": 0.4,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 12.114686894945418,
+  "fell": false,
+  "segments": [
+   {
+    "command": "stop",
+    "interval_s": [
+     5,
+     15.0
+    ],
+    "mean_velocity": [
+     -0.017972653820604163,
+     0.05014550847061546,
+     -0.11144853559199082
+    ],
+    "signed_axis_mean": 0.0,
+    "axis_tracking_rmse": 0.0,
+    "stationary_fraction": null,
+    "orthogonal_rms": null,
+    "horizontal_rms": 0.054441326946660235,
+    "yaw_rms": 0.14394972995531458,
+    "lift_mm": [
+     25.684500974104832,
+     19.679121758434867
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": false,
+    "stationary_ok": true,
+    "stop_ok": false
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_0_0",
+  "group": "walking_head",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": -0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.863667071558273,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09108183475500915,
+     -0.010186117319516344,
+     -0.034106365307187636
+    ],
+    "signed_axis_mean": 0.09108183475500925,
+    "axis_tracking_rmse": 0.0589306114686683,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.015301881427836263,
+    "horizontal_rms": 0.09269004112321058,
+    "yaw_rms": 0.040568080495070824,
+    "lift_mm": [
+     38.013624916504476,
+     34.26641686601275
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_0_1",
+  "group": "walking_head",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": -0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.703586625514445,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09043849615019055,
+     -0.006583746678020788,
+     -0.03280708671815548
+    ],
+    "signed_axis_mean": 0.09043849615019049,
+    "axis_tracking_rmse": 0.060271405261813654,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.012318713384144598,
+    "horizontal_rms": 0.09115919301126872,
+    "yaw_rms": 0.04243663447111484,
+    "lift_mm": [
+     38.57796929607382,
+     33.3078840876191
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_0_2",
+  "group": "walking_head",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": -0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.84213715183712,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09052790993386509,
+     -0.005388225934762976,
+     -0.03103803389275236
+    ],
+    "signed_axis_mean": 0.09052790993386506,
+    "axis_tracking_rmse": 0.060421947579045614,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01358129479960182,
+    "horizontal_rms": 0.09113513821379846,
+    "yaw_rms": 0.03805951060782962,
+    "lift_mm": [
+     37.51677558116068,
+     33.94319265172718
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_0_3",
+  "group": "walking_head",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": -0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.70495337036127,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09017512996067187,
+     -0.004746778421284665,
+     -0.02845318731065977
+    ],
+    "signed_axis_mean": 0.09017512996067187,
+    "axis_tracking_rmse": 0.06015784310320545,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.010919210750628109,
+    "horizontal_rms": 0.09073432347065846,
+    "yaw_rms": 0.04014706715661427,
+    "lift_mm": [
+     37.94539426196476,
+     33.75423220460105
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_0_4",
+  "group": "walking_head",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": -0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.40683147705043,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09176566610149275,
+     -0.007119614903460887,
+     -0.030278340144376283
+    ],
+    "signed_axis_mean": 0.0917656661014927,
+    "axis_tracking_rmse": 0.05771573105401845,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.01242402981476429,
+    "horizontal_rms": 0.09335630315509638,
+    "yaw_rms": 0.03885404278508489,
+    "lift_mm": [
+     38.59946696920936,
+     33.009401064376135
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_1_0",
+  "group": "walking_head",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.049404583821145,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11769678058338108,
+     -0.0012305589101202098,
+     0.018934453330836046
+    ],
+    "signed_axis_mean": 0.11769678058338107,
+    "axis_tracking_rmse": 0.032615917168409,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007459848391835206,
+    "horizontal_rms": 0.1180627231311074,
+    "yaw_rms": 0.028125328430182485,
+    "lift_mm": [
+     39.034847488743466,
+     37.86858480964677
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_1_1",
+  "group": "walking_head",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.524853384339202,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11801104906074728,
+     -0.0010518514716744284,
+     0.018951198205451984
+    ],
+    "signed_axis_mean": 0.11801104906074712,
+    "axis_tracking_rmse": 0.03278151595402207,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007690261297980215,
+    "horizontal_rms": 0.1177564554546589,
+    "yaw_rms": 0.02548605213690264,
+    "lift_mm": [
+     38.79497229979512,
+     38.70004760423558
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_1_2",
+  "group": "walking_head",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.516012710449953,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11612819422724224,
+     -0.00041724590017300667,
+     0.0244140750785347
+    ],
+    "signed_axis_mean": 0.11612819422724215,
+    "axis_tracking_rmse": 0.03435144860440494,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007961537799870024,
+    "horizontal_rms": 0.11638860731801878,
+    "yaw_rms": 0.03221883327471793,
+    "lift_mm": [
+     38.53513647324421,
+     37.705832625279264
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_1_3",
+  "group": "walking_head",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.50088987139533,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11712223197296866,
+     -0.0011707646526844672,
+     0.012015749118639346
+    ],
+    "signed_axis_mean": 0.11712223197296846,
+    "axis_tracking_rmse": 0.03360773540609965,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00835083176897625,
+    "horizontal_rms": 0.11711035382471698,
+    "yaw_rms": 0.027406594794682732,
+    "lift_mm": [
+     38.55474348013828,
+     39.37553589850931
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_1_4",
+  "group": "walking_head",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.15,
+  "head_yaw": 0.0,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.332437128883027,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11913591643745035,
+     -0.0018157495710703383,
+     0.018337192122470786
+    ],
+    "signed_axis_mean": 0.1191359164374502,
+    "axis_tracking_rmse": 0.03201360441561276,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008758803575860633,
+    "horizontal_rms": 0.11886792628287904,
+    "yaw_rms": 0.030010592876847132,
+    "lift_mm": [
+     38.751002816712585,
+     37.685435384750406
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_2_0",
+  "group": "walking_head",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": -0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.205979883222755,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11318313122482224,
+     -0.010524626072833693,
+     0.07623397010762026
+    ],
+    "signed_axis_mean": 0.11318313122482211,
+    "axis_tracking_rmse": 0.03746063046423409,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.013686395694608144,
+    "horizontal_rms": 0.11377570549662305,
+    "yaw_rms": 0.07897807243369742,
+    "lift_mm": [
+     37.004788639557525,
+     38.570926971360876
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_2_1",
+  "group": "walking_head",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": -0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.685966719468242,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11554773715637102,
+     -0.012686433521528533,
+     0.08196134848977192
+    ],
+    "signed_axis_mean": 0.11554773715637104,
+    "axis_tracking_rmse": 0.03518360852830932,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.015222281697760987,
+    "horizontal_rms": 0.11605740812139899,
+    "yaw_rms": 0.08234964478264575,
+    "lift_mm": [
+     37.13458373339523,
+     38.697225808632474
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_2_2",
+  "group": "walking_head",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": -0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.825568819762081,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11457127746588411,
+     -0.014457494353202763,
+     0.0812345012307206
+    ],
+    "signed_axis_mean": 0.1145712774658842,
+    "axis_tracking_rmse": 0.035792833551508314,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.017199188016294067,
+    "horizontal_rms": 0.11580705081756075,
+    "yaw_rms": 0.08549653959491714,
+    "lift_mm": [
+     36.94331059350204,
+     38.99337027057949
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_2_3",
+  "group": "walking_head",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": -0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 8.954942645136569,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11413132693552973,
+     -0.011445625441627484,
+     0.07447923604182015
+    ],
+    "signed_axis_mean": 0.11413132693552963,
+    "axis_tracking_rmse": 0.036621001511006286,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.014623681791923068,
+    "horizontal_rms": 0.11475876713765347,
+    "yaw_rms": 0.07938005901131517,
+    "lift_mm": [
+     36.73959816570352,
+     38.69072892609131
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_2_4",
+  "group": "walking_head",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": -0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 8.66596118119308,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.11651189982508564,
+     -0.01338748708976291,
+     0.08633233226840355
+    ],
+    "signed_axis_mean": 0.1165118998250857,
+    "axis_tracking_rmse": 0.0336953250172776,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.015815957594985164,
+    "horizontal_rms": 0.1178581409333253,
+    "yaw_rms": 0.08932637758366284,
+    "lift_mm": [
+     37.64881337972373,
+     38.47251313763229
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_3_0",
+  "group": "walking_head",
+  "seed": 0,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 10.006984671549734,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09921477246353777,
+     -0.0028214953710186605,
+     -0.14065652099069945
+    ],
+    "signed_axis_mean": 0.09921477246353773,
+    "axis_tracking_rmse": 0.050941059923470984,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008103451482780964,
+    "horizontal_rms": 0.09960275828409568,
+    "yaw_rms": 0.144374034367647,
+    "lift_mm": [
+     36.26302026552208,
+     35.84614128090566
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_3_1",
+  "group": "walking_head",
+  "seed": 1,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.90411634467722,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09678342602667171,
+     0.0010955230315807883,
+     -0.13129577409345983
+    ],
+    "signed_axis_mean": 0.09678342602667168,
+    "axis_tracking_rmse": 0.05358238015132305,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00803160458501698,
+    "horizontal_rms": 0.09707592694168139,
+    "yaw_rms": 0.13438345953064088,
+    "lift_mm": [
+     35.51711709964205,
+     35.82135080734534
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_3_2",
+  "group": "walking_head",
+  "seed": 2,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.069942873658968,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09791261054100102,
+     -0.0011049746107595635,
+     -0.12602897581184103
+    ],
+    "signed_axis_mean": 0.09791261054100099,
+    "axis_tracking_rmse": 0.05256716432597494,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.00787078608227908,
+    "horizontal_rms": 0.0981542175489471,
+    "yaw_rms": 0.12849276902676832,
+    "lift_mm": [
+     35.91934617728098,
+     35.47014560406603
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_3_3",
+  "group": "walking_head",
+  "seed": 3,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 11.264210752934739,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.09769047037867193,
+     -0.0009334122752740518,
+     -0.13376071641080592
+    ],
+    "signed_axis_mean": 0.09769047037867191,
+    "axis_tracking_rmse": 0.05220249558298857,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.007907471872001552,
+    "horizontal_rms": 0.09832674680516473,
+    "yaw_rms": 0.13665395946349843,
+    "lift_mm": [
+     36.843211638051365,
+     35.208044915551035
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ },
+ {
+  "trial": "walking_head_3_4",
+  "group": "walking_head",
+  "seed": 4,
+  "command": "forward",
+  "head_pitch": 0.0,
+  "head_yaw": 0.08,
+  "push_deg": null,
+  "safety_applied": false,
+  "completed": true,
+  "safety_interventions": 0,
+  "safety_stop_fraction": 0.0,
+  "max_tilt_deg": 9.17620486689666,
+  "fell": false,
+  "segments": [
+   {
+    "command": "forward",
+    "interval_s": [
+     5,
+     20.0
+    ],
+    "mean_velocity": [
+     0.10043535109148083,
+     -0.0007037172067653249,
+     -0.13317158128460985
+    ],
+    "signed_axis_mean": 0.10043535109148084,
+    "axis_tracking_rmse": 0.04981698315571546,
+    "stationary_fraction": 0.0,
+    "orthogonal_rms": 0.008915708362644367,
+    "horizontal_rms": 0.10090675631770979,
+    "yaw_rms": 0.13476860967514975,
+    "lift_mm": [
+     36.474155411689104,
+     35.12190018977998
+    ],
+    "direction_ok": true,
+    "tracking_ok": true,
+    "cross_ok": true,
+    "stationary_ok": true,
+    "stop_ok": true
+   }
+  ]
+ }
+]

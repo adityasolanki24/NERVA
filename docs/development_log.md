@@ -4,6 +4,69 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Neutral B2 motor gate: pure-turn translation fails; expressive curriculum remains blocked
+
+Preregistered at `14a139c` (`b2_robustness_gate.md`), implemented at `e8e3f34`.
+Reports: `experiments/locomotion_curriculum/results_b2/`; raw traces local,
+git-ignored. Existing final B2 checkpoint, backlash training scene, neutral
+style, raw accelerometer, training observation noise and +/-0.02 rad initial
+noise, seeds 0–4. No affect, perception or memory inputs [measured].
+
+**All 115 primary trials completed in 398.95 s.**
+
+| fixed criterion | result |
+|---|---|
+| unperturbed stability | pass; no falls in any of 115 trials, including pushes; max tilt 15.82 degrees |
+| steady tracking, every direction/seed | **fail: pure-turn horizontal RMS exceeds 0.03 m/s in 10/10 turn trials** |
+| no standing solution | pass in all steady and moving transition phases |
+| starts/stops/transitions | pass, 5/5 trial sequences |
+| pushes, no falls + recovery <=5 s in >=4/5 for each command/direction | pass: 5/5 in all eight conditions, 40/40; longest 1.78 s |
+| standing/walking head tolerance | pass, 20 standing + 20 walking trials; minimum paired speed retention 86.31% (limit 75%) |
+
+**Steady achieved mean velocity, five seeds per condition:**
+- forward command +0.15: +0.1049 m/s; backward -0.15: -0.1126 m/s;
+- lateral command +/-0.10: +0.0613 / -0.0598 m/s;
+- yaw command +/-0.60: +0.5617 / -0.5864 rad/s.
+All command-axis direction and tracking checks pass. The failure is translation
+while commanded vx=vy=0: left-turn horizontal RMS 0.0330–0.0379 m/s, right-turn
+0.0416–0.0439 m/s (limit 0.03). Mean lateral velocity is +0.0342 / -0.0382 m/s.
+The short transition turns pass their axis-tracking criteria; they were not
+preregistered to use the steady cross-motion criterion and do not overturn it.
+
+**Decision:** negative motor-readiness verdict; do not proceed to expressive
+curriculum training or change the thresholds. B2 retains its established
+reactive-scenario role. Affect default Bv4, physical safety and motor control
+are unchanged. Completed S1–S6 experiments were not rerun.
+
+**Safety separation:** the unchanged deterministic SafetySupervisor ran in
+shadow at 50 Hz, with zero interventions and zero stop time in every primary
+trial. No conditional safety-on replay was needed. It neither masked a motor
+failure nor supplied the tracking criterion. All work was simulated locally.
+
+**Cause remains open:** heading-frame base translation during yaw does not
+establish persistent global drift. Rotation around an offset centre and the
+reference lookup are candidate explanations, not causal findings. Source
+inspection confirms the known reference grid has no exact zero lateral
+velocity and uses nearest-neighbour lookup (`open_duck_baseline.md`); that
+alone does not explain the opposite-signed observed lateral velocities.
+Next: preregister a local turn-centre/reference diagnostic before selecting
+any motor-only training fix (`locomotion_curriculum.md`). No new run launched.
+
+**Verification:** 7 new known-signal tests cover heading-frame direction,
+backward sign, yaw unwrap, stationary motion, stop drift, full-window recovery,
+later-fall rejection and incomplete-report failure. Complete suite including
+slow tests: **243 passed**, 546 s; two JAX cast-overflow warnings in unchanged
+training-env tests. Ruff and diff checks clean. Results recompute to the same
+negative decision; every protocol trial/seed is present.
+
+**Cloud/public safety:** final read-only audit: no instances, disks, addresses,
+forwarding rules, routers or snapshots. Results bucket and runner identity
+intentionally retained; no paid work or deletions. Public additions are code,
+docs/tests and small metrics reports; no credentials, account IDs, personal
+absolute paths or large raw artifacts. Raw traces remain git-ignored.
+
+---
+
 ## 2026-10-09 — Same-source facets pass all criteria; Bv4 adopted; curriculum design resumed
 
 Preregistration committed as `ca30916` (`context_facet_experiment.md`), before

@@ -1,6 +1,8 @@
 # B2 neutral motor gate: preregistration (2026-10-09)
 
-Status: fixed before implementation/evaluation. No training or paid work.
+Status: fixed at `14a139c` before implementation/evaluation; completed
+2026-10-09, overall fail on pure-turn translation. Results:
+`experiments/locomotion_curriculum/results_b2/`. No training or paid work.
 This is a new motor-readiness gate, not a repeat of S1–S6 style experiments.
 
 ## Hypothesis and setup

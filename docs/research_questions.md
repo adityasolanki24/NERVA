@@ -14,6 +14,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
 - **Only a narrow speed band (about 0.045–0.056 m/s) can be matched at all,** because of the policy's command dead zone.
 - Details: `experiments/expressive_locomotion/README.md`.
 - **Open:** is one coupled scalar an adequate style representation? See RQ1c.
+- **Neutral motor prerequisite (2026-10-09):** B2 readiness gate fails pure-turn
+  translation (10/10 turns), despite 115 trials without falls and passing
+  the other criteria. Expressive curriculum waits for a separately preregistered
+  turn-centre/reference diagnostic (`locomotion_curriculum.md`).
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 

@@ -1,0 +1,21 @@
+{
+ "preregistration_commit": "14a139c",
+ "implementation_commit": "e8e3f341a738e4b3df61f9cf723e3eefa14304d8",
+ "policy_sha256": "6ebfe384f4bcb8f06657ba597825744a01a69146ab07583b5f993f15b7f2c9a1",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dt_s": 0.02,
+ "scene": "flat_terrain_backlash",
+ "style": [
+  0,
+  0,
+  0
+ ],
+ "primary_safety": "shadow only",
+ "cloud_work": false
+}

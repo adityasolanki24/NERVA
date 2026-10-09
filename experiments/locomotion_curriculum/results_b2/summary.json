@@ -1,0 +1,56 @@
+{
+ "criteria": {
+  "complete": true,
+  "unperturbed_stability": true,
+  "steady_tracking": false,
+  "no_standing_solution": true,
+  "transitions_stops": true,
+  "push_recovery": true,
+  "head_tolerance": true
+ },
+ "all_pass": false,
+ "push_recovered_counts_of_5": {
+  "forward_0": 5,
+  "forward_90": 5,
+  "forward_180": 5,
+  "forward_270": 5,
+  "backward_0": 5,
+  "backward_90": 5,
+  "backward_180": 5,
+  "backward_270": 5
+ },
+ "groups": {
+  "steady": {
+   "trials": 30,
+   "falls": 0,
+   "shadow_interventions": 0,
+   "mean_shadow_stop_fraction": 0.0
+  },
+  "transition": {
+   "trials": 5,
+   "falls": 0,
+   "shadow_interventions": 0,
+   "mean_shadow_stop_fraction": 0.0
+  },
+  "push": {
+   "trials": 40,
+   "falls": 0,
+   "shadow_interventions": 0,
+   "mean_shadow_stop_fraction": 0.0
+  },
+  "standing_head": {
+   "trials": 20,
+   "falls": 0,
+   "shadow_interventions": 0,
+   "mean_shadow_stop_fraction": 0.0
+  },
+  "walking_head": {
+   "trials": 20,
+   "falls": 0,
+   "shadow_interventions": 0,
+   "mean_shadow_stop_fraction": 0.0
+  }
+ },
+ "wall_seconds": 398.95,
+ "safety_diagnostic_replays": 0
+}

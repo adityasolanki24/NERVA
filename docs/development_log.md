@@ -4,6 +4,42 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Identity-preprocessing on-policy/restore screen passes
+
+Preregistered `e627af3`, implementation `ed66f4e`, baseline `8175144`.
+Exactly one declared change from frozen variance-control settings:
+normalize_observations=False. Native Brax records Welford statistics but does
+not apply them; counts 16->32 are unused bookkeeping. Shared runner exposes
+opt-in flag/initial/stage validation; original defaults remain normalized.
+Saved network config and contract retain the actual flag. Fresh/warm initial
+parameters pass literal comparison and reference/core/control checkpoint
+admission; fresh weights match the original retained first-batch behavior.
+
+**All criteria pass**, two 16-transition stages/four Adam updates in 230.45 s
+under 900 s. Training KL fresh/warm 0.000140119/0.000140149; training value loss
+0.051039/0.046600. Final deployed replay against original retained behavior
+has KL 0.058854/0.243470 and value loss 0.086861/0.084648. Independent densities
+and KL pass; all 21 checkpoint leaves and warm initialization are literal-equal;
+20 restored-action probes error 0. Changing saved mean/std affects logits/value
+by exactly 0 on 10 synthetic probes. Adam/RNG/counters restart on warm load.
+
+Single-update-per-batch training KL is pre-SGD self-KL; deployed checks prevent
+mistaking that for update stability. These tiny runs do not establish useful
+motor control or general learning stability. Next preregister multi-batch local
+checking of post-SGD KL against each batch's behavior, not an ever-growing KL
+against the original policy. Command coverage/long readiness remain future gates.
+No affect/safety changes, expressive training, upstream/dependency edits,
+deployments/default promotions or paid/cloud work. Public aggregate reports
+results_identity_preprocessing; all raw artifacts and historical failures retained.
+
+Verification: **303 full tests including slow pass in 283.67 s**, 14 focused
+identity/rebase/admission tests pass, Ruff/diff checks pass. Same two historical
+cast warnings. Public-content/finite-JSON/size audit passes; raw artifacts ignored.
+Final cloud audit clear of instances/disks/addresses/forwarding rules/routers/
+snapshots. Results bucket and runner identity retained; no deletion or spending.
+
+---
+
 ## 2026-10-10 — Offline optimization/deployment comparison supports fixed preprocessing
 
 Preregistered `e241208`, implementation `d42b541`, baseline `61a0a0b`.

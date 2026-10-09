@@ -27,7 +27,7 @@ transitions or optimizer updates from this diagnostic.
 
 All original plumbing criteria remain: callbacks[0,16] in both stages;
 finite initial/final parameters and reported losses; policy/value each update
->1e-12; statistics counts16->32; literal-byte disk/checkpoint/warm-initial trees;
+>1e-12; statistics counts 16->32; literal-byte disk/checkpoint/warm-initial trees;
 ten deterministic/same-key restored-action probes per stage error<=1e-6,
 finite/bounded actions. Checkpoint configuration and contract explicitly disable
 normalization; refuse incompatible warm starts. Existing runners/defaults retain
@@ -62,3 +62,26 @@ Passing permits separately preregistered local multi-batch neutral-learning
 stability/command-coverage work. It does not validate the long motor gate,
 replace B2, justify paid training or authorize expressive objectives before
 robust locomotion. Affine rebase/Adam continuation remains a separate question.
+
+## Completed outcome
+
+Preregistration `e627af3`, implementation `ed66f4e`: **all criteria pass**,
+32 new transitions/four optimizer updates, 230.45 s under 900 s. Counts 16->32
+are retained unused statistics; saved normalize flag is False. Fresh initial
+weights exactly match the retained behavior; frozen control/source/checkpoint
+admission passes. Live/disk/warm initial 21-leaf bytes and 20 restored-action
+probes pass, max action error 0. Normalizer perturbation leaves logits/value
+exactly unchanged on 10 probes. Independent density/KL checks pass.
+
+| Stage | Training KL | Training value loss | Deployed KL | Deployed value loss |
+|---|---:|---:|---:|---:|
+| fresh | 0.000140119 | 0.051039 | 0.058854 | 0.086861 |
+| warm | 0.000140149 | 0.046600 | 0.243470 | 0.084648 |
+
+Deployed replay is against the original retained behavior; warm drift is
+cumulative. Single-update-per-batch epoch KL is measured before SGD, so its
+near-self value alone does not establish update stability. No useful locomotion
+or general stability claim. Adam/RNG/counters restart on warm load. Public
+results_identity_preprocessing; raw checkpoints/replays retained ignored.
+Next is a separately preregistered multi-batch local check with post-update KL
+against each batch's own behavior, before larger neutral learning/command gate.

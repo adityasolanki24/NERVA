@@ -86,3 +86,10 @@ Adam/RNG/counters are newly initialized in both warm stages. Fresh value loss
 8.842e8 and KL 1.552e11 repeat; no post-hoc threshold is added. Saved-normalizer
 diagnosis demonstrates amplification susceptibility, not causal attribution.
 Next is a normalization-stability control before larger neutral learning.
+
+Completed follow-ups (2026-10-10): same-batch timing replay isolates statistics
+replacement drift (`normalization_timing_offline_retry.md`); offline schedule
+comparison supports fixed preprocessing and demonstrates deferred deployment
+drift (`normalization_schedule_comparison.md`). Next is the bounded on-policy
+identity screen (`identity_preprocessing_smoke.md`) before larger neutral
+learning. Earlier outcomes/criteria and every abort remain preserved.

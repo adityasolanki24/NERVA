@@ -1,0 +1,70 @@
+[
+ {
+  "stage": "fresh",
+  "normalizer_count_unused": 16,
+  "metrics": {
+   "entropy_loss": -0.0003297913062851876,
+   "kl_mean": 0.0588538721203804,
+   "policy_dist_max_loc": 1.4678298234939575,
+   "policy_dist_max_std": 3.1708130836486816,
+   "policy_dist_mean_loc": -0.10459036380052567,
+   "policy_dist_mean_std": 0.8460575342178345,
+   "policy_dist_min_loc": -3.5152673721313477,
+   "policy_dist_min_std": 0.030155124142766,
+   "policy_loss": -0.10354246199131012,
+   "total_loss": -0.01701093278825283,
+   "v_loss": 0.08686131983995438
+  },
+  "manual_stabilized_kl_mean": 0.05885360187409365,
+  "manual_kl_agreement": true,
+  "manual_log_prob_agreement": true,
+  "manual_log_prob_max_error": 2.793000759560016e-06,
+  "preprocessing_invariance": {
+   "probes": 5,
+   "finite": true,
+   "max_logits_or_value_error": 0.0,
+   "all_pass": true
+  },
+  "retained_batch_sha256": "1bd9b7aae6d1301b6cfa2a6ae0d018f115100e412ebb950d74ddc084e71b5926",
+  "replay_artifact": {
+   "file_sha256": "127f4fdd8bceef0b6c852d2a63eb3b8f19b63985618cedd78bc69c79a21ae357",
+   "tree_sha256": "1cf8cd0d362981375ef72ea64b71c729312f5c37ef490367cbe4930de701effd",
+   "bytes": 12030,
+   "leaves": 18
+  }
+ },
+ {
+  "stage": "warm",
+  "normalizer_count_unused": 32,
+  "metrics": {
+   "entropy_loss": -0.0003222725645173341,
+   "kl_mean": 0.24346981942653656,
+   "policy_dist_max_loc": 1.4836305379867554,
+   "policy_dist_max_std": 3.1941537857055664,
+   "policy_dist_mean_loc": -0.10299518704414368,
+   "policy_dist_mean_std": 0.8474131226539612,
+   "policy_dist_min_loc": -3.5284738540649414,
+   "policy_dist_min_std": 0.030227288603782654,
+   "policy_loss": -0.12368078529834747,
+   "total_loss": -0.03935456648468971,
+   "v_loss": 0.0846484899520874
+  },
+  "manual_stabilized_kl_mean": 0.24346970092261416,
+  "manual_kl_agreement": true,
+  "manual_log_prob_agreement": true,
+  "manual_log_prob_max_error": 6.388422661984805e-07,
+  "preprocessing_invariance": {
+   "probes": 5,
+   "finite": true,
+   "max_logits_or_value_error": 0.0,
+   "all_pass": true
+  },
+  "retained_batch_sha256": "1bd9b7aae6d1301b6cfa2a6ae0d018f115100e412ebb950d74ddc084e71b5926",
+  "replay_artifact": {
+   "file_sha256": "481fff7fb871c8dc81a6cc7d924ef96e128f2bcd7b28adf2d6f633bd51081093",
+   "tree_sha256": "f727736ec590d2c36e44abf86766688047cee34d89325cccdc6a604f422a6b6a",
+   "bytes": 12031,
+   "leaves": 18
+  }
+ }
+]

@@ -146,3 +146,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
     - Brier score, benign within 3 s: prototypes 0.0575, hand-coded labels 0.0297, base rate 0.0583.
     - Most boundaries marked tracking/gait fluctuations. Other features or segmentation would be a new,
       separately preregistered experiment.
+
+Identity-preprocessing on-policy follow-up (2026-10-10,
+`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
+fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
+influence. This does not establish motor readiness. Next preregister a bounded
+multi-batch local stability check with post-update KL against each batch's
+behavior, then balanced command coverage and the long neutral motor gate.

@@ -80,8 +80,19 @@ policies retain their clock. Two local 16-transition PPO/warm-start stages now
 complete (`neutral_ppo_restore_smoke.md`), with identical restored actions and
 fresh optimizer/RNG/counters. The saved-checkpoint audit finds normalization
 floor susceptibility. The 1e-4 variance-epsilon control passes amplification and
-strict byte checks but fails fresh KL <=1; no default promotion. Next preregister
-fixed-weight, same-batch normalization-timing replay before larger motor learning.
+strict byte checks but fails fresh KL <=1; no default promotion. Same-batch
+timing replay demonstrates statistics replacement drift; offline schedule
+comparison passes fixed preprocessing and detects deferred deployment drift.
+Affine inference rebase preserves outputs but does not transform Adam.
+Next is the preregistered identity-preprocessing on-policy screen
+(`identity_preprocessing_smoke.md`) before larger motor learning.
 These tiny artifacts are not validated controllers. Do not rerun R0 or S1–S6. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.
+
+Identity-preprocessing on-policy follow-up (2026-10-10,
+`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
+fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
+influence. This does not establish motor readiness. Next preregister a bounded
+multi-batch local stability check with post-update KL against each batch's
+behavior, then balanced command coverage and the long neutral motor gate.

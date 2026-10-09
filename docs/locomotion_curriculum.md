@@ -144,3 +144,10 @@ measurement. The early 95-hour projection was superseded by steady-state
 measurements, but neither projection authorises a blind 300M-step launch.
 Use the existing capped self-deleting launcher, attached result fetching,
 network cleanup and final audit. Preserve recoverable checkpoint artifacts.
+
+Identity-preprocessing on-policy follow-up (2026-10-10,
+`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
+fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
+influence. This does not establish motor readiness. Next preregister a bounded
+multi-batch local stability check with post-update KL against each batch's
+behavior, then balanced command coverage and the long neutral motor gate.

@@ -99,3 +99,10 @@ entry, docs, commit.
   event-driven appraisal, with PAD slowest.
 - **No PAD → joint angles.** Affect reaches the body only through behaviour.
 - **No LLM or foundation model in motor control or safety.**
+
+Identity-preprocessing on-policy follow-up (2026-10-10,
+`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
+fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
+influence. This does not establish motor readiness. Next preregister a bounded
+multi-batch local stability check with post-update KL against each batch's
+behavior, then balanced command coverage and the long neutral motor gate.

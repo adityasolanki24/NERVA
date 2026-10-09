@@ -1,0 +1,74 @@
+{
+ "stages": [
+  {
+   "stage": "fresh",
+   "criteria": {
+    "plumbing": true,
+    "training_kl": true,
+    "training_value_loss": true,
+    "deployed_kl": true,
+    "deployed_value_loss": true,
+    "density_integrity": true,
+    "preprocessing_invariance": true
+   },
+   "all_pass": true,
+   "training_kl": 0.00014011934399604797,
+   "deployed_kl": 0.0588538721203804
+  },
+  {
+   "stage": "warm",
+   "criteria": {
+    "plumbing": true,
+    "training_kl": true,
+    "training_value_loss": true,
+    "deployed_kl": true,
+    "deployed_value_loss": true,
+    "density_integrity": true,
+    "preprocessing_invariance": true
+   },
+   "all_pass": true,
+   "training_kl": 0.00014014914631843567,
+   "deployed_kl": 0.24346981942653656
+  }
+ ],
+ "all_pass": true,
+ "new_environment_transitions": 32,
+ "optimizer_updates": 4,
+ "frozen_control_metrics": {
+  "fresh": {
+   "training/sps": 0.2424151745379609,
+   "training/walltime": 66.0024688243866,
+   "training/entropy_loss": -0.0006993596907705069,
+   "training/kl_mean": 1489.4017333984375,
+   "training/learning_rate": 9.999999747378752e-05,
+   "training/policy_dist_max_loc": 1.4412568807601929,
+   "training/policy_dist_max_std": 1.2646763324737549,
+   "training/policy_dist_mean_loc": -0.04654205963015556,
+   "training/policy_dist_mean_std": 0.7092746496200562,
+   "training/policy_dist_min_loc": -1.6107957363128662,
+   "training/policy_dist_min_std": 0.34735700488090515,
+   "training/policy_loss": 0.27956342697143555,
+   "training/total_loss": 10.7190523147583,
+   "training/v_loss": 10.44018840789795
+  },
+  "warm": {
+   "training/sps": 0.2517343263854821,
+   "training/walltime": 63.55907130241394,
+   "training/entropy_loss": -0.000738256610929966,
+   "training/kl_mean": 0.13244791328907013,
+   "training/learning_rate": 9.999999747378752e-05,
+   "training/policy_dist_max_loc": 1.2938108444213867,
+   "training/policy_dist_max_std": 1.2583523988723755,
+   "training/policy_dist_mean_loc": 0.010946473106741905,
+   "training/policy_dist_mean_std": 0.7247791290283203,
+   "training/policy_dist_min_loc": -1.045269250869751,
+   "training/policy_dist_min_std": 0.30893242359161377,
+   "training/policy_loss": 0.2422834038734436,
+   "training/total_loss": 0.29957225918769836,
+   "training/v_loss": 0.05802708864212036
+  }
+ },
+ "general_learning_stability": false,
+ "learned_motor_readiness": false,
+ "cloud_work": false
+}

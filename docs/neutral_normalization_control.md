@@ -85,3 +85,10 @@ general learning stability or learned locomotion. Source inspection identifies
 old-stat collection followed by statistics update before SGD in the constant-LR
 path. Preregister a fixed-weight, same-batch old/new-normalizer replay diagnostic
 to isolate that timing effect before changing schedules or launching larger work.
+
+Completed follow-ups (2026-10-10): same-batch timing replay isolates statistics
+replacement drift (`normalization_timing_offline_retry.md`); offline schedule
+comparison supports fixed preprocessing and demonstrates deferred deployment
+drift (`normalization_schedule_comparison.md`). Next is the bounded on-policy
+identity screen (`identity_preprocessing_smoke.md`) before larger neutral
+learning. Earlier outcomes/criteria and every abort remain preserved.

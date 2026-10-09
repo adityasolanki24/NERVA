@@ -96,3 +96,10 @@ No validated schedule fix, general learning stability, motor readiness or
 expressive-training result. Next compare normalization treatment under a new
 preregistration, requiring both optimization and deployed-policy drift checks;
 moving a statistics update after SGD alone can still change deployed behavior.
+
+Completed follow-ups (2026-10-10): same-batch timing replay isolates statistics
+replacement drift (`normalization_timing_offline_retry.md`); offline schedule
+comparison supports fixed preprocessing and demonstrates deferred deployment
+drift (`normalization_schedule_comparison.md`). Next is the bounded on-policy
+identity screen (`identity_preprocessing_smoke.md`) before larger neutral
+learning. Earlier outcomes/criteria and every abort remain preserved.

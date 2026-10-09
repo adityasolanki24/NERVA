@@ -1,0 +1,74 @@
+{
+ "preregistration_commit": "e627af3",
+ "implementation_commit": "ed66f4ede6276e1acb94a0cd6273ac2d82e48b01",
+ "config": {
+  "num_timesteps": 16,
+  "num_envs": 2,
+  "batch_size": 2,
+  "unroll_length": 4,
+  "num_minibatches": 1,
+  "num_updates_per_batch": 1,
+  "num_evals": 1,
+  "num_eval_envs": 2,
+  "episode_length": 8,
+  "action_repeat": 1,
+  "run_evals": false,
+  "seed": 7,
+  "normalize_observations": false,
+  "learning_rate": 0.0001,
+  "entropy_cost": 0.0001,
+  "discounting": 0.9,
+  "reward_scaling": 1.0,
+  "clipping_epsilon": 0.3,
+  "gae_lambda": 0.95,
+  "vf_loss_coefficient": 0.5,
+  "normalize_advantage": true,
+  "restore_value_fn": true,
+  "normalize_observations_std_eps": 0.0001
+ },
+ "network": {
+  "policy_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "value_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "policy_obs_key": "state",
+  "value_obs_key": "privileged_state"
+ },
+ "source_hashes": {
+  "brax.training.agents.ppo.train": "32ed2754f3f9b545c7f381aba9953d1160ca82cc0d01deb59d1f5847872eea32",
+  "brax.training.agents.ppo.checkpoint": "5879b701f400fbb49331f8cb31d9475b7ad6565c29b93098d35e7460c00ddc83",
+  "brax.training.checkpoint": "b0570f33018e604c8d0567e663e519afd6077bbc3524453e05aacbf5f57996f5",
+  "brax.training.agents.ppo.networks": "3cbab3dbb3c7240f1f36477c3f92444aaf1812c59dc99d6dcb6c37bac4b0bca4",
+  "nerva.motor_contract": "48dc4d1efdf3e14f8c034f8ee09e33dfc1e22158c38666377f9e3ef89690d537",
+  "nerva.training.neutral_joystick": "6f4270f6fe6079f61a721b35546f7fc084eac6bcab0d6f74b99e02da883cc7a8",
+  "nerva.training.neutral_reference": "bcbf92b1634a934686924373de6b10b549dc68ecf4ede682ed39ec6050e4a539",
+  "nerva.training.neutral_wrapper": "83d8d986eafbcc248265bf24ad1ce80dbd36b643dacad41e880849ef40a5b3b4",
+  "nerva.training.parameter_checkpoint": "8894aa8336b417909808e6124762bff946a0ddd07e913ed51dde73bf67085d24"
+ },
+ "runner_source_sha256": "67bb248389bdb3602ab214b802fbea0b67b0e20a8ae11abbc805a11876a22169",
+ "versions": {
+  "brax": "0.14.2",
+  "jax": "0.5.3",
+  "mujoco": "3.3.0",
+  "numpy": "2.5.3",
+  "flax": "0.10.6",
+  "orbax-checkpoint": "0.11.24"
+ },
+ "python_version": "3.12.4",
+ "checkpoint_storage": "plain_state_dict_host_numpy_default_none_initializers_omitted",
+ "wall_cap_s": 900,
+ "max_optimization_transitions": 32,
+ "cloud_work": false,
+ "normalization_mode": "welford",
+ "normalize_observations_std_eps": 0.0001,
+ "preprocessing": "identity_statistics_unused",
+ "num_resets_per_eval": 0,
+ "use_pmap_on_reset": true,
+ "max_grad_norm": null,
+ "learning_rate_schedule": null,
+ "domain_randomization": false
+}

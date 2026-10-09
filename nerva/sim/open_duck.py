@@ -107,6 +107,8 @@ class OpenDuckSim:
         from playground.open_duck_mini_v2.mujoco_infer import MjInfer
 
         self.scene = Path(scene)
+        self.policy_path = Path(policy_path)
+        self._neutral_motor_clock = None
         self.inf = MjInfer(str(self.scene), str(REFERENCE), str(policy_path), standing=False)
         if scene_extender is not None:
             self._extend_scene(scene_extender)
@@ -169,8 +171,40 @@ class OpenDuckSim:
 
     # ── inputs ──────────────────────────────────────────────────────────────
 
+    def set_neutral_motor_contract(self, metadata) -> None:
+        """Explicit deployment opt-in for a matching future candidate ONNX artifact."""
+        import hashlib
+        from nerva.motor_contract import NeutralPhaseClock
+        from nerva.training.neutral_reference import COMMANDS, CONTRACT
+        if (metadata.get("contract") != CONTRACT or metadata.get("observation_size") != 101
+                or metadata.get("period_steps") != 27 or metadata.get("head_commands_zero") is not True
+                or {tuple(c) for c in metadata.get("commands", ())} != set(COMMANDS)
+                or metadata.get("policy_sha256") != hashlib.sha256(self.policy_path.read_bytes()).hexdigest()
+                or self.style_vector is not None or np.any(self.head_offset != 0)):
+            raise ValueError("candidate deployment metadata mismatch")
+        self._neutral_motor_clock = NeutralPhaseClock(27)
+        self.inf.imitation_i = 0
+        self.inf.imitation_phase = self._neutral_motor_clock.reset()
+        self.nb_steps_in_period = 27
+
+    def _validate_neutral_command(self, command):
+        from nerva.motor_contract import canonical_command
+        from nerva.training.neutral_reference import COMMANDS
+        command = canonical_command(command)
+        if (np.shape(command) != (7,) or not np.isfinite(command).all() or np.any(command[3:] != 0)
+                or not any(np.allclose(command[:3], known, atol=1e-8, rtol=0) for known in COMMANDS)):
+            raise ValueError("unsupported candidate motor command")
+        return command
+
     def set_behaviour(self, cmd: BehaviourCommand) -> None:
         """Apply a BehaviourCommand. Velocities are clipped to the trained range."""
+        if self._neutral_motor_clock is not None:
+            if cmd.style_vector is not None or cmd.style.style != 0:
+                raise ValueError("neutral candidate has no expressive conditioning")
+            command = self._validate_neutral_command([cmd.vx, cmd.vy, cmd.yaw_rate, *self.head_offset])
+            self.inf.commands = command.tolist()
+            self.applied_command = tuple(command[:3])
+            return
         vx = float(np.clip(cmd.vx, *TRAINED_VX))
         vy = float(np.clip(cmd.vy, *TRAINED_VY))
         wz = float(np.clip(cmd.yaw_rate, *TRAINED_YAW_RATE))
@@ -186,6 +220,8 @@ class OpenDuckSim:
         Style enters the observation noise-free (StyleJoystick appends it after
         upstream noise) and the phase clock uses the style's own gait period.
         """
+        if self._neutral_motor_clock is not None:
+            raise ValueError("neutral candidate has no style vector")
         e = np.asarray(e, dtype=np.float64)
         if e.shape != (3,) or np.any(np.abs(e) > 1.0):
             raise ValueError("style vector must be three values in [-1, 1]")
@@ -201,7 +237,10 @@ class OpenDuckSim:
     def set_head_offset(self, neck_pitch: float = 0.0, head_pitch: float = 0.0,
                         head_yaw: float = 0.0, head_roll: float = 0.0) -> None:
         """Head posture offsets [rad] on top of the policy (hardware-runtime convention)."""
-        self.head_offset = np.array([neck_pitch, head_pitch, head_yaw, head_roll], dtype=float)
+        offset = np.array([neck_pitch, head_pitch, head_yaw, head_roll], dtype=float)
+        if self._neutral_motor_clock is not None and np.any(offset != 0):
+            raise ValueError("neutral candidate requires zero head offsets")
+        self.head_offset = offset
         self.inf.commands = list(self.inf.commands[:3]) + self.head_offset.tolist()
 
     def push(self, dvx: float, dvy: float) -> None:
@@ -214,10 +253,14 @@ class OpenDuckSim:
     def _control_step(self) -> None:
         """Mirror of the body of `if counter % decimation == 0:` in upstream run()."""
         inf = self.inf
-        inf.imitation_i += 1.0 * self.phase_factor
-        inf.imitation_i = inf.imitation_i % self.nb_steps_in_period
-        ang = inf.imitation_i / self.nb_steps_in_period * 2 * np.pi
-        inf.imitation_phase = np.array([np.cos(ang), np.sin(ang)])
+        if self._neutral_motor_clock is not None:
+            tick = self._neutral_motor_clock.tick(self._validate_neutral_command(inf.commands))
+            inf.imitation_i, inf.imitation_phase, inf.commands = tick["index"], tick["phase"], tick["command"].tolist()
+        else:
+            inf.imitation_i += 1.0 * self.phase_factor
+            inf.imitation_i = inf.imitation_i % self.nb_steps_in_period
+            ang = inf.imitation_i / self.nb_steps_in_period * 2 * np.pi
+            inf.imitation_phase = np.array([np.cos(ang), np.sin(ang)])
 
         obs = inf.get_obs(self.data, inf.commands)
         if self._obs_noise_scale is not None:

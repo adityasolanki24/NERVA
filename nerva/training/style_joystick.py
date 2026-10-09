@@ -165,6 +165,20 @@ class StyleJoystick(upstream.Joystick):
     def _style_key(self, rng: jax.Array) -> jax.Array:
         return jax.random.fold_in(rng, STYLE_KEY_SALT)
 
+    def _initialize_reference(self, info):
+        """Optional reference contract hook; historical initialization is unchanged."""
+
+    def _advance_reference(self, info):
+        s_idx = info["style_idx"]
+        nb = self.SREF.nb_steps_in_period(s_idx)
+        info["imitation_i"] = (info["imitation_i"] + 1) % nb
+        info["imitation_phase"] = jp.array([
+            jp.cos((info["imitation_i"] / nb) * 2 * jp.pi),
+            jp.sin((info["imitation_i"] / nb) * 2 * jp.pi),
+        ])
+        info["current_reference_motion"] = self.SREF.get_reference_motion(
+            info["command"][0], info["command"][1], info["command"][2], info["imitation_i"], s_idx)
+
     # ── observation: upstream + style ────────────────────────────────────────
 
     def _get_obs(self, data, info: dict[str, Any], contact):
@@ -245,6 +259,7 @@ class StyleJoystick(upstream.Joystick):
             "style_idx": style_idx,  # NERVA
             "style": self.SREF.styles[style_idx],  # NERVA
         }
+        self._initialize_reference(info)
 
         metrics = {}
         for k, v in self._config.reward_config.scales.items():
@@ -265,18 +280,7 @@ class StyleJoystick(upstream.Joystick):
 
     def step(self, state: mjx_env.State, action: jax.Array) -> mjx_env.State:
         s_idx = state.info["style_idx"]  # NERVA
-        nb = self.SREF.nb_steps_in_period(s_idx)  # NERVA: per-style gait period
-
-        state.info["imitation_i"] += 1
-        state.info["imitation_i"] = state.info["imitation_i"] % nb
-        state.info["imitation_phase"] = jp.array([
-            jp.cos((state.info["imitation_i"] / nb) * 2 * jp.pi),
-            jp.sin((state.info["imitation_i"] / nb) * 2 * jp.pi),
-        ])
-        state.info["current_reference_motion"] = self.SREF.get_reference_motion(
-            state.info["command"][0], state.info["command"][1], state.info["command"][2],
-            state.info["imitation_i"], s_idx,
-        )  # NERVA
+        self._advance_reference(state.info)
 
         state.info["rng"], push1_rng, push2_rng, action_delay_rng = jax.random.split(state.info["rng"], 4)
 

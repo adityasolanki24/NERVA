@@ -1,0 +1,152 @@
+{
+ "all_pass": false,
+ "known_pose_checks": [
+  {
+   "dt_s": 0.01,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 6.661338147750939e-16,
+   "frame_roundtrip_error": 1.6653345369377348e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.01,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 8.326672684688674e-16,
+   "frame_roundtrip_error": 1.3877787807814457e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.01,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 3.452793606584237e-14,
+   "frame_roundtrip_error": 1.6653345369377348e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.01,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 7.271960811294775e-15,
+   "frame_roundtrip_error": 2.220446049250313e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.02,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 9.992007221626409e-16,
+   "frame_roundtrip_error": 1.3877787807814457e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.02,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 8.881784197001252e-16,
+   "frame_roundtrip_error": 1.942890293094024e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.02,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 1.2101430968414206e-14,
+   "frame_roundtrip_error": 2.498001805406602e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.02,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 7.105427357601002e-15,
+   "frame_roundtrip_error": 1.6653345369377348e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.04,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 8.881784197001252e-16,
+   "frame_roundtrip_error": 1.942890293094024e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.04,
+   "yaw_rad": 0.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 5.551115123125783e-16,
+   "frame_roundtrip_error": 1.3877787807814457e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.04,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "angular_error": 4.3298697960381105e-15,
+   "frame_roundtrip_error": 1.1102230246251565e-16,
+   "pass": true
+  },
+  {
+   "dt_s": 0.04,
+   "yaw_rad": 1.0,
+   "omega_world": [
+    0.2,
+    -0.3,
+    0.4
+   ],
+   "angular_error": 7.105427357601002e-15,
+   "frame_roundtrip_error": 2.220446049250313e-16,
+   "pass": true
+  }
+ ],
+ "wall_seconds": 3.88,
+ "usable_for_training": false,
+ "reason": "subset only; dynamic motor readiness untested"
+}

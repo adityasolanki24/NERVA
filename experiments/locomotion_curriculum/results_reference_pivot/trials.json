@@ -1,0 +1,22 @@
+[
+ {
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ }
+]

@@ -82,3 +82,11 @@ this is explicitly a mixed-provenance subset, not seven newly rerun results.
 Both turns must pass to admit the subset to candidate-only testing. Preserve
 the 6/7 failure and stop adoption on any failure. No empirical parameter
 tuning or paid work. An admitted subset is still not a trained motor policy.
+
+The first pivot attempt (`3dca496`) aborted in its pre-generation verifier:
+the 0.6.3 binding cannot return `Footstep.frame`'s Eigen transform. No recordings
+were created and no turn outcomes were observed. Preserve the aborted reports.
+Repair the verifier by comparing its exposed four-corner support polygon with
+the same translation/yaw formula. Authorise one retry of the same two turns in
+new output directories, under the same caps and criteria; this is an API
+compatibility repair, not a parameter/criteria change.

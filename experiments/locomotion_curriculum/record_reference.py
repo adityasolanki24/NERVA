@@ -36,10 +36,12 @@ def verify_planner(placo):
     for theta in (-.162, .162):
         planner = placo.FootstepsPlannerRepetitive(parameters)
         planner.configure(.001, -.004, theta, 5)
-        actual = planner.plan(placo.HumanoidRobot_Side.left, left, right)[2].frame()
-        expected = np.eye(4)
-        expected[:2, :2] = [[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]]
-        expected[:2, 3] = [.001, .08 - .004]
+        foot = planner.plan(placo.HumanoidRobot_Side.left, left, right)[2]
+        # 0.6.3 cannot convert Footstep.frame's Eigen::Affine3d; its polygon is exposed.
+        corners = np.array([[-1, 1], [1, 1], [1, -1], [-1, -1]]) * [foot.foot_length / 2, foot.foot_width / 2]
+        rotation = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+        expected = corners @ rotation.T + [.001, .08 - .004]
+        actual = np.asarray(foot.support_polygon())
         if not np.allclose(actual, expected, atol=1e-8, rtol=0):
             raise ValueError("installed planner geometry differs")
 

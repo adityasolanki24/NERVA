@@ -28,7 +28,8 @@ def test_contract_requires_exact_reference_normalization_and_shape_match(tmp_pat
         write_contract(tmp_path, contract)
 
 
-def test_pinned_brax_checkpoint_roundtrip_and_inference_match(tmp_path):
+@pytest.mark.parametrize("variance_eps", [0., .0001])
+def test_pinned_brax_checkpoint_roundtrip_and_inference_match(tmp_path, variance_eps):
     import functools
     import jax
     import jax.numpy as jp
@@ -38,7 +39,8 @@ def test_pinned_brax_checkpoint_roundtrip_and_inference_match(tmp_path):
 
     factory = functools.partial(networks.make_ppo_networks, **NETWORK_CONFIG)
     shape = {"state": (101,), "privileged_state": (212,)}
-    normalizer = running_statistics.init_state({key: specs.Array(value, jp.float32) for key, value in shape.items()})
+    normalizer = running_statistics.init_state({key: specs.Array(value, jp.float32) for key, value in shape.items()},
+                                             std_eps=variance_eps)
     network = factory(shape, 14, preprocess_observations_fn=running_statistics.normalize)
     keys = jax.random.split(jax.random.PRNGKey(7), 2)
     params = (normalizer, network.policy_network.init(keys[0]), network.value_network.init(keys[1]))
@@ -48,6 +50,15 @@ def test_pinned_brax_checkpoint_roundtrip_and_inference_match(tmp_path):
     location = tmp_path / "000000000016"
     restored = checkpoint.load(location)
     assert leaf_comparison(params, restored)["equal"]
+    batch = {key: jp.zeros((4,) + value, dtype=jp.float32) for key, value in shape.items()}
+    # Training updates run under JIT, which places Brax's restored host arrays on device.
+    update = jax.jit(running_statistics.update)
+    live_update = update(params[0], batch)
+    restored_update = update(restored[0], batch)
+    assert leaf_comparison(live_update, restored_update)["equal"]
+    expected_std = max(1e-6, variance_eps**.5)
+    for std in restored_update.std.values():
+        np.testing.assert_allclose(std, expected_std, rtol=1e-6)
     parity = action_parity(networks.make_inference_fn(network), params,
                            lambda deterministic: checkpoint.load_policy(location, deterministic=deterministic))
     assert parity["all_pass"]

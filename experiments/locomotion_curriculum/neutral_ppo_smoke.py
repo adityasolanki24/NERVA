@@ -53,7 +53,7 @@ def action_parity(make_policy, params, loaded_policy):
             "all_pass": finite and maximum <= 1e-6}
 
 
-def run(root, raw, output):
+def run(root, raw, output, *, normalization_eps=0., preregistration_commit="4243988", stage_observer=None):
     import jax
     from brax.training import checkpoint as common_checkpoint
     from brax.training.agents.ppo import checkpoint, networks, train
@@ -65,19 +65,24 @@ def run(root, raw, output):
                for module in (train, checkpoint, common_checkpoint, networks, motor_contract,
                               neutral_joystick, neutral_reference, neutral_wrapper, parameter_checkpoint)}
     records, manifest = neutral_reference.verified_references(root)
+    options = dict(PPO_CONFIG)
+    if normalization_eps:
+        options["normalize_observations_std_eps"] = normalization_eps
     contract = {"contract": neutral_reference.CONTRACT, "observation_size": {"state": [101], "privileged_state": [212]},
                 "action_size": 14, "network": NETWORK_CONFIG, "normalize_observations": True,
+                "normalization_mode": "welford", "normalization_variance_eps": normalization_eps,
                 "references": [row["reference_sha256"] for row in manifest["references"]],
                 "source_hashes": sources, "restoration": "parameters_only_optimizer_rng_and_counters_restart"}
-    protocol = {"preregistration_commit": "4243988",
+    protocol = {"preregistration_commit": preregistration_commit,
                 "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-                "config": PPO_CONFIG, "network": NETWORK_CONFIG, "source_hashes": sources,
+                "config": options, "network": NETWORK_CONFIG, "source_hashes": sources,
+                "runner_source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "versions": {key: importlib.metadata.version(key) for key in
                              ("brax", "jax", "mujoco", "numpy", "flax", "orbax-checkpoint")},
                 "python_version": sys.version.split()[0],
                 "checkpoint_storage": "plain_state_dict_host_numpy_default_none_initializers_omitted",
                 "wall_cap_s": 900, "max_optimization_transitions": 32, "cloud_work": False,
-                "normalization_mode": "welford", "normalize_observations_std_eps": 0.,
+                "normalization_mode": "welford", "normalize_observations_std_eps": normalization_eps,
                 "num_resets_per_eval": 0, "use_pmap_on_reset": True, "max_grad_norm": None,
                 "learning_rate_schedule": None, "domain_randomization": False}
     write_json(output / "protocol.json", protocol)
@@ -112,13 +117,13 @@ def run(root, raw, output):
                 raise ValueError("nonfinite PPO metrics")
             print(stage_name, "metrics at", int(step), flush=True)
 
-        options = dict(PPO_CONFIG)
+        stage_options = dict(options)
         if name == "warm":
             require_contract(fresh_path, contract)
-            options["restore_checkpoint_path"] = str(fresh_path)
+            stage_options["restore_checkpoint_path"] = str(fresh_path)
         make_policy, params, metrics = train.train(
             environment=env, network_factory=network, wrap_env_fn=neutral_wrapper.wrap_neutral_for_training,
-            policy_params_fn=callback, progress_fn=progress, **options)
+            policy_params_fn=callback, progress_fn=progress, **stage_options)
         if not initial:
             raise ValueError("missing initial PPO callback")
         policy_change = leaf_comparison(initial[0][1], params[1])
@@ -149,6 +154,8 @@ def run(root, raw, output):
                "value_max_update": value_change["max_error"], "roundtrip": equality, "action_parity": parity,
                "metrics": {key: float(value) for key, value in metrics.items()},
                "checkpoint_hashes": checkpoint_hashes(path), "wall_seconds": round(time.monotonic() - stage_start, 2)}
+        if stage_observer is not None:
+            row["normalization_diagnostics"] = stage_observer(name, params)
         stages.append(row)
         write_json(output / "stages.json", stages)
         if not row["all_pass"]:

@@ -67,3 +67,11 @@ update authoritative docs/log and commit/push verified work. Passing permits
 planning an equal-step neutral motor comparison and prospective long motor gate;
 it does not replace B2 or authorize paid training. A true full-state resume API
 remains a separate implementation if the research needs exact continuation.
+
+Pre-training compatibility checks: Orbax 0.11.24 calls JAX monitoring APIs absent
+in pinned JAX 0.5.3 when saving device arrays, including Brax's UInt64 counter.
+Save plain Flax state dictionaries with identical host NumPy leaves through the
+same Brax API. Brax also fails to load explicit null kernel initializer names;
+omit those default-null entries from the saved network configuration. Both
+repairs are covered by a real checkpoint roundtrip and ten inference comparisons
+before optimization. No dependencies, numerical parameters or criteria change.

@@ -136,7 +136,7 @@ appraisal (r, d, l, e, c) → features u = [r·d⁺·l, r·d⁻·l, r·(1−e)²
   `experiments/affect_models/`.
 - **Not claimed:** that the linear system, or Model A, describes human emotion.
 
-## Model B v2: bounded attractor (default since 2026-10-02) [NERVA design]
+## Model B v2: bounded attractor (default 2026-10-02 through 2026-10-08) [NERVA design]
 
 `AttractorAffectModel` in `nerva/affect/model_b.py`, `affect_model="Bv2"`. It fixes old Model B's
 saturation. In old B, every re-appraisal of an unchanged situation (the in-view frames every 2 s) added a
@@ -167,10 +167,26 @@ PAD     dx/dt = −Λ (x − x*)
   its relevance), not from a novelty → D weight; there is none.
 - **Open:** the appraiser's constant in-view controllability (0.8) keeps dominance mostly positive.
 
-**Experimental, not default (2026-10-06):** Model B v3 (`Bv3`: fast onset, slow return), reaction-margin
+**Historical experimental result (2026-10-06):** Model B v3 (`Bv3`: fast onset, slow return), reaction-margin
 controllability for people in view, and ongoing touch as context. Together they make dominance
 two-sided and responsive: min −0.69, and −0.57 within 3 s of a lunge. But valence saturates 8.2% of the
 time, because the in-view and contact contexts of the same person are summed. See `development_log.md`.
+
+## Model B v4: same-source facets (default since 2026-10-09) [NERVA design]
+
+`FacetAttractorAffectModel`, `affect_model="Bv4"`: Bv3 dynamics and context slots
+per (source, kind), combined as `max(w) * sum(w*u) / sum(w)` per source, with
+unchanged hold/fade weights. Different sources add; phasic events and tendency
+traces stay unchanged. This prevents in-view and ongoing-contact facets from
+counting as independent people. Explicit Bv2 and Bv3 paths remain available.
+
+Bv4 + reaction-margin controllability + touch context passed all preregistered
+trace, dynamic-range, dominance and behavioural criteria (15 local vision/B2
+runs, no falls). Pooled saturation V/A/D: 2.02/0/0.37%; min D -0.695.
+These are the v2 defaults. Brief negative saturation remains; the result is
+specific to these scenarios. Protocol: `context_facet_experiment.md`;
+measurements: `development_log.md`. Continuous expressive locomotion still needs
+its own validation (`locomotion_curriculum.md`).
 
 ## Action tendencies (refactor stage C)
 

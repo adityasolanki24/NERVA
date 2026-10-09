@@ -56,13 +56,14 @@ entry, docs, commit.
 
 **Next, in this order:**
 1. ~~Fix Model B's PAD saturation~~ Done 2026-10-02: Model B v2 (bounded attractor), default.
-   **Two-sided dominance:** reaction-margin controllability and Model B v3 (fast onset) were tried on
-   2026-10-06 and failed their preregistered criteria. Then touch as persistent context: every dominance
-   criterion passed, but valence saturation is 8.2% (> 5%), because a person's in-view and contact contexts
-   are summed. Default stays Bv2. Next: combine a source's simultaneous context facets instead of summing
-   (preregistered), then re-evaluate.
+   **Two-sided dominance:** completed 2026-10-09. Bv4 combines same-source context facets
+   by a fade-weighted mean: all preregistered criteria pass, 15 runs without falls;
+   saturation V/A/D 2.02/0/0.37%. Bv4 + reaction margin + touch context is now the
+   default; Bv2 and failed Bv3 experiments remain reproducible. See
+   `context_facet_experiment.md` and the development log.
 2. Return to expressive movement: π(s, c, e) with continuous expressive conditioning / reference motion
-   (curriculum design: robust locomotion first, then expressive objectives), evaluated on monotonic
+   (curriculum design: robust locomotion first, then expressive objectives;
+   `locomotion_curriculum.md`, first a preregistered local B2 robustness gate), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

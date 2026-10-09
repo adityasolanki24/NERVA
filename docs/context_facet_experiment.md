@@ -1,6 +1,8 @@
 # Same-source context facets: preregistration (2026-10-09)
 
-Status: preregistered before implementation or evaluation.
+Status: preregistered at `ca30916` before implementation or evaluation; completed
+2026-10-09, all criteria pass. Bv4 + margin + touch adopted. Results and limitations
+are recorded in `development_log.md` and `experiments/affect_models/results_facets/`.
 
 Hypothesis [NERVA design]: summing in-view and ongoing-contact context for one source
 double-counts one interaction. Combining its facets will reduce valence saturation

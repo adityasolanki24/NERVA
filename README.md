@@ -34,10 +34,12 @@ it: `docs/architecture.md`.
 | Memory | M1–M4: entity, episodic with consolidation, place memory; two-person ablation memory 5/5 vs none 0/5, measured with S1 in the plain scene (`docs/memory_design.md`) |
 | Isaac Sim | kinematic replay of MuJoCo runs with realistic rendering and the robot's-eye camera (`experiments/isaac/`); not used for physics |
 | Architecture (2026-10-02) | default profile "v2": policy capability layer, action tendencies conditioned on their target, outcome-grounded memory (near misses kept apart as risk estimates), self state, goals, appraisal frames over explicit hypotheses, world model as the query source, affect Model B, deterministic safety stop. B2 v2 suite: all reactive, two-person and together criteria pass, no falls. `--profile legacy` reproduces earlier results exactly (`docs/architecture.md` §1.5–1.6) |
-| Affect Model B | appraisal → PAD and tendencies without emotion categories (RQ8). **Model B v2** (default) makes PAD a bounded attractor: repeated appraisals of an unchanged situation converge instead of accumulating; 0% saturation across the scenarios (old B: up to 32%), all behavioural criteria kept |
+| Affect Model B | appraisal → PAD and tendencies without emotion categories (RQ8). **Model B v2** (former default) makes PAD a bounded attractor: repeated appraisals of an unchanged situation converge instead of accumulating; 0% saturation across the scenarios (old B: up to 32%), all behavioural criteria kept |
 | B2 body limits | B2 falls with some head postures (yaw −0.8; pitch −0.35 with yaw); the measured safe envelope (pitch ≥ −0.2, \|yaw\| ≤ 0.4) is in B2's capability record (`nerva/sim/capabilities.py`) and applied automatically |
 | Learned events | prediction-error prototypes predicted outcomes worse than the hand-coded events (RQ9 falsified for this design) |
 | Human evaluation | not started; no behaviour is claimed to *look* emotional |
+
+**Affect default (2026-10-09):** Bv4 combines simultaneous context facets per source. With reaction margin and ongoing-touch context, all criteria pass (15 runs, no falls; saturation V/A/D 2.02/0/0.37%). Historical Bv2/Bv3 paths remain available. Next: robust-locomotion-first curriculum (`docs/locomotion_curriculum.md`).
 
 The detailed record of every run, measurement and correction is `docs/development_log.md`. Long-term trajectory: `docs/roadmap.md`.
 

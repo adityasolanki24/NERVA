@@ -4,6 +4,63 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Same-source facets pass all criteria; Bv4 adopted; curriculum design resumed
+
+Preregistration committed as `ca30916` (`context_facet_experiment.md`), before
+implementation/evaluation. Candidate code `33febb1`; evaluator missing-detection
+handling `2fbf1fe`. Reports: `experiments/affect_models/results_facets/`.
+All runs local, B2 final checkpoint, v2, vision, utility, seeds 0–4 [measured].
+
+**Exact structural change:** Bv4 keeps the latest context per (source, kind),
+then uses `max(w) * sum(w*u) / sum(w)` per source before adding distinct sources.
+W, gains, fast-onset/slow-return dynamics, phasic input and tendencies are unchanged.
+Unit tests cover replacement, mixed-sign facets, idempotence, independent sources,
+stale fading, source attribution and phasic/tendency equivalence.
+
+| criterion | result |
+|---|---|
+| trace/convergence | pass: bounded, recovery 18.3 s, directions 7/7, max 0.564, rate-invariant |
+| default / two-person / together behaviour | every criterion 5/5; no falls in 15 runs |
+| pooled saturation V / A / D <= 5% | **pass: 2.02 / 0 / 0.37%** (Bv3 touch: 8.17 / 0.14 / 3.91%) |
+| pooled std V / A / D | 0.5155 / 0.2293 / 0.3250; pass |
+| max absolute V / A in every scenario >= 0.2 | pass |
+| pooled minimum D <= -0.10 | pass: -0.695 |
+| minimum D within 3 s after detected rapid approach < 0 | 5/5: -0.570 to -0.579 |
+| D during A return < B return | 5/5: -0.042 to +0.074 vs +0.718 to +0.722 |
+
+**Decision under the preregistered rule:** adopt Bv4 + reaction-margin
+controllability + touch context as the v2 default. Explicit `--affect Bv2`
+reproduces the old default with both options off; explicit Bv3 remains reproducible.
+Both evaluators and scenario resolve the same defaults; the memory evaluator now
+reports its actual learning mode (v2 had overridden the requested legacy mode); `--no-margin-controllability`
+and `--no-touch-context` provide diagnostic overrides. Legacy remains A.
+The old lunge-window mean remains positive (+0.213 to +0.228), reported rather
+than reinterpreted. Some brief negative valence saturation remains (min -0.932);
+this is not a claim of zero saturation or generalisation outside these scenarios.
+The default-scenario reports are identical to Bv3; the contact scenarios change.
+
+**Verification:** full pre-adoption suite with slow tests: 234 passed (246 s),
+with two JAX cast-overflow warnings in the unchanged training-env tests. After
+adding evaluator/default-resolution checks: 234 passed, two slow tests skipped;
+both slow tests passed in the preceding full run. Ruff and diff whitespace checks
+clean. Legacy and explicit Bv2 seed-0 traces were checked against pre-change
+snapshots; the adopted default is checked against candidate seed 0 in all three
+scenarios. Physical safety and motor control were not modified.
+
+**Cloud/public safety:** read-only audit found no instances, disks, addresses,
+forwarding rules, routers or snapshots. Results storage and runner identity retained;
+no resources deleted and no paid run launched. Public additions contain small
+reports, protocol/checkpoint hash and source/docs/tests; private snapshots and
+checkpoints remain git-ignored. No account identifiers, credentials or personal paths
+were added.
+
+**Next phase:** `locomotion_curriculum.md` records the robust-locomotion-first
+design. First preregister and run a local neutral B2 robustness gate; then verify
+checkpoint continuation before introducing continuous feasible style conditioning
+and gradually scheduled expressive objectives. No S1–S6 reruns or new training.
+
+---
+
 ## 2026-10-06 — Ongoing touch as context: dominance goals met, valence saturation 8.2%; round closed, default stays Bv2
 
 Preregistered in the previous entry. Code at `9ad6618`; `experiments/affect_models/results_touch/`

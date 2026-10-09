@@ -1,0 +1,29 @@
+{
+ "preregistration_commit": "ca30916",
+ "implementation_commit": "33febb1",
+ "model": "Bv4",
+ "profile": "v2",
+ "margin_controllability": true,
+ "touch_context": true,
+ "policy_checkpoint_steps": 300482560,
+ "policy_sha256": "6ebfe384f4bcb8f06657ba597825744a01a69146ab07583b5f993f15b7f2c9a1",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "perception": "vision",
+ "scene": "flat_terrain_backlash",
+ "style": "neutral",
+ "selector": "utility",
+ "durations_s": {
+  "default": 100,
+  "memory": 135,
+  "together": 125
+ },
+ "cloud_work": false,
+ "comparator": "../results_touch",
+ "summary_note": "Summariser handles missing rapid detection as failure; thresholds unchanged."
+}

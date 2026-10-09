@@ -141,6 +141,13 @@ Model B's PAD saturation (dominance > 0.9 for 31% of the default scenario) is fi
 behavioural criteria kept. Open: dominance is mostly positive, because the appraiser gives anything in
 view a constant controllability of 0.8.
 
+**Update 2026-10-09:** Bv4 + reaction-margin controllability + touch context now
+passes all preregistered criteria and is the v2 default. Same-source context
+facets combine by a fade-weighted mean instead of adding; pooled saturation
+V/A/D is 2.02/0/0.37%, with two-sided responsive dominance and no falls in 15
+local runs. Explicit Bv2 preserves the previous default. See
+`context_facet_experiment.md` and `development_log.md`.
+
 ### 2.1 Diagram
 
 ```

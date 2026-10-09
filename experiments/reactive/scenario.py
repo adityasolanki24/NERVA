@@ -33,9 +33,9 @@ profile="v2" (consolidation, 2026-10-02) bundles the new paths:
   - the world model is updated right after identity binding and is the source that touch attribution,
     appraisal identity and the behaviour's inputs (tracks, remembered threat per entity) query
   - near misses are RiskEstimates, kept apart from actual OutcomeSignals (also in legacy runs' logs)
-profile="v2" with affect Model B v2 ("Bv2", the saturation fix) is the DEFAULT since 2026-10-02 (preregistered consolidation suite,
+profile="v2" with affect Bv4 + reaction margin + touch context is the DEFAULT since 2026-10-09 (preregistered facet experiment,
 development log). profile="legacy" (affect A by default) reproduces the pre-refactor behaviour byte-for-byte;
-pass it explicitly to reproduce any result recorded before that date.
+Use explicit affect/options to reproduce later v2 results (Bv2 for the previous default).
 """
 
 from __future__ import annotations
@@ -252,13 +252,21 @@ def neutralised(command):
     return dataclasses.replace(command, style_vector=StyleVector())
 
 
+def affect_options(profile, affect_model=None, margin_controllability=None, touch_context=None):
+    """Resolve adopted defaults while retaining explicit historical configurations."""
+    model = affect_model or ("Bv4" if profile == "v2" else "A")
+    margin = model == "Bv4" if margin_controllability is None else margin_controllability
+    touch = model == "Bv4" if touch_context is None else touch_context
+    return model, margin, touch
+
+
 def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, Agent] | None = None,
         record_every: int | None = None, head_moves_while_walking: bool = False, selector: str = "utility",
         walking_head_limit=None, perception_mode: str = "simulated", use_memory: bool = False,
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
         memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str | None = None,
         safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None,
-        profile: str = "v2", margin_controllability: bool = False, touch_context: bool = False):
+        profile: str = "v2", margin_controllability: bool | None = None, touch_context: bool | None = None):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -266,7 +274,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     if profile not in ("legacy", "v2"):
         raise ValueError("profile must be 'legacy' or 'v2'")
     v2 = profile == "v2"
-    affect_model = affect_model or ("Bv2" if v2 else "A")  # defaults decided 2026-10-02 (development log)
+    affect_model, margin_controllability, touch_context = affect_options(
+        profile, affect_model, margin_controllability, touch_context)  # adopted 2026-10-09
     capabilities = capabilities_for(policy) if v2 else None
     if v2:
         backlash_scene = capabilities.training_scene == "backlash"

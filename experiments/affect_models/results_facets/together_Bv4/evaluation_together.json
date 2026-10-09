@@ -1,0 +1,190 @@
+{
+ "summary": {
+  "memory": {
+   "avoids_a": "5/5",
+   "engages_b": "5/5"
+  },
+  "pad_pooled_memory": {
+   "valence": {
+    "min": -0.932,
+    "max": 0.858,
+    "frac_sat": 0.0291,
+    "std": 0.5209
+   },
+   "arousal": {
+    "min": 0.0,
+    "max": 0.876,
+    "frac_sat": 0.0,
+    "std": 0.2376
+   },
+   "dominance": {
+    "min": -0.125,
+    "max": 0.889,
+    "frac_sat": 0.0,
+    "std": 0.3134
+   }
+  }
+ },
+ "runs": [
+  {
+   "seed": 0,
+   "memory": true,
+   "avoids_a": true,
+   "engages_b": true,
+   "mean_dist_a": 1.31,
+   "mean_dist_b": 0.98,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.932,
+     "max": 0.858,
+     "mean": 0.1686,
+     "std": 0.5159,
+     "frac_sat": 0.0312
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.863,
+     "mean": 0.493,
+     "std": 0.2347,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.125,
+     "max": 0.881,
+     "mean": 0.5262,
+     "std": 0.33,
+     "frac_sat": 0.0
+    }
+   }
+  },
+  {
+   "seed": 1,
+   "memory": true,
+   "avoids_a": true,
+   "engages_b": true,
+   "mean_dist_a": 1.29,
+   "mean_dist_b": 0.98,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.932,
+     "max": 0.857,
+     "mean": 0.175,
+     "std": 0.516,
+     "frac_sat": 0.0312
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.863,
+     "mean": 0.4837,
+     "std": 0.2361,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.085,
+     "max": 0.889,
+     "mean": 0.529,
+     "std": 0.3193,
+     "frac_sat": 0.0
+    }
+   }
+  },
+  {
+   "seed": 2,
+   "memory": true,
+   "avoids_a": true,
+   "engages_b": true,
+   "mean_dist_a": 1.28,
+   "mean_dist_b": 0.97,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.932,
+     "max": 0.857,
+     "mean": 0.0818,
+     "std": 0.545,
+     "frac_sat": 0.0304
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.862,
+     "mean": 0.508,
+     "std": 0.2422,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.083,
+     "max": 0.876,
+     "mean": 0.5204,
+     "std": 0.3086,
+     "frac_sat": 0.0
+    }
+   }
+  },
+  {
+   "seed": 3,
+   "memory": true,
+   "avoids_a": true,
+   "engages_b": true,
+   "mean_dist_a": 1.3,
+   "mean_dist_b": 0.97,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.931,
+     "max": 0.858,
+     "mean": 0.1695,
+     "std": 0.512,
+     "frac_sat": 0.0304
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.862,
+     "mean": 0.4871,
+     "std": 0.2357,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": -0.08,
+     "max": 0.875,
+     "mean": 0.5288,
+     "std": 0.3172,
+     "frac_sat": 0.0
+    }
+   }
+  },
+  {
+   "seed": 4,
+   "memory": true,
+   "avoids_a": true,
+   "engages_b": true,
+   "mean_dist_a": 1.31,
+   "mean_dist_b": 0.98,
+   "fell": false,
+   "pad": {
+    "valence": {
+     "min": -0.917,
+     "max": 0.856,
+     "mean": 0.1595,
+     "std": 0.5088,
+     "frac_sat": 0.0224
+    },
+    "arousal": {
+     "min": 0.0,
+     "max": 0.876,
+     "mean": 0.4942,
+     "std": 0.2384,
+     "frac_sat": 0.0
+    },
+    "dominance": {
+     "min": 0.0,
+     "max": 0.873,
+     "mean": 0.5489,
+     "std": 0.2898,
+     "frac_sat": 0.0
+    }
+   }
+  }
+ ]
+}

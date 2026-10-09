@@ -45,8 +45,8 @@ def _threat_at(sim, eid: str, t: float):
 
 def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
              neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
-             head_pitch_down=None, head_yaw_max=None, profile: str = "v2", margin_controllability: bool = False,
-             touch_context: bool = False) -> dict:
+             head_pitch_down=None, head_yaw_max=None, profile: str = "v2", margin_controllability: bool | None = None,
+             touch_context: bool | None = None) -> dict:
     sim, rows, _, _ = scenario.run(policy, seed=seed, duration=135.0, agents=scenario.memory_scenario(),
                                    perception_mode="vision", use_memory=use_memory, memory_learning=learning,
                                    backlash_scene=backlash, neutral_style=neutral, appraisal_mode=appraisal_mode,
@@ -71,7 +71,7 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
         result["identities"] = {r.eid: {"threat": round(r.threat, 3), "warmth": round(r.warmth, 3),
                                         "trust": round(r.trust, 3)} for r in recs}
         result["touch_to_b"] = (len(people) == 2 and people[1].warmth > 0 > people[0].warmth)
-        result["learning"] = learning
+        result["learning"] = sim.memory.learning  # v2 overrides the requested legacy path
         result["a_threat_40"] = _threat_at(sim, "person#0", 40.0)
         result["a_threat_116"] = _threat_at(sim, "person#0", 116.0)
         result["outcomes"] = [(round(o.time_s, 1), o.kind, o.source) for o in sim.outcomes + sim.risks]
@@ -80,7 +80,7 @@ def evaluate(policy: str, seed: int, use_memory: bool, learning: str = "legacy",
 
 def evaluate_together(policy: str, seed: int, use_memory: bool, learning: str = "legacy", backlash: bool = False,
                       neutral: bool = False, appraisal_mode: str = "legacy", affect_model: str | None = None,
-                      profile: str = "v2", margin_controllability: bool = False, touch_context: bool = False) -> dict:
+                      profile: str = "v2", margin_controllability: bool | None = None, touch_context: bool | None = None) -> dict:
     """A (feared) and B (liked) return together at 95 s. Criteria, stated in advance, over 100-125 s:
     avoids_a: A never closer than 1.0 m, and watch/retreat/freeze occurs; engages_b: approach/inspect
     occurs and B comes closer than A on average."""
@@ -112,10 +112,10 @@ def main() -> None:
     ap.add_argument("--no-ablation", action="store_true", help="skip the memory-OFF runs")
     ap.add_argument("--profile", choices=("legacy", "v2"), default="v2")
     ap.add_argument("--appraisal", choices=("legacy", "frames"), default="legacy")
-    ap.add_argument("--touch-context", action="store_true", help="continued touch = persistent context (2026-10-06)")
-    ap.add_argument("--margin-controllability", action="store_true",
+    ap.add_argument("--touch-context", action=argparse.BooleanOptionalAction, default=None, help="continued touch = persistent context (2026-10-06)")
+    ap.add_argument("--margin-controllability", action=argparse.BooleanOptionalAction, default=None,
                     help="in-view controllability of people = reaction margin (2026-10-06)")
-    ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3", "Bv4"), default=None, help="default: Bv2 for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3", "Bv4"), default=None, help="default: Bv4 + margin + touch for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")

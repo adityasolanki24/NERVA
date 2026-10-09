@@ -102,6 +102,11 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
       scenario).
     - *Fixed by Model B v2* (bounded attractor; default): 0% saturation in all scenarios, all behavioural
       criteria kept (development log 2026-10-02).
+  - **Follow-up (2026-10-09):** Bv4 same-source context facets + reaction margin +
+    touch context pass all fixed dynamic-range/dominance and scenario criteria;
+    saturation V/A/D 2.02/0/0.37%, no falls in 15 runs. Adopted as default.
+    This closes the current affect round; next is the neutral locomotion gate
+    and curriculum design (`locomotion_curriculum.md`).
 - **RQ9, learned events.** Do event prototypes found by prediction-error segmentation and online
   clustering of world/self state predict grounded outcomes at least as well as the hand-coded event
   labels, in the same simulated scenarios?

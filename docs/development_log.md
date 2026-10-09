@@ -4,6 +4,35 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Fixed-weight timing capture stops on replay integrity
+
+Preregistered `0901b11`, implementation `8a2f467`, baseline `82360a0`.
+One CPU attempt captured exactly eight transitions, seed 7, fixed initial
+weights, variance epsilon 1e-4; zero optimizer updates. Stops after 98.28 s
+under the 600 s cap at the old-statistics control. Counts 0->8, initializer
+seed schedule, finite captured data and 21-leaf literal checkpoint roundtrip
+pass. Logits error 9.54e-7 and self-KL 0.000139929 pass, but recomputed raw-action
+log probabilities differ by 4.315092, exceeding the unchanged <=1e-4 criterion.
+Updated-statistics replay was not executed. **Integrity-invalid, timing
+hypothesis unevaluated**; preserve partial reports and captured artifacts.
+
+Offline old-control inspection of the retained batch finds independent NumPy
+and standalone Brax log probabilities agree with stored behavior. Passing the
+batch explicitly into the compiled joint network/loss replay gives error
+9.06e-6 and self-KL 0.000140131. The failing implementation closes over the
+batch. This is evidence of a compilation-sensitive replay discrepancy, not
+proof of a general compiler defect or a normalization timing effect. No new
+physical transitions or gradients during inspection. A separately preregistered
+offline retry must retain the exact batch/weights and original criteria.
+
+Verification: **293 tests passed including slow tests in 250.62 s**, Ruff clean;
+two existing historical cast warnings. Public reports contain aggregates/hashes;
+raw batch/parameters/logs stay ignored. Cloud audit clear of compute/network
+resources; results bucket and runner identity retained. No cloud work, paid
+spending, upstream edits, artifact deletion or policy promotion.
+
+---
+
 ## 2026-10-09 — Variance-floor control reduces amplification but fails the KL screen
 
 Preregistered `1ee56c5`, implementation `d947120`, baseline `22ebf72`.

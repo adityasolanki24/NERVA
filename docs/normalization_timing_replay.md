@@ -71,3 +71,14 @@ output `results_normalization_timing/`; raw artifacts under ignored
 work, package installation, upstream edits, default promotion, deployment or
 expressive objectives. Complete tests including slow checks, Ruff, docs/log,
 public-content audit, commit/push and final cloud resource audit.
+
+## Preserved outcome
+
+The single capture attempt (`8a2f467`) stopped after 98.28 s at old-control
+integrity: log-probability error 4.315092 exceeds <=1e-4 despite matching logits
+and analytic self-KL. Exactly eight transitions and zero optimizer updates;
+updated replay not executed, timing hypothesis unevaluated. Public partial
+reports: `results_normalization_timing/`. Raw dataset/weights remain ignored.
+Offline old-control inspection with an explicit dynamic batch yields error
+9.06e-6. An offline retry requires a new preregistration; the original failure
+and criteria stay unchanged.

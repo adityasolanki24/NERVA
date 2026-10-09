@@ -1,0 +1,56 @@
+{
+ "preregistration_commit": "0901b11",
+ "implementation_commit": "8a2f46719cda77c55768fee7551c838bfece9542",
+ "source_hashes": {
+  "brax.training.agents.ppo.train": "32ed2754f3f9b545c7f381aba9953d1160ca82cc0d01deb59d1f5847872eea32",
+  "brax.training.agents.ppo.checkpoint": "5879b701f400fbb49331f8cb31d9475b7ad6565c29b93098d35e7460c00ddc83",
+  "brax.training.checkpoint": "b0570f33018e604c8d0567e663e519afd6077bbc3524453e05aacbf5f57996f5",
+  "brax.training.agents.ppo.networks": "3cbab3dbb3c7240f1f36477c3f92444aaf1812c59dc99d6dcb6c37bac4b0bca4",
+  "nerva.motor_contract": "48dc4d1efdf3e14f8c034f8ee09e33dfc1e22158c38666377f9e3ef89690d537",
+  "nerva.training.neutral_joystick": "6f4270f6fe6079f61a721b35546f7fc084eac6bcab0d6f74b99e02da883cc7a8",
+  "nerva.training.neutral_reference": "bcbf92b1634a934686924373de6b10b549dc68ecf4ede682ed39ec6050e4a539",
+  "nerva.training.neutral_wrapper": "83d8d986eafbcc248265bf24ad1ce80dbd36b643dacad41e880849ef40a5b3b4",
+  "nerva.training.parameter_checkpoint": "8894aa8336b417909808e6124762bff946a0ddd07e913ed51dde73bf67085d24",
+  "brax.training.acting": "ada9405dd58d6d97bd8ab9ff797a07f17fe7d98909920d890589543a6a7134a0",
+  "brax.training.distribution": "3f9375b179f55ebb76fb337db610fafbf60b53b3d329a2fbbfae365836b1d220",
+  "brax.training.agents.ppo.losses": "b6dfe0aefeb1e3d11252fc40c6ec4512757fc7fccc0b3e37ec9ccd349351007c",
+  "brax.training.acme.running_statistics": "9591566ebcd151d35dd1a9167de3b1b00df92100892b5889bc9514252fb8c0c4"
+ },
+ "runner_source_sha256": "51d116ab170249b4e83db6e75586715291dcd98896e94907d54ecd514f22204a",
+ "prior_report_hashes": {
+  "protocol.json": "21fd51c58cbd03f2d0726a138ffdea9468954e45f8d8f0cc318ed6b7e5abc002",
+  "comparison.json": "5308a19c4c055375bfa3b66129cef210952f04bbf29aa0670bd093ff09cf4987",
+  "reference_manifest.json": "4cd02845c1a6031857de1e5d3c747bb39f094bac55e45382972013a58b2f7a79",
+  "control_admission.json": "5d4ad431d44d55f09066c4e43e693b960d3261f5ea5839839fb343c917845c54"
+ },
+ "versions": {
+  "brax": "0.14.2",
+  "jax": "0.5.3",
+  "mujoco": "3.3.0",
+  "numpy": "2.5.3",
+  "flax": "0.10.6",
+  "orbax-checkpoint": "0.11.24"
+ },
+ "seed": 7,
+ "network": {
+  "policy_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "value_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "policy_obs_key": "state",
+  "value_obs_key": "privileged_state"
+ },
+ "variance_eps": 0.0001,
+ "num_envs": 2,
+ "unroll_length": 4,
+ "episode_length": 8,
+ "max_environment_transitions": 8,
+ "optimizer_updates": 0,
+ "initializer_requested_timesteps": 0,
+ "wall_cap_s": 600,
+ "cloud_work": false
+}

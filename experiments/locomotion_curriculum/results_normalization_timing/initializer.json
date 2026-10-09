@@ -1,0 +1,12 @@
+{
+ "normalizer_count": 0,
+ "weights_sha256": "5d9bc65774a4cb496c18932d9098102de6582fdb2f25c3a78e580311b16f3c80",
+ "initial_parameter_artifact": {
+  "file_sha256": "fce80cb9f472eaf3e0a2fc68a5dfbfcb4f86fa70672621d4eefc1cfbbf4f4542",
+  "tree_sha256": "80af4d1f4f4b869adf1cf7943fa1c94bbca39f958f21f2bbfa6f24e79d44d00e",
+  "bytes": 53003,
+  "leaves": 21
+ },
+ "official_initialization_matches_seed_schedule": true,
+ "optimizer_updates": 0
+}

@@ -1,0 +1,22 @@
+{
+ "shape": [
+  2,
+  4
+ ],
+ "transitions": 8,
+ "batch_artifact": {
+  "file_sha256": "b99ef93a499d6f148b5c1d5bdc26b8dea80d3685f460f6266a830fc3f5d22ea9",
+  "tree_sha256": "1bd9b7aae6d1301b6cfa2a6ae0d018f115100e412ebb950d74ddc084e71b5926",
+  "bytes": 20046,
+  "leaves": 22
+ },
+ "minibatch_tree_sha256": "1bd9b7aae6d1301b6cfa2a6ae0d018f115100e412ebb950d74ddc084e71b5926",
+ "initial_weights_sha256": "5d9bc65774a4cb496c18932d9098102de6582fdb2f25c3a78e580311b16f3c80",
+ "key_ledger_sha256": "41fb3fbc113fd3d60ffebe62109e755afb3a3d1dd8e2fa6413db6d77dbba9207",
+ "normalization_count": [
+  0,
+  8
+ ],
+ "terminations": 0,
+ "truncations": 0
+}

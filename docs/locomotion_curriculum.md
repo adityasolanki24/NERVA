@@ -133,3 +133,10 @@ measurement. The early 95-hour projection was superseded by steady-state
 measurements, but neither projection authorises a blind 300M-step launch.
 Use the existing capped self-deleting launcher, attached result fetching,
 network cleanup and final audit. Preserve recoverable checkpoint artifacts.
+
+Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
+old-control log-probability integrity check on eight saved transitions, with
+zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
+the failure; next preregister an offline replay using the same captured batch
+and weights, with explicit compiled inputs and unchanged criteria, before
+larger neutral learning or expressive objectives.

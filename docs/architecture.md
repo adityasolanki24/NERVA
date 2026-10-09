@@ -270,3 +270,10 @@ appraisal → PAD, the slowest. PAD is never updated or used like a motor contro
 4. **Measured in this project:** only what `development_log.md` records as measured.
 5. **Hypotheses:** everything else, including that any behaviour or style reads as an emotion to people.
 6. **Future research directions:** `roadmap.md`. These are not claims.
+
+Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
+old-control log-probability integrity check on eight saved transitions, with
+zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
+the failure; next preregister an offline replay using the same captured batch
+and weights, with explicit compiled inputs and unchanged criteria, before
+larger neutral learning or expressive objectives.

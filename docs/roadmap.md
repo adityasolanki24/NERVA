@@ -95,3 +95,10 @@ entry, docs, commit.
   event-driven appraisal, with PAD slowest.
 - **No PAD → joint angles.** Affect reaches the body only through behaviour.
 - **No LLM or foundation model in motor control or safety.**
+
+Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
+old-control log-probability integrity check on eight saved transitions, with
+zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
+the failure; next preregister an offline replay using the same captured batch
+and weights, with explicit compiled inputs and unchanged criteria, before
+larger neutral learning or expressive objectives.

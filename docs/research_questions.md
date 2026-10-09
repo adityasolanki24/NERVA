@@ -138,3 +138,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
     - Brier score, benign within 3 s: prototypes 0.0575, hand-coded labels 0.0297, base rate 0.0583.
     - Most boundaries marked tracking/gait fluctuations. Other features or segmentation would be a new,
       separately preregistered experiment.
+
+Normalization-timing capture (`normalization_timing_replay.md`) stopped at the
+old-control log-probability integrity check on eight saved transitions, with
+zero optimizer updates. The timing hypothesis remains unevaluated. Preserve
+the failure; next preregister an offline replay using the same captured batch
+and weights, with explicit compiled inputs and unchanged criteria, before
+larger neutral learning or expressive objectives.

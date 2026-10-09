@@ -1,5 +1,8 @@
 # B2 turn-centre diagnostic
 
+Completed: aggregate **inconclusive**. Fixed criteria unchanged. See
+[results](../experiments/locomotion_curriculum/results_turn/README.md).
+
 Preregistered before computing geometry metrics. This is a descriptive follow-up
 to the failed B2 robustness gate, not a replacement gate or a policy change.
 

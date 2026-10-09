@@ -4,6 +4,41 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — B2 turn-centre diagnostic remains inconclusive
+
+Preregistered at `69dc1e0`, implemented at `661c4be`. Analysed exactly the ten
+saved 20-second pure-turn traces; fitted on 5–12.5 s and evaluated on the
+held-out 12.5–20 s segment. No new simulation, training, cloud run or policy change.
+Small reports and SHA256 provenance: `experiments/locomotion_curriculum/results_turn/`.
+
+**Aggregate inconclusive under unchanged prospective criteria.** Left: 0/5
+bounded-orbit, 0/5 sustained-world-drift, 5/5 inconclusive. Right: 1/5 bounded,
+0/5 sustained drift, 4/5 inconclusive. All fits full rank and well conditioned.
+Orbit held-out position RMSE 13.74–33.46 mm left, 8.66–39.07 mm right; fitted
+constant world drift speed 1.88–4.46 / 1.11–9.97 mm/s. Small drift estimates do
+not prove bounded movement: nine orbit predictions fail the fixed 10 mm limit.
+The original base-velocity robustness gate remains failed [measured].
+
+Shipped reference nearest keys are `(0,-0.037,+0.704)` and
+`(0,-0.037,-0.593)`. Mean reference lateral velocity is negative for both;
+it disagrees with all five observed left turns and agrees with right turns.
+Reference yaw-velocity reward slices average only +0.01425 / -0.00810 rad/s.
+These training targets require future scrutiny, but this association does not
+establish the cause of policy behaviour. Runtime ONNX does not query references.
+
+Next phase: separately preregister longer turns with direct centre-of-mass and
+foot-position logging to measure support-region drift. No threshold tuning,
+reference regeneration as a runtime fix, or expressive training is justified.
+Validation: complete suite including slow tests **247 passed** in 223.59 s;
+four new synthetic geometry tests; Ruff and diff checks clean. The same two
+existing JAX cast-overflow warnings occurred in unchanged training-env tests.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots; results bucket and runner identity intentionally retained.
+No spending or deletions. Public-content scan passed; small reports only, no
+personal paths, account identifiers or credentials; raw traces remain ignored.
+
+---
+
 ## 2026-10-09 — Neutral B2 motor gate: pure-turn translation fails; expressive curriculum remains blocked
 
 Preregistered at `14a139c` (`b2_robustness_gate.md`), implemented at `e8e3f34`.

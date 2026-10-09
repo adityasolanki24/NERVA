@@ -1,0 +1,19 @@
+{
+ "preregistration_commit": "69dc1e0",
+ "implementation_commit": "661c4be38377d259c52cfaf9ac801b446ffcf3f9",
+ "upstream_commit": "b9be205ac64488c23504ca42e5ec790337adeec3",
+ "input_sha256": {
+  "steady_turn_left_0_primary.npz": "695fdd1fdea4903978249335d40cb4679bae8e37f63e762522730de0c0cd3b51",
+  "steady_turn_left_1_primary.npz": "b37cab714f25c7d457f8c370fb684b5307b74799bccc53f47a2fbf2f75b53173",
+  "steady_turn_left_2_primary.npz": "2934a6aac3754890bd0983d0eaf33b5b6ace071d1128d1c803a7d093cd5d0259",
+  "steady_turn_left_3_primary.npz": "f791cc961cd7d17408f18219259f3be0fb9e8426b27081b867d67238e856f284",
+  "steady_turn_left_4_primary.npz": "3ce7cb41504c649a8000f0dd5af3a69443c0c50a4acab826eee076aa09e79024",
+  "steady_turn_right_0_primary.npz": "05f8e3b60f10b79734df26077528e24177026dcc456c71c625e50cca211f39d6",
+  "steady_turn_right_1_primary.npz": "e3a072b8ff1b4b3648b141bd5cd5ca6a16de60a9a0bd31db33e5579eb45ad69a",
+  "steady_turn_right_2_primary.npz": "b18c23f4021886ea08cf7a3c586a0b43b9f5b078c29e9e720e237af3ab0597b3",
+  "steady_turn_right_3_primary.npz": "fdcd3f18bfeb6cb7289711abbd196427cf9410c5efe7fcd533b7e919d7b32851",
+  "steady_turn_right_4_primary.npz": "214ceb7f00782288af4a8f21ec2d72285bc5ec1aa4d58754cbb27dfaa399014d"
+ },
+ "reference_sha256": "5850c0610ed89e2860e7047f9ee27d8412462e1199752952c3c2a0efd2cb7a25",
+ "cloud_work": false
+}

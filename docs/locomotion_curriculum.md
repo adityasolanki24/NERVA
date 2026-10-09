@@ -80,6 +80,12 @@ unmeasured. PAD does not enter motor targets or deterministic safety.
 
 ## Paid-work boundary
 
+The subsequent [turn-centre diagnostic](b2_turn_diagnostic.md) was inconclusive:
+one of ten traces met the bounded-orbit criteria; none met constant world-drift
+criteria. It does not overturn the failed gate. Next local measurement should
+preregister longer turns with centre-of-mass and foot-position logging before
+deciding which physical error a future baseline must correct.
+
 No training is authorised by this design. Before any paid pilot, provide an
 explicit small hard duration/cost cap and expected throughput from a relevant
 measurement. The early 95-hour projection was superseded by steady-state

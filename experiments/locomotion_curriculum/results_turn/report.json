@@ -1,0 +1,434 @@
+{
+ "counts": {
+  "left": {
+   "bounded_orbit": 0,
+   "sustained_world_drift": 0,
+   "inconclusive": 5
+  },
+  "right": {
+   "bounded_orbit": 1,
+   "sustained_world_drift": 0,
+   "inconclusive": 4
+  }
+ },
+ "aggregate": "inconclusive",
+ "trials": [
+  {
+   "direction": "left",
+   "seed": 0,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.5102712779742071,
+    "centre_xy_m": [
+     -0.06684479653291081,
+     0.017810956243947563
+    ],
+    "offset_body_xy_m": [
+     0.05744845340618472,
+     0.02043904612156067
+    ],
+    "heldout_rmse_m": 0.013741408084439534
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 16.556399217804024,
+    "centre_xy_m": [
+     -0.06396894204614953,
+     0.007684505583619031
+    ],
+    "offset_body_xy_m": [
+     0.05589111015865572,
+     0.01533086169242219
+    ],
+    "heldout_rmse_m": 0.018104072040512034,
+    "drift_world_xy_m_s": [
+     -0.00021331028009678125,
+     0.002752792670408717
+    ],
+    "drift_speed_m_s": 0.0027610448677721487
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": 0.034076428512185335,
+   "reference_lateral_sign_agrees": false
+  },
+  {
+   "direction": "left",
+   "seed": 1,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.5404817515625582,
+    "centre_xy_m": [
+     -0.05835561052398896,
+     -0.005715889121971171
+    ],
+    "offset_body_xy_m": [
+     0.05361144184081912,
+     0.014099150318802914
+    ],
+    "heldout_rmse_m": 0.02812745413031025
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 17.05555852585384,
+    "centre_xy_m": [
+     -0.05665327983431736,
+     0.0012746548925581668
+    ],
+    "offset_body_xy_m": [
+     0.05558619589852118,
+     0.017241437038636866
+    ],
+    "heldout_rmse_m": 0.028959469669123168,
+    "drift_world_xy_m_s": [
+     -0.0008192296889939525,
+     -0.0016941116231784445
+    ],
+    "drift_speed_m_s": 0.0018817947484030856
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": 0.036225706140507526,
+   "reference_lateral_sign_agrees": false
+  },
+  {
+   "direction": "left",
+   "seed": 2,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.558258717164679,
+    "centre_xy_m": [
+     -0.045118726958633344,
+     0.01902789922853202
+    ],
+    "offset_body_xy_m": [
+     0.05185891797117049,
+     0.010081352816331473
+    ],
+    "heldout_rmse_m": 0.01949407651418976
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 17.021239329598973,
+    "centre_xy_m": [
+     -0.04665598131186905,
+     0.010103667862816784
+    ],
+    "offset_body_xy_m": [
+     0.04957969982002935,
+     0.005989583896168141
+    ],
+    "heldout_rmse_m": 0.034397235596202225,
+    "drift_world_xy_m_s": [
+     0.0008952436105881013,
+     0.002191913532999356
+    ],
+    "drift_speed_m_s": 0.0023676879140724053
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": 0.03133019278402611,
+   "reference_lateral_sign_agrees": false
+  },
+  {
+   "direction": "left",
+   "seed": 3,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.5370304146401084,
+    "centre_xy_m": [
+     -0.06590469037116393,
+     -0.022946502488556862
+    ],
+    "offset_body_xy_m": [
+     0.06626142741972522,
+     0.0032382017884124703
+    ],
+    "heldout_rmse_m": 0.033455698635104045
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 16.60277102204479,
+    "centre_xy_m": [
+     -0.08058507851336394,
+     -0.014519917300214649
+    ],
+    "offset_body_xy_m": [
+     0.06121442864956566,
+     0.01032063188739702
+    ],
+    "heldout_rmse_m": 0.012764935444711361,
+    "drift_world_xy_m_s": [
+     0.0033197866955442176,
+     -0.002975041779374271
+    ],
+    "drift_speed_m_s": 0.004457786142575126
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": 0.03606502044951656,
+   "reference_lateral_sign_agrees": false
+  },
+  {
+   "direction": "left",
+   "seed": 4,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.5467348637171983,
+    "centre_xy_m": [
+     -0.05591651375626806,
+     -0.003586634278360975
+    ],
+    "offset_body_xy_m": [
+     0.06688369197259146,
+     0.014413477647904967
+    ],
+    "heldout_rmse_m": 0.024365925092667304
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 16.863887676550863,
+    "centre_xy_m": [
+     -0.06737911769574417,
+     -0.010718869476983889
+    ],
+    "offset_body_xy_m": [
+     0.06003336972037449,
+     0.013469479019312138
+    ],
+    "heldout_rmse_m": 0.01851450268164544,
+    "drift_world_xy_m_s": [
+     0.0033148546525280393,
+     0.0011904804635756204
+    ],
+    "drift_speed_m_s": 0.0035221449574857097
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": 0.033173581094342965,
+   "reference_lateral_sign_agrees": false
+  },
+  {
+   "direction": "right",
+   "seed": 0,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.4460960656806345,
+    "centre_xy_m": [
+     -0.08314452666802147,
+     0.01636078357441604
+    ],
+    "offset_body_xy_m": [
+     0.06734015996708716,
+     -0.037661240739621515
+    ],
+    "heldout_rmse_m": 0.03665097766955105
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 15.549942396202432,
+    "centre_xy_m": [
+     -0.06370229860577338,
+     0.048839470675438756
+    ],
+    "offset_body_xy_m": [
+     0.06983219353458066,
+     -0.019382651840623242
+    ],
+    "heldout_rmse_m": 0.06641473243315671,
+    "drift_world_xy_m_s": [
+     -0.0035730219192004475,
+     -0.009308401185676185
+    ],
+    "drift_speed_m_s": 0.009970597688633549
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": -0.038742276578659654,
+   "reference_lateral_sign_agrees": true
+  },
+  {
+   "direction": "right",
+   "seed": 1,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.4001989687333054,
+    "centre_xy_m": [
+     -0.0499731985200902,
+     0.04151563082317109
+    ],
+    "offset_body_xy_m": [
+     0.06753147230277709,
+     -0.02815281765399604
+    ],
+    "heldout_rmse_m": 0.018811057864492612
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 15.180074829933396,
+    "centre_xy_m": [
+     -0.05638948570526713,
+     0.04070384073681578
+    ],
+    "offset_body_xy_m": [
+     0.06526807346403538,
+     -0.030263834469821217
+    ],
+    "heldout_rmse_m": 0.03130280987178304,
+    "drift_world_xy_m_s": [
+     0.0016416990624213354,
+     0.000475191595258489
+    ],
+    "drift_speed_m_s": 0.0017090883136220314
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": -0.03867858476186848,
+   "reference_lateral_sign_agrees": true
+  },
+  {
+   "direction": "right",
+   "seed": 2,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.4974418434914654,
+    "centre_xy_m": [
+     -0.05447018293337087,
+     0.0446405782868484
+    ],
+    "offset_body_xy_m": [
+     0.06552424257983355,
+     -0.03019369656652621
+    ],
+    "heldout_rmse_m": 0.03907456042603448
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 16.124086567545675,
+    "centre_xy_m": [
+     -0.056502635677050564,
+     0.04093650860421024
+    ],
+    "offset_body_xy_m": [
+     0.0655548033861541,
+     -0.03231533902969293
+    ],
+    "heldout_rmse_m": 0.034185825155540125,
+    "drift_world_xy_m_s": [
+     0.0003376420153536272,
+     0.0010604217625540934
+    ],
+    "drift_speed_m_s": 0.0011128775516787053
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": -0.0378797091163951,
+   "reference_lateral_sign_agrees": true
+  },
+  {
+   "direction": "right",
+   "seed": 3,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.4508922726303244,
+    "centre_xy_m": [
+     -0.07947791459418196,
+     0.04837217147147963
+    ],
+    "offset_body_xy_m": [
+     0.06760671968638607,
+     -0.03069563572864487
+    ],
+    "heldout_rmse_m": 0.008661116254842269
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 15.800615781576434,
+    "centre_xy_m": [
+     -0.06993909477493641,
+     0.05764157866508169
+    ],
+    "offset_body_xy_m": [
+     0.06911768953352396,
+     -0.02435439027531921
+    ],
+    "heldout_rmse_m": 0.02832645876322202,
+    "drift_world_xy_m_s": [
+     -0.002042158244993285,
+     -0.002833981851210152
+    ],
+    "drift_speed_m_s": 0.00349311657844146
+   },
+   "classification": "bounded_orbit",
+   "mean_heading_lateral_m_s": -0.03865541382061043,
+   "reference_lateral_sign_agrees": true
+  },
+  {
+   "direction": "right",
+   "seed": 4,
+   "orbit": {
+    "rank": 4,
+    "condition_number": 1.4245775799922462,
+    "centre_xy_m": [
+     -0.06803866945647546,
+     0.05277744970895273
+    ],
+    "offset_body_xy_m": [
+     0.0578215541549275,
+     -0.02176446250424394
+    ],
+    "heldout_rmse_m": 0.019232514795113037
+   },
+   "orbit_drift": {
+    "rank": 6,
+    "condition_number": 15.542475565805237,
+    "centre_xy_m": [
+     -0.06370750534216676,
+     0.04364214026509396
+    ],
+    "offset_body_xy_m": [
+     0.061897819149657196,
+     -0.024427310688721882
+    ],
+    "heldout_rmse_m": 0.020239205942118442,
+    "drift_world_xy_m_s": [
+     -0.0015110722588200232,
+     0.0021759730614933533
+    ],
+    "drift_speed_m_s": 0.002649188203152091
+   },
+   "classification": "inconclusive",
+   "mean_heading_lateral_m_s": -0.03733320228243824,
+   "reference_lateral_sign_agrees": true
+  }
+ ],
+ "reference_audit": {
+  "left": {
+   "selected_key": [
+    0.0,
+    -0.037,
+    0.704
+   ],
+   "mean_linear_velocity": [
+    -0.008742480628438878,
+    -0.012515326626302732,
+    -0.0006473628458996548
+   ],
+   "mean_angular_velocity": [
+    0.0009962726869112996,
+    0.0,
+    0.01424502127456214
+   ]
+  },
+  "right": {
+   "selected_key": [
+    0.0,
+    -0.037,
+    -0.593
+   ],
+   "mean_linear_velocity": [
+    -0.01241878994652417,
+    -0.05851551453395071,
+    -0.0007459345016590566
+   ],
+   "mean_angular_velocity": [
+    -0.000565794693752975,
+    0.0,
+    -0.008098028884453759
+   ]
+  }
+ },
+ "original_gate": "failed; unchanged"
+}

@@ -1,0 +1,11 @@
+{
+ "outcome": "pre_update_coverage_integrity_stop",
+ "collected_transitions": 224,
+ "accepted_updates": 0,
+ "accounting_correction": "training_summary.json originally counted only batches reaching SGD; this initial collection did occur",
+ "representation_issue": "float32(0.6) differs from float64(0.6) by 2.38e-8; admission compared different representations at tolerance 1e-8",
+ "correction": "compare the canonical command in the actual collector dtype, keeping tolerance 1e-8",
+ "criteria_changed": false,
+ "artifacts_preserved": true,
+ "raw_batch_archived": false
+}

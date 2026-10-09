@@ -33,6 +33,13 @@ def collect_balanced_batch(env, make_policy, params, physical, rng):
     return next_state, jax.tree.map(lambda x: jp.swapaxes(x, 0, 1), data), rng
 
 
+def command_coverage(commands):
+    commands = np.asarray(commands)
+    # Compare the canonical commands in the collector's float32 representation.
+    # Comparing float32(0.6) with float64(0.6) at 1e-8 wrongly rejects exact coverage.
+    return bool(np.allclose(commands, np.asarray(COMMANDS, dtype=commands.dtype)[:, None, :], atol=1e-8, rtol=0))
+
+
 def run(root, raw, output):
     import jax
     import jax.numpy as jp
@@ -103,7 +110,7 @@ def run(root, raw, output):
         updates, optimizer_state = optimizer.update(gradients, optimizer_state, current)
         return optax.apply_updates(current, updates), optimizer_state, gradients, metrics
 
-    rows, accepted = [], 0
+    rows, accepted, collected = [], 0, 0
     stop = "transition_cap"
     for index in range(128):
         if time.monotonic() - start >= 1100:
@@ -111,16 +118,18 @@ def run(root, raw, output):
             break
         batch_start = time.monotonic()
         state, data, key = collect(weights, state, key)
+        collected += 224
         if not tree_finite(data):
             stop = "nonfinite_data"
             break
         commands = np.asarray(data.extras["state_extras"]["command"])[..., :3]
-        coverage = np.allclose(commands, np.asarray(COMMANDS)[:, None, :], atol=1e-8, rtol=0)
+        coverage = command_coverage(commands)
         before = replay(weights, data)
         behavior = data.extras["policy_extras"]
         errors = {"logits": float(np.max(np.abs(before[0] - np.swapaxes(behavior["distribution_params"], 0, 1)))),
                   "log_prob": float(np.max(np.abs(before[1] - np.swapaxes(behavior["log_prob"], 0, 1))))}
         if not coverage or not tree_finite(before) or errors["logits"] > 1e-4 or errors["log_prob"] > 1e-3:
+            archive(raw / "integrity_batch.npz", data)
             write_json(output / "integrity_stop.json", {"batch": index, "coverage": bool(coverage), "errors": errors})
             stop = "collection_integrity"
             break
@@ -170,7 +179,7 @@ def run(root, raw, output):
         raise ValueError("final checkpoint roundtrip failed")
     export_policy(raw / "candidate.onnx", restored)
     write_json(output / "training_summary.json", {"accepted_updates": accepted,
-        "accepted_transitions": accepted * 224, "collected_transitions": len(rows) * 224,
+        "accepted_transitions": accepted * 224, "collected_transitions": collected,
         "stop_reason": stop, "wall_seconds": round(time.monotonic() - start, 2),
         "frozen_statistics_unchanged": True, "roundtrip": equality,
         "checkpoint_hashes": checkpoint_hashes(final), "cloud_work": False,
@@ -182,9 +191,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--retry", action="store_true", help="retain the pre-collection interface abort separately")
+    parser.add_argument("--corrected", action="store_true", help="retain the float-representation integrity stop separately")
     args = parser.parse_args()
     root = Path.cwd().resolve()
-    suffix = "-retry" if args.retry else ""
+    suffix = "-corrected" if args.corrected else "-retry" if args.retry else ""
     raw = root / f"experiments/cloud_runs/neutral-learning-pilot{suffix}"
     output = root / ("experiments/locomotion_curriculum/results_neutral_learning" + suffix.replace("-", "_"))
     if args.worker:
@@ -198,7 +208,7 @@ def main():
     output.mkdir(parents=True)
     with (raw / "training.log").open("w", encoding="utf-8") as stream:
         subprocess.run([sys.executable, "-m", "experiments.locomotion_curriculum.neutral_learning", "--worker",
-                        *(["--retry"] if args.retry else [])],
+                        *(["--retry"] if args.retry else []), *(["--corrected"] if args.corrected else [])],
                        stdout=stream, stderr=subprocess.STDOUT, check=True, timeout=1200,
                        env={**os.environ, "JAX_PLATFORMS": "cpu"})
     print("Training worker complete; run paired_motor evaluation", flush=True)

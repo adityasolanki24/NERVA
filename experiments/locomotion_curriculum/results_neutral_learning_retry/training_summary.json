@@ -1,0 +1,28 @@
+{
+ "accepted_updates": 0,
+ "accepted_transitions": 0,
+ "collected_transitions": 0,
+ "stop_reason": "collection_integrity",
+ "wall_seconds": 66.5,
+ "frozen_statistics_unchanged": true,
+ "roundtrip": {
+  "equal": true,
+  "finite": true,
+  "max_error": 0.0,
+  "leaves": 25
+ },
+ "checkpoint_hashes": {
+  "_CHECKPOINT_METADATA": "5d76fb3a082f9dec168aa4a92cf6b79950a1fc706e05ebd386b8109cf1472991",
+  "_METADATA": "ccbe2bcf8b904bee9d11ac3a9ec6f5302d287c3f066e4c5c4f77df6be712c4d5",
+  "d/3c7e9df3e7a6f7fe8c016bdd6712a76e": "c4d36cdeb544a2e69b54e0a86aa0258cf7ccef5e0dabff26a70e47b1d10e0072",
+  "manifest.ocdbt": "2baa652e4e8b191d2fe78803ba5160197031edbff597e889b97d550ae3bbf132",
+  "ocdbt.process_0/d/199a2a3d14c99aaf496e3bc4e9c51658": "ef8e44e884ff7716aa493f810cc2ef6ac55a879ce05cdbfb7b1e66674be92e96",
+  "ocdbt.process_0/d/bb4fbd08543c4ac62ac23cc603b8b640": "906b253e7f6fb1310d2e33aca30d455048bed2e1f8f7217cd81dababe7f4eaee",
+  "ocdbt.process_0/d/e147ca0a5252f8bc4547fbf1210143c6": "4a7e1354cd97566d8e2ef91ac83efb362a6b8ce36169fce16a11002804e05d50",
+  "ocdbt.process_0/d/ee4fae4877c13d8563664c66a51077de": "420e5039588c37875c06959d01b1b21cb459f66d06d95c934d0f1a4f3fa44e4a",
+  "ocdbt.process_0/manifest.ocdbt": "12b42d4996d17b2c0d03dfe4753fb1520b8c5de80131abc86ec86ddf02f0a240",
+  "ppo_network_config.json": "7e163a3a4ca9d0438b1579987a77b9efa0fea897ea9e8c1e216a8cd0311b76aa"
+ },
+ "cloud_work": false,
+ "motor_readiness": "pending_paired_evaluation"
+}

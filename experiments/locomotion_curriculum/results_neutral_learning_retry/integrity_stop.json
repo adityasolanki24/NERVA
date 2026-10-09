@@ -1,0 +1,8 @@
+{
+ "batch": 0,
+ "coverage": false,
+ "errors": {
+  "logits": 1.430511474609375e-06,
+  "log_prob": 9.179115295410156e-06
+ }
+}

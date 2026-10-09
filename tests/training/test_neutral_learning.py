@@ -18,6 +18,15 @@ def test_zero_style_conversion_preserves_affine_input_with_nonzero_style_mean():
     np.testing.assert_array_equal(weights["params"]["hidden_0"]["kernel"], kernel)
 
 
+def test_coverage_uses_canonical_collector_dtype_and_rejects_missing_command():
+    from experiments.locomotion_curriculum.neutral_learning import command_coverage
+    from nerva.training.neutral_reference import COMMANDS
+    commands = np.repeat(np.asarray(COMMANDS, dtype=np.float32)[:, None], 32, axis=1)
+    assert command_coverage(commands)
+    commands[5] = commands[6]
+    assert not command_coverage(commands)
+
+
 def test_frozen_onnx_export_matches_silu_policy_and_rejects_overwrite(tmp_path):
     jax = pytest.importorskip("jax")
     pytest.importorskip("onnx")

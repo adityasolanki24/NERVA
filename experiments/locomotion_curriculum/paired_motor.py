@@ -212,9 +212,10 @@ def main():
     parser.add_argument("--render", action="store_true")
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--retry", action="store_true")
+    parser.add_argument("--corrected", action="store_true")
     args = parser.parse_args()
     root = Path.cwd().resolve()
-    suffix = "-retry" if args.retry else ""
+    suffix = "-corrected" if args.corrected else "-retry" if args.retry else ""
     raw = root / f"experiments/cloud_runs/neutral-learning-pilot{suffix}"
     output = root / ("experiments/locomotion_curriculum/results_neutral_learning" + suffix.replace("-", "_"))
     if args.worker:
@@ -225,7 +226,8 @@ def main():
         raise FileExistsError("never overwrite comparison artifacts")
     with (raw / f"{name}.log").open("w", encoding="utf-8") as stream:
         subprocess.run([sys.executable, "-m", "experiments.locomotion_curriculum.paired_motor", "--worker",
-                        *(["--render"] if args.render else []), *(["--retry"] if args.retry else [])],
+                        *(["--render"] if args.render else []), *(["--retry"] if args.retry else []),
+                        *(["--corrected"] if args.corrected else [])],
                        stdout=stream, stderr=subprocess.STDOUT,
                        check=True, timeout=600, env={**os.environ, "JAX_PLATFORMS": "cpu"})
     print(name, "complete", flush=True)

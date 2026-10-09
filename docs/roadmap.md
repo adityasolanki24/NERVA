@@ -66,9 +66,11 @@ entry, docs, commit.
    `locomotion_curriculum.md`: B2 gate failed pure-turn translation, 2026-10-09;
    short/long turn diagnostics completed, aggregate inconclusive; long zero-command
    controls migrate in COM/foot region; motor audit and candidate design complete;
-   corrected subset fails 0/7, alignment insufficient; shared rest/phase contract
-   conformance passes; next preregister fitting/contact/knee checks before
-   further generation or motor-only training), evaluated on monotonic
+   original subset fails 0/7, alignment insufficient; smooth/joint-limited repair
+   passes 6/7 and geometric correction passes both turns, giving seven verified
+   candidate targets; opt-in motor environment passes 80-step CPU smoke;
+   next preregister capped PPO/restore smoke and a neutral policy comparison/gate
+   before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

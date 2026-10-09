@@ -22,9 +22,11 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   confirms lateral tolerance and an inspected generator derivative bug;
   behavioural causation remains unproven. The corrected seven-reference subset
   fails 0/7; alignment alone is insufficient. Shared rest/phase infrastructure
-  passes conformance. Next is preregistered derivative-consistent fitting,
-  contact semantics and knee initialization (`neutral_motor_candidate.md`);
-  expressive curriculum remains blocked.
+  passes conformance. Subsequent smooth/joint-limited repair passes 6/7, and
+  analytic pivot correction passes both turns; seven candidate targets are
+  hash-verified. The opt-in motor environment passes 80 CPU steps without
+  optimisation (`neutral_motor_smoke.md`). Next is capped PPO/restore smoke and
+  a neutral learned-policy comparison/gate; expressive curriculum remains blocked.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 

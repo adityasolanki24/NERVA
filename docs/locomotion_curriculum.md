@@ -56,9 +56,16 @@ unproven. A [motor-only candidate design](neutral_motor_candidate.md) requires
 verified reference derivatives/frames, symmetric tracking and explicit rest
 semantics. The corrected seven-reference subset then failed 0/7; timing
 alignment reduces velocity error but does not meet the fixed absolute limit.
-Shared rest/phase conformance passes as isolated infrastructure. Next:
-preregister derivative-consistent fitting, static contact semantics and knee
-initialization checks before further generation or candidate training.
+Shared rest/phase conformance passes. The separately preregistered
+[reference repair](neutral_reference_repair.md) fixes derivatives, static
+contacts and knee limits (6/7); analytic base-pivot correction passes both turns.
+Five preserved passing targets plus two corrected turns form a hash-verified
+seven-command subset. The opt-in `NeutralJoystick` and matching-policy-hash
+inference contract pass the [80-step CPU smoke](neutral_motor_smoke.md), no
+terminations or zero-clipped rewards. No optimisation or trained candidate yet.
+Next: preregister capped PPO/restore smoke, then an equal-step motor-only
+comparison with the long rest/turn readiness gate. Subset command coverage is
+discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

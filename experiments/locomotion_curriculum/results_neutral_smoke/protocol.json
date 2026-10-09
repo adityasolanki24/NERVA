@@ -1,0 +1,10 @@
+{
+ "preregistration_commit": "f92e19e",
+ "implementation_commit": "25510c83dd184c20ff6efa4708e9c387f07eacd2",
+ "seed": 7,
+ "steps": 80,
+ "wall_cap_s": 600,
+ "cloud_work": false,
+ "optimisation": false,
+ "policy_observation_size": 101
+}

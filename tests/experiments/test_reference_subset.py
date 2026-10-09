@@ -51,6 +51,10 @@ def test_repaired_validator_enforces_bounds_and_joint_order():
     limits = {name: (-2., 2.) for name in REFERENCE_JOINTS}
     result, ref = validate(data, [.074, 0, 0], joint_limits=limits)
     assert result["all_pass"] and ref["version"] == 2
+    data["Frames"][0][10] = 3.  # Warmup outside fitting/scoring must still respect physical bounds.
+    result, _ = validate(data, [.074, 0, 0], joint_limits=limits)
+    assert not result["criteria"]["joint_limits"]
+    data["Frames"][0][10] = 1.2
     limits["left_knee"] = (.01, 1.)
     result, _ = validate(data, [.074, 0, 0], joint_limits=limits)
     assert not result["criteria"]["joint_limits"]

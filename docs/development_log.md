@@ -4,6 +4,89 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Reference repairs, geometric turns and opt-in neutral motor environment
+
+Completed the remaining safe-local reference/environment blockers in one batch.
+No paid work, optimiser, candidate policy export, upstream edits or expressive
+training. Bv4 affect/defaults and deterministic safety remain unchanged; B2's
+failed learned motor gate is not overturned by reference/environment checks.
+
+**Repair package:** preregistration `1b86c37`, code `df51807`, results `f8728dc`.
+Medium preset with COM 0.215 m, lift 0.020 m, rise ratio 0.30; initial knees
+1.2 rad; sorted positive knee range and enabled URDF limits; solver substep
+matches actual recorder time. Static support labels require both foot frames
+on the floor. Version-2/H12 Fourier positions and interval velocities share
+coefficients; runtime joint velocity is analytic, validation compares exact
+interval averages. Version-1/H5 remains supported. Two workers, one eight-second
+recording per command, 180 s each / 900 s wall cap: **6/7 pass in 83.75 s**.
+All derivative fits, contacts, knees and limits pass; left turn alone fails
+off-axis motion (body vy +0.037961 m/s >0.020). Worst moving joint-velocity
+component RMSE 0.217–0.353 rad/s. No thresholds changed or failed poses clipped.
+
+**Geometric turns:** preregistration `f8728dc`, implementation `3dca496`.
+Derive initial base-minus-foot-midpoint offset c in yaw axes and set pure-turn
+internal step translation `(I-Rz(theta))c`. Requested commands remain zero
+translation and yaw ±0.60; raw poses are not translated afterwards. Installed
+Placo 0.6.3 geometry must match the source-derived formula before generation.
+First attempt aborted in 3.88 s before recordings: its Footstep.frame binding
+cannot return the Eigen transform. Preserved abort; API repair/explicit same-
+criteria retry `bc176bb` verifies the exposed support polygon instead.
+**Retry 2/2 pass in 18.31 s**, recorded `f92e19e`: body lateral means +0.016680
+and +0.014414 m/s; yaw ±0.603689 rad/s; interval-velocity RMSE maxima 0.226951
+and 0.219495 rad/s. Both signs retain positive knees and valid joint ranges.
+Five passing repair targets plus these two turns form an explicitly mixed-
+provenance, hash-verified seven-command subset. Original 0/7, alignment negative,
+repair 6/7 and preflight abort stay recoverable and documented.
+
+**Candidate plumbing:** protocol `f92e19e` (`neutral_motor_smoke.md`), code
+`25510c8`. `NeutralReference` requires exact seven-command coverage, checks
+recording/fit hashes, joint order, schema and all admission criteria. Unsupported
+JAX lookup emits nonfinite targets instead of choosing a nearest gait.
+`NeutralJoystick` uses upstream physics/control/reset and 101/212 observation
+slots, zero head commands, the shared rest/canonical/phase clock, current-body
+imitation and symmetric planar tracking. Reward scales stay at upstream
+defaults, no foot-height/air-time objectives. Rest pose/velocity targets use
+the static reference; imitation is movement-only. Historical StyleJoystick
+reference hooks preserve its original clock and transition behavior. Inference
+contract opt-in requires exact command coverage, metadata and matching policy
+hash; there is no trained candidate artifact to deploy automatically.
+
+Fixed CPU smoke: seed 7, seven eight-step commands plus stand-forward-stop,
+zero actions, no optimisation, 600 s parent watchdog. **80/80 pass in 74.88 s**,
+finite states/observations/raw and scaled rewards, clock/mode/index parity,
+exact reference selection, no terminations or zero-clipped rewards. Reference
+NumPy/JAX parity over 189 phases: position <=4.63e-7 rad, velocity <=5.51e-6
+rad/s. Weighted imitation -9.711 to +2.348, rest cost -3.533 to 0, alive +20;
+reward 0.2143–0.5582 per tick. Weights were not tuned. This is a plumbing check,
+not learned locomotion, standing-solution avoidance or continuous-command coverage.
+
+Final review tightened the joint-limit validator from the scored interval to
+every recorded frame, as originally preregistered. All 400 raw frames plus
+1,000 fitted-cycle samples per admitted target pass; minimum joint margin
+0.137816 rad. Regression test covers a bad warmup frame. Admission also requires
+all eight named criteria, static/moving semantics and both artifact hashes.
+
+Reports: `results_reference_repair/`, `results_reference_pivot/`,
+`results_reference_pivot_retry/`, `results_neutral_smoke/` under
+`experiments/locomotion_curriculum/`. Raw motions, coefficients and subprocess
+logs are preserved in ignored local storage. Existing Python/WSL environments
+reused; dependency versions recorded, no installation or full-grid regeneration.
+Next: preregister a bounded PPO/checkpoint-restore smoke, then an equal-step
+motor-only comparison and long rest/turn/transition/push readiness gate before
+expressive objectives. Any paid pilot still requires its own small hard cap.
+
+Verification: **281 tests passed including slow MJX tests** in 227.98 s,
+including upstream transition equality; nine new tests. Sixteen focused
+reference/admission tests also pass after the warmup-coverage fix. Ruff and
+diff checks clean; the same two existing JAX cast-overflow warnings in legacy
+training tests. Public-content/JSON/artifact checks pass; no credentials,
+account identifiers, personal absolute paths or large artifacts added.
+Upstream checkouts clean; no recorder processes remain. Read-only cloud audit:
+no instances, disks, addresses, forwarding rules, routers or snapshots. Results
+bucket and runner identity intentionally retained; no launches, spending or deletions.
+
+---
+
 ## 2026-10-09 — Corrected reference subset, shared motor contract, derivative alignment
 
 Three consecutive preregistered safe-local phases, no paid work or PPO.

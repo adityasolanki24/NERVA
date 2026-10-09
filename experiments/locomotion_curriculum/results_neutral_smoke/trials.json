@@ -1,0 +1,3282 @@
+[
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.36455240845680237,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 13.10689926147461,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.058633845299482346
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -2.621379852294922,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.14658461324870586
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3510904312133789,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 16.924190521240234,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.07285987585783005
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.384838104248047,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.18214968964457512
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.338300496339798,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 17.665489196777344,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.08519113063812256
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.533097839355469,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.2129778265953064
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3495207130908966,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 16.27680015563965,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.0909794420003891
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.25536003112793,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.22744860500097275
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.36240673065185547,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 13.168781280517578,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.07798208296298981
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -2.6337562561035157,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.19495520740747452
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3928942084312439,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 9.02784252166748,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.580285906791687
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -1.8055685043334961,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 1.4507147669792175
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4162575900554657,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 6.607786655426025,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.8542261719703674
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -1.3215573310852051,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 2.1355654299259186
+  }
+ },
+ {
+  "trial": 0,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.41451704502105713,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 4.257669448852539,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.5905742049217224
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.8515338897705078,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 1.476435512304306
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.41260814666748047,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.09112811088562012,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.0076470631174743176
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.09112811088562012,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.019117657793685794
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4450215697288513,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.4661064147949219,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.011105310171842575
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.4661064147949219,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.027763275429606438
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4523581564426422,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 2.3477423191070557,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.014008236117661
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 2.3477423191070557,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.0350205902941525
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.42227309942245483,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.5837786793708801,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.01037229597568512
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.5837786793708801,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.0259307399392128
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3199787735939026,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.5746893882751465,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.005796515382826328
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.5746893882751465,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.01449128845706582
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.29696154594421387,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -5.484260082244873,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.13310912251472473
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -5.484260082244873,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 0.33277280628681183
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2855492830276489,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -6.427212715148926,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.28232210874557495
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -6.427212715148926,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 0.7058052718639374
+  }
+ },
+ {
+  "trial": 1,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.26052460074424744,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.6124677658081055,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.2150985449552536
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.6124677658081055,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 0.537746362388134
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.42671969532966614,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.2576425075531006,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.1503704935312271
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.2576425075531006,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.3759262338280678
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4436410069465637,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.0251299142837524,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.15988458693027496
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.0251299142837524,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.3997114673256874
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4410608112812042,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.3846781253814697,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.17328697443008423
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.3846781253814697,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.43321743607521057
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.41422170400619507,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.4601461887359619,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.26691460609436035
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.4601461887359619,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.6672865152359009
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.32144880294799805,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -5.363946914672852,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.3509000539779663
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -5.363946914672852,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.8772501349449158
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.32280176877975464,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -5.974799633026123,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.8461296558380127
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -5.974799633026123,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 2.1153241395950317
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.31212538480758667,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -6.553834438323975,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.864493191242218
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -6.553834438323975,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 2.161232978105545
+  }
+ },
+ {
+  "trial": 2,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.28227221965789795,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.343193054199219,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.5423406958580017
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.343193054199219,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 1.3558517396450043
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4124690592288971,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.09045207500457764,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.004595358390361071
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.09045207500457764,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.011488395975902677
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.44216182827949524,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.3364777565002441,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.0057617793790996075
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.3364777565002441,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.014404448447749019
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.44940030574798584,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 2.2173943519592285,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.006990961730480194
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 2.2173943519592285,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.017477404326200485
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.43503397703170776,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.2216341495513916,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.010447517968714237
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.2216341495513916,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.026118794921785593
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3564949035644531,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -2.7692337036132812,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.013936374336481094
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -2.7692337036132812,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.034840935841202736
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.34245002269744873,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -3.346607208251953,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.1878170222043991
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -3.346607208251953,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 0.46954255551099777
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.34663665294647217,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.144145488739014,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.5908427834510803
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.144145488739014,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 1.4771069586277008
+  }
+ },
+ {
+  "trial": 3,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3489728569984436,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.903489112854004,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.9004723429679871
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.903489112854004,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 2.2511808574199677
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4320399761199951,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.27400898933410645,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.2502291202545166
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.27400898933410645,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.6255728006362915
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.45418670773506165,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.1817177534103394,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.30816328525543213
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.1817177534103394,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.7704082131385803
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.454573392868042,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.6254603862762451,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.34722623229026794
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.6254603862762451,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.8680655807256699
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4048398435115814,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.9244346618652344,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.26499292254447937
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.9244346618652344,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.6624823063611984
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2766427993774414,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.0918707847595215,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.14594882726669312
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.0918707847595215,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.3648720681667328
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2723310887813568,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.882177352905273,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.59966641664505
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.882177352905273,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 1.4991660416126251
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.25046980381011963,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -8.508082389831543,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.41308027505874634
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -8.508082389831543,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 1.0327006876468658
+  }
+ },
+ {
+  "trial": 4,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.21428117156028748,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -9.710768699645996,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.1295505315065384
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -9.710768699645996,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 0.323876328766346
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.38472238183021545,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.8769047260284424,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 1.0076597334318649e-09,
+   "tracking_lin_vel": 0.058633845299482346
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.8769047260284424,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 6.045958400591189e-09,
+   "tracking_lin_vel": 0.14658461324870586
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.40829962491989136,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.2607267498970032,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 1.1223239469486724e-24,
+   "tracking_lin_vel": 0.07285987585783005
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.2607267498970032,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 6.733943681692034e-24,
+   "tracking_lin_vel": 0.18214968964457512
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4249137043952942,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.0517399311065674,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 5.321130658118106e-27,
+   "tracking_lin_vel": 0.08519113063812256
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.0517399311065674,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 3.1926783948708634e-26,
+   "tracking_lin_vel": 0.2129778265953064
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3874904215335846,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.846198320388794,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 1.3035726778360586e-25,
+   "tracking_lin_vel": 0.0909794420003891
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.846198320388794,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 7.821436067016352e-25,
+   "tracking_lin_vel": 0.22744860500097275
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2807718515396118,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -6.155104637145996,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 2.047454336615082e-25,
+   "tracking_lin_vel": 0.07798208296298981
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -6.155104637145996,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 1.2284726019690492e-24,
+   "tracking_lin_vel": 0.19495520740747452
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.30894118547439575,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -6.530963897705078,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 0.08795720338821411,
+   "tracking_lin_vel": 0.580285906791687
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -6.530963897705078,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 0.5277432203292847,
+   "tracking_lin_vel": 1.4507147669792175
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.29588013887405396,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.36190128326416,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 0.0035804356448352337,
+   "tracking_lin_vel": 0.8542261719703674
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.36190128326416,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 0.021482613869011402,
+   "tracking_lin_vel": 2.1355654299259186
+  }
+ },
+ {
+  "trial": 5,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.25843626260757446,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -8.552846908569336,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 1.2867275245298515e-07,
+   "tracking_lin_vel": 0.5905742049217224
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -8.552846908569336,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 7.720365147179109e-07,
+   "tracking_lin_vel": 1.476435512304306
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.39694398641586304,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.26582467555999756,
+   "stand_still": 0.0,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 8.03347251061651e-25,
+   "tracking_lin_vel": 0.058633845299482346
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.26582467555999756,
+   "stand_still": -0.0,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 4.820083506369906e-24,
+   "tracking_lin_vel": 0.14658461324870586
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4224737584590912,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.9694327116012573,
+   "stand_still": 0.0,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 8.207793333880886e-10,
+   "tracking_lin_vel": 0.07285987585783005
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.9694327116012573,
+   "stand_still": -0.0,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 4.924676000328532e-09,
+   "tracking_lin_vel": 0.18214968964457512
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.43395552039146423,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 1.503831148147583,
+   "stand_still": 0.0,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 1.8145618341236514e-08,
+   "tracking_lin_vel": 0.08519113063812256
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 1.503831148147583,
+   "stand_still": -0.0,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 1.0887371004741908e-07,
+   "tracking_lin_vel": 0.2129778265953064
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3941184878349304,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.5147956609725952,
+   "stand_still": 0.0,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 2.9898168385500412e-09,
+   "tracking_lin_vel": 0.0909794420003891
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.5147956609725952,
+   "stand_still": -0.0,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 1.7938901031300247e-08,
+   "tracking_lin_vel": 0.22744860500097275
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2903042435646057,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -5.6784844398498535,
+   "stand_still": 0.0,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 2.292289025263017e-09,
+   "tracking_lin_vel": 0.07798208296298981
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -5.6784844398498535,
+   "stand_still": -0.0,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 1.3753734151578101e-08,
+   "tracking_lin_vel": 0.19495520740747452
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2976890504360199,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -6.565825939178467,
+   "stand_still": 0.0,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 0.0,
+   "tracking_lin_vel": 0.580285906791687
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -6.565825939178467,
+   "stand_still": -0.0,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 0.0,
+   "tracking_lin_vel": 1.4507147669792175
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.29319366812705994,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -7.474742889404297,
+   "stand_still": 0.0,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 0.0,
+   "tracking_lin_vel": 0.8542261719703674
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -7.474742889404297,
+   "stand_still": -0.0,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 0.0,
+   "tracking_lin_vel": 2.1355654299259186
+  }
+ },
+ {
+  "trial": 6,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.2594236433506012,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -8.503477096557617,
+   "stand_still": 0.0,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 1.2257037055843273e-28,
+   "tracking_lin_vel": 0.5905742049217224
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -8.503477096557617,
+   "stand_still": -0.0,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 7.354222233505964e-28,
+   "tracking_lin_vel": 1.476435512304306
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.36455240845680237,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 13.10689926147461,
+   "torques": 33.559532165527344,
+   "tracking_ang_vel": 0.12266261875629425,
+   "tracking_lin_vel": 0.058633845299482346
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -2.621379852294922,
+   "torques": -0.033559532165527345,
+   "tracking_ang_vel": 0.7359757125377655,
+   "tracking_lin_vel": 0.14658461324870586
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3510904312133789,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 16.924190521240234,
+   "torques": 27.894824981689453,
+   "tracking_ang_vel": 0.13085076212882996,
+   "tracking_lin_vel": 0.07285987585783005
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.384838104248047,
+   "torques": -0.027894824981689454,
+   "tracking_ang_vel": 0.7851045727729797,
+   "tracking_lin_vel": 0.18214968964457512
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.338300496339798,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 17.665489196777344,
+   "torques": 19.033769607543945,
+   "tracking_ang_vel": 0.04236327111721039,
+   "tracking_lin_vel": 0.08519113063812256
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.533097839355469,
+   "torques": -0.019033769607543945,
+   "tracking_ang_vel": 0.25417962670326233,
+   "tracking_lin_vel": 0.2129778265953064
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3495207130908966,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 16.27680015563965,
+   "torques": 6.7275800704956055,
+   "tracking_ang_vel": 0.0851123183965683,
+   "tracking_lin_vel": 0.0909794420003891
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -3.25536003112793,
+   "torques": -0.006727580070495605,
+   "tracking_ang_vel": 0.5106739103794098,
+   "tracking_lin_vel": 0.22744860500097275
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.36240673065185547,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 13.168781280517578,
+   "torques": 1.2575570344924927,
+   "tracking_ang_vel": 0.09339937567710876,
+   "tracking_lin_vel": 0.07798208296298981
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -2.6337562561035157,
+   "torques": -0.0012575570344924927,
+   "tracking_ang_vel": 0.5603962540626526,
+   "tracking_lin_vel": 0.19495520740747452
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3928942084312439,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 9.02784252166748,
+   "torques": 0.43491289019584656,
+   "tracking_ang_vel": 2.7236979338596257e-09,
+   "tracking_lin_vel": 0.580285906791687
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -1.8055685043334961,
+   "torques": -0.0004349128901958466,
+   "tracking_ang_vel": 1.6342187603157754e-08,
+   "tracking_lin_vel": 1.4507147669792175
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4162575900554657,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 6.607786655426025,
+   "torques": 1.1395622491836548,
+   "tracking_ang_vel": 1.9389069620956434e-06,
+   "tracking_lin_vel": 0.8542261719703674
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -1.3215573310852051,
+   "torques": -0.0011395622491836548,
+   "tracking_ang_vel": 1.163344177257386e-05,
+   "tracking_lin_vel": 2.1355654299259186
+  }
+ },
+ {
+  "trial": 7,
+  "block": 0,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.41451704502105713,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 4.257669448852539,
+   "torques": 1.7761785984039307,
+   "tracking_ang_vel": 0.01712138205766678,
+   "tracking_lin_vel": 0.5905742049217224
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.8515338897705078,
+   "torques": -0.0017761785984039308,
+   "tracking_ang_vel": 0.10272829234600067,
+   "tracking_lin_vel": 1.476435512304306
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 0,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.40337732434272766,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -1.5937293767929077,
+   "stand_still": 0.0,
+   "torques": 1.8426867723464966,
+   "tracking_ang_vel": 0.2536719739437103,
+   "tracking_lin_vel": 0.09696261584758759
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -1.5937293767929077,
+   "stand_still": -0.0,
+   "torques": -0.0018426867723464967,
+   "tracking_ang_vel": 1.522031843662262,
+   "tracking_lin_vel": 0.24240653961896896
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 1,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.7041117406080275e-09,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.43725770711898804,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -1.4390156269073486,
+   "stand_still": 0.0,
+   "torques": 1.527909517288208,
+   "tracking_ang_vel": 0.5397436022758484,
+   "tracking_lin_vel": 0.025987451896071434
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -1.4390156269073486,
+   "stand_still": -0.0,
+   "torques": -0.001527909517288208,
+   "tracking_ang_vel": 3.2384616136550903,
+   "tracking_lin_vel": 0.06496862974017859
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 2,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.2704963858745089e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3937073349952698,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -0.4507027864456177,
+   "stand_still": 0.0,
+   "torques": 1.1595419645309448,
+   "tracking_ang_vel": 1.7135531882317423e-10,
+   "tracking_lin_vel": 0.0548916757106781
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -0.4507027864456177,
+   "stand_still": -0.0,
+   "torques": -0.0011595419645309447,
+   "tracking_ang_vel": 1.0281319129390454e-09,
+   "tracking_lin_vel": 0.13722918927669525
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 3,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 3.396479852924017e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.36040058732032776,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -2.1615843772888184,
+   "stand_still": 0.0,
+   "torques": 0.9743473529815674,
+   "tracking_ang_vel": 2.1748633255122762e-23,
+   "tracking_lin_vel": 0.07303501665592194
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -2.1615843772888184,
+   "stand_still": -0.0,
+   "torques": -0.0009743473529815675,
+   "tracking_ang_vel": 1.3049179953073657e-22,
+   "tracking_lin_vel": 0.18258754163980484
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 4,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 1.9117984084715545e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.32742324471473694,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.2051005363464355,
+   "stand_still": 0.0,
+   "torques": 0.9431948065757751,
+   "tracking_ang_vel": 4.904244767383621e-19,
+   "tracking_lin_vel": 0.23088248074054718
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.2051005363464355,
+   "stand_still": -0.0,
+   "torques": -0.0009431948065757752,
+   "tracking_ang_vel": 2.9425468604301724e-18,
+   "tracking_lin_vel": 0.577206201851368
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 5,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.697253702667936e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.3187229037284851,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.96432638168335,
+   "stand_still": 0.0,
+   "torques": 0.8594350814819336,
+   "tracking_ang_vel": 2.0916813170401838e-08,
+   "tracking_lin_vel": 0.3605327606201172
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.96432638168335,
+   "stand_still": -0.0,
+   "torques": -0.0008594350814819336,
+   "tracking_ang_vel": 1.2550087902241103e-07,
+   "tracking_lin_vel": 0.901331901550293
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 6,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 4.561397626279273e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.33750614523887634,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -4.741089344024658,
+   "stand_still": 0.0,
+   "torques": 0.7626133561134338,
+   "tracking_ang_vel": 0.1109900027513504,
+   "tracking_lin_vel": 0.3804875314235687
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -4.741089344024658,
+   "stand_still": -0.0,
+   "torques": -0.0007626133561134339,
+   "tracking_ang_vel": 0.6659400165081024,
+   "tracking_lin_vel": 0.9512188285589218
+  }
+ },
+ {
+  "trial": 7,
+  "block": 1,
+  "tick": 7,
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 2.3491427136868026e-08,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.4357340931892395,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": -5.212305068969727,
+   "stand_still": 0.0,
+   "torques": 0.6771572828292847,
+   "tracking_ang_vel": 0.964083194732666,
+   "tracking_lin_vel": 0.4860750138759613
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": -5.212305068969727,
+   "stand_still": -0.0,
+   "torques": -0.0006771572828292847,
+   "tracking_ang_vel": 5.784499168395996,
+   "tracking_lin_vel": 1.2151875346899033
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 0,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.48807492852211,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 3.453688621520996,
+   "torques": 0.5715282559394836,
+   "tracking_ang_vel": 0.4327102303504944,
+   "tracking_lin_vel": 0.9995178580284119
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.6907377243041992,
+   "torques": -0.0005715282559394837,
+   "tracking_ang_vel": 2.5962613821029663,
+   "tracking_lin_vel": 2.4987946450710297
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 1,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.46136900782585144,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 3.389930009841919,
+   "torques": 0.48103827238082886,
+   "tracking_ang_vel": 0.21150654554367065,
+   "tracking_lin_vel": 0.9911512136459351
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.6779860019683839,
+   "torques": -0.00048103827238082887,
+   "tracking_ang_vel": 1.269039273262024,
+   "tracking_lin_vel": 2.4778780341148376
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 2,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5534852743148804,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.9293267726898193,
+   "torques": 0.4329448938369751,
+   "tracking_ang_vel": 0.9635483622550964,
+   "tracking_lin_vel": 0.9917091727256775
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.5858653545379638,
+   "torques": -0.00043294489383697513,
+   "tracking_ang_vel": 5.781290173530579,
+   "tracking_lin_vel": 2.4792729318141937
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 3,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5561272501945496,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.870774984359741,
+   "torques": 0.41751545667648315,
+   "tracking_ang_vel": 0.9826500415802002,
+   "tracking_lin_vel": 0.994015097618103
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.5741549968719483,
+   "torques": -0.00041751545667648317,
+   "tracking_ang_vel": 5.895900249481201,
+   "tracking_lin_vel": 2.4850377440452576
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 4,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5565218329429626,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.8230113983154297,
+   "torques": 0.41847267746925354,
+   "tracking_ang_vel": 0.98299241065979,
+   "tracking_lin_vel": 0.9972630739212036
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.564602279663086,
+   "torques": -0.0004184726774692536,
+   "tracking_ang_vel": 5.89795446395874,
+   "tracking_lin_vel": 2.493157684803009
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 5,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5567359924316406,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.785966396331787,
+   "torques": 0.4256453812122345,
+   "tracking_ang_vel": 0.9830529689788818,
+   "tracking_lin_vel": 0.9984403848648071
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.5571932792663574,
+   "torques": -0.0004256453812122345,
+   "tracking_ang_vel": 5.898317813873291,
+   "tracking_lin_vel": 2.496100962162018
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 6,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5574150085449219,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.748946189880371,
+   "torques": 0.4334339201450348,
+   "tracking_ang_vel": 0.9873128533363342,
+   "tracking_lin_vel": 0.9988390207290649
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.5497892379760743,
+   "torques": -0.0004334339201450348,
+   "tracking_ang_vel": 5.923877120018005,
+   "tracking_lin_vel": 2.4970975518226624
+  }
+ },
+ {
+  "trial": 7,
+  "block": 2,
+  "tick": 7,
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "criteria": {
+   "finite": true,
+   "phase_parity": true,
+   "index_parity": true,
+   "mode_parity": true,
+   "reference_selection": true,
+   "command_observation": true
+  },
+  "all_pass": true,
+  "phase_error": 0.0,
+  "reference_error": 0.0,
+  "terminated": false,
+  "reward": 0.5582334995269775,
+  "raw_rewards": {
+   "action_rate": 0.0,
+   "alive": 1.0,
+   "imitation": 0.0,
+   "stand_still": 2.7152950763702393,
+   "torques": 0.4398256540298462,
+   "tracking_ang_vel": 0.9929519295692444,
+   "tracking_lin_vel": 0.9989855289459229
+  },
+  "weighted_rewards": {
+   "action_rate": -0.0,
+   "alive": 20.0,
+   "imitation": 0.0,
+   "stand_still": -0.5430590152740479,
+   "torques": -0.0004398256540298462,
+   "tracking_ang_vel": 5.957711577415466,
+   "tracking_lin_vel": 2.497463822364807
+  }
+ }
+]

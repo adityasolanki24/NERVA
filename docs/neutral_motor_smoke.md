@@ -43,3 +43,11 @@ actions. Stop on nonfinite data or cap. Passing means environment plumbing only.
 Run complete tests including legacy transition equality plus Ruff before final
 adoption of this opt-in environment. A future PPO/restore smoke and neutral
 policy gate require separate protocols and any paid work an explicit small cap.
+
+Result: implementation `25510c8`, 80/80 pass in 74.88 s, no terminations or
+zero-clipped rewards. Reference parity over 189 phases: position <=4.63e-7 rad,
+analytic velocity <=5.51e-6 rad/s. Weighted imitation -9.711 to +2.348, rest
+pose/velocity -3.533 to 0, alive +20. Total reward 0.2143–0.5582 per tick.
+All raw reward terms were finite; no weights changed. The seven targets also
+pass final full-recording joint-limit verification (400 frames plus 1,000
+cycle points each). No optimiser, exported candidate or learned policy result.

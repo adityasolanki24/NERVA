@@ -1,4 +1,5 @@
 import hashlib
+import json
 from types import SimpleNamespace
 
 import numpy as np
@@ -11,8 +12,9 @@ import jax.numpy as jp  # noqa: E402
 from nerva.interfaces import BehaviourCommand, ExpressiveStyle  # noqa: E402
 from nerva.sim.open_duck import OpenDuckSim  # noqa: E402
 from nerva.training.neutral_joystick import body_imitation  # noqa: E402
-from nerva.training.neutral_reference import COMMANDS, CONTRACT, NeutralReference  # noqa: E402
+from nerva.training.neutral_reference import COMMANDS, CONTRACT, REQUIRED_CRITERIA, NeutralReference, verified_references  # noqa: E402
 from nerva.training.reference_kinematics import fit_reference, sample_reference  # noqa: E402
+from nerva.training.reference_validation import REFERENCE_JOINTS  # noqa: E402
 
 
 def synthetic_records():
@@ -76,3 +78,40 @@ def test_deployment_requires_matching_metadata_and_rejects_out_of_scope_commands
         sim.set_head_offset(head_yaw=.1)
     with pytest.raises(ValueError):
         sim.set_style_vector([0, 0, 0])
+
+
+def test_admission_checks_every_criterion_and_both_artifact_hashes(tmp_path):
+    records = synthetic_records()
+    names = ("stand", "forward", "backward", "left", "right", "turn_left", "turn_right")
+    reports = {"repair": [], "pivot_retry": []}
+    for name, record in zip(names, records):
+        suffix = "pivot_retry" if name.startswith("turn") else "repair"
+        raw = tmp_path / f"experiments/cloud_runs/neutral-reference-{suffix.replace('_', '-')}" / name
+        raw.mkdir(parents=True)
+        ref = record["reference"]
+        ref.update(joint_names=list(REFERENCE_JOINTS), joint_velocity_semantics="analytic_instantaneous",
+                   contact_semantics="static_geometric_support" if ref["static"] else "planned_support")
+        reference = raw / "reference.json"
+        reference.write_text(json.dumps(ref), encoding="utf-8")
+        recording = raw / "motion.json"
+        recording.write_text("{}", encoding="utf-8")
+        reports[suffix].append({"condition": name, "command": record["command"], "all_pass": True,
+                                "criteria": dict.fromkeys(REQUIRED_CRITERIA, True),
+                                "reference_sha256": hashlib.sha256(reference.read_bytes()).hexdigest(),
+                                "recording_sha256": hashlib.sha256(recording.read_bytes()).hexdigest()})
+    for suffix, rows in reports.items():
+        report = tmp_path / f"experiments/locomotion_curriculum/results_reference_{suffix}/trials.json"
+        report.parent.mkdir(parents=True)
+        report.write_text(json.dumps(rows), encoding="utf-8")
+    admitted, manifest = verified_references(tmp_path)
+    assert len(admitted) == 7 and manifest["mixed_provenance"]
+    raw = tmp_path / "experiments/cloud_runs/neutral-reference-repair/stand/motion.json"
+    raw.write_text("tampered", encoding="utf-8")
+    with pytest.raises(ValueError, match="hash mismatch"):
+        verified_references(tmp_path)
+    raw.write_text("{}", encoding="utf-8")
+    reports["repair"][0]["criteria"] = {}
+    report = tmp_path / "experiments/locomotion_curriculum/results_reference_repair/trials.json"
+    report.write_text(json.dumps(reports["repair"]), encoding="utf-8")
+    with pytest.raises(ValueError, match="admission failed"):
+        verified_references(tmp_path)

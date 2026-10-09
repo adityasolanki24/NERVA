@@ -238,6 +238,15 @@ behavioural). The two are never merged; affect never delays, suppresses or gates
   one neutral style. The simulator's control loop is tested to reproduce upstream `mujoco_infer.py`.
 - Upstream code is never edited; differences are overridden from NERVA code and documented.
 
+**Motor candidate update 2026-10-09:** `training/neutral_reference.py` admits a
+hash-verified seven-command subset with explicit body-frame derivatives.
+`training/neutral_joystick.py` is an opt-in 101-slot motor-only environment;
+`motor_contract.py` shares rest/canonical-command/phase semantics with the
+simulator's explicit matching-policy-hash deployment opt-in. Historical clocks
+and default policies retain their existing behavior. The candidate passes an
+80-step CPU plumbing smoke; there is no trained candidate or learned-readiness
+claim. Affect and deterministic safety are separate and unchanged.
+
 ## 5. Timescales
 
 Fastest first: motor/PD control → locomotion policy and state estimation → behaviour → event-driven

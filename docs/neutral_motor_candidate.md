@@ -1,20 +1,23 @@
-# Neutral motor baseline candidate (design only)
+# Neutral motor baseline candidate (opt-in environment)
 
-Status update 2026-10-09: seven-point corrected subset evaluated, 0/7 pass;
-derivative alignment improves fit errors but is insufficient. Shared rest/phase
-contract is implemented as isolated infrastructure and passes NumPy/JAX
-conformance. No candidate environment, trained policy or reference adoption.
+Status update 2026-10-09: the original subset stays 0/7 and alignment remains
+insufficient. A preregistered smooth/limited repair passes 6/7; geometric pivot
+correction passes both turns, yielding seven hash-verified candidate targets.
+`NeutralJoystick` and explicit inference contract opt-in are implemented. The
+80-step CPU smoke passes, with no terminations or zero-clipped rewards. No
+optimisation, trained candidate policy or learned motor-readiness result.
 
 Grounding: [neutral motor audit](neutral_motor_audit.md) and longer-turn
-measurements. This is a proposed package, not an implemented fix or training
-authorisation. B2, S1–S6 and historical defaults remain reproducible. The audit
+measurements. This is an implemented candidate environment, not evidence of
+improved learned locomotion. B2, S1–S6 and historical defaults remain reproducible. The audit
 establishes target issues; it does not establish causes of the learned drift.
 
 ## Rest and movement contract
 
 Infer a rest mode from planar command speed ≤0.005 m/s AND absolute yaw command
 ≤0.02 rad/s, avoiding the current mixed-unit norm and exact-boundary gap.
-These are proposed thresholds requiring separate preregistration before use.
+These thresholds are preregistered and implemented for the candidate only
+(`neutral_motor_smoke.md`).
 Keep head offsets zero for the initial motor-only baseline. At rest, use a
 static neutral joint/contact target, no swing-height/air-time objectives, and
 a fixed phase `[1,0]`; at movement onset reset phase predictably and resume the
@@ -46,13 +49,14 @@ Keep raw generated motions and old pickles recoverable and ignored.
 
 ## Motor-only reward and evaluation
 
-Propose symmetric two-axis planar tracking with the existing sigma and scale,
-removing the 0.10 m/s lateral tolerance. Retain angular tracking and conservative
-effort/action-change costs. Start with height and air-time scales both zero;
-stationary pose cost only in rest. Validate reference imitation in movement
-with correct units/frames. Check term magnitudes and reward clipping on actual
-valid states before freezing a training protocol; synthetic audit values do
-not justify reward-weight tuning.
+The candidate implements symmetric planar tracking with existing sigma/scale,
+angular tracking and unchanged effort/action-change costs. Height and air-time
+objectives are absent; pose/velocity cost uses the static target only at rest.
+Body-frame imitation is enabled only in movement. The CPU smoke records actual
+state reward terms: weighted imitation -9.711 to +2.348, rest cost -3.533 to 0,
+alive +20; total reward 0.2143–0.5582 per tick, no zero clipping. These zero-action
+states do not establish that learning avoids a standing solution; future
+training must measure it. Weights were not adjusted after these observations.
 
 Treat this as a package comparison, not a single-variable causal experiment.
 Before learning, preregister the exact configuration and an equal-step neutral
@@ -64,12 +68,14 @@ displacement criteria. Passing one-minute rest descriptions alone is insufficien
 
 ## Next phase and spending boundary
 
-The velocity/frame validator and seven-motion subset are complete; the subset
-fails. Shared rest/phase infrastructure (`nerva.motor_contract`) passes
-conformance but is not wired into historical policies. Next safe local work is
-a preregistered derivative-consistent fitting and contact-label investigation,
-including positive-knee initialization. Do not rerun R0 or S1–S6. Candidate
-environment/PPO smoke waits for valid references and its own limits. Verify checkpoint
-restore compatibility before planning continuation. Any cloud pilot still
+Reference fitting/contact/knee repair and geometric turns are complete
+(`neutral_reference_repair.md`). The opt-in environment passes its fixed CPU
+smoke (`neutral_motor_smoke.md`); the mixed subset has exactly seven discrete
+commands, no full-grid or continuous coverage. Hashes protect raw recordings
+and fitted targets; unsupported references fail closed. Shared rest/phase is
+wired to the candidate and a matching-policy-hash inference opt-in; historical
+policies retain their clock. Next preregister a capped PPO/checkpoint-restore
+smoke, then an equal-step motor-only comparison and long neutral-readiness gate.
+No optimiser has run. Do not rerun R0 or S1–S6. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.

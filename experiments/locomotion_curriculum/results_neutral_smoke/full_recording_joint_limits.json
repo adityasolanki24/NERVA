@@ -1,0 +1,47 @@
+{
+ "criteria": "all 400 recorded frames plus 1000 fitted cycle samples within URDF bounds; knees [0.01,pi/2]; tolerance 1e-5",
+ "rows": [
+  {
+   "condition": "stand",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.32928231299858235
+  },
+  {
+   "condition": "forward",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.18761010266380818
+  },
+  {
+   "condition": "backward",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.18809632679489652
+  },
+  {
+   "condition": "left",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.14324632679489646
+  },
+  {
+   "condition": "right",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.13781632679489664
+  },
+  {
+   "condition": "turn_left",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.18910632679489647
+  },
+  {
+   "condition": "turn_right",
+   "samples": 400,
+   "all_pass": true,
+   "min_margin_rad": 0.18793632679489658
+  }
+ ]
+}

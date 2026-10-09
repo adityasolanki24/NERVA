@@ -1,0 +1,87 @@
+{
+ "all_pass": true,
+ "target_parity": [
+  {
+   "command": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "max_position_error": 2.8686523156906674e-08,
+   "max_velocity_error": 0.0,
+   "max_other_error": 0.0,
+   "pass": true
+  },
+  {
+   "command": [
+    0.074,
+    0.0,
+    0.0
+   ],
+   "max_position_error": 4.3804677329895014e-07,
+   "max_velocity_error": 5.160477624777116e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  },
+  {
+   "command": [
+    -0.074,
+    0.0,
+    0.0
+   ],
+   "max_position_error": 4.626180722944184e-07,
+   "max_velocity_error": 4.77929081021955e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  },
+  {
+   "command": [
+    0.0,
+    0.074,
+    0.0
+   ],
+   "max_position_error": 3.0599325850921844e-07,
+   "max_velocity_error": 5.506281109290967e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  },
+  {
+   "command": [
+    0.0,
+    -0.074,
+    0.0
+   ],
+   "max_position_error": 3.8889674014441766e-07,
+   "max_velocity_error": 4.748364711204545e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  },
+  {
+   "command": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "max_position_error": 2.9606076945576376e-07,
+   "max_velocity_error": 4.58172392114875e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  },
+  {
+   "command": [
+    0.0,
+    0.0,
+    -0.6
+   ],
+   "max_position_error": 3.8730589513313873e-07,
+   "max_velocity_error": 5.320707527900481e-06,
+   "max_other_error": 6.751495156276377e-07,
+   "pass": true
+  }
+ ],
+ "steps": 80,
+ "terminations": 0,
+ "zero_reward_fraction": 0.0,
+ "wall_seconds": 74.88,
+ "learned_readiness": false
+}

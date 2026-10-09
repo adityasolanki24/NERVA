@@ -1,0 +1,5 @@
+{
+ "generator": {"python": "3.10.12", "placo": "0.6.3", "numpy": "1.26.4", "scipy": "1.15.3"},
+ "fit_and_smoke": {"python": "3.12.4", "numpy": "2.5.3", "scipy": "1.18.1", "jax": "0.5.3", "mujoco": "3.3.0", "brax": "0.14.2", "playground": "0.0.4", "flax": "0.10.6"},
+ "note": "Versions inspected after evaluation; existing interpreters reused, no dependencies changed."
+}

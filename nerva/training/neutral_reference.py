@@ -13,6 +13,8 @@ from nerva.training.reference_validation import REFERENCE_JOINTS
 CONTRACT = "neutral_motor_v1"
 COMMANDS = ((0., 0., 0.), (.074, 0., 0.), (-.074, 0., 0.),
             (0., .074, 0.), (0., -.074, 0.), (0., 0., .60), (0., 0., -.60))
+REQUIRED_CRITERIA = {"positive_knees", "joint_position_fit", "joint_velocity_fit", "linear_fit",
+                     "angular_fit", "contact_fit", "command_tracking", "joint_limits"}
 
 
 def verified_references(root):
@@ -27,7 +29,8 @@ def verified_references(root):
             turn = row["condition"].startswith("turn")
             if (suffix == "repair" and turn) or (suffix == "pivot_retry" and not turn):
                 continue
-            if not row["all_pass"] or not all(row["criteria"].values()):
+            if (not row["all_pass"] or set(row["criteria"]) != REQUIRED_CRITERIA
+                    or not all(row["criteria"].values())):
                 raise ValueError("reference admission failed")
             raw_suffix = "pivot-retry" if turn else "repair"
             raw = root / f"experiments/cloud_runs/neutral-reference-{raw_suffix}" / row["condition"]
@@ -41,6 +44,7 @@ def verified_references(root):
             ref = json.loads(reference_path.read_text(encoding="utf-8"))
             if (ref.get("version") != 2 or ref.get("velocity_frame") != "current_body"
                     or tuple(ref.get("joint_names", ())) != REFERENCE_JOINTS
+                    or bool(ref.get("static")) != (tuple(row["command"]) == (0., 0., 0.))
                     or ref.get("joint_velocity_semantics") != "analytic_instantaneous"
                     or ref.get("contact_semantics") != ("static_geometric_support" if ref["static"] else "planned_support")):
                 raise ValueError("reference contract mismatch")

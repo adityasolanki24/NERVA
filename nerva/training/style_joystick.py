@@ -11,6 +11,9 @@ reset/step) except for the lines marked `# NERVA:`:
   2. the phase clock uses that style's gait period;
   3. the style vector is appended to both observations;
   4. a style is sampled at reset and resampled whenever the command is resampled.
+Reference initialization/advance hooks additionally allow the opt-in neutral
+candidate to share its rest clock with inference. Default hooks preserve the
+historical transitions, guarded by the full upstream-equality test.
 Optional (S2, off by default): a per-style feet-height cost, `feet_height_scale`,
 added in `_get_reward` (see FeetHeight below). With scale 0 nothing changes.
 Optional (S4, off by default): `backward_fraction` replaces the forward-velocity command with a

@@ -80,7 +80,7 @@ def validate(recording, command, static=False, *, joint_limits=None):
         if tuple(recording["Joints"]) != REFERENCE_JOINTS:
             raise ValueError("unexpected joint order")
         low, high = np.array([joint_limits[name] for name in REFERENCE_JOINTS]).T
-        positions = np.vstack([joints[scored], cycle])
+        positions = np.vstack([frames[:, j:j + 16], cycle])
         criteria["joint_limits"] = bool(np.all(positions >= low - 1e-5) and np.all(positions <= high + 1e-5))
     return {"criteria": criteria, "all_pass": all(criteria.values()), "rmse_per_component": errors,
             "contact_agreement": contact_agree, "knee_min_rad": knee_min.tolist(),

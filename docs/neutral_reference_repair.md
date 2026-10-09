@@ -90,3 +90,15 @@ Repair the verifier by comparing its exposed four-corner support polygon with
 the same translation/yaw formula. Authorise one retry of the same two turns in
 new output directories, under the same caps and criteria; this is an API
 compatibility repair, not a parameter/criteria change.
+
+The polygon-verifier retry passes 2/2 turns in 18.31 s (`bc176bb`, recorded in
+`f92e19e`). Five passing repair targets plus these two turns are admitted only
+to the candidate smoke. Left/right body lateral means +0.016680/+0.014414 m/s,
+yaw ±0.603689 rad/s. The original 6/7 failure and preflight abort are preserved.
+During final review, the joint-limit implementation was tightened from the
+scored interval to every recorded frame, matching the original preregistration.
+Independent confirmation checks all 400 raw frames plus 1,000 cycle samples
+per admitted target: all pass, minimum joint-limit margin 0.137816 rad across
+the subset. A regression test rejects out-of-bounds warmup frames. This adds
+coverage; it does not change any criterion or fit. Evidence:
+`results_neutral_smoke/full_recording_joint_limits.json`.

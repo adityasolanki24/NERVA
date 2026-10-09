@@ -229,3 +229,34 @@ class OnsetAttractorAffectModel(AttractorAffectModel):
         self.z_by_source = {s: z * k for s, z in self.z_by_source.items() if float(np.max(np.abs(z))) > 1e-4}
         self.context = {s: (u, tl) for s, (u, tl) in self.context.items() if self._weight(tl) > 1e-3}
         return self.pad
+
+
+class FacetAttractorAffectModel(OnsetAttractorAffectModel):
+    """Bv4: combine context facets per source (docs/context_facet_experiment.md).
+
+    Each source contributes a fade-weighted mean, scaled by its freshest weight.
+    Distinct sources still add; phasic input and tendency traces are unchanged.
+    """
+
+    def add(self, appraisal: AppraisalState | AppraisalFrame, source: str = "") -> np.ndarray:
+        persistent = isinstance(appraisal, AppraisalFrame) and appraisal.persistent
+        kind = appraisal.hypothesis.kind if isinstance(appraisal, AppraisalFrame) else ""
+        if isinstance(appraisal, AppraisalFrame):
+            source = source or appraisal.hypothesis.subject
+        u = DimensionalAffectModel.add(self, appraisal, source)
+        if persistent:
+            self.context[(source, kind)] = (u, self.t)
+        else:
+            self.z_phasic = self.z_phasic + u
+        return u
+
+    def context_input(self) -> np.ndarray:
+        grouped = {}
+        for (source, _kind), (u, t_last) in self.context.items():
+            weight = self._weight(t_last)
+            numerator, denominator, freshest = grouped.get(source, (np.zeros(len(FEATURES)), 0.0, 0.0))
+            grouped[source] = (numerator + weight * u, denominator + weight, max(freshest, weight))
+        total = np.zeros(len(FEATURES))
+        for numerator, denominator, freshest in grouped.values():
+            total += freshest * numerator / denominator
+        return total

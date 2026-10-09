@@ -54,7 +54,7 @@ from nerva.memory.spatial import PlaceMemory
 from nerva.world.outcomes import OutcomeMonitor
 from nerva.sim.capabilities import capabilities_for
 from nerva.affect.frames import FrameAppraiser
-from nerva.affect.model_b import AttractorAffectModel, DimensionalAffectModel, OnsetAttractorAffectModel
+from nerva.affect.model_b import AttractorAffectModel, DimensionalAffectModel, FacetAttractorAffectModel, OnsetAttractorAffectModel
 from nerva.behaviour.goals import active_goals
 from nerva.safety import SafetySupervisor
 from nerva.world.model import WorldModel
@@ -300,7 +300,7 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
     last_seen_anything, last_sleep, sleep_log = 0.0, -1e9, []
     last_touch = -1e9
     affect = {"A": CategoricalAffectModel, "B": DimensionalAffectModel, "Bv2": AttractorAffectModel,
-              "Bv3": OnsetAttractorAffectModel}[affect_model]()
+              "Bv3": OnsetAttractorAffectModel, "Bv4": FacetAttractorAffectModel}[affect_model]()
     behaviour_cls = {"utility": UtilityBehaviour, "rules": ReactiveBehaviour}[selector]
     if head_moves_while_walking:
         behaviour = behaviour_cls(walking_head_limit=None)

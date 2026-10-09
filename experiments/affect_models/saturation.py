@@ -28,12 +28,12 @@ from run import TIMELINE  # noqa: E402
 
 from nerva.affect.appraisal import EVENT_APPRAISALS, appraise  # noqa: E402
 from nerva.affect.emotions import CategoricalAffectModel  # noqa: E402
-from nerva.affect.model_b import AttractorAffectModel, DimensionalAffectModel, OnsetAttractorAffectModel  # noqa: E402
+from nerva.affect.model_b import AttractorAffectModel, DimensionalAffectModel, FacetAttractorAffectModel, OnsetAttractorAffectModel  # noqa: E402
 from nerva.interfaces import AppraisalFrame, Event, OutcomeHypothesis  # noqa: E402
 
 DT = 0.1
 MODELS = {"A": CategoricalAffectModel, "B": DimensionalAffectModel, "Bv2": AttractorAffectModel,
-          "Bv3": OnsetAttractorAffectModel}
+          "Bv3": OnsetAttractorAffectModel, "Bv4": FacetAttractorAffectModel}
 PERSISTENT = AppraisalFrame(OutcomeHypothesis("novel_stimulus", subject="ball-0", probability=0.5), relevance=0.6,
                             desirability=0.0, expectedness=0.3, controllability=0.8, persistent=True)
 

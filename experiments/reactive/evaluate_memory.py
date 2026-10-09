@@ -115,7 +115,7 @@ def main() -> None:
     ap.add_argument("--touch-context", action="store_true", help="continued touch = persistent context (2026-10-06)")
     ap.add_argument("--margin-controllability", action="store_true",
                     help="in-view controllability of people = reaction margin (2026-10-06)")
-    ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3"), default=None, help="default: Bv2 for v2, A for legacy")
+    ap.add_argument("--affect", choices=("A", "B", "Bv2", "Bv3", "Bv4"), default=None, help="default: Bv2 for v2, A for legacy")
     ap.add_argument("--head-pitch-down", type=float, default=None, help="downward head limit (B2: -0.2)")
     ap.add_argument("--head-yaw-max", type=float, default=None, help="head yaw limit (B2: 0.4)")
     ap.add_argument("--out", type=Path, default=Path(__file__).resolve().parent / "results_memory")

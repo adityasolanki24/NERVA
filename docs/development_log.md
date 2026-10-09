@@ -25,6 +25,11 @@ proof of a general compiler defect or a normalization timing effect. No new
 physical transitions or gradients during inspection. A separately preregistered
 offline retry must retain the exact batch/weights and original criteria.
 
+Offline retry preregistered `619b142`, implementation `37d5312`, stopped in
+4.62 s before any loss evaluation: archive parser rejected valid slash-separated
+episode metric keys. All inputs and abort reports retained. Schema correction
+and a fresh offline attempt are separately preregistered; thresholds unchanged.
+
 Verification: **293 tests passed including slow tests in 250.62 s**, Ruff clean;
 two existing historical cast warnings. Public reports contain aggregates/hashes;
 raw batch/parameters/logs stay ignored. Cloud audit clear of compute/network

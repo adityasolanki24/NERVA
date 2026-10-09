@@ -50,3 +50,22 @@ retain all raw/partial outputs. Refuse overwrite. Public small aggregate reports
 edits, paid cloud, default promotion, expressive training or artifact deletion.
 Complete full tests including slow, Ruff, docs/log, public-content checks,
 commit/push and final cloud resource audit.
+
+## Admission-only abort and schema correction
+
+The registered offline attempt (`37d5312`) stopped before any loss replay in
+4.62 s: the parser rejected existing episode metric keys such as
+`cost/action_rate`. No new transitions or optimizer updates; all original
+artifacts retained. Public abort reports remain in
+`results_normalization_timing_offline/`. This is an implementation defect,
+not a negative timing-hypothesis result.
+
+Separately preregistered 2026-10-10: one new offline attempt with identical input
+files, all hashes, settings, criteria and 180 s limit. Change only the archive
+key parser to accept slash-separated generated metric names; retain no-pickle,
+exact reconstructed-name/schema and literal byte/hash checks. Test the actual
+retained archive admission and slash-key regression before running. Dynamic
+replay implementation remains unchanged. Use fresh output
+`results_normalization_timing_offline_schema/` and ignored raw directory
+`normalization-timing-offline-schema/`; no overwrites or unregistered retry.
+No physical transitions, gradients, optimizer updates, cloud work or promotions.

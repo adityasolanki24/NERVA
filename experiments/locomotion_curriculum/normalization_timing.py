@@ -116,10 +116,9 @@ def decide(integrity, old_kl, updated_kl):
 
 def run(root, raw, output):
     import jax
-    import jax.numpy as jp
     from brax.training import acting, distribution
     from brax.training.acme import running_statistics
-    from brax.training.agents.ppo import checkpoint, losses, networks, train
+    from brax.training.agents.ppo import losses, networks, train
     from nerva.sim.open_duck import OPEN_DUCK_ROOT
     from nerva.training.neutral_joystick import NeutralJoystick
     from nerva.training.neutral_reference import NeutralReference, verified_references
@@ -192,35 +191,65 @@ def run(root, raw, output):
         "truncations": int(np.sum(np.asarray(data.extras["state_extras"]["truncation"])))})
     print("capture saved; replaying old and updated statistics", flush=True)
 
+    evaluate_cases(params, updated, batch, keys, net, shape, factory, raw, output)
+
+
+def make_replay(net):
+    """Keep the complete replay dataset and weights as dynamic compiled inputs."""
+    import jax
+    import jax.numpy as jp
+    from brax.training.acme import running_statistics
+    from brax.training.agents.ppo import losses
+
     loss_options = {name: PPO_CONFIG[name] for name in
                     ("entropy_cost", "discounting", "reward_scaling", "gae_lambda", "clipping_epsilon", "normalize_advantage")}
-    fixed_weights = losses.PPONetworkParams(policy=params[1], value=params[2])
     loss_fn = functools.partial(losses.compute_ppo_loss, ppo_network=net,
                                 vf_coefficient=PPO_CONFIG["vf_loss_coefficient"], **loss_options)
 
     @jax.jit
-    def replay(normalizer):
+    def replay(normalizer, weights, batch, loss_key):
         obs = jax.tree.map(lambda x: jp.swapaxes(x, 0, 1), batch.observation)
-        logits = net.policy_network.apply(normalizer, params[1], obs)
+        logits = net.policy_network.apply(normalizer, weights.policy, obs)
         dist = net.parametric_action_distribution.create_dist(logits)
         log_prob = net.parametric_action_distribution.log_prob(
             logits, jp.swapaxes(batch.extras["policy_extras"]["raw_action"], 0, 1))
-        value = net.value_network.apply(normalizer, params[2], obs)
-        _, metrics = loss_fn(fixed_weights, normalizer, batch, keys["loss"])
+        value = net.value_network.apply(normalizer, weights.value, obs)
+        _, metrics = loss_fn(weights, normalizer, batch, loss_key)
         return {"metrics": metrics, "logits": logits, "loc": dist.loc, "scale": dist.scale,
                 "log_prob": log_prob, "value": value, "normalized": running_statistics.normalize(obs, normalizer)}
 
+    return replay
+
+
+def gaussian_log_prob(loc, scale, raw_action):
+    """Independent float64 tanh-Gaussian density evaluated on raw actions."""
+    loc, scale, raw_action = [np.asarray(x, dtype=np.float64) for x in (loc, scale, raw_action)]
+    if np.any(scale <= 0):
+        raise ValueError("Gaussian scales must be positive")
+    gaussian = -.5 * ((raw_action - loc) / scale)**2 - np.log(scale) - .5 * np.log(2 * np.pi)
+    jacobian = 2 * (np.log(2) - raw_action - np.logaddexp(0, -2 * raw_action))
+    return np.sum(gaussian - jacobian, axis=-1)
+
+
+def evaluate_cases(params, updated, batch, keys, net, shape, factory, raw, output):
+    from brax.training.agents.ppo import checkpoint, losses
+    weight_hash, batch_hash = fingerprint(params[1:]), fingerprint(batch)
+    fixed_weights = losses.PPONetworkParams(policy=params[1], value=params[2])
+    replay = make_replay(net)
     stored_logits = np.swapaxes(np.asarray(batch.extras["policy_extras"]["distribution_params"]), 0, 1)
     behavior_dist = net.parametric_action_distribution.create_dist(stored_logits)
     stored_lp = np.swapaxes(np.asarray(batch.extras["policy_extras"]["log_prob"]), 0, 1)
     results, rows, roundtrips = [], [], []
     for name, normalizer, count in (("old", params[0], 0), ("updated", updated, 8)):
-        result = replay(normalizer)
+        result = replay(normalizer, fixed_weights, batch, keys["loss"])
         if not tree_finite(result):
             raise ValueError("nonfinite replay")
         artifact = archive(raw / f"{name}_replay.npz", result)
         conventional = gaussian_kl(behavior_dist.loc, behavior_dist.scale, result["loc"], result["scale"])
         stabilized = gaussian_kl(behavior_dist.loc, behavior_dist.scale, result["loc"], result["scale"], 1e-5)
+        manual_lp = gaussian_log_prob(result["loc"], result["scale"],
+                                      np.swapaxes(batch.extras["policy_extras"]["raw_action"], 0, 1))
+        lp_match = bool(np.allclose(manual_lp, result["log_prob"], atol=1e-4, rtol=1e-5))
         metrics = {key: float(value) for key, value in result["metrics"].items()}
         manual_match = bool(np.isclose(np.mean(stabilized), metrics["kl_mean"], atol=1e-5, rtol=1e-5))
         save_parameters(raw / name, count, (normalizer, *params[1:]), checkpoint.network_config(shape, 14, True, factory))
@@ -233,7 +262,8 @@ def run(root, raw, output):
         roundtrips.append(equality["equal"] and equality["finite"])
         row = {"case": name, "metrics": metrics, "conventional_kl_mean": float(np.mean(conventional)),
                "conventional_kl_max": float(np.max(conventional)), "manual_stabilized_kl_mean": float(np.mean(stabilized)),
-               "manual_kl_agreement": manual_match,
+               "manual_kl_agreement": manual_match, "manual_log_prob_agreement": lp_match,
+               "manual_log_prob_max_error": float(np.max(np.abs(manual_lp - result["log_prob"]))),
                "behavior_logits_max_error": float(np.max(np.abs(result["logits"] - stored_logits))),
                "behavior_log_prob_max_error": float(np.max(np.abs(result["log_prob"] - stored_lp))),
                "value_max_abs": float(np.max(np.abs(result["value"]))),
@@ -244,7 +274,7 @@ def run(root, raw, output):
         rows.append(row)
         results.append(result)
         write_json(output / "cases.json", rows)
-        case_valid = (manual_match and equality["equal"] and equality["finite"]
+        case_valid = (manual_match and lp_match and equality["equal"] and equality["finite"]
                       and fingerprint(params[1:]) == weight_hash and fingerprint(batch) == batch_hash)
         if name == "old":
             case_valid &= (row["behavior_logits_max_error"] <= 1e-5
@@ -253,17 +283,19 @@ def run(root, raw, output):
         if not case_valid:
             write_json(output / "integrity_failure.json", {"case": name, "integrity_pass": False})
             raise ValueError("case integrity criteria failed")
-    integrity = {"finite": tree_finite((results, params, updated, data)),
+    integrity = {"finite": tree_finite((results, params, updated, batch)),
                  "statistics_count": count_value(updated.count) == 8,
                  "fixed_weights": fingerprint(params[1:]) == weight_hash,
                  "fixed_batch": fingerprint(batch) == batch_hash,
                  "checkpoint_roundtrips": all(roundtrips), "manual_kl_agreement": all(r["manual_kl_agreement"] for r in rows),
+                 "manual_log_prob_agreement": all(r["manual_log_prob_agreement"] for r in rows),
                  "old_logits": rows[0]["behavior_logits_max_error"] <= 1e-5,
                  "old_log_prob": rows[0]["behavior_log_prob_max_error"] <= 1e-4,
                  "old_conventional_self_kl": abs(rows[0]["conventional_kl_mean"]) <= 1e-6}
     summary = decide(integrity, rows[0]["metrics"]["kl_mean"], rows[1]["metrics"]["kl_mean"])
     summary["deterministic_action_max_shift"] = float(np.max(np.abs(np.tanh(results[1]["loc"]) - np.tanh(results[0]["loc"]))))
     summary["value_max_shift"] = float(np.max(np.abs(results[1]["value"] - results[0]["value"])))
+    summary["log_prob_max_shift"] = float(np.max(np.abs(results[1]["log_prob"] - results[0]["log_prob"])))
     write_json(output / "normalizer_shift.json", {
         key: {"mean_delta": np.asarray(updated.mean[key] - params[0].mean[key]).tolist(),
               "std_delta": np.asarray(updated.std[key] - params[0].std[key]).tolist()}

@@ -84,3 +84,15 @@ def test_balanced_reset_observations_and_autoreset_keep_each_command(monkeypatch
         np.testing.assert_allclose(state.info["command"][:, :3], COMMANDS, atol=1e-8)
         np.testing.assert_allclose(state.info["current_reference_motion"], COMMANDS, atol=1e-8)
         state = jax.jit(env.step)(state, jp.zeros((7, 14)))
+    from experiments.locomotion_curriculum.neutral_learning import collect_balanced_batch
+
+    def make_policy(params):
+        del params
+        return lambda obs, key: (jp.zeros((7, 14)), {"raw_action": jp.zeros((7, 14))})
+
+    _, batch, next_key = jax.jit(lambda s, key: collect_balanced_batch(env, make_policy, (), s, key))(
+        state, jax.random.PRNGKey(5))
+    assert batch.discount.shape == (7, 32)
+    np.testing.assert_allclose(batch.extras["state_extras"]["command"][..., :3],
+                               np.repeat(np.asarray(COMMANDS)[:, None], 32, axis=1), atol=1e-8)
+    assert not np.array_equal(next_key, jax.random.PRNGKey(5))

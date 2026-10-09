@@ -23,11 +23,20 @@ LOSS = {"entropy_cost": .005, "discounting": .97, "reward_scaling": 1., "gae_lam
         "clipping_epsilon": .2, "normalize_advantage": True, "vf_coefficient": .5}
 
 
+def collect_balanced_batch(env, make_policy, params, physical, rng):
+    import jax
+    import jax.numpy as jp
+    from brax.training import acting
+    rng, unroll_key = jax.random.split(rng)
+    next_state, data = acting.generate_unroll(env, physical, make_policy(params), unroll_key, 32,
+        extra_fields=("truncation", "episode_done", "command"))
+    return next_state, jax.tree.map(lambda x: jp.swapaxes(x, 0, 1), data), rng
+
+
 def run(root, raw, output):
     import jax
     import jax.numpy as jp
     import optax
-    from brax.training import acting
     from brax.training.acme import running_statistics
     from brax.training.agents.ppo import checkpoint, losses, networks
     from nerva.sim.open_duck import OPEN_DUCK_ROOT
@@ -77,10 +86,7 @@ def run(root, raw, output):
 
     @jax.jit
     def collect(current, physical, rng):
-        rng, unroll_key = jax.random.split(rng)
-        next_state, data = acting.generate_unroll(env, make_policy((normalizer, current.policy, current.value)),
-            physical, unroll_key, 32, extra_fields=("truncation", "episode_done", "command"))
-        return next_state, jax.tree.map(lambda x: jp.swapaxes(x, 0, 1), data), rng
+        return collect_balanced_batch(env, make_policy, (normalizer, current.policy, current.value), physical, rng)
 
     @jax.jit
     def replay(current, data):
@@ -175,10 +181,12 @@ def run(root, raw, output):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument("--retry", action="store_true", help="retain the pre-collection interface abort separately")
     args = parser.parse_args()
     root = Path.cwd().resolve()
-    raw = root / "experiments/cloud_runs/neutral-learning-pilot"
-    output = root / "experiments/locomotion_curriculum/results_neutral_learning"
+    suffix = "-retry" if args.retry else ""
+    raw = root / f"experiments/cloud_runs/neutral-learning-pilot{suffix}"
+    output = root / ("experiments/locomotion_curriculum/results_neutral_learning" + suffix.replace("-", "_"))
     if args.worker:
         run(root, raw, output)
         return
@@ -189,7 +197,8 @@ def main():
     raw.mkdir(parents=True)
     output.mkdir(parents=True)
     with (raw / "training.log").open("w", encoding="utf-8") as stream:
-        subprocess.run([sys.executable, "-m", "experiments.locomotion_curriculum.neutral_learning", "--worker"],
+        subprocess.run([sys.executable, "-m", "experiments.locomotion_curriculum.neutral_learning", "--worker",
+                        *(["--retry"] if args.retry else [])],
                        stdout=stream, stderr=subprocess.STDOUT, check=True, timeout=1200,
                        env={**os.environ, "JAX_PLATFORMS": "cpu"})
     print("Training worker complete; run paired_motor evaluation", flush=True)

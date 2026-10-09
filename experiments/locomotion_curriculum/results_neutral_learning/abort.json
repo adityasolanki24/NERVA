@@ -1,0 +1,9 @@
+{
+ "outcome": "pre_collection_interface_abort",
+ "error_type": "TypeError",
+ "reason": "generate_unroll received policy and environment state in reversed positions",
+ "optimizer_updates": 0,
+ "collected_transitions": 0,
+ "initial_checkpoint_and_logs_preserved": true,
+ "criteria_changed": false
+}

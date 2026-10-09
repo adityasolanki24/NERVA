@@ -66,14 +66,14 @@ def first_batch_keys(seed=7):
             "permutation": key_perm, "loss": key_loss, "policy_init": key_policy, "value_init": key_value}
 
 
-def make_collector(env, make_policy, axis_name):
+def make_collector(env, make_policy, axis_name, *, return_state=False, extra_fields=()):
     import jax
     import jax.numpy as jp
     from brax.training import acting
     from brax.training.acme import running_statistics
 
     def capture(params, state, epoch_key):
-        _, key_generate_unroll, _ = jax.random.split(epoch_key, 3)
+        _, key_generate_unroll, next_epoch_key = jax.random.split(epoch_key, 3)
         policy = make_policy(params)
 
         def unroll(carry, unused):
@@ -82,14 +82,14 @@ def make_collector(env, make_policy, axis_name):
             current_key, next_key = jax.random.split(current_key)
             next_state, data = acting.generate_unroll(
                 env, current_state, policy, current_key, 4,
-                extra_fields=("truncation", "episode_metrics", "episode_done"))
+                extra_fields=("truncation", "episode_metrics", "episode_done", *extra_fields))
             return (next_state, next_key), data
 
-        _, data = jax.lax.scan(unroll, (state, key_generate_unroll), (), length=1)
+        (next_state, _), data = jax.lax.scan(unroll, (state, key_generate_unroll), (), length=1)
         data = jax.tree.map(lambda x: jp.swapaxes(x, 1, 2), data)
         data = jax.tree.map(lambda x: jp.reshape(x, (-1,) + x.shape[2:]), data)
         updated = running_statistics.update(params[0], data.observation, pmap_axis_name=axis_name)
-        return data, updated
+        return (data, updated, next_state, next_epoch_key) if return_state else (data, updated)
 
     return jax.pmap(capture, axis_name=axis_name)
 

@@ -162,3 +162,12 @@ def test_collector_preserves_batch_time_alignment_and_updates_exactly_eight_obse
                                   np.repeat(np.asarray(keys["reset"])[0, :, :1] % 100, 4, axis=1))
     np.testing.assert_allclose(updated.mean["state"][1], 1.5)
     np.testing.assert_allclose(updated.std["state"][1], np.sqrt(1.25 + .0001), rtol=1e-6)
+    # Streaming collection carries physical state/RNG rather than replaying reset.
+    streaming = make_collector(env, make_policy, "i", return_state=True)
+    first, statistics, carried, next_key = streaming(
+        jax.device_put_replicated((normalizer, jp.float32(0), jp.float32(0)), jax.local_devices()), state, keys["epoch"])
+    np.testing.assert_array_equal(next_key[0], jax.random.split(keys["epoch"][0], 3)[2])
+    second, statistics, _, _ = streaming((statistics, jp.zeros(1), jp.zeros(1)), carried, next_key)
+    np.testing.assert_array_equal(first.observation["state"][0, :, :, 1], [[0, 1, 2, 3]] * 2)
+    np.testing.assert_array_equal(second.observation["state"][0, :, :, 1], [[4, 5, 6, 7]] * 2)
+    assert count_value(jax.tree.map(lambda x: x[0], statistics).count) == 16

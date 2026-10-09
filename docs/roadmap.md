@@ -69,7 +69,9 @@ entry, docs, commit.
    original subset fails 0/7, alignment insufficient; smooth/joint-limited repair
    passes 6/7 and geometric correction passes both turns, giving seven verified
    candidate targets; opt-in motor environment passes 80-step CPU smoke;
-   next preregister capped PPO/restore smoke and a neutral policy comparison/gate
+   32-transition PPO/warm-start plumbing completed; saved-checkpoint audit finds
+   normalization amplification; next preregister a normalization-control smoke,
+   then a neutral policy comparison/gate
    before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and

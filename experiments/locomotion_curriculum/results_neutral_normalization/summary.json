@@ -1,0 +1,10 @@
+{
+ "preregistration_commit": "7a3b7c5",
+ "implementation_commit": "2218811c64c4b2f7c9faa89bb832ad27406b725d",
+ "source_sha256": "aef246a666a628f91e17d23f86be6027a296d618674f8216ecc54bbb3525720d",
+ "all_integrity_pass": true,
+ "new_optimization_transitions": 0,
+ "rollouts": 0,
+ "cloud_work": false,
+ "causal_loss_diagnosis": false
+}

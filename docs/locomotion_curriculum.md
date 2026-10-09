@@ -1,7 +1,8 @@
 # Robust locomotion before expressive objectives (design, 2026-10-09)
 
-Status: local B2 motor gate evaluated; overall fail (2026-10-09). No new
-training or cloud run. S1–S6 remain closed results.
+Status: local B2 motor gate evaluated; overall fail (2026-10-09). Local neutral
+plumbing includes 32 PPO transitions and saved-checkpoint diagnosis, without a
+learned readiness result or cloud run. S1–S6 remain closed results.
 
 ## Why the order changes
 
@@ -62,9 +63,20 @@ contacts and knee limits (6/7); analytic base-pivot correction passes both turns
 Five preserved passing targets plus two corrected turns form a hash-verified
 seven-command subset. The opt-in `NeutralJoystick` and matching-policy-hash
 inference contract pass the [80-step CPU smoke](neutral_motor_smoke.md), no
-terminations or zero-clipped rewards. No optimisation or trained candidate yet.
-Next: preregister capped PPO/restore smoke, then an equal-step motor-only
-comparison with the long rest/turn readiness gate. Subset command coverage is
+terminations or zero-clipped rewards. A subsequent
+[PPO/warm-start smoke](neutral_ppo_restore_smoke.md) completes two 16-transition
+stages in 193.47 s: finite updates to both networks, normalization count 16->32,
+exact action restoration and warm initialization. Adam/RNG/counters restart;
+this is not full training-state continuation. The live comparison checked
+numeric equality; subsequent literal-byte audit covers saved-tree reserialization,
+so the original live bitwise criterion is not fully evidenced. Fresh value loss
+8.842e8/KL 1.552e11 are preserved, despite warm loss 0.0612/KL 0.1214.
+[Normalization audit](neutral_normalization_audit.md) finds six policy and
+seventeen privileged slots at the 1e-6 std floor; fixed synthetic probes amplify
+to 449,070 and saturate actions. This does not prove rollout loss causation.
+Next: preregister a normalization-control smoke with strict live-byte checks,
+then an equal-step motor-only comparison with the long rest/turn readiness gate.
+There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
@@ -75,10 +87,10 @@ previously verified reactive role; the affect default remains Bv4.
    Establish tracking, stepping and recovery with a verified neutral reference.
    B2 may be a starting checkpoint if the local gate supports it; otherwise
    preregister a motor-only candidate. Keep head commands fixed initially.
-2. **Checkpoint continuation.** Prove that resuming the same neutral env retains
-   its observations, normalisation and behaviour before adding objectives.
-   The current train_style runner does not expose restore arguments; inspect
-   the pinned Brax restore API and checkpoint schema before implementing this.
+2. **Checkpoint continuation.** Parameter warm start is implemented and checked
+   in the candidate smoke: policy/value/normalizer restore with matching shapes,
+   references and source hashes. Pinned Brax reinitializes Adam, RNG and counters;
+   implement a separate full-state API if exact continuation is required.
    ONNX alone is an inference artifact, not sufficient PPO training state.
 3. **Expressive conditioning.** Add continuous joint sampling only over a
    reference space with measured feasibility. The current StyledReference picks
@@ -105,7 +117,7 @@ longer-turn measurement do not overturn the failed gate. The latter reveals
 zero-command COM and foot-region migration, which a future motor-only baseline
 must address alongside pure-turn translation.
 
-No training is authorised by this design. Before any paid pilot, provide an
+No paid training is authorised by this design. Before any paid pilot, provide an
 explicit small hard duration/cost cap and expected throughput from a relevant
 measurement. The early 95-hour projection was superseded by steady-state
 measurements, but neither projection authorises a blind 300M-step launch.

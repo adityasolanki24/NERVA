@@ -4,8 +4,9 @@ Status update 2026-10-09: the original subset stays 0/7 and alignment remains
 insufficient. A preregistered smooth/limited repair passes 6/7; geometric pivot
 correction passes both turns, yielding seven hash-verified candidate targets.
 `NeutralJoystick` and explicit inference contract opt-in are implemented. The
-80-step CPU smoke passes, with no terminations or zero-clipped rewards. No
-optimisation, trained candidate policy or learned motor-readiness result.
+80-step CPU smoke passes, with no terminations or zero-clipped rewards. A local
+32-transition PPO check updates networks and restores actions; live byte
+verification needs the declared retry. No validated learned motor-readiness result.
 
 Grounding: [neutral motor audit](neutral_motor_audit.md) and longer-turn
 measurements. This is an implemented candidate environment, not evidence of
@@ -74,8 +75,11 @@ smoke (`neutral_motor_smoke.md`); the mixed subset has exactly seven discrete
 commands, no full-grid or continuous coverage. Hashes protect raw recordings
 and fitted targets; unsupported references fail closed. Shared rest/phase is
 wired to the candidate and a matching-policy-hash inference opt-in; historical
-policies retain their clock. Next preregister a capped PPO/checkpoint-restore
-smoke, then an equal-step motor-only comparison and long neutral-readiness gate.
-No optimiser has run. Do not rerun R0 or S1–S6. Any cloud pilot still
+policies retain their clock. Two local 16-transition PPO/warm-start stages now
+complete (`neutral_ppo_restore_smoke.md`), with identical restored actions and
+fresh optimizer/RNG/counters. The saved-checkpoint audit finds normalization
+floor susceptibility; next preregister a normalization-control smoke and strict
+live-byte checks before an equal-step motor-only comparison/readiness gate.
+These tiny artifacts are not validated controllers. Do not rerun R0 or S1–S6. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.

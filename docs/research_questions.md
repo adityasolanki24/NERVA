@@ -25,8 +25,13 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   passes conformance. Subsequent smooth/joint-limited repair passes 6/7, and
   analytic pivot correction passes both turns; seven candidate targets are
   hash-verified. The opt-in motor environment passes 80 CPU steps without
-  optimisation (`neutral_motor_smoke.md`). Next is capped PPO/restore smoke and
-  a neutral learned-policy comparison/gate; expressive curriculum remains blocked.
+  optimisation (`neutral_motor_smoke.md`). A subsequent 32-transition PPO check
+  updates both networks and restores identical actions/normalizer, with fresh
+  optimizer state (`neutral_ppo_restore_smoke.md`). Saved-checkpoint audit finds
+  six policy and seventeen privileged slots at the 1e-6 std floor, causing
+  extreme synthetic-probe amplification (`neutral_normalization_audit.md`).
+  Next: normalization-control smoke, then a neutral learned-policy comparison/gate;
+  expressive curriculum remains blocked. No loss-causation or motor-quality claim.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 

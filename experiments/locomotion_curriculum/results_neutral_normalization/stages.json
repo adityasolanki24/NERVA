@@ -1,0 +1,244 @@
+[
+ {
+  "stage": "fresh",
+  "normalizer_count": 16,
+  "std": {
+   "privileged_state": {
+    "slots": 212,
+    "floor_count": 17,
+    "floor_indices": [
+     6,
+     7,
+     9,
+     10,
+     11,
+     12,
+     174,
+     176,
+     177,
+     178,
+     179,
+     190,
+     191,
+     192,
+     193,
+     194,
+     195
+    ],
+    "min": 9.999999974752427e-07,
+    "median": 0.2996489405632019,
+    "max": 6.460186004638672,
+    "max_inverse_std": 1000000.0
+   },
+   "state": {
+    "slots": 101,
+    "floor_count": 6,
+    "floor_indices": [
+     6,
+     7,
+     9,
+     10,
+     11,
+     12
+    ],
+    "min": 9.999999974752427e-07,
+    "median": 0.3290974199771881,
+    "max": 6.460186004638672,
+    "max_inverse_std": 1000000.0
+   }
+  },
+  "probes": [
+   {
+    "index": 0,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 349070.0,
+     "state": 19.11027717590332
+    },
+    "action_max_abs": 0.9796602129936218,
+    "value": 12401.203125
+   },
+   {
+    "index": 1,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 249070.015625,
+     "state": 100000.0
+    },
+    "action_max_abs": 1.0,
+    "value": -7158.9267578125
+   },
+   {
+    "index": 2,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 449070.0,
+     "state": 100000.0
+    },
+    "action_max_abs": 1.0,
+    "value": 7881.76171875
+   },
+   {
+    "index": 3,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 219212.1875,
+     "state": 176000.0
+    },
+    "action_max_abs": 1.0,
+    "value": -257.8155822753906
+   },
+   {
+    "index": 4,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 0.0,
+     "state": 0.0
+    },
+    "action_max_abs": 0.0005379768554121256,
+    "value": -0.0008365898975171149
+   }
+  ],
+  "literal_byte_roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "input_hashes": {
+   "_CHECKPOINT_METADATA": "390589bdf9273629227fd7c04d4bc7ce61aa0c8d53719c2009adfca4f48dde8f",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/902bc9f7511484decfdb550666fe2c4d": "0fdda9cb4440918e505dc2c210c43a988e0d155a964584a850c84b54c74e28d6",
+   "manifest.ocdbt": "36f737def395c92b60ccc05b7a623d15532cd4241ec86e19644d4888f1db4ebb",
+   "nerva_contract.json": "aa0f558bd3e46aca6e04fa6f19baeaf1ef729d7801de972d0e5b33695c748108",
+   "ocdbt.process_0/d/15eae0d855aa440f211812ed82c492bb": "82ca6f2daee03276e8c850790d85491cc9cf162edd67cf31555278f866ac4702",
+   "ocdbt.process_0/d/1689667e04087cb169a4e7cdef108d22": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/44c4872414526e747fba34419024091c": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/ae09d00139b705fc874e094348f8b446": "fdf3fd1408b2df80cafe697c43181980a61583393030e4cd5eac4a92b15f70d3",
+   "ocdbt.process_0/manifest.ocdbt": "b66a7e7405046dfbd203bee85be96164494613117beccb8eba8c10c2d6bee3e4",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "all_integrity_pass": true
+ },
+ {
+  "stage": "warm",
+  "normalizer_count": 32,
+  "std": {
+   "privileged_state": {
+    "slots": 212,
+    "floor_count": 17,
+    "floor_indices": [
+     6,
+     7,
+     9,
+     10,
+     11,
+     12,
+     174,
+     176,
+     177,
+     178,
+     179,
+     190,
+     191,
+     192,
+     193,
+     194,
+     195
+    ],
+    "min": 9.999999974752427e-07,
+    "median": 0.308586061000824,
+    "max": 6.575585842132568,
+    "max_inverse_std": 1000000.0
+   },
+   "state": {
+    "slots": 101,
+    "floor_count": 6,
+    "floor_indices": [
+     6,
+     7,
+     9,
+     10,
+     11,
+     12
+    ],
+    "min": 9.999999974752427e-07,
+    "median": 0.3221834897994995,
+    "max": 6.575585842132568,
+    "max_inverse_std": 1000000.0
+   }
+  },
+  "probes": [
+   {
+    "index": 0,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 349070.0,
+     "state": 20.699663162231445
+    },
+    "action_max_abs": 0.9890087246894836,
+    "value": 12332.578125
+   },
+   {
+    "index": 1,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 249070.015625,
+     "state": 100000.0
+    },
+    "action_max_abs": 1.0,
+    "value": -7168.6748046875
+   },
+   {
+    "index": 2,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 449070.0,
+     "state": 100000.0
+    },
+    "action_max_abs": 1.0,
+    "value": 7893.548828125
+   },
+   {
+    "index": 3,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 219212.1875,
+     "state": 176000.0
+    },
+    "action_max_abs": 1.0,
+    "value": -187.1943817138672
+   },
+   {
+    "index": 4,
+    "manual_agreement": true,
+    "normalized_max_abs": {
+     "privileged_state": 0.0,
+     "state": 0.0
+    },
+    "action_max_abs": 0.000981419812887907,
+    "value": -0.00022498292673844844
+   }
+  ],
+  "literal_byte_roundtrip": {
+   "equal": true,
+   "finite": true,
+   "max_error": 0.0,
+   "leaves": 21
+  },
+  "input_hashes": {
+   "_CHECKPOINT_METADATA": "2aae6b01a5c1c168f0f38139183ddd2dfb72684aeb6bf03b84b73bb189f1fccd",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/2d0853863744834f6298ff4161274401": "85a9ed9eb75be91a9bb9c4fb388b1b1ea73b08b96e6413a5f0ec4b7f35e0cce3",
+   "manifest.ocdbt": "9bf5f10b11379b01d09d1a8a29de805e8c9e0d6181a4684383bae5abfce9394c",
+   "nerva_contract.json": "aa0f558bd3e46aca6e04fa6f19baeaf1ef729d7801de972d0e5b33695c748108",
+   "ocdbt.process_0/d/06fbb1e45f9adff0555a9a8246a7f817": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/1d7bebaa6afaa33d8b24f7c18b24eb8e": "95409c7ab0cf940b34d8d432e9749ce63516721a68d12e1deda2099465ef4ee9",
+   "ocdbt.process_0/d/907bd1ea1cca7e8b6e5c94819647f142": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/ef71d05932a00bc347813ffe55f790e6": "42f13d1b93a7e1db9afa531f00b320ffa196b7fd53bbb91cb1766cb6109adc09",
+   "ocdbt.process_0/manifest.ocdbt": "bb8e228ea44a66573e4cfe991ed144ffc18b6f1d57f340ce06c963926eed2cb3",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  },
+  "all_integrity_pass": true
+ }
+]

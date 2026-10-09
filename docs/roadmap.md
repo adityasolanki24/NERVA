@@ -64,7 +64,9 @@ entry, docs, commit.
 2. Return to expressive movement: π(s, c, e) with continuous expressive conditioning / reference motion
    (curriculum design: robust locomotion first, then expressive objectives;
    `locomotion_curriculum.md`: B2 gate failed pure-turn translation, 2026-10-09;
-   next a local turn-centre/reference diagnostic before training), evaluated on monotonic
+   short/long turn diagnostics completed, aggregate inconclusive; long zero-command
+   controls migrate in COM/foot region; next a preregistered neutral motor-target
+   audit and motor-only baseline design before training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

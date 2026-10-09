@@ -1,0 +1,34 @@
+{
+ "preregistration_commit": "dec8fba",
+ "implementation_commit": "7f18b7f9c9fc16db41fe92f5f820e41f8be9b90b",
+ "policy_sha256": "6ebfe384f4bcb8f06657ba597825744a01a69146ab07583b5f993f15b7f2c9a1",
+ "scene_sha256": "65324e27a3a84e2e42d1073bfc636f9cdbf6bef7b1f20c1b5a886b8fd58fcc71",
+ "upstream_commit": "b9be205ac64488c23504ca42e5ec790337adeec3",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "duration_s": 65,
+ "dt_s": 0.02,
+ "wall_cap_s": 900,
+ "cloud_work": false,
+ "safety": "shadow only",
+ "style": [
+  0,
+  0,
+  0
+ ],
+ "raw_accel": true,
+ "obs_noise": true,
+ "init_joint_noise_rad": 0.02,
+ "head_offsets": [
+  0,
+  0,
+  0,
+  0
+ ],
+ "scene": "flat_terrain_backlash"
+}

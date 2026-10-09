@@ -4,6 +4,52 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-09 — Longer B2 turns: aggregate inconclusive; zero-command controls migrate
+
+Preregistered `dec8fba`, implemented `7f18b7f`; reports in
+`experiments/locomotion_curriculum/results_long_turn/`. Exactly 15 primary
+65-second trials (left/right yaw +/-0.60 and stop, seeds 0–4) completed in
+109.62 s against a 900 s wall cap. Same B2 checkpoint, backlash scene, raw
+accelerometer, observation noise, initial +/-0.02 rad joint noise, neutral
+style and head. No affect, training, cloud run or policy change.
+
+Recorded mass-weighted robot COM and foot sites/contacts via isolated MuJoCo
+forward kinematics. Excludes static scene bodies. Rotation-averaged blocks:
+five complete rotations per turn; six fixed 10-second blocks per stop. Site
+centroid is a support-region proxy, not a force centre or support polygon.
+
+**Aggregate inconclusive, fixed thresholds preserved.** Local-region counts
+3/5 left, 2/5 right, 0/5 stop; coherent migration 0/5 left, 1/5 right,
+**5/5 stop**. Others inconclusive. All trials upright, no shadow safety
+interventions, max tilt 14.59 degrees, minimum block contact coverage 99.81%.
+Zero-command COM first-to-last block displacement 0.556–0.588 m; both-foot
+midpoint 0.564–0.596 m; contact centroid 0.555–0.586 m. COM endpoint drift
+11.12–11.75 mm/s. These are block-average displacements, not raw endpoints.
+
+Every long turn still fails original horizontal-speed criterion: left
+0.0356–0.0382, right 0.0437–0.0451 m/s (fixed limit 0.03). Stop horizontal RMS
+0.0152–0.0156 m/s still passes the original speed limit despite accumulated
+position migration. Do not revise the original gate retrospectively. B2 is
+not ready for expressive curriculum; its reactive role and Bv4 remain unchanged.
+
+Recorder COM matches MuJoCo subtree COM and does not alter live simulation
+state. Left seed 0 first 20 s base pose/velocity, action and contact arrays
+match the original gate exactly; checkpoint SHA256 matches. Six new tests.
+Complete suite including slow tests: **253 passed** in 223.65 s; the same two
+existing JAX cast-overflow warnings in unchanged training-env tests. Ruff and
+diff checks clean. Public-content scan passed; reports total about 63 KB,
+15 raw traces remain ignored; no secrets, identifiers or personal paths added.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots. Results bucket and runner identity intentionally retained;
+no spending, cloud launches or deletions.
+
+Next: separately preregister a neutral motor-target audit of zero-command
+reference lookup, velocity slices and stationary reward activation. Candidate
+mechanisms remain unproven; motor-only stopping/turning must precede expressive
+objectives. No paid training authorised, no threshold tuning or reruns.
+
+---
+
 ## 2026-10-09 — B2 turn-centre diagnostic remains inconclusive
 
 Preregistered at `69dc1e0`, implemented at `661c4be`. Analysed exactly the ten

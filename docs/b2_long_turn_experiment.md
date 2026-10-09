@@ -1,5 +1,8 @@
 # B2 longer-turn support-region measurement
 
+Completed: **aggregate inconclusive; all five zero-command controls migrate**.
+Fixed criteria unchanged. [Results](../experiments/locomotion_curriculum/results_long_turn/README.md).
+
 Preregistered before implementing or evaluating new rollouts. Follow-up to the
 inconclusive short-record diagnostic; original B2 gate stays failed.
 

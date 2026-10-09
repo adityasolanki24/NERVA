@@ -1,0 +1,23 @@
+{
+ "complete": true,
+ "counts": {
+  "turn_left": {
+   "local_region": 3,
+   "coherent_migration": 0,
+   "inconclusive": 2
+  },
+  "turn_right": {
+   "local_region": 2,
+   "coherent_migration": 1,
+   "inconclusive": 2
+  },
+  "stop": {
+   "local_region": 0,
+   "coherent_migration": 5,
+   "inconclusive": 0
+  }
+ },
+ "aggregate": "inconclusive",
+ "original_gate": "failed; unchanged",
+ "wall_seconds": 109.62
+}

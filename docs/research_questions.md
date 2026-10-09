@@ -16,8 +16,10 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
 - **Open:** is one coupled scalar an adequate style representation? See RQ1c.
 - **Neutral motor prerequisite (2026-10-09):** B2 readiness gate fails pure-turn
   translation (10/10 turns), despite 115 trials without falls and passing
-  the other criteria. Expressive curriculum waits for a separately preregistered
-  turn-centre/reference diagnostic (`locomotion_curriculum.md`).
+  the other criteria. Follow-up short and long turn diagnostics remain
+  aggregate-inconclusive; longer zero-command controls migrate in COM and foot
+  region, all five seeds (`b2_long_turn_experiment.md`). Next is a preregistered
+  neutral motor-target audit; expressive curriculum remains blocked.
 
 > Can the same biped locomotion controller produce **measurably different** movement styles, controlled by one variable `style ∈ [-1, 1]`, while remaining stable?
 

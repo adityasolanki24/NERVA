@@ -41,12 +41,18 @@ passes. All other criteria pass: no falls in 115 trials, starts/stops and
 reversals, no standing solution, all 40 modest pushes recovered (max 1.78 s),
 and the standing/walking head checks. No shadow safety interventions occurred.
 
-The next phase is a separately preregistered local pure-turn diagnostic, before
-checkpoint continuation or expressive training: distinguish base motion about
-an offset turning centre from sustained global translation, and inspect the
-reference/command lookup (the known grid lacks exact zero lateral velocity).
-Neither mechanism is established by this result. Do not relax the gate or
-train another reward variant in response to its outcome. B2 retains its
+The short-record turn diagnostic and subsequent
+[longer-turn measurement](b2_long_turn_experiment.md) are complete. Both
+aggregate conclusions are inconclusive. In the longer measurement, all five
+zero-command controls migrate: COM block-centre displacement 0.556–0.588 m,
+with corresponding foot-region displacement. Local turn-region support is
+3/5 left and 2/5 right, below the fixed 4/5 requirement. No falls or shadow
+interventions occurred. The original motor gate remains failed.
+
+Next: preregister a neutral motor-target audit covering zero-command reference
+selection, stored velocity slices and active stationary reward terms, then
+design a motor-only baseline candidate addressing stop and turn errors.
+Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 
 ## Training stages after that gate
@@ -80,11 +86,10 @@ unmeasured. PAD does not enter motor targets or deterministic safety.
 
 ## Paid-work boundary
 
-The subsequent [turn-centre diagnostic](b2_turn_diagnostic.md) was inconclusive:
-one of ten traces met the bounded-orbit criteria; none met constant world-drift
-criteria. It does not overturn the failed gate. Next local measurement should
-preregister longer turns with centre-of-mass and foot-position logging before
-deciding which physical error a future baseline must correct.
+The [short-record turn-centre diagnostic](b2_turn_diagnostic.md) and subsequent
+longer-turn measurement do not overturn the failed gate. The latter reveals
+zero-command COM and foot-region migration, which a future motor-only baseline
+must address alongside pure-turn translation.
 
 No training is authorised by this design. Before any paid pilot, provide an
 explicit small hard duration/cost cap and expected throughput from a relevant

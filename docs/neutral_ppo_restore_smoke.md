@@ -90,6 +90,7 @@ Next is a normalization-stability control before larger neutral learning.
 Completed follow-ups (2026-10-10): same-batch timing replay isolates statistics
 replacement drift (`normalization_timing_offline_retry.md`); offline schedule
 comparison supports fixed preprocessing and demonstrates deferred deployment
-drift (`normalization_schedule_comparison.md`). Next is the bounded on-policy
-identity screen (`identity_preprocessing_smoke.md`) before larger neutral
-learning. Earlier outcomes/criteria and every abort remain preserved.
+drift (`normalization_schedule_comparison.md`). The identity on-policy screen
+(`identity_preprocessing_smoke.md`) and carried-batch update screen
+(`identity_multibatch_stability.md`) subsequently pass. Next balanced seven-command
+local coverage/curriculum and paired controls before the long motor gate. Earlier outcomes/criteria and every abort remain preserved.

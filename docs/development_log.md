@@ -4,6 +4,46 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Carried identity PPO batches pass every post-update stability screen
+
+Preregistered `8c9c16b`, implementation `91356c7`, baseline `9514ad8`.
+Admit the exact passing identity warm checkpoint, contract/21 leaves/core/
+package/reference hashes. Parameter warm-start initializes fresh Adam/RNG/
+environment at seed 19; no full-state resume. Within this run, preserve Adam,
+physical environment and PRNG state across batches. Episode 32/action repeat1,
+two CPU environments, unroll 4, one Adam update per newly collected eight-step
+batch; other PPO/reference/reward/physics settings unchanged. Collector state/
+key return is opt-in; existing callers retain their original two-output behavior.
+Regression test verifies consecutive observation ticks and advancing keys/count.
+
+**All 16 batches pass**, 128 new transitions/16 optimizer updates in 144.92 s
+under 900 s. Every pre-SGD behavior replay and post-SGD finite/KL/value/density
+check passes. Maximum deployed KL 0.008009 and value loss 0.126727; control
+logits/log-probability max error 9.83e-7/9.06e-6. Unused normalizer count 32->160.
+Final 21-leaf literal checkpoint roundtrip, 10 restored deterministic/sampled
+probes (error 0) and five statistics-invariance probes (error 0) pass. Archive all
+batch datasets, parameter/Adam states and post-update replays in ignored storage.
+Public aggregates in results_identity_multibatch; prior failures retained.
+
+Coverage is only lateral -0.074 m/s and yaw +0.6 rad/s. Four zero-discount episode
+endings also carry timeout flags; no motor/fall-readiness claim follows. These
+128 steps do not establish seven-command coverage, long rest, transition,
+push/head robustness or meaningful learned locomotion. Next preregister balanced
+seven-command local curriculum/coverage and paired controls before the long
+motor gate or larger training. Do not reopen S1–S6 or add expressive objectives.
+No physical-safety/affect changes, upstream/dependency edits, default adoption,
+deployment, paid/cloud work or artifact deletion.
+Verification: **304 full tests including slow MJX checks pass in 262.38 s**;
+10 focused carry/identity/control tests pass, Ruff/diff checks pass. Same two
+historical cast warnings. Public-content/finite-JSON/size checks pass for all
+43 changed/report files; raw batch/Adam/checkpoint artifacts remain ignored.
+All four upstream checkouts remain clean; no local test/training worker remains.
+Final read-only cloud audit: no instances, disks, addresses, forwarding rules,
+routers or snapshots. Existing results bucket and runner identity retained;
+no cloud runs, paid compute, resource/artifact deletion or default promotion.
+
+---
+
 ## 2026-10-10 — Identity-preprocessing on-policy/restore screen passes
 
 Preregistered `e627af3`, implementation `ed66f4e`, baseline `8175144`.

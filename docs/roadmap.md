@@ -76,8 +76,11 @@ entry, docs, commit.
    0.000140 to 10.297 with no optimizer update. Preserve both earlier integrity
    aborts. Offline schedule comparison now passes: fixed preprocessing KL 0.0237,
    deferred deployment KL 10.288, affine inference rebase preserves outputs.
-   Next preregister an identity-preprocessing on-policy smoke, then a neutral
-   policy comparison/gate before expressive training), evaluated on monotonic
+   Identity on-policy/restore screen passes 32 transitions. Its carried-batch
+   follow-up passes all 128 new transitions/16 post-SGD checks (max KL 0.00801),
+   covering only two commands. Next preregister balanced seven-command local
+   learning/coverage and paired controls, then the long neutral motor gate
+   before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.
@@ -99,10 +102,3 @@ entry, docs, commit.
   event-driven appraisal, with PAD slowest.
 - **No PAD → joint angles.** Affect reaches the body only through behaviour.
 - **No LLM or foundation model in motor control or safety.**
-
-Identity-preprocessing on-policy follow-up (2026-10-10,
-`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
-fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
-influence. This does not establish motor readiness. Next preregister a bounded
-multi-batch local stability check with post-update KL against each batch's
-behavior, then balanced command coverage and the long neutral motor gate.

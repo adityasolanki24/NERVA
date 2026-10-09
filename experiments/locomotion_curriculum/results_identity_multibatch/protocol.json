@@ -1,0 +1,119 @@
+{
+ "preregistration_commit": "8c9c16b",
+ "implementation_commit": "91356c7b456e62bbf2d092d109f7ee032da1d858",
+ "runner_sha256": "2d526f039b02f90b864072b8db3bf36704868d6662ce08a5b45b6900104dec98",
+ "collector_source_sha256": "5d8d46dd0eb510ccc1498aa42a3764c1834ee9a9b8f5b8e03f7e8639f0bac3dd",
+ "admission": {
+  "prior_report_hashes": {
+   "protocol.json": "2e2abb12253e45f0ded8a693ea88d5c0a33ab6ae19212b848b5126265dc32a21",
+   "initializer.json": "18b81acef648849e93bbc51807f7b6269b4f81b08582af08cd2b16fccdc3bc74",
+   "capture.json": "b0c8ba6b79d02a91feee7820f0056a866de40c81edbd79a9d959c98ae31f7053",
+   "cases.json": "d60f58e7dc9450b813d10d23c52a2c8f494aaf31a383fdffa6c1310c80aec7c3",
+   "reference_manifest.json": "4cd02845c1a6031857de1e5d3c747bb39f094bac55e45382972013a58b2f7a79"
+  },
+  "source_hashes": {
+   "brax.training.agents.ppo.train": "32ed2754f3f9b545c7f381aba9953d1160ca82cc0d01deb59d1f5847872eea32",
+   "brax.training.agents.ppo.checkpoint": "5879b701f400fbb49331f8cb31d9475b7ad6565c29b93098d35e7460c00ddc83",
+   "brax.training.checkpoint": "b0570f33018e604c8d0567e663e519afd6077bbc3524453e05aacbf5f57996f5",
+   "brax.training.agents.ppo.networks": "3cbab3dbb3c7240f1f36477c3f92444aaf1812c59dc99d6dcb6c37bac4b0bca4",
+   "nerva.motor_contract": "48dc4d1efdf3e14f8c034f8ee09e33dfc1e22158c38666377f9e3ef89690d537",
+   "nerva.training.neutral_joystick": "6f4270f6fe6079f61a721b35546f7fc084eac6bcab0d6f74b99e02da883cc7a8",
+   "nerva.training.neutral_reference": "bcbf92b1634a934686924373de6b10b549dc68ecf4ede682ed39ec6050e4a539",
+   "nerva.training.neutral_wrapper": "83d8d986eafbcc248265bf24ad1ce80dbd36b643dacad41e880849ef40a5b3b4",
+   "nerva.training.parameter_checkpoint": "8894aa8336b417909808e6124762bff946a0ddd07e913ed51dde73bf67085d24",
+   "brax.training.acting": "ada9405dd58d6d97bd8ab9ff797a07f17fe7d98909920d890589543a6a7134a0",
+   "brax.training.distribution": "3f9375b179f55ebb76fb337db610fafbf60b53b3d329a2fbbfae365836b1d220",
+   "brax.training.agents.ppo.losses": "b6dfe0aefeb1e3d11252fc40c6ec4512757fc7fccc0b3e37ec9ccd349351007c",
+   "brax.training.acme.running_statistics": "9591566ebcd151d35dd1a9167de3b1b00df92100892b5889bc9514252fb8c0c4"
+  },
+  "versions": {
+   "brax": "0.14.2",
+   "jax": "0.5.3",
+   "mujoco": "3.3.0",
+   "numpy": "2.5.3",
+   "flax": "0.10.6",
+   "orbax-checkpoint": "0.11.24"
+  },
+  "network": {
+   "policy_hidden_layer_sizes": [
+    32,
+    32
+   ],
+   "value_hidden_layer_sizes": [
+    32,
+    32
+   ],
+   "policy_obs_key": "state",
+   "value_obs_key": "privileged_state"
+  },
+  "variance_eps": 0.0001,
+  "seed": 7,
+  "normalization_count": [
+   0,
+   8
+  ],
+  "original_environment_transitions": 8,
+  "new_environment_transitions": 0,
+  "input_admission_pass": true,
+  "weights_sha256": "5d9bc65774a4cb496c18932d9098102de6582fdb2f25c3a78e580311b16f3c80",
+  "batch_sha256": "1bd9b7aae6d1301b6cfa2a6ae0d018f115100e412ebb950d74ddc084e71b5926",
+  "checkpoint_hashes": {
+   "_CHECKPOINT_METADATA": "d0762ed09a8d2752da5ac723cc9cf7277dd0f587a7e0f5d2c7eba1746fddede8",
+   "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+   "d/3af1656e5d79027b024814e61532344c": "2614f3b87dc6473b6861b1ebd204b0127f1fb297e4ccb16d8fdd618ab6c04bb3",
+   "manifest.ocdbt": "6bde4e7169a0e0105fccbc4fc8befde0709d3690796b885d0ef839c7208927de",
+   "nerva_contract.json": "cbd4d3070295db6743c0f435f7503927729a1aa321b34a6861086805db8ba520",
+   "ocdbt.process_0/d/60904b4b78527a33b84c56289c2cf3f8": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+   "ocdbt.process_0/d/71a3bbdf243aa19624daf1fb55b019ad": "e5535ffb0313d7b0006e38b9d1e0e87de4606b92fc6cb0a7f657d2ca335936e5",
+   "ocdbt.process_0/d/e7fbcc8be6f3373319f085b7df2d80dc": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+   "ocdbt.process_0/d/e8143539b72357daa4154f62fe7b5dee": "31fb0923241cfaefaf53e6c4596fb75db3a7831c12a3b7d6beebfa000300277d",
+   "ocdbt.process_0/manifest.ocdbt": "874757e70eedc6ffa0cec4aa8665770ef40d3a84071190aad18eb8ea6f296900",
+   "ppo_network_config.json": "122f33556716df6424a082b98cda00b4a51e31e9b7db22ae5c867cfbfc80cd5b"
+  }
+ },
+ "input_checkpoint_hashes": {
+  "_CHECKPOINT_METADATA": "6708e895f476d69d1e78d5032a44c48112c2f9d4b01c5e2346d907146a9fdd3e",
+  "_METADATA": "06cead78a85af5ac2a923f29d3e631f6dbffd71d58559432c63f8f5b812272c8",
+  "d/db83b3b945729aa5a63869a6ac89ce34": "d1640d8da5d0eab3665c8f372ef163cf69a051e09b6e39e4c2bd1923481ebdd4",
+  "manifest.ocdbt": "bdce28254d03c8aa8976508dda2fd07b92cc83e77c4397a4dda432d73437b222",
+  "nerva_contract.json": "bcd91af4fa5fc5a158060d873c9f767f2d288261c98e1e61803b598828806cb2",
+  "ocdbt.process_0/d/934a85f88c02ac575e3d5fca99ebe32f": "70d6d87c1f1bd0b87243be96ef3621a3d1d734fcaf89b27b0f594cbf9a50a11b",
+  "ocdbt.process_0/d/daa49c56f14c9841e0fc23c5785a8c9b": "414aff7fa9d1223f0fb5369eaf0a74d9548ea03bdfadec75ff3aa4525072bd6a",
+  "ocdbt.process_0/d/db1f09c655792a468d56755567e9fb4e": "e344f888ffbbf7b58958043a4040a0917fc98f07e3289fb09f4ee7082f30e9ab",
+  "ocdbt.process_0/d/ff111bee8cb2d6994ec3f08821f7f50e": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+  "ocdbt.process_0/manifest.ocdbt": "586bdacc48f9fa5d6dfe0be3937e2ddb110dfb967a8c8ba908591d18abd2e164",
+  "ppo_network_config.json": "a44ef7e99b56bcffd1206b8110e1a63f41fefa4fdf21395af567ab894a8d2c80"
+ },
+ "seed": 19,
+ "num_envs": 2,
+ "unroll_length": 4,
+ "episode_length": 32,
+ "max_new_transitions": 128,
+ "max_optimizer_updates": 16,
+ "normalizer_initial_count_unused": 32,
+ "network": {
+  "policy_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "value_hidden_layer_sizes": [
+   32,
+   32
+  ],
+  "policy_obs_key": "state",
+  "value_obs_key": "privileged_state"
+ },
+ "ppo_loss_options": {
+  "entropy_cost": 0.0001,
+  "discounting": 0.9,
+  "reward_scaling": 1.0,
+  "gae_lambda": 0.95,
+  "clipping_epsilon": 0.3,
+  "normalize_advantage": true
+ },
+ "learning_rate": 0.0001,
+ "preprocessing": "identity_statistics_unused",
+ "warm_start": "parameters_only_fresh_adam_rng_environment",
+ "wall_cap_s": 900,
+ "cloud_work": false
+}

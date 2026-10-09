@@ -95,8 +95,13 @@ not the entire previous two-update KL or a learning fix. The subsequent
 [offline schedule comparison](normalization_schedule_comparison.md) passes:
 fixed preprocessing KL 0.023703, deferred deployment KL 10.288106; affine
 first-layer inference rebase preserves policy/value outputs, but does not
-transform Adam. Next preregister a bounded identity-preprocessing on-policy
-smoke before larger neutral learning and the long readiness gate.
+transform Adam. The [identity on-policy/restore screen](identity_preprocessing_smoke.md)
+passes 32 transitions (deployed fresh/warm KL 0.058854/0.243470), exact restoration
+and zero statistics influence. The [carried-batch check](identity_multibatch_stability.md)
+passes 128 new transitions/16 updates, max post-SGD KL 0.008009 and value loss
+0.126727. It samples only lateral -0.074 m/s and yaw +0.6 rad/s. Next preregister
+balanced seven-command local learning/coverage and paired controls before larger
+training or the long readiness gate.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its
@@ -144,10 +149,3 @@ measurement. The early 95-hour projection was superseded by steady-state
 measurements, but neither projection authorises a blind 300M-step launch.
 Use the existing capped self-deleting launcher, attached result fetching,
 network cleanup and final audit. Preserve recoverable checkpoint artifacts.
-
-Identity-preprocessing on-policy follow-up (2026-10-10,
-`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
-fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
-influence. This does not establish motor readiness. Next preregister a bounded
-multi-batch local stability check with post-update KL against each batch's
-behavior, then balanced command coverage and the long neutral motor gate.

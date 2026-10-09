@@ -84,15 +84,11 @@ strict byte checks but fails fresh KL <=1; no default promotion. Same-batch
 timing replay demonstrates statistics replacement drift; offline schedule
 comparison passes fixed preprocessing and detects deferred deployment drift.
 Affine inference rebase preserves outputs but does not transform Adam.
-Next is the preregistered identity-preprocessing on-policy screen
-(`identity_preprocessing_smoke.md`) before larger motor learning.
+The identity on-policy screen passes 32 transitions and its carried-batch
+follow-up passes 128 new transitions/16 post-SGD checks (max KL 0.00801).
+See `identity_preprocessing_smoke.md` and `identity_multibatch_stability.md`.
+Only two commands were sampled: next balanced seven-command local learning/
+coverage and paired controls before the long gate or larger budgets.
 These tiny artifacts are not validated controllers. Do not rerun R0 or S1–S6. Any cloud pilot still
 needs an explicit small deterministic cap, self-deletion, result fetching,
 NAT cleanup and final resource audit. No paid run is authorised here.
-
-Identity-preprocessing on-policy follow-up (2026-10-10,
-`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
-fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
-influence. This does not establish motor readiness. Next preregister a bounded
-multi-batch local stability check with post-update KL against each batch's
-behavior, then balanced command coverage and the long neutral motor gate.

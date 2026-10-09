@@ -257,8 +257,11 @@ same-batch replay shows statistics replacement alone raises KL from 0.000140 to
 in the separately preregistered offline retry. An offline one-step comparison
 passes fixed preprocessing (KL 0.0237), detects deferred deployment drift
 (KL 10.288), and validates affine inference rebase on the declared probes.
-Adam rebase/continuation is unvalidated. Next test identity preprocessing
-on-policy before larger learning.
+Adam rebase/continuation is unvalidated. Identity-preprocessing on-policy
+screen passes 32 transitions and the subsequent carried-batch screen passes
+128 new transitions/16 updates (max post-SGD KL 0.00801). Only two commands
+were sampled. Next balanced seven-command local coverage/curriculum and paired
+controls before the long motor gate; no learned-readiness claim.
 Affect and deterministic safety are separate and unchanged.
 
 ## 5. Timescales
@@ -277,10 +280,3 @@ appraisal → PAD, the slowest. PAD is never updated or used like a motor contro
 4. **Measured in this project:** only what `development_log.md` records as measured.
 5. **Hypotheses:** everything else, including that any behaviour or style reads as an emotion to people.
 6. **Future research directions:** `roadmap.md`. These are not claims.
-
-Identity-preprocessing on-policy follow-up (2026-10-10,
-`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
-fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
-influence. This does not establish motor readiness. Next preregister a bounded
-multi-batch local stability check with post-update KL against each batch's
-behavior, then balanced command coverage and the long neutral motor gate.

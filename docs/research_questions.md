@@ -39,8 +39,11 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   remain preserved. Offline schedule comparison passes: fixed preprocessing
   KL 0.0237 versus deferred deployment KL 10.288; affine inference rebase
   preserves outputs, without Adam-continuation validation
-  (`normalization_schedule_comparison.md`). Next: identity-preprocessing
-  on-policy numerical/restore smoke before larger neutral learning.
+  (`normalization_schedule_comparison.md`). Identity on-policy/restore screen
+  passes 32 transitions; carried multi-batch follow-up passes 128 new
+  transitions/16 updates, max deployed KL 0.00801, only two commands sampled
+  (`identity_multibatch_stability.md`). Next: balanced seven-command local
+  curriculum/coverage and paired controls before the long motor gate.
   Expressive curriculum remains blocked;
   no general-stability or motor-quality claim.
 
@@ -146,10 +149,3 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
     - Brier score, benign within 3 s: prototypes 0.0575, hand-coded labels 0.0297, base rate 0.0583.
     - Most boundaries marked tracking/gait fluctuations. Other features or segmentation would be a new,
       separately preregistered experiment.
-
-Identity-preprocessing on-policy follow-up (2026-10-10,
-`identity_preprocessing_smoke.md`) passes all fixed screens in 32 transitions:
-fresh/warm deployed KL 0.058854/0.243470, exact restoration, no statistics
-influence. This does not establish motor readiness. Next preregister a bounded
-multi-batch local stability check with post-update KL against each batch's
-behavior, then balanced command coverage and the long neutral motor gate.

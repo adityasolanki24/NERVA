@@ -1,0 +1,1890 @@
+[
+ {
+  "batch": 0,
+  "new_transitions": 8,
+  "optimizer_updates": 1,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0007304800092242658,
+   "kl_mean": 0.00014009326696395874,
+   "policy_dist_max_loc": 0.9227787852287292,
+   "policy_dist_max_std": 1.9694287776947021,
+   "policy_dist_mean_loc": -0.03764568269252777,
+   "policy_dist_mean_std": 0.7918528318405151,
+   "policy_dist_min_loc": -0.8822394609451294,
+   "policy_dist_min_std": 0.31525149941444397,
+   "policy_loss": 7.450580596923828e-09,
+   "total_loss": 0.10200116783380508,
+   "v_loss": 0.10273163765668869
+  },
+  "post": {
+   "entropy_loss": -0.0007295362302102149,
+   "kl_mean": 0.0004387199878692627,
+   "policy_dist_max_loc": 0.9267056584358215,
+   "policy_dist_max_std": 1.9806360006332397,
+   "policy_dist_mean_loc": -0.03723758086562157,
+   "policy_dist_mean_std": 0.7924150228500366,
+   "policy_dist_min_loc": -0.8795027136802673,
+   "policy_dist_min_std": 0.3145430088043213,
+   "policy_loss": -0.04398307949304581,
+   "total_loss": 0.05767761543393135,
+   "v_loss": 0.10239022970199585
+  },
+  "control_errors": {
+   "logits": 9.834766387939453e-07,
+   "log_prob": 2.1457672119140625e-06
+  },
+  "gradient_norm": 18.01642608642578,
+  "normalizer_count_unused": 40,
+  "reward_mean": 0.1987532526254654,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 14.325709342956543,
+   "state": 14.325709342956543
+  },
+  "data_artifact": {
+   "file_sha256": "ec54d984936b648462c2d37946e730777414b7ccc092bee1b7cf0cfe912b74ba",
+   "tree_sha256": "ae77b994c6cc74c11434b6d463f2eb4cec379739aae335cd31b4535427ed7149",
+   "bytes": 20663,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "7369c4986aa067cd3452e69aa482e91337c0a7091b840fa0e110d2478e2f5de6",
+   "tree_sha256": "24bdb206ae1815d948df014fcccca44baf27633a624cef62cd1cc05c91143e53",
+   "bytes": 152007,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "40e5cb0a13e28a61dbeecd8647fb296ac1d76274b2b402ba690012c52bfb23d9",
+   "tree_sha256": "1baf25b04701adee95b42acb389fee3eac27c6c7402de99c3a453b90ccf101a2",
+   "bytes": 12244,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 1,
+  "new_transitions": 16,
+  "optimizer_updates": 2,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": 2.2311847715172917e-05,
+   "kl_mean": 0.0001401081681251526,
+   "policy_dist_max_loc": 1.5809752941131592,
+   "policy_dist_max_std": 3.9416356086730957,
+   "policy_dist_mean_loc": -0.1805165857076645,
+   "policy_dist_mean_std": 0.8937058448791504,
+   "policy_dist_min_loc": -3.4627676010131836,
+   "policy_dist_min_std": 0.029224436730146408,
+   "policy_loss": 1.4944816939532757e-07,
+   "total_loss": 0.03572628274559975,
+   "v_loss": 0.03570382297039032
+  },
+  "post": {
+   "entropy_loss": 2.176507405238226e-05,
+   "kl_mean": 0.00800933688879013,
+   "policy_dist_max_loc": 1.584307312965393,
+   "policy_dist_max_std": 3.9376187324523926,
+   "policy_dist_mean_loc": -0.18065539002418518,
+   "policy_dist_mean_std": 0.8935573697090149,
+   "policy_dist_min_loc": -3.4579808712005615,
+   "policy_dist_min_std": 0.02917889505624771,
+   "policy_loss": -0.07617884874343872,
+   "total_loss": -0.04081506282091141,
+   "v_loss": 0.0353420190513134
+  },
+  "control_errors": {
+   "logits": 9.5367431640625e-07,
+   "log_prob": 3.814697265625e-06
+  },
+  "gradient_norm": 44.21151351928711,
+  "normalizer_count_unused": 48,
+  "reward_mean": 0.11602858453989029,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 17.015199661254883,
+   "state": 17.015199661254883
+  },
+  "data_artifact": {
+   "file_sha256": "318a177d5a18aac1db6584951677fb987acdbc718c2b21ea038e7bab28ba383e",
+   "tree_sha256": "8ca6eb43b03865df460c12c0eef88015f5c58744a14bec8339c424627bd391b7",
+   "bytes": 22677,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "3b61472d28be18e681cd82ec38ba8d83edb845b1dea75720de6cd3170c21439d",
+   "tree_sha256": "3b162fdee514e6338027647ac14a6d896e732dce5ac15eb0c5a163df2491c815",
+   "bytes": 158656,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "bbe04463e9aa594fd671be3c1872724931959240e4cf7b99456b4c4847c7ea87",
+   "tree_sha256": "bde5c765b281d7d1d08707c2e4e40a856c5d94e1b52c93380fe6bc54efbb2201",
+   "bytes": 14259,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 2,
+  "new_transitions": 24,
+  "optimizer_updates": 3,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0002287514798808843,
+   "kl_mean": 0.00014005601406097412,
+   "policy_dist_max_loc": 1.18495774269104,
+   "policy_dist_max_std": 2.3200132846832275,
+   "policy_dist_mean_loc": -0.197282612323761,
+   "policy_dist_mean_std": 0.8445642590522766,
+   "policy_dist_min_loc": -2.1296019554138184,
+   "policy_dist_min_std": 0.10994431376457214,
+   "policy_loss": 4.470348358154297e-07,
+   "total_loss": 0.04820198193192482,
+   "v_loss": 0.04843028634786606
+  },
+  "post": {
+   "entropy_loss": -0.00022892633569426835,
+   "kl_mean": 0.0003310069441795349,
+   "policy_dist_max_loc": 1.183733582496643,
+   "policy_dist_max_std": 2.317876100540161,
+   "policy_dist_mean_loc": -0.19792486727237701,
+   "policy_dist_mean_std": 0.8442589640617371,
+   "policy_dist_min_loc": -2.126469135284424,
+   "policy_dist_min_std": 0.1101604625582695,
+   "policy_loss": -0.016124747693538666,
+   "total_loss": 0.03025037795305252,
+   "v_loss": 0.04660405218601227
+  },
+  "control_errors": {
+   "logits": 6.556510925292969e-07,
+   "log_prob": 2.86102294921875e-06
+  },
+  "gradient_norm": 11.100348472595215,
+  "normalizer_count_unused": 56,
+  "reward_mean": 0.16985705494880676,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 11.881426811218262,
+   "state": 11.852596282958984
+  },
+  "data_artifact": {
+   "file_sha256": "9807242d7610c3989bfb222a28cb93894bcfe95058e6717ce6c8b982c395b981",
+   "tree_sha256": "7e19d860808ebe639f0e7ef6a99a4af98d458af329fb92341ce3dec7f5689929",
+   "bytes": 22715,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "dfdec1995c83b248d9819229d369d44f9b70a407a396b5f5a2d28643aef90f37",
+   "tree_sha256": "c4bb13f734e5143a27e478a91123f93b2ec11243590ff27be5f52c6d7caeebb2",
+   "bytes": 158567,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "d342fdbd50619d78f2c3c55aff341dc1053329b42267175ffb5fdae1e5aeda0e",
+   "tree_sha256": "9bf834b429fe5895c7b81bf7724471aa9171d2f37b6ab37b1cb20eaf921044ab",
+   "bytes": 14231,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 3,
+  "new_transitions": 32,
+  "optimizer_updates": 4,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.000775323249399662,
+   "kl_mean": 0.0001401454210281372,
+   "policy_dist_max_loc": 0.5296662449836731,
+   "policy_dist_max_std": 1.3959933519363403,
+   "policy_dist_mean_loc": -0.09077288955450058,
+   "policy_dist_mean_std": 0.7613789439201355,
+   "policy_dist_min_loc": -1.1442108154296875,
+   "policy_dist_min_std": 0.24953864514827728,
+   "policy_loss": 4.470348358154297e-08,
+   "total_loss": 0.09072797745466232,
+   "v_loss": 0.09150325506925583
+  },
+  "post": {
+   "entropy_loss": -0.0007753765676170588,
+   "kl_mean": 0.00016558170318603516,
+   "policy_dist_max_loc": 0.530617356300354,
+   "policy_dist_max_std": 1.3961708545684814,
+   "policy_dist_mean_loc": -0.09105881303548813,
+   "policy_dist_mean_std": 0.7613402009010315,
+   "policy_dist_min_loc": -1.1445425748825073,
+   "policy_dist_min_std": 0.24947480857372284,
+   "policy_loss": -0.010379284620285034,
+   "total_loss": 0.07935963571071625,
+   "v_loss": 0.09051429480314255
+  },
+  "control_errors": {
+   "logits": 3.5762786865234375e-07,
+   "log_prob": 2.384185791015625e-06
+  },
+  "gradient_norm": 15.285442352294922,
+  "normalizer_count_unused": 64,
+  "reward_mean": 0.3082258701324463,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 14.0,
+   "state": 9.997655868530273
+  },
+  "data_artifact": {
+   "file_sha256": "de131835b7a613c5f888aa8cab370cae4cec6e73781e061265e6b08bc7262b08",
+   "tree_sha256": "7e7c7cf9200402927d44eb31316a9ed886056e7fb1083f3333b305a69cb84714",
+   "bytes": 22642,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "21d09d9afe85591fdaa1e788ce6ed0af95858a822eb40d9b31db68a7a113710a",
+   "tree_sha256": "349313058055dc877d1a9f2d905e7d60b1b616050c98acb35386bbaab4044131",
+   "bytes": 158448,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "68f3ca6a3e91efae9be9903298e35d877a6237d65bbc52d46d27d01dc69dc1ad",
+   "tree_sha256": "d2fb002595d9e73b7ebfe9f4492615a51ff2d0644dad1ae62cf9fd44e0af74cf",
+   "bytes": 14167,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 4,
+  "new_transitions": 40,
+  "optimizer_updates": 5,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.000652099319268018,
+   "kl_mean": 0.00014006346464157104,
+   "policy_dist_max_loc": 1.0785503387451172,
+   "policy_dist_max_std": 1.9015522003173828,
+   "policy_dist_mean_loc": -0.11258070170879364,
+   "policy_dist_mean_std": 0.7874626517295837,
+   "policy_dist_min_loc": -1.427313208580017,
+   "policy_dist_min_std": 0.17310450971126556,
+   "policy_loss": -3.427267074584961e-07,
+   "total_loss": 0.09781154245138168,
+   "v_loss": 0.0984639823436737
+  },
+  "post": {
+   "entropy_loss": -0.0006520366296172142,
+   "kl_mean": 0.00019230693578720093,
+   "policy_dist_max_loc": 1.08157217502594,
+   "policy_dist_max_std": 1.9030076265335083,
+   "policy_dist_mean_loc": -0.11308151483535767,
+   "policy_dist_mean_std": 0.7873146533966064,
+   "policy_dist_min_loc": -1.4269026517868042,
+   "policy_dist_min_std": 0.1732277125120163,
+   "policy_loss": -0.019573435187339783,
+   "total_loss": 0.07611514627933502,
+   "v_loss": 0.0963406190276146
+  },
+  "control_errors": {
+   "logits": 5.960464477539062e-07,
+   "log_prob": 3.814697265625e-06
+  },
+  "gradient_norm": 21.633037567138672,
+  "normalizer_count_unused": 72,
+  "reward_mean": 0.21534080803394318,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 18.0,
+   "state": 14.603874206542969
+  },
+  "data_artifact": {
+   "file_sha256": "85f912ff3375460459b07b5a174f5a78a85ae458dbc42318a359ff9e4c3dc282",
+   "tree_sha256": "aa06410c4d1e9c76a6c9d29a7bb9efef26b840dd8b2786be0e84a01a03ce537b",
+   "bytes": 22574,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "319b3ec2c0e5f1cb87d05475eb92107dc1152d4d8fc30792a4af82962ec7f99a",
+   "tree_sha256": "3f0ae30d24fe4028556b07284f017820ded7208cfc9d7026efc4b09be28a200a",
+   "bytes": 158434,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "1fa58643136d2104fb82842282efb92cd072fb59f5df6d0515b28f72d52efa02",
+   "tree_sha256": "d00cf686c0b2091fb23674bc29ad0571eb442967ed165ef0e51189cd8ccea6ac",
+   "bytes": 14207,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 5,
+  "new_transitions": 48,
+  "optimizer_updates": 6,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0005597417475655675,
+   "kl_mean": 0.0001401454210281372,
+   "policy_dist_max_loc": 0.6731234788894653,
+   "policy_dist_max_std": 2.072103977203369,
+   "policy_dist_mean_loc": -0.060831766575574875,
+   "policy_dist_mean_std": 0.7766014337539673,
+   "policy_dist_min_loc": -1.4267500638961792,
+   "policy_dist_min_std": 0.24689160287380219,
+   "policy_loss": 1.1920928955078125e-07,
+   "total_loss": 0.0196364913135767,
+   "v_loss": 0.020196113735437393
+  },
+  "post": {
+   "entropy_loss": -0.000559604202862829,
+   "kl_mean": 0.00015629827976226807,
+   "policy_dist_max_loc": 0.6727101802825928,
+   "policy_dist_max_std": 2.0723721981048584,
+   "policy_dist_mean_loc": -0.06109439209103584,
+   "policy_dist_mean_std": 0.7765040993690491,
+   "policy_dist_min_loc": -1.426015853881836,
+   "policy_dist_min_std": 0.24686111509799957,
+   "policy_loss": -0.00817544013261795,
+   "total_loss": 0.011376962065696716,
+   "v_loss": 0.02011200599372387
+  },
+  "control_errors": {
+   "logits": 5.066394805908203e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 14.197708129882812,
+  "normalizer_count_unused": 80,
+  "reward_mean": 0.1714359074831009,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 22.0,
+   "state": 11.36953067779541
+  },
+  "data_artifact": {
+   "file_sha256": "2c03d3f7b9ee8ea15ff30e5a72e5def7e64671d910e6173c27c4276a2aaea81d",
+   "tree_sha256": "ec6b71b81963eb1c9f79e01878898cafced9959de44c768612417b407c164a96",
+   "bytes": 22726,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "d103fb306949b0c74a77b14c4205a660fcef067fe0a0ef4dabeb0cf7211fbccd",
+   "tree_sha256": "699d2934d6d17b367c6b32db3e04239a22f1d3b6fe58a3b188414d5e830ba932",
+   "bytes": 158387,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "178421d8fdc43e53a6272f3abc0f86c342d79fe9cd2947dfb68350a9c57a7630",
+   "tree_sha256": "fa8c6e21ae2a2d9b4ab4755b72aebd3ac4cff7923167ec7d5b3504dc38434a80",
+   "bytes": 14259,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 6,
+  "new_transitions": 56,
+  "optimizer_updates": 7,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.000520364788826555,
+   "kl_mean": 0.0001400783658027649,
+   "policy_dist_max_loc": 0.5769567489624023,
+   "policy_dist_max_std": 1.8235336542129517,
+   "policy_dist_mean_loc": -0.09388817101716995,
+   "policy_dist_mean_std": 0.815747857093811,
+   "policy_dist_min_loc": -1.0070549249649048,
+   "policy_dist_min_std": 0.2883259952068329,
+   "policy_loss": -1.341104507446289e-07,
+   "total_loss": 0.08231519162654877,
+   "v_loss": 0.08283568918704987
+  },
+  "post": {
+   "entropy_loss": -0.0005204209010116756,
+   "kl_mean": 0.00016073137521743774,
+   "policy_dist_max_loc": 0.5775278210639954,
+   "policy_dist_max_std": 1.8256163597106934,
+   "policy_dist_mean_loc": -0.09397055208683014,
+   "policy_dist_mean_std": 0.8156570792198181,
+   "policy_dist_min_loc": -1.0066038370132446,
+   "policy_dist_min_std": 0.28895992040634155,
+   "policy_loss": -0.009008705615997314,
+   "total_loss": 0.07188162207603455,
+   "v_loss": 0.08141075074672699
+  },
+  "control_errors": {
+   "logits": 6.556510925292969e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 14.229945182800293,
+  "normalizer_count_unused": 88,
+  "reward_mean": 0.27937862277030945,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 26.0,
+   "state": 11.577603340148926
+  },
+  "data_artifact": {
+   "file_sha256": "5ba2ae44fe5ce5587e9e8765e3103ba27d8c2689dd1a031535da6dd2eea0ae18",
+   "tree_sha256": "1c9d31697a9339cecd39d0275d958ae8f11b723741a4402eaa2834a0933428a9",
+   "bytes": 22610,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "ea05bc3e43a105fbabe9f2c76c623e93dc143bc53bc3aada9cc672f082e8a57a",
+   "tree_sha256": "7bf26693f5d0891c1c2ad260b29422c145f71d2ff11f567e4a45ff228c0742d5",
+   "bytes": 158408,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "d6c2596834a5881f5c0b4809421b670130bb1486b163efd0dae297873bf24ee6",
+   "tree_sha256": "6553a2e067f27891773df50222802a32ef5069ca4733c14fd05080c8b4b3a4e1",
+   "bytes": 14175,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 7,
+  "new_transitions": 64,
+  "optimizer_updates": 8,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0006347651360556483,
+   "kl_mean": 0.0001401454210281372,
+   "policy_dist_max_loc": 0.9108486175537109,
+   "policy_dist_max_std": 2.4358432292938232,
+   "policy_dist_mean_loc": -0.0907588079571724,
+   "policy_dist_mean_std": 0.8405867218971252,
+   "policy_dist_min_loc": -1.307712197303772,
+   "policy_dist_min_std": 0.2682744264602661,
+   "policy_loss": 1.9371509552001953e-07,
+   "total_loss": 0.07715386897325516,
+   "v_loss": 0.07778844237327576
+  },
+  "post": {
+   "entropy_loss": -0.000635323638562113,
+   "kl_mean": 0.00016704201698303223,
+   "policy_dist_max_loc": 0.9117739796638489,
+   "policy_dist_max_std": 2.4352197647094727,
+   "policy_dist_mean_loc": -0.09064875543117523,
+   "policy_dist_mean_std": 0.8405020833015442,
+   "policy_dist_min_loc": -1.306247591972351,
+   "policy_dist_min_std": 0.26870080828666687,
+   "policy_loss": -0.006706520915031433,
+   "total_loss": 0.07009901106357574,
+   "v_loss": 0.07744085788726807
+  },
+  "control_errors": {
+   "logits": 4.76837158203125e-07,
+   "log_prob": 9.5367431640625e-07
+  },
+  "gradient_norm": 16.458419799804688,
+  "normalizer_count_unused": 96,
+  "reward_mean": 0.21046487987041473,
+  "terminations": 2,
+  "truncations": 2,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 13.233614921569824,
+   "state": 11.432001113891602
+  },
+  "data_artifact": {
+   "file_sha256": "0e6ce5961e46be8fce4363a2df3396df45c55a9fdbfeb975ee110ca14e1459fc",
+   "tree_sha256": "9495fa302e1591fc6a0f37b581c3f0bd35b872d515f816a665428afe03f31130",
+   "bytes": 22288,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "7cc692ab83e3d973a7eb8e35dc243c41b949755cfc0bb83dbbec76978a1ccd69",
+   "tree_sha256": "e10de7727724c115afed347ee6e1e48131fb24f4422956f5dca42753365f555c",
+   "bytes": 158366,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "c33d24356874e817b3e2a889e15c365982d283a5a78426bf420ebe6d8dd9ade6",
+   "tree_sha256": "41d5590f83f5ee8739e5efa5947196e3a138f85e61f531e6facbbdd314480703",
+   "bytes": 14260,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 8,
+  "new_transitions": 72,
+  "optimizer_updates": 9,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0008353380835615098,
+   "kl_mean": 0.00014006346464157104,
+   "policy_dist_max_loc": 1.106260895729065,
+   "policy_dist_max_std": 2.389296293258667,
+   "policy_dist_mean_loc": -0.053021613508462906,
+   "policy_dist_mean_std": 0.7905288338661194,
+   "policy_dist_min_loc": -1.1429729461669922,
+   "policy_dist_min_std": 0.2773520350456238,
+   "policy_loss": -1.4901161193847656e-08,
+   "total_loss": 0.12586702406406403,
+   "v_loss": 0.12670238316059113
+  },
+  "post": {
+   "entropy_loss": -0.0008355958852916956,
+   "kl_mean": 0.00014797598123550415,
+   "policy_dist_max_loc": 1.1057767868041992,
+   "policy_dist_max_std": 2.3892345428466797,
+   "policy_dist_mean_loc": -0.052961599081754684,
+   "policy_dist_mean_std": 0.7904577851295471,
+   "policy_dist_min_loc": -1.1414228677749634,
+   "policy_dist_min_std": 0.27739864587783813,
+   "policy_loss": -0.0021233409643173218,
+   "total_loss": 0.12376809120178223,
+   "v_loss": 0.12672702968120575
+  },
+  "control_errors": {
+   "logits": 8.344650268554688e-07,
+   "log_prob": 2.86102294921875e-06
+  },
+  "gradient_norm": 10.533060073852539,
+  "normalizer_count_unused": 104,
+  "reward_mean": 0.22104662656784058,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 17.12589454650879,
+   "state": 17.122940063476562
+  },
+  "data_artifact": {
+   "file_sha256": "803d1b69d023d4897cc88e82962b200310e20d8edd92d074568d07b1dd0ac5bb",
+   "tree_sha256": "3f6bb82a65475789ddb3c5d5409a00a029777d161e20d99cfd9bb8e9da63da26",
+   "bytes": 20354,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "669955ecea718a413f14ad39b63dabb23c7ce4c2b43f1753ce6ffd7243150b29",
+   "tree_sha256": "014e7a73ae6af233f9abc4523d0eb5426d7349b130322bef07eaa78917accfc7",
+   "bytes": 158394,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "2f10ade6f9b8df6aed824c6bf275c938f8e20b41c140c59bedd273c49a466a1d",
+   "tree_sha256": "4688f6c8dd0016a693eea32f65b85c9e4fa51929098429c0bffd326349a786a3",
+   "bytes": 12075,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 9,
+  "new_transitions": 80,
+  "optimizer_updates": 10,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0004991763853468001,
+   "kl_mean": 0.00014013051986694336,
+   "policy_dist_max_loc": 0.8539032340049744,
+   "policy_dist_max_std": 2.3279521465301514,
+   "policy_dist_mean_loc": -0.15487226843833923,
+   "policy_dist_mean_std": 0.855349600315094,
+   "policy_dist_min_loc": -1.871647596359253,
+   "policy_dist_min_std": 0.09773051738739014,
+   "policy_loss": 5.438923835754395e-07,
+   "total_loss": 0.004917882848531008,
+   "v_loss": 0.0054165152832865715
+  },
+  "post": {
+   "entropy_loss": -0.0005000971723347902,
+   "kl_mean": 0.0001979246735572815,
+   "policy_dist_max_loc": 0.8530009388923645,
+   "policy_dist_max_std": 2.326267957687378,
+   "policy_dist_mean_loc": -0.15495137870311737,
+   "policy_dist_mean_std": 0.8551052212715149,
+   "policy_dist_min_loc": -1.8694446086883545,
+   "policy_dist_min_std": 0.09819668531417847,
+   "policy_loss": -0.016324300318956375,
+   "total_loss": -0.011322303675115108,
+   "v_loss": 0.005502093583345413
+  },
+  "control_errors": {
+   "logits": 8.940696716308594e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 26.097375869750977,
+  "normalizer_count_unused": 112,
+  "reward_mean": 0.1068028062582016,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 13.937798500061035,
+   "state": 13.923182487487793
+  },
+  "data_artifact": {
+   "file_sha256": "1d88b8e710c32b82f80601f77bf4f0efde388c2c79f421a348f8ddb1fc59d586",
+   "tree_sha256": "a778130bbcba61681e9bfbf9cc6429f2106254fc19bd6a780f6de50e7e29d963",
+   "bytes": 22667,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "b1a456ef8a2249c005c61fc61f0e10695dd3042e78d6ebec7f5c644fe89c4662",
+   "tree_sha256": "9702b2683913de106aff19e2f2c579ff3dce8a786d9ea9bb782cd6e9216063e7",
+   "bytes": 158364,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "966fcde9766f7075d2e803d30e9634cf4a1365129cd54d92d52b24eb8aaa9acd",
+   "tree_sha256": "39e84a94a81114db910685c99ca4a722a03f1d0a2e0cc5cd70cf9129f51e7fe9",
+   "bytes": 14248,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 10,
+  "new_transitions": 88,
+  "optimizer_updates": 11,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0005940941628068686,
+   "kl_mean": 0.0001401081681251526,
+   "policy_dist_max_loc": 0.8809801936149597,
+   "policy_dist_max_std": 2.342068672180176,
+   "policy_dist_mean_loc": -0.1439400464296341,
+   "policy_dist_mean_std": 0.8206081986427307,
+   "policy_dist_min_loc": -1.9773774147033691,
+   "policy_dist_min_std": 0.09313550591468811,
+   "policy_loss": -0.0,
+   "total_loss": 0.04021625965833664,
+   "v_loss": 0.04081035405397415
+  },
+  "post": {
+   "entropy_loss": -0.0005945898592472076,
+   "kl_mean": 0.00024256855249404907,
+   "policy_dist_max_loc": 0.8797323107719421,
+   "policy_dist_max_std": 2.3405234813690186,
+   "policy_dist_mean_loc": -0.1439228057861328,
+   "policy_dist_mean_std": 0.8204253911972046,
+   "policy_dist_min_loc": -1.976667881011963,
+   "policy_dist_min_std": 0.09348668158054352,
+   "policy_loss": -0.017592191696166992,
+   "total_loss": 0.02211562916636467,
+   "v_loss": 0.04030241072177887
+  },
+  "control_errors": {
+   "logits": 5.960464477539062e-07,
+   "log_prob": 2.3245811462402344e-06
+  },
+  "gradient_norm": 21.2345027923584,
+  "normalizer_count_unused": 120,
+  "reward_mean": 0.1169734001159668,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 12.591092109680176,
+   "state": 12.575957298278809
+  },
+  "data_artifact": {
+   "file_sha256": "26bc9598a8bd03d7c99aee31f691b8bcc92e13410f7d1f44ea376265f3e9e5d0",
+   "tree_sha256": "17774f2c68a9e7d86fc4deadc94886de56876173a6d7697408bd4843b95d0ee4",
+   "bytes": 22655,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "89acbed4f53436f5471c59a039fea3b52624f1325f7c927016cb3a1eed49d5ed",
+   "tree_sha256": "f17b33f9cbd76529f4d7c0e7fdf81afb48f851234789bfcf825afa28710b41f2",
+   "bytes": 158400,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "5043f785cdb6969130cba486970db5d3fa16ca78f651a2ac5d6a8fbc919ad19b",
+   "tree_sha256": "1d1548fd2ad9bff9e92d60445f375820f65e4d00589aa772a4d00f1ee7aee1c6",
+   "bytes": 14222,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 11,
+  "new_transitions": 96,
+  "optimizer_updates": 12,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0006004386814311147,
+   "kl_mean": 0.0001401081681251526,
+   "policy_dist_max_loc": 1.2869350910186768,
+   "policy_dist_max_std": 2.460629463195801,
+   "policy_dist_mean_loc": -0.10521940141916275,
+   "policy_dist_mean_std": 0.8110894560813904,
+   "policy_dist_min_loc": -2.3761141300201416,
+   "policy_dist_min_std": 0.07767708599567413,
+   "policy_loss": 2.346932888031006e-06,
+   "total_loss": 0.07873236387968063,
+   "v_loss": 0.0793304592370987
+  },
+  "post": {
+   "entropy_loss": -0.0006000997964292765,
+   "kl_mean": 0.0003261491656303406,
+   "policy_dist_max_loc": 1.2861748933792114,
+   "policy_dist_max_std": 2.4628725051879883,
+   "policy_dist_mean_loc": -0.10562988370656967,
+   "policy_dist_mean_std": 0.8109710812568665,
+   "policy_dist_min_loc": -2.380481243133545,
+   "policy_dist_min_std": 0.07776625454425812,
+   "policy_loss": -0.028305446729063988,
+   "total_loss": 0.05008623003959656,
+   "v_loss": 0.07899177819490433
+  },
+  "control_errors": {
+   "logits": 8.344650268554688e-07,
+   "log_prob": 9.059906005859375e-06
+  },
+  "gradient_norm": 44.35811996459961,
+  "normalizer_count_unused": 128,
+  "reward_mean": 0.26653730869293213,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 15.45479965209961,
+   "state": 15.45479965209961
+  },
+  "data_artifact": {
+   "file_sha256": "0f962159fd6a4024d91774536de0efe97c78d178e9c336a2ce89780669f5e8a3",
+   "tree_sha256": "7ab896df081639fef2c7b3279d5ee5ba7c12efcdffbf10007542c4f5705643e8",
+   "bytes": 22755,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "0ffa66e6ddac5c03fe667068add35ca22a83565441aba587649ccf4c84b315ec",
+   "tree_sha256": "823003dd51c98f4a123beebc12d7db9451c59d7a2eab8b2ba9a07cbf15ab6f60",
+   "bytes": 158473,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "0f028758a29edb9247b281992681a604df5baa8bd514d23d26f8134ec03904aa",
+   "tree_sha256": "dcb24c64b887a4e85e6dd678e7b471b17d61550507693c4ff4728fa28d2bf45f",
+   "bytes": 14276,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 12,
+  "new_transitions": 104,
+  "optimizer_updates": 13,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0006786681478843093,
+   "kl_mean": 0.0001400485634803772,
+   "policy_dist_max_loc": 0.8079048991203308,
+   "policy_dist_max_std": 1.9232254028320312,
+   "policy_dist_mean_loc": -0.04689129814505577,
+   "policy_dist_mean_std": 0.7744777202606201,
+   "policy_dist_min_loc": -2.0135116577148438,
+   "policy_dist_min_std": 0.12000720202922821,
+   "policy_loss": -3.501772880554199e-07,
+   "total_loss": 0.10431111603975296,
+   "v_loss": 0.10499013215303421
+  },
+  "post": {
+   "entropy_loss": -0.0006785733276046813,
+   "kl_mean": 0.0001569688320159912,
+   "policy_dist_max_loc": 0.8081831336021423,
+   "policy_dist_max_std": 1.9245264530181885,
+   "policy_dist_mean_loc": -0.047043997794389725,
+   "policy_dist_mean_std": 0.7744330763816833,
+   "policy_dist_min_loc": -2.0145492553710938,
+   "policy_dist_min_std": 0.1201968640089035,
+   "policy_loss": -0.0019254013895988464,
+   "total_loss": 0.10104401409626007,
+   "v_loss": 0.10364799201488495
+  },
+  "control_errors": {
+   "logits": 5.364418029785156e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 18.072731018066406,
+  "normalizer_count_unused": 136,
+  "reward_mean": 0.22441762685775757,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 18.0,
+   "state": 11.857146263122559
+  },
+  "data_artifact": {
+   "file_sha256": "37734e6d439322fb68a2c9558b7bf6891b35f7bb63839e2b027913f6a26eee09",
+   "tree_sha256": "3c1bad5c94b088fd0ca8089f7bdcc01f6035b38e3dea3cab058c543f44957cf6",
+   "bytes": 22621,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "b018951fa6d640bd3b81dfc940890c0be3aa7e0706a7800f209b344817c3b203",
+   "tree_sha256": "8de480bdef2f6df41b17902393373915383cfc60f2ce08f87dad60e71d8ca18c",
+   "bytes": 158351,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "c1301ffb91021e6cefb3484860afa04a073927274a40cb25fdfd201418dfbd2a",
+   "tree_sha256": "82918590b6f1a0ddcf7afe382267bab274dadb7fc504d8229303725edd965165",
+   "bytes": 14175,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 13,
+  "new_transitions": 112,
+  "optimizer_updates": 14,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0006055471021682024,
+   "kl_mean": 0.0001401081681251526,
+   "policy_dist_max_loc": 1.1417698860168457,
+   "policy_dist_max_std": 2.221083402633667,
+   "policy_dist_mean_loc": -0.09095809608697891,
+   "policy_dist_mean_std": 0.8119527697563171,
+   "policy_dist_min_loc": -2.338792562484741,
+   "policy_dist_min_std": 0.09806793183088303,
+   "policy_loss": 1.7881393432617188e-07,
+   "total_loss": 0.01818208023905754,
+   "v_loss": 0.018787449225783348
+  },
+  "post": {
+   "entropy_loss": -0.0006052582757547498,
+   "kl_mean": 0.00018034130334854126,
+   "policy_dist_max_loc": 1.1410374641418457,
+   "policy_dist_max_std": 2.221400499343872,
+   "policy_dist_mean_loc": -0.09121572226285934,
+   "policy_dist_mean_std": 0.8118626475334167,
+   "policy_dist_min_loc": -2.340801954269409,
+   "policy_dist_min_std": 0.09839458763599396,
+   "policy_loss": -0.011070698499679565,
+   "total_loss": 0.0071303630247712135,
+   "v_loss": 0.018806319683790207
+  },
+  "control_errors": {
+   "logits": 4.172325134277344e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 17.289077758789062,
+  "normalizer_count_unused": 144,
+  "reward_mean": 0.14984071254730225,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 22.0,
+   "state": 14.231632232666016
+  },
+  "data_artifact": {
+   "file_sha256": "7125cafc279418b27fababde9733610eb561d955939aa7e1f63b4be32f57d622",
+   "tree_sha256": "7eebc39bbf4b99bb1ca84f59204d17da60f8eb79eac9e8d63f4719365a50a140",
+   "bytes": 22746,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "f01c7b51fdfb5e0d4dd73d9ed0839f7ba3254711152f7cd3c4416161772c079c",
+   "tree_sha256": "a04f1e0fab56afa5f0f162b5c571f5f165efc1f79674f4ffdc2f417fa44cf332",
+   "bytes": 158373,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "d11288a2f4b46d739e327872dbf7771c9efc8b20df3a6222cd88b05a8f202fb6",
+   "tree_sha256": "b9f5451605592a6df5d26e3f06581bfd11cfbb2d6c33f42b5b84488c70456267",
+   "bytes": 14243,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 14,
+  "new_transitions": 120,
+  "optimizer_updates": 15,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0004801291215699166,
+   "kl_mean": 0.0001401454210281372,
+   "policy_dist_max_loc": 0.8534120321273804,
+   "policy_dist_max_std": 2.000645399093628,
+   "policy_dist_mean_loc": -0.08369304239749908,
+   "policy_dist_mean_std": 0.8185635805130005,
+   "policy_dist_min_loc": -1.1857361793518066,
+   "policy_dist_min_std": 0.3121257722377777,
+   "policy_loss": 1.862645149230957e-07,
+   "total_loss": 0.0603216290473938,
+   "v_loss": 0.06080157309770584
+  },
+  "post": {
+   "entropy_loss": -0.0004801361355930567,
+   "kl_mean": 0.00015538930892944336,
+   "policy_dist_max_loc": 0.853744387626648,
+   "policy_dist_max_std": 2.000776767730713,
+   "policy_dist_mean_loc": -0.08387399464845657,
+   "policy_dist_mean_std": 0.8185368180274963,
+   "policy_dist_min_loc": -1.1870852708816528,
+   "policy_dist_min_std": 0.3127562999725342,
+   "policy_loss": -0.002865023910999298,
+   "total_loss": 0.056597694754600525,
+   "v_loss": 0.059942856431007385
+  },
+  "control_errors": {
+   "logits": 5.960464477539062e-07,
+   "log_prob": 1.9073486328125e-06
+  },
+  "gradient_norm": 10.802103042602539,
+  "normalizer_count_unused": 152,
+  "reward_mean": 0.24609825015068054,
+  "terminations": 0,
+  "truncations": 0,
+  "commands": [
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ],
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 26.0,
+   "state": 10.66966724395752
+  },
+  "data_artifact": {
+   "file_sha256": "46cce0324fd49e8b6e9741fc4e95a636ae6c9c56d5a46417f1fd28bbe34192ca",
+   "tree_sha256": "4affdc4e5fbbd361debc1547aef830f36dcc2af834bbe3b3685d54b1a45291d6",
+   "bytes": 22751,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "be0c37262d7fb34587b89621f4e6fe2934db3b0c7afc29f0059c584781e98659",
+   "tree_sha256": "5cef55d0a95350a3b38cb1fc605186aa11ec532018dc9ba46dd145a0157c84f9",
+   "bytes": 158409,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "0c9fde38c582e1efb20be34b2a2ef2c9a85c565f2d37a02f0fa24cb8991659c7",
+   "tree_sha256": "b680ea86a267620e0282acbc180883b1b6c2d19506aa260cf257c3c5fa9c3ddf",
+   "bytes": 14227,
+   "leaves": 18
+  }
+ },
+ {
+  "batch": 15,
+  "new_transitions": 128,
+  "optimizer_updates": 16,
+  "criteria": {
+   "control_logits": true,
+   "control_log_prob": true,
+   "control_kl": true,
+   "deployed_kl": true,
+   "deployed_value_loss": true,
+   "manual_kl": true,
+   "manual_log_prob": true
+  },
+  "all_pass": true,
+  "pre": {
+   "entropy_loss": -0.0007018814794719219,
+   "kl_mean": 0.00014010071754455566,
+   "policy_dist_max_loc": 1.005081057548523,
+   "policy_dist_max_std": 1.8849560022354126,
+   "policy_dist_mean_loc": -0.07328061014413834,
+   "policy_dist_mean_std": 0.8059998154640198,
+   "policy_dist_min_loc": -0.8379997611045837,
+   "policy_dist_min_std": 0.3130440413951874,
+   "policy_loss": 1.7881393432617188e-07,
+   "total_loss": 0.05576753243803978,
+   "v_loss": 0.05646923556923866
+  },
+  "post": {
+   "entropy_loss": -0.0007021260098554194,
+   "kl_mean": 0.00015026330947875977,
+   "policy_dist_max_loc": 1.0063802003860474,
+   "policy_dist_max_std": 1.88521409034729,
+   "policy_dist_mean_loc": -0.073332279920578,
+   "policy_dist_mean_std": 0.805925190448761,
+   "policy_dist_min_loc": -0.8389952182769775,
+   "policy_dist_min_std": 0.3134601414203644,
+   "policy_loss": -0.004200279712677002,
+   "total_loss": 0.051324911415576935,
+   "v_loss": 0.056227318942546844
+  },
+  "control_errors": {
+   "logits": 5.364418029785156e-07,
+   "log_prob": 1.430511474609375e-06
+  },
+  "gradient_norm": 15.093552589416504,
+  "normalizer_count_unused": 160,
+  "reward_mean": 0.16479669511318207,
+  "terminations": 2,
+  "truncations": 2,
+  "commands": [
+   [
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ],
+    [
+     0.0,
+     -0.07400000095367432,
+     0.0
+    ]
+   ],
+   [
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ],
+    [
+     0.0,
+     0.0,
+     0.6000000238418579
+    ]
+   ]
+  ],
+  "raw_observation_max_abs": {
+   "privileged_state": 13.233614921569824,
+   "state": 9.623310089111328
+  },
+  "data_artifact": {
+   "file_sha256": "146a7e319ea0fba8c0f6359e21a88072eeb8a54e02fca190123e47d2703addf1",
+   "tree_sha256": "fc83a49e6fbba875dc08071d459c7bcaff26165ed0df50f687d573ca250c406e",
+   "bytes": 22185,
+   "leaves": 23
+  },
+  "parameter_adam_artifact": {
+   "file_sha256": "0270c01c7ed962e98181ddb342b35a3261207762809c556fc7b2883e8cebe2ca",
+   "tree_sha256": "68114416c760fc629995a77ee89aa75041058ec0194967da0a556e3ff419897e",
+   "bytes": 158250,
+   "leaves": 46
+  },
+  "deployed_artifact": {
+   "file_sha256": "0632279f5edf6ac32056748c3a6d7f631cb01d79c8307aa402b54848a4864bdf",
+   "tree_sha256": "0ded088e9a4e21d1d5081cb5a65baa8f3c95c13aa75e56b8195ec6088aec30b7",
+   "bytes": 14215,
+   "leaves": 18
+  }
+ }
+]

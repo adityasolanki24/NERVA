@@ -85,3 +85,7 @@ or general stability claim. Adam/RNG/counters restart on warm load. Public
 results_identity_preprocessing; raw checkpoints/replays retained ignored.
 Next is a separately preregistered multi-batch local check with post-update KL
 against each batch's own behavior, before larger neutral learning/command gate.
+
+The separately preregistered carried-batch follow-up subsequently passes all
+128 new transitions/16 post-SGD screens; see identity_multibatch_stability.md.
+Balanced seven-command coverage and the long motor gate remain outstanding.

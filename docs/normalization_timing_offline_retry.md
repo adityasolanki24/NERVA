@@ -1,0 +1,52 @@
+# Offline retry of the preserved normalization-timing batch
+
+Preregistered 2026-10-10 at `9a03e63`, before implementation or updated-statistics
+evaluation. Original preregistration `0901b11` and invalid attempt `8a2f467`
+remain intact: its old-control log probabilities failed integrity. Offline
+old-control inspection passed when the compiled function received the batch
+explicitly. Retry changes replay input placement only: normalizer, fixed weights,
+batch and loss key are explicit dynamic JIT inputs. No change to PPO loss,
+networks, epsilon, weights, dataset, permutation, loss key or success criteria.
+This avoids relying on the failed graph that captured the batch as constants;
+it does not assert a general XLA defect.
+
+Use only retained `normalization-timing/batch.npz`, `initial_params.npz` and
+`old/000000000000` checkpoint. Verify file hashes, reconstructed tree hashes,
+all checkpoint file hashes and literal-byte checkpoint/initial NPZ equality
+against the preserved public reports before replay. Refuse missing or changed
+inputs. Check the pinned Python/package/external-source and reference hashes,
+one CPU process/device, batch [2,4], eight original transitions, count zero and
+initial weight fingerprint. No initializer, environment reset/step, rollout,
+optimizer/gradient calculation, policy training or additional transitions.
+
+Reconstruct the same initial-normalizer copy update on unpermuted observations
+with the original Welford operator, epsilon 1e-4 and one-device pmap reduction;
+count must be eight. Reproduce the same seed-7 minibatch permutation/loss key
+and verify the key ledger and minibatch hash. Replay old then updated statistics,
+using the exact pinned PPO loss/options and networks. All weights remain
+literally fixed. Stop before updated replay if old integrity fails.
+
+Every original integrity and hypothesis criterion in
+`normalization_timing_replay.md` remains unchanged: finite inputs/results,
+old logits error <=1e-5, old raw-action log-probability error <=1e-4,
+conventional old analytic self-KL absolute mean <=1e-6, official self-KL <=0.001,
+independent NumPy stabilized KL agreement atol/rtol=1e-5 in both cases,
+fixed weight/batch hashes, literal-byte old/updated checkpoint roundtrips,
+counts 0->8. Additionally compare both replays' raw-action log probabilities
+with independent NumPy tanh-Gaussian probabilities at atol=1e-4, rtol=1e-5.
+Report measured errors; no threshold relaxation or cherry-picking retries.
+
+Hypothesis supported only if integrity passes and updated official KL >1.0
+while old KL <=0.001. Otherwise preserve a negative or integrity-invalid result.
+Report value/loss/distribution/action/log-probability drift and per-slot
+normalizer changes descriptively. This diagnostic cannot prove a safe SGD
+schedule, explain the whole prior two-update KL or establish motor readiness.
+
+One offline CPU attempt with hard parent watchdog 180 s, zero new physical
+transitions and zero optimizer updates. Stop on integrity/API/nonfinite/timeout,
+retain all raw/partial outputs. Refuse overwrite. Public small aggregate reports
+`results_normalization_timing_offline/`; ignored raw artifacts
+`experiments/cloud_runs/normalization-timing-offline/`. No dependencies/upstream
+edits, paid cloud, default promotion, expressive training or artifact deletion.
+Complete full tests including slow, Ruff, docs/log, public-content checks,
+commit/push and final cloud resource audit.

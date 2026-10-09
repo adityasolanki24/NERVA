@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from experiments.locomotion_curriculum.record_reference import adapt, adapt_engine, static_support
+from experiments.locomotion_curriculum.record_reference import adapt, adapt_engine, pivot_step, static_support
 from experiments.locomotion_curriculum.reference_subset import known_pose_checks, validate
 
 
@@ -57,3 +57,13 @@ def test_repaired_validator_enforces_bounds_and_joint_order():
     data["Joints"].reverse()
     with pytest.raises(ValueError):
         validate(data, [.074, 0, 0], joint_limits=limits)
+
+
+def test_analytic_pivot_is_fixed_for_both_turn_signs_without_pose_clipping():
+    for theta in (-.162, 0, .162):
+        c = np.array([.04, -.01])
+        rotation = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+        shift = pivot_step(c, theta)
+        np.testing.assert_allclose(shift + rotation @ c, c, atol=1e-12)
+    with pytest.raises(ValueError):
+        pivot_step([float("nan"), 0], .1)

@@ -113,10 +113,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--generator-python", required=True, help="existing Linux Python interpreter with Placo")
     ap.add_argument("--repair", action="store_true")
+    ap.add_argument("--pivot", action="store_true")
     ap.add_argument("--out", type=Path)
     ap.add_argument("--raw-dir", type=Path)
     args = ap.parse_args()
-    suffix = "repair" if args.repair else "subset"
+    if args.pivot and not args.repair:
+        raise ValueError("pivot requires repair")
+    conditions = {key: value for key, value in CONDITIONS.items() if key.startswith("turn")} if args.pivot else CONDITIONS
+    wall_cap = 420 if args.pivot else 900
+    suffix = "pivot" if args.pivot else "repair" if args.repair else "subset"
     args.out = args.out or Path(f"experiments/locomotion_curriculum/results_reference_{suffix}")
     args.raw_dir = args.raw_dir or Path(f"experiments/cloud_runs/neutral-reference-{suffix}")
     if args.out.exists() or args.raw_dir.exists():
@@ -138,14 +143,15 @@ def main():
             limits[name] = (.01, np.pi / 2)
     args.out.mkdir(parents=True)
     args.raw_dir.mkdir(parents=True)
-    write_json(args.out / "protocol.json", {"preregistration_commit": "1b86c37" if args.repair else "7800728",
+    registration = "f8728dc" if args.pivot else "1b86c37" if args.repair else "7800728"
+    write_json(args.out / "protocol.json", {"preregistration_commit": registration,
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "upstream_commit": subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip(),
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
-        "preset_sha256": hashlib.sha256(preset_path.read_bytes()).hexdigest(), "conditions": CONDITIONS,
+        "preset_sha256": hashlib.sha256(preset_path.read_bytes()).hexdigest(), "conditions": conditions,
         "engine_sha256": hashlib.sha256(source.with_name("placo_walk_engine.py").read_bytes()).hexdigest(),
         "effective_preset": preset, "repair": args.repair,
-        "workers": 2, "per_recording_cap_s": 180, "wall_cap_s": 900, "cloud_work": False})
+        "workers": 2, "per_recording_cap_s": 180, "wall_cap_s": wall_cap, "cloud_work": False})
     start = time.monotonic()
 
     def record(item):
@@ -155,7 +161,7 @@ def main():
         effective = {**preset, **dict(zip(("dx", "dy", "dtheta"), np.array(command) * .54 / 2))}
         path = directory / "preset.json"
         write_json(path, effective)
-        remaining = 900 - (time.monotonic() - start)
+        remaining = wall_cap - (time.monotonic() - start)
         if remaining <= 0:
             return {"condition": name, "command": list(command), "all_pass": False, "error_type": "WallCap"}
         cap = min(180, remaining)
@@ -168,6 +174,8 @@ def main():
             command_line.append("--stand")
         if args.repair:
             command_line.append("--repair")
+        if args.pivot:
+            command_line.append("--pivot")
         try:
             with (directory / "generate.log").open("w", encoding="utf-8") as stream:
                 subprocess.run(command_line, stdout=stream, stderr=subprocess.STDOUT, check=True,
@@ -178,7 +186,7 @@ def main():
             recording = json.loads(files[0].read_text(encoding="utf-8"))
             result, ref = validate(recording, command, name == "stand", joint_limits=limits)
             write_json(directory / "reference.json", ref)
-            return {"condition": name, "command": list(command), "recording_sha256":
+            return {"condition": name, "command": list(command), "pivot": recording.get("NeutralPivot"), "recording_sha256":
                     hashlib.sha256(files[0].read_bytes()).hexdigest(), "reference_sha256":
                     hashlib.sha256((directory / "reference.json").read_bytes()).hexdigest(), **result}
         except (ValueError, KeyError, subprocess.SubprocessError) as error:
@@ -191,11 +199,11 @@ def main():
         raise RuntimeError("known-rotation validation failed")
     rows = []
     with ThreadPoolExecutor(max_workers=2) as executor:
-        for row in executor.map(record, CONDITIONS.items()):
+        for row in executor.map(record, conditions.items()):
             rows.append(row)
             write_json(args.out / "trials.json", rows)
             print(row["condition"], row["all_pass"], row.get("criteria", row.get("error_type")), flush=True)
-    report = {"all_pass": len(rows) == 7 and all(r["all_pass"] for r in rows),
+    report = {"all_pass": len(rows) == len(conditions) and all(r["all_pass"] for r in rows),
               "known_pose_checks": checks, "wall_seconds": round(time.monotonic() - start, 2),
               "usable_for_training": False, "reason": "subset only; dynamic motor readiness untested"}
     write_json(args.out / "summary.json", report)

@@ -1,0 +1,144 @@
+{
+ "reference_symmetry": {
+  "forward_walk_self_mirror_joint_rms_rad": 0.039714787155389786,
+  "best_phase_shift_steps": 13,
+  "joint_rms_rad_at_best_shift": 0.04135996848344803,
+  "joint_rms_rad_unshifted": 0.12871676683425903,
+  "contact_mismatch_fraction": 0.037037037037037035,
+  "body_velocity_rms_at_best_shift": 0.030149945989251137,
+  "turn_left_mean_body_velocity": [
+   0.003800000064074993,
+   0.0005000000237487257,
+   -0.0003000000142492354
+  ],
+  "turn_right_mean_body_velocity": [
+   -0.0026000000070780516,
+   -0.0005000000237487257,
+   0.00019999999494757503
+  ],
+  "turn_left_first_swing": "right",
+  "turn_right_first_swing": "right"
+ },
+ "turns": {
+  "mjx_turn_left": {
+   "horizontal_rms": [
+    0.0256,
+    0.0228,
+    0.0221
+   ],
+   "mean_yaw_rate": 0.5918,
+   "pivot_forward_left_m": [
+    0.0059,
+    -0.022
+   ]
+  },
+  "mjx_turn_right": {
+   "horizontal_rms": [
+    0.03,
+    0.0246,
+    0.0253
+   ],
+   "mean_yaw_rate": -0.5732,
+   "pivot_forward_left_m": [
+    0.0234,
+    -0.0191
+   ]
+  },
+  "mjx_base_candidate_no_delays_turn_left": {
+   "horizontal_rms": [
+    0.0278,
+    0.0282,
+    0.0279
+   ],
+   "mean_yaw_rate": 0.5868,
+   "pivot_forward_left_m": [
+    0.0079,
+    -0.0355
+   ]
+  },
+  "mjx_base_candidate_no_delays_turn_right": {
+   "horizontal_rms": [
+    0.0236,
+    0.0245,
+    0.0223
+   ],
+   "mean_yaw_rate": -0.5511,
+   "pivot_forward_left_m": [
+    0.0179,
+    -0.0179
+   ]
+  },
+  "mjx_gpu_candidate_delays_turn_left": {
+   "horizontal_rms": [
+    0.0305,
+    0.0285,
+    0.0323
+   ],
+   "mean_yaw_rate": 0.5722,
+   "pivot_forward_left_m": [
+    -0.0487,
+    -0.0013
+   ]
+  },
+  "mjx_gpu_candidate_delays_turn_right": {
+   "horizontal_rms": [
+    0.0353,
+    0.0353,
+    0.0337
+   ],
+   "mean_yaw_rate": -0.6096,
+   "pivot_forward_left_m": [
+    -0.0488,
+    0.012
+   ]
+  },
+  "mjx_gpu_candidate_no_delays_turn_left": {
+   "horizontal_rms": [
+    0.036,
+    0.0374,
+    0.0276
+   ],
+   "mean_yaw_rate": 0.6162,
+   "pivot_forward_left_m": [
+    -0.0521,
+    -0.0125
+   ]
+  },
+  "mjx_gpu_candidate_no_delays_turn_right": {
+   "horizontal_rms": [
+    0.0372,
+    0.0377,
+    0.0402
+   ],
+   "mean_yaw_rate": -0.6537,
+   "pivot_forward_left_m": [
+    -0.0424,
+    0.0343
+   ]
+  },
+  "native_turn_left": {
+   "horizontal_rms": [
+    0.0345,
+    0.0343,
+    0.0325
+   ],
+   "mean_yaw_rate": 0.6066,
+   "pivot_forward_left_m": [
+    -0.0145,
+    -0.0457
+   ]
+  },
+  "native_turn_right": {
+   "horizontal_rms": [
+    0.0193,
+    0.0194,
+    0.0204
+   ],
+   "mean_yaw_rate": -0.5701,
+   "pivot_forward_left_m": [
+    0.0019,
+    -0.0137
+   ]
+  }
+ }
+}

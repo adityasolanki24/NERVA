@@ -4,6 +4,32 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Left-turn miss is a MJX → native gap; about half comes from training-only delays
+
+Local diagnostic only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_turn_asymmetry/`
+(`turn_asymmetry_diagnostic.py`; parts 1–2 reading committed before running, part 3 post-hoc).
+
+### Observations [measured]
+- Base-origin candidate in its own MJX environment: turn left translates 0.022–0.026 m/s (within 0.03),
+  natively 0.033–0.035. Per the fixed reading, the miss is a sim-to-sim gap, not learned.
+- Reference turns are mirror-symmetric (joint RMS 0.041 rad at a half-period shift, equal to the forward
+  walk's own 0.040). A first run used the wrong mirror sign convention (0.56 rad, spurious); corrected in
+  `e04b728` before writing up.
+- Training delays actions and IMU readings by 0–2 control steps; the native evaluation does not. Disabling
+  the delays in MJX moves turn translation, lateral pivot and yaw rate roughly half-way to native (e.g. GPU
+  pilot yaw 0.572 → 0.616, native 0.711).
+- Scratch checks: identical contact points in both engines on identical states; one-iteration cold-start
+  accelerations differ between engines, but 10 iterations changed neither engine's turns earlier.
+
+### Reading
+The remaining failure is a protocol/sim mismatch, half explained by delays; the rest is open. Changing the
+evaluation (for example adding delays) would need its own preregistration and cannot rescue past runs.
+
+### Not yet verified
+- The remaining half of the gap; the cause of the ≈ 2 cm rightward pivot bias in both MJX turns.
+
+---
+
 ## 2026-10-10 — Base-origin reward velocity: pivot moves to the base, turn right passes, turn left misses (0.034 vs 0.03)
 
 Third authorized capped run (one L4, 45 min cap, US$2 cap), preregistered at `69a6f0f`; VM ran `0b31524`.

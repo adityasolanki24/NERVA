@@ -99,7 +99,11 @@ entry, docs, commit.
    continuation (`base_origin_velocity_pilot.md`, 60 M transitions, ≈ US$0.70) moved the turn
    pivot to the base and passed 6/7 commands (turn right now passes); it fails narrowly because turn
    left still translates 0.033–0.035 m/s (limit 0.03), from a sideways pivot offset.
-   Next: diagnose the left/right turn asymmetry, then the long neutral motor gate before expressive training), evaluated on monotonic
+   A local diagnostic then showed the left turn passes in MJX (0.022–0.026 m/s): the miss is a
+   MJX → native gap, about half of it because training adds 0–2 step action/IMU delays that the
+   native evaluation lacks (`results_turn_asymmetry/`).
+   Next: decide, by a new preregistration, how the evaluation should model latency; close the rest
+   of the gap; then the long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

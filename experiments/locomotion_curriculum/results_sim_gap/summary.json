@@ -1,0 +1,342 @@
+{
+ "pilot_candidate": {
+  "rest": {
+   "command": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    -0.0129,
+    -0.0056,
+    0.0462
+   ],
+   "terminations_pushes": 4,
+   "mjx_no_pushes": [
+    -0.0001,
+    0.0002,
+    0.0013
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0001,
+    0.0002,
+    0.0002
+   ]
+  },
+  "forward": {
+   "command": [
+    0.074,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    0.0476,
+    0.0168,
+    -0.0315
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    0.0382,
+    0.0101,
+    -0.0597
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    0.0321,
+    0.0099,
+    -0.0562
+   ]
+  },
+  "backward": {
+   "command": [
+    -0.074,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    -0.0174,
+    -0.0071,
+    0.0116
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    -0.0054,
+    -0.0001,
+    -0.005
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0165,
+    0.0005,
+    0.0002
+   ]
+  },
+  "left": {
+   "command": [
+    0.0,
+    0.074,
+    0.0
+   ],
+   "mjx_pushes": [
+    0.0086,
+    0.042,
+    -0.0601
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    0.0189,
+    0.0285,
+    -0.0313
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    0.0115,
+    0.0364,
+    -0.0254
+   ]
+  },
+  "right": {
+   "command": [
+    0.0,
+    -0.074,
+    0.0
+   ],
+   "mjx_pushes": [
+    0.0167,
+    -0.0109,
+    -0.0687
+   ],
+   "terminations_pushes": 5,
+   "mjx_no_pushes": [
+    0.0126,
+    -0.0242,
+    -0.0537
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    0.0045,
+    -0.0384,
+    -0.0323
+   ]
+  },
+  "turn_left": {
+   "command": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "mjx_pushes": [
+    -0.0418,
+    -0.0149,
+    0.555
+   ],
+   "terminations_pushes": 6,
+   "mjx_no_pushes": [
+    -0.0003,
+    -0.0091,
+    0.5318
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0083,
+    0.0314,
+    0.5581
+   ]
+  },
+  "turn_right": {
+   "command": [
+    0.0,
+    0.0,
+    -0.6
+   ],
+   "mjx_pushes": [
+    -0.0089,
+    0.0138,
+    -0.5566
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    -0.0002,
+    0.0045,
+    -0.5779
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0139,
+    -0.0404,
+    -0.5987
+   ]
+  }
+ },
+ "gpu_candidate": {
+  "rest": {
+   "command": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    -0.0063,
+    -0.0082,
+    0.0341
+   ],
+   "terminations_pushes": 3,
+   "mjx_no_pushes": [
+    0.0,
+    -0.0,
+    0.0
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0,
+    -0.0,
+    0.0
+   ]
+  },
+  "forward": {
+   "command": [
+    0.074,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    0.0199,
+    0.0206,
+    0.0117
+   ],
+   "terminations_pushes": 3,
+   "mjx_no_pushes": [
+    0.0385,
+    0.0187,
+    -0.0092
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    0.0316,
+    0.0274,
+    -0.0027
+   ]
+  },
+  "backward": {
+   "command": [
+    -0.074,
+    0.0,
+    0.0
+   ],
+   "mjx_pushes": [
+    -0.0532,
+    -0.0008,
+    0.0307
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    -0.0468,
+    0.0084,
+    0.009
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0652,
+    0.015,
+    0.0224
+   ]
+  },
+  "left": {
+   "command": [
+    0.0,
+    0.074,
+    0.0
+   ],
+   "mjx_pushes": [
+    -0.0035,
+    0.0433,
+    -0.0458
+   ],
+   "terminations_pushes": 3,
+   "mjx_no_pushes": [
+    -0.0066,
+    0.0468,
+    0.0217
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0179,
+    0.0705,
+    0.0018
+   ]
+  },
+  "right": {
+   "command": [
+    0.0,
+    -0.074,
+    0.0
+   ],
+   "mjx_pushes": [
+    0.0027,
+    -0.023,
+    -0.0355
+   ],
+   "terminations_pushes": 2,
+   "mjx_no_pushes": [
+    -0.002,
+    -0.0208,
+    -0.0088
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.017,
+    -0.0212,
+    0.0253
+   ]
+  },
+  "turn_left": {
+   "command": [
+    0.0,
+    0.0,
+    0.6
+   ],
+   "mjx_pushes": [
+    -0.0226,
+    -0.0177,
+    0.5665
+   ],
+   "terminations_pushes": 4,
+   "mjx_no_pushes": [
+    -0.0003,
+    -0.0178,
+    0.5648
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0053,
+    0.0427,
+    0.7111
+   ]
+  },
+  "turn_right": {
+   "command": [
+    0.0,
+    0.0,
+    -0.6
+   ],
+   "mjx_pushes": [
+    -0.0069,
+    0.0296,
+    -0.5933
+   ],
+   "terminations_pushes": 1,
+   "mjx_no_pushes": [
+    -0.0081,
+    0.0219,
+    -0.6071
+   ],
+   "terminations_no_pushes": 0,
+   "native_mujoco": [
+    -0.0287,
+    -0.0246,
+    -0.6686
+   ]
+  }
+ }
+}

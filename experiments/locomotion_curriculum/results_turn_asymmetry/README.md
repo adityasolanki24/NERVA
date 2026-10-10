@@ -1,6 +1,6 @@
 # Left-turn miss: a MJX → native gap, about half of it from training-only delays (2026-10-10)
 
-Runner: `turn_asymmetry_diagnostic.py`. Parts 1–2 had their reading committed before running (`83905f0`);
+Runner: `turn_asymmetry_diagnostic.py` (now `archive/`, byte-identical). Parts 1–2 had their reading committed before running (`83905f0`);
 part 3 (delays) was added afterwards, post-hoc (`5ccb195`). Diagnostic only: no criteria, no training,
 CPU. Files: `summary.json`, `rollouts.json`. The upstream checkout stayed clean.
 

@@ -1,6 +1,6 @@
 # Turn translation is a measurement-point mismatch: rewards measure the IMU, evaluation the base (2026-10-10)
 
-Runner: `turn_pivot_diagnostic.py`. Post-hoc diagnostic on the saved native rollouts (found while exploring
+Runner: `turn_pivot_diagnostic.py` (now `archive/`, byte-identical). Post-hoc diagnostic on the saved native rollouts (found while exploring
 them after `results_gait_averaged_tracking/`): no criteria, no training, CPU only. Files: `summary.json`,
 `trials.json`.
 

@@ -13,6 +13,9 @@ untouched.
 | `motor_audit.py` | `../results_motor_audit/` | `docs/neutral_motor_audit.md` |
 | `turn_diagnostic.py` | `../results_turn/` | `docs/b2_turn_diagnostic.md` |
 | `derivative_alignment.py` | `../results_derivative_alignment/` | `docs/reference_derivative_alignment.md` |
+| `sim_gap_diagnostic.py` (moved 2026-10-11) | `../results_sim_gap/` | development log 2026-10-10 |
+| `turn_pivot_diagnostic.py` (moved 2026-10-11) | `../results_turn_pivot/` | `docs/base_origin_velocity_pilot.md` |
+| `turn_asymmetry_diagnostic.py` (moved 2026-10-11) | `../results_turn_asymmetry/` | `docs/turn_translation_pilot.md` |
 
 **Reproducing a result exactly:** check out the implementation commit recorded in that result's
 `protocol.json` (or the development log), where the runner is at its original path, and run it as

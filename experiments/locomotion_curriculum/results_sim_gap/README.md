@@ -1,6 +1,6 @@
 # Diagnostics after the GPU pilot: sim-to-sim gap and the tracking reward (2026-10-10)
 
-Runner: `sim_gap_diagnostic.py` (its reading was fixed in the docstring before running). Diagnostic only:
+Runner: `sim_gap_diagnostic.py` (now `archive/`, byte-identical; original path at the recorded commits) (its reading was fixed in the docstring before running). Diagnostic only:
 no criteria, no training. CPU, local.
 
 ## 1. MJX training environment vs native MuJoCo

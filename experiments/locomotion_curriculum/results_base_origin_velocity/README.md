@@ -36,7 +36,7 @@ environment-steps per command. Neither is a motor-readiness claim.
 Normalized moving-axis RMSE: B2 0.4302, untrained 0.4250, gait-averaged 0.1496, **base-origin 0.1346**
 (ratio to untrained 0.317; to the start 0.900). Turn left fails only on translation (`cross`).
 
-## Pivot (same functions as `turn_pivot_diagnostic.py`)
+## Pivot (same functions as `archive/turn_pivot_diagnostic.py`)
 
 | | turn left: base / IMU translation (m/s), pivot forward, left (m) | turn right |
 |---|---|---|

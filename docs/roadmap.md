@@ -109,7 +109,9 @@ entry, docs, commit.
    59 M transitions, ≈ US$0.70) then **passed the whole gate in both latency conditions**
    (`turn_translation_pilot.md`): every command 5/5, no falls, all transitions, 80/80 pushes.
    One training seed, simulation only, modest margins.
-   Next: preregister the first expressive-objective experiment on top of this neutral candidate before expressive training), evaluated on monotonic
+   E1 (continuous torso-pitch and body-height conditioning by imitation of verified styled
+   references, starting from this candidate) is preregistered (`expressive_posture_experiment.md`);
+   reference generation and evaluation are local, the single training run awaits authorization before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

@@ -4,6 +4,22 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-11 — E1 expressive posture conditioning preregistered (nothing run)
+
+- `docs/expressive_posture_experiment.md`: two continuous axes, torso pitch (S1-feasible −10°…+2°) and body
+  height (COM 0.203…0.227 m, feasibility unknown), at the neutral candidate's fixed 0.54 s period.
+- Phase A (local WSL): 56 grid + 28 interpolation-checkpoint + 7 reproducibility recordings; admission
+  criteria unchanged; bilinear-interpolation validity ≤ 0.05 rad; a single fixed range-halving rule, else
+  stop.
+- Phase B: one capped L4 run from the turn-translation checkpoint, e appended with zero-initialized weights
+  (identical start), interpolated imitation and rest targets, held-out region e_pitch > 0.5 and
+  e_height > 0.5 never sampled. **Needs explicit authorization.**
+- Phase C criteria: neutral gate at e = 0 (both latency conditions); per-seed direction and ≥ 50% of the
+  reference range; strict monotonicity of seed means; cross-talk ≤ 25% with a fixed normalizer (S1's
+  failed); all commands valid at the corners and the held-out point; no falls.
+
+---
+
 ## 2026-10-11 — Codebase cleanup after the turn-translation pilot (separate commit series)
 
 - One push-recovery metric (`nerva.analysis.motor_eval.push_recovery`) replaces the copies in `gate.py` and

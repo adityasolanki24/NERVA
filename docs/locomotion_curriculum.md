@@ -150,6 +150,12 @@ one L4, ≈ US$0.70). **The neutral long motor gate passes in both latency condi
 One training seed, simulation only; margins modest. This is the first validated neutral candidate; next is
 preregistering expressive-objective work on top of it. No deployment or default change.
 
+**E1 preregistered (2026-10-11, `expressive_posture_experiment.md`):** stage 3, continuous conditioning on
+e = (torso pitch, body height) by imitating bilinearly interpolated verified styled references, fixed 0.54 s
+period, no new reward objective; Phase A reference/interpolation gate (local), one capped GPU run
+(needs authorization), then the unchanged neutral gate at e = 0 plus monotonicity, range, cross-talk and
+style-space task criteria with a held-out combination. Tempo (E2) and stage-4 objectives come later.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

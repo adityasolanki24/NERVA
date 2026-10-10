@@ -8,7 +8,11 @@ does not? (After docs/base_origin_velocity_pilot.md; development log 2026-10-10.
 2. Reference symmetry. The fitted turn-left reference, mirrored (left/right legs swapped, hip yaw and roll
    negated), against the turn-right reference over every phase shift; contact and body-velocity mirror error.
 
-Reading (fixed before running):
+3. Delays (added after parts 1–2, post-hoc): the training environment delays actions and IMU readings by a
+   random 0–2 control steps; the native evaluation has neither. MJX rollouts with the delays as trained and
+   disabled (maximum delay 1, so always 0), for the base-origin and the GPU pilot candidates.
+
+Reading (fixed before running parts 1–2):
 - If the MJX left turn translates ≤ 0.03 m/s while native does not, the offset is a MJX → native gap.
 - If MJX also translates > 0.03 m/s with a similar sideways pivot, the policy learned it.
 - A mirror joint error far above the fit tolerance would point at the reference itself.
@@ -31,6 +35,8 @@ from nerva.training.neutral_reference import COMMANDS
 
 RUN = "experiments/cloud_runs/base_origin_velocity-20261010-201858"
 CHECKPOINT = RUN + "/checkpoints/000060480000"
+DELAY_ARMS = {"base_candidate": CHECKPOINT,
+              "gpu_candidate": "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812/checkpoints/000060318720"}
 TURNS = {"turn_left": 5, "turn_right": 6}
 STEPS, START = 1000, 250
 # Joint order of the reference rows 0:16 (and velocities 16:32).
@@ -50,17 +56,20 @@ def turn_metrics(quat, linvel):
             "pivot_forward_left_m": [float(-mean[1] / yaw), float(mean[0] / yaw)]}
 
 
-def mjx_rollouts(root, reference):
+def mjx_rollouts(root, reference, folder=CHECKPOINT, delays=True, source="mjx"):
     import jax
     from brax.training.acme import running_statistics
     from brax.training.agents.ppo import checkpoint, networks
-    params = checkpoint.load(root / CHECKPOINT)
+    params = checkpoint.load(root / folder)
     net = functools.partial(networks.make_ppo_networks, **NETWORK)(
         SHAPE, 14, preprocess_observations_fn=running_statistics.normalize)
     policy = networks.make_inference_fn(net)(params, deterministic=True)
     env = balanced_environment(reference, episode_length=STEPS + 10, replicas=1, persistent_command=True,
                                gait_averaged_tracking=True, base_origin_velocity=True)
-    env.env.env.env._config.push_config.enable = False
+    config = env.env.env.env._config
+    config.push_config.enable = False
+    if not delays:
+        config.noise_config.action_max_delay = config.noise_config.imu_max_delay = 1  # randint(0, 1) == 0
     rows = []
     for seed in (0, 1, 2):
         state = jax.jit(env.reset)(jax.random.split(jax.random.PRNGKey(seed), 7))
@@ -76,9 +85,9 @@ def mjx_rollouts(root, reference):
             state, jax.random.PRNGKey(100 + seed))
         quat, linvel, done = np.asarray(quat), np.asarray(linvel), np.asarray(done)
         for name, i in TURNS.items():
-            rows.append({"source": "mjx", "command": name, "seed": seed, "terminations": int(done[:, i].sum()),
+            rows.append({"source": source, "command": name, "seed": seed, "terminations": int(done[:, i].sum()),
                          **turn_metrics(quat[:, i], linvel[:, i])})
-        print("mjx seed", seed, flush=True)
+        print(source, "seed", seed, flush=True)
     return rows
 
 
@@ -144,8 +153,13 @@ def main():
     native = native_rows(root)
     os.chdir(OPEN_DUCK_ROOT / "Open_Duck_Playground")
     rows = native + mjx_rollouts(root, reference)
+    for arm, folder in DELAY_ARMS.items():
+        for delays in (True, False):
+            if arm == "base_candidate" and delays:
+                continue  # identical to part 1
+            rows += mjx_rollouts(root, reference, folder, delays, f"mjx_{arm}_{'delays' if delays else 'no_delays'}")
     summary = {"reference_symmetry": symmetry, "turns": {}}
-    for source in ("mjx", "native"):
+    for source in sorted({r["source"] for r in rows}):
         for name in TURNS:
             sel = [r for r in rows if r["source"] == source and r["command"] == name]
             summary["turns"][f"{source}_{name}"] = {

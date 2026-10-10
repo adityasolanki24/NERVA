@@ -105,7 +105,11 @@ entry, docs, commit.
    The neutral long motor gate (`neutral_motor_gate.md`; every condition with and without
    training-like latency) then failed only on the steady left turn (0/5 without, 2/5 with latency);
    no falls in 160 trials, all transitions, 80/80 pushes recovered.
-   Next: remove the left-turn sideways offset, then re-run the same gate before expressive training), evaluated on monotonic
+   The single authorized turn-translation pilot (pure-turn tracking width σ 0.01 → 0.0025,
+   59 M transitions, ≈ US$0.70) then **passed the whole gate in both latency conditions**
+   (`turn_translation_pilot.md`): every command 5/5, no falls, all transitions, 80/80 pushes.
+   One training seed, simulation only, modest margins.
+   Next: preregister the first expressive-objective experiment on top of this neutral candidate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

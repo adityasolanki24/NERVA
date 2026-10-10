@@ -4,6 +4,37 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-11 — Turn-translation pilot: first candidate to pass the neutral long motor gate
+
+The single authorized capped run (one L4, 45 min, US$2). Preregistered at `366aec9` before training; the VM
+ran `a009a3a`. Evidence: `experiments/locomotion_curriculum/results_turn_translation/`.
+
+### Intervention (one change)
+- For the two pure-turn commands only, the gait-averaged base-origin linear tracking width σ 0.01 → 0.0025.
+  Chosen because 0.03 m/s of turn drift kept 91% of the term, trained turns sat at 0.022–0.030 m/s even in
+  MJX, and native MuJoCo adds ≈ 0.01 m/s to the left turn. Start: the base-origin final checkpoint.
+
+### What ran
+- ≈ 33 min VM, ≈ US$0.70; 59,189,760 transitions (step ceiling at 35,443 steps/s); max KL 0.0149; 18
+  recoverable snapshots. A first launch was refused locally (an uncommitted file) before any VM existed.
+- Fetch verified (236/236 files, hashes, export parity 1.2e-6); NAT removed; audit clean.
+- Full neutral gate (160 trials) on the final checkpoint; descriptive 84-trial paired evaluation with
+  clips (B2 | current | trained); left-turn report.
+
+### Observations [measured]
+- **Gate passes with and without latency:** all seven commands 5/5; turn left 0.021–0.025 m/s (was
+  0.030–0.035); no falls; all transitions; 80/80 pushes; no shadow interventions.
+- Left-turn pivot offset 4.5 → 1.7 cm; heading-frame vx −0.027 → −0.011 m/s; right-foot touchdown rate
+  during the left turn 3.5 → 2.9 per s (left 1.9 → 2.4), i.e. more even stepping.
+- Costs: turn right is closest to its limit (≤ 0.027); left step overshoots 123–130%; left turn ≈ 8% fast;
+  descriptive aggregate RMSE 0.155 (previous 0.135).
+
+### Decision (preregistered)
+- **H supported; the pilot passes.** One seed, simulation only, thresholds unchanged. Opens preregistration
+  of expressive-objective work; no deployment or default change.
+
+---
+
 ## 2026-10-10 — Neutral long motor gate (with and without latency): fails only on the steady left turn
 
 Local only (no paid compute). Preregistered at `b6ec4c5` (`docs/neutral_motor_gate.md`); runner `d29bf8e`.

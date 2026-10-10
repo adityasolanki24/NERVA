@@ -71,3 +71,14 @@ touch the sim gap itself. No other change.
   criteria, every command 5/5 including turn right, no falls, all transitions, push recovery).
 - A pass is one training seed in simulation: it opens preregistration of expressive-objective work, not
   deployment. A fail is reported as a fail; no second run.
+
+## Outcome (2026-10-11; protocol above unchanged)
+
+- **Run:** one L4 VM, ≈ 33 min, ≈ US$0.70; 367 iterations, 59,189,760 transitions, step ceiling; max KL
+  0.0149; exact roundtrip; all hashes verified; compute and network torn down and audited.
+- **Gate (final checkpoint only): PASS in both latency conditions.** Every command 5/5; turn left
+  0.021–0.023 m/s (no latency) and 0.022–0.025 (latency); 0 falls in 160 trials; every transition phase;
+  80/80 pushes recovered; no shadow-safety interventions.
+- **H supported; the pilot passes.** Margins are modest (turn right ≤ 0.027; left step overshoots 123–130%;
+  left turn ≈ 8% fast). One training seed, simulation only.
+- Report: `experiments/locomotion_curriculum/results_turn_translation/README.md`.

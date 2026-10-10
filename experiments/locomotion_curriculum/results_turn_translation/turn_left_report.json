@@ -1,0 +1,701 @@
+{
+ "b2": {
+  "paired_no_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.5753893055206754,
+     "vx": -0.009211892534743641,
+     "vy": 0.034125167389831894,
+     "horizontal_rms": 0.036491093496312806,
+     "pivot_forward_left_m": [
+      -0.059307962561020666,
+      -0.01600984315550966
+     ],
+     "displacement_m": 0.020389100016473614,
+     "stance_fraction_left_right": [
+      0.489,
+      0.549
+     ],
+     "double_support_fraction": 0.03866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      1.8
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.55842461624646,
+     "vx": -0.006666787764315002,
+     "vy": 0.036218595794945976,
+     "horizontal_rms": 0.03790723412623818,
+     "pivot_forward_left_m": [
+      -0.06485852296124593,
+      -0.011938563541712896
+     ],
+     "displacement_m": 0.08007622126324875,
+     "stance_fraction_left_right": [
+      0.485,
+      0.557
+     ],
+     "double_support_fraction": 0.042666666666666665,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      1.8
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.557693994388483,
+     "vx": -0.006276754008392186,
+     "vy": 0.031297208383605016,
+     "horizontal_rms": 0.03301100355428097,
+     "pivot_forward_left_m": [
+      -0.05611896254669681,
+      -0.011254835217070446
+     ],
+     "displacement_m": 0.05318678827417374,
+     "stance_fraction_left_right": [
+      0.487,
+      0.552
+     ],
+     "double_support_fraction": 0.03866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      1.8
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.5638359720518729,
+    "vx": -0.007385144769150277,
+    "vy": 0.033880323856127624,
+    "horizontal_rms": 0.03580311039227732,
+    "displacement_m": 0.05121736985129869,
+    "double_support_fraction": 0.04
+   }
+  }
+ },
+ "current": {
+  "paired_no_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6007248585769766,
+     "vx": -0.027644707907757325,
+     "vy": 0.012766269093459228,
+     "horizontal_rms": 0.0345466606185572,
+     "pivot_forward_left_m": [
+      -0.02125144133988483,
+      -0.046018917834103494
+     ],
+     "displacement_m": 0.08954150897555069,
+     "stance_fraction_left_right": [
+      0.553,
+      0.625
+     ],
+     "double_support_fraction": 0.17866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.53
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6077641771131872,
+     "vx": -0.028378682173705583,
+     "vy": 0.009383730271037413,
+     "horizontal_rms": 0.03433041876408745,
+     "pivot_forward_left_m": [
+      -0.0154397554584561,
+      -0.04669357497919866
+     ],
+     "displacement_m": 0.06677601855193105,
+     "stance_fraction_left_right": [
+      0.549,
+      0.631
+     ],
+     "double_support_fraction": 0.18,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.6
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6110907157920712,
+     "vx": -0.02733859701836181,
+     "vy": 0.003696779190568057,
+     "horizontal_rms": 0.03251949309890464,
+     "pivot_forward_left_m": [
+      -0.006049476935313017,
+      -0.04473737910242446
+     ],
+     "displacement_m": 0.04467110124680648,
+     "stance_fraction_left_right": [
+      0.549,
+      0.629
+     ],
+     "double_support_fraction": 0.17866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.4
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6065265838274118,
+    "vx": -0.02778732903327491,
+    "vy": 0.008615592851688232,
+    "horizontal_rms": 0.03379885749384976,
+    "displacement_m": 0.0669962095914294,
+    "double_support_fraction": 0.1791111111111111
+   }
+  },
+  "gate_no_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6007248585769766,
+     "vx": -0.027644707907757325,
+     "vy": 0.012766269093459228,
+     "horizontal_rms": 0.0345466606185572,
+     "pivot_forward_left_m": [
+      -0.02125144133988483,
+      -0.046018917834103494
+     ],
+     "displacement_m": 0.08954150897555069,
+     "stance_fraction_left_right": [
+      0.553,
+      0.625
+     ],
+     "double_support_fraction": 0.17866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.53
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6077641771131872,
+     "vx": -0.028378682173705583,
+     "vy": 0.009383730271037413,
+     "horizontal_rms": 0.03433041876408745,
+     "pivot_forward_left_m": [
+      -0.0154397554584561,
+      -0.04669357497919866
+     ],
+     "displacement_m": 0.06677601855193105,
+     "stance_fraction_left_right": [
+      0.549,
+      0.631
+     ],
+     "double_support_fraction": 0.18,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.6
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6110907157920712,
+     "vx": -0.02733859701836181,
+     "vy": 0.003696779190568057,
+     "horizontal_rms": 0.03251949309890464,
+     "pivot_forward_left_m": [
+      -0.006049476935313017,
+      -0.04473737910242446
+     ],
+     "displacement_m": 0.04467110124680648,
+     "stance_fraction_left_right": [
+      0.549,
+      0.629
+     ],
+     "double_support_fraction": 0.17866666666666667,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.4
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6120232271810863,
+     "vx": -0.026856553312681934,
+     "vy": 0.008613708739728004,
+     "horizontal_rms": 0.03401206645982633,
+     "pivot_forward_left_m": [
+      -0.01407415332813728,
+      -0.04388159161275685
+     ],
+     "displacement_m": 0.09099042059828841,
+     "stance_fraction_left_right": [
+      0.551,
+      0.637
+     ],
+     "double_support_fraction": 0.188,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.33
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6083929685423068,
+     "vx": -0.02673771252864619,
+     "vy": 0.007794673386387103,
+     "horizontal_rms": 0.03342011052711532,
+     "pivot_forward_left_m": [
+      -0.012811905773768114,
+      -0.04394809590371997
+     ],
+     "displacement_m": 0.062261698643448334,
+     "stance_fraction_left_right": [
+      0.54,
+      0.635
+     ],
+     "double_support_fraction": 0.17466666666666666,
+     "touchdowns_per_s_left_right": [
+      1.87,
+      3.6
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6079991894411256,
+    "vx": -0.02739125058823057,
+    "vy": 0.00845103213623596,
+    "horizontal_rms": 0.03376574989369819,
+    "displacement_m": 0.07084814960320499,
+    "double_support_fraction": 0.18
+   }
+  },
+  "gate_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6213514858848347,
+     "vx": -0.024594959370908966,
+     "vy": -0.0008830670389406611,
+     "horizontal_rms": 0.031233207179103478,
+     "pivot_forward_left_m": [
+      0.0014212037131980633,
+      -0.039583005641138126
+     ],
+     "displacement_m": 0.1104439105340344,
+     "stance_fraction_left_right": [
+      0.557,
+      0.649
+     ],
+     "double_support_fraction": 0.20666666666666667,
+     "touchdowns_per_s_left_right": [
+      2.0,
+      3.33
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6206678208770942,
+     "vx": -0.025823655008508254,
+     "vy": 0.004374303961621982,
+     "horizontal_rms": 0.03317297157397939,
+     "pivot_forward_left_m": [
+      -0.007047737637566666,
+      -0.04160624111624744
+     ],
+     "displacement_m": 0.07800190492034799,
+     "stance_fraction_left_right": [
+      0.581,
+      0.656
+     ],
+     "double_support_fraction": 0.23733333333333334,
+     "touchdowns_per_s_left_right": [
+      2.07,
+      3.93
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6249558636669665,
+     "vx": -0.02231156127597767,
+     "vy": 0.002218676564731588,
+     "horizontal_rms": 0.02981365529816618,
+     "pivot_forward_left_m": [
+      -0.003550133207349025,
+      -0.03570101918087979
+     ],
+     "displacement_m": 0.061307203361200456,
+     "stance_fraction_left_right": [
+      0.571,
+      0.648
+     ],
+     "double_support_fraction": 0.21866666666666668,
+     "touchdowns_per_s_left_right": [
+      2.0,
+      3.6
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6228162338860214,
+     "vx": -0.02139007846141388,
+     "vy": 0.003075590146473845,
+     "horizontal_rms": 0.029861370551794726,
+     "pivot_forward_left_m": [
+      -0.00493819842698046,
+      -0.034344124795771425
+     ],
+     "displacement_m": 0.06039152624279891,
+     "stance_fraction_left_right": [
+      0.561,
+      0.639
+     ],
+     "double_support_fraction": 0.2,
+     "touchdowns_per_s_left_right": [
+      2.13,
+      3.6
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6219492163753774,
+     "vx": -0.023747953306453292,
+     "vy": -0.004185517084922045,
+     "horizontal_rms": 0.03118754656398068,
+     "pivot_forward_left_m": [
+      0.00672967659532491,
+      -0.03818310672509991
+     ],
+     "displacement_m": 0.08513150426546107,
+     "stance_fraction_left_right": [
+      0.567,
+      0.644
+     ],
+     "double_support_fraction": 0.21066666666666667,
+     "touchdowns_per_s_left_right": [
+      2.27,
+      3.87
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6223481241380588,
+    "vx": -0.023573641484652415,
+    "vy": 0.0009199973097929418,
+    "horizontal_rms": 0.03105375023340489,
+    "displacement_m": 0.07905520986476856,
+    "double_support_fraction": 0.21466666666666664
+   }
+  }
+ },
+ "trained": {
+  "paired_no_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.642320519164009,
+     "vx": -0.00957085584680649,
+     "vy": 0.007377344310589208,
+     "horizontal_rms": 0.022325712007604897,
+     "pivot_forward_left_m": [
+      -0.011485456388955075,
+      -0.014900436092658412
+     ],
+     "displacement_m": 0.07602378721558227,
+     "stance_fraction_left_right": [
+      0.536,
+      0.672
+     ],
+     "double_support_fraction": 0.208,
+     "touchdowns_per_s_left_right": [
+      2.6,
+      3.0
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6461878791101837,
+     "vx": -0.01140276716091826,
+     "vy": 0.0055076408500468604,
+     "horizontal_rms": 0.0234448062377692,
+     "pivot_forward_left_m": [
+      -0.008523280965330105,
+      -0.01764621022700108
+     ],
+     "displacement_m": 0.10244906420838902,
+     "stance_fraction_left_right": [
+      0.532,
+      0.687
+     ],
+     "double_support_fraction": 0.21866666666666668,
+     "touchdowns_per_s_left_right": [
+      2.53,
+      2.93
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6487357394936714,
+     "vx": -0.010844182378678194,
+     "vy": 0.001927755951658687,
+     "horizontal_rms": 0.021453676167091155,
+     "pivot_forward_left_m": [
+      -0.002971558115733337,
+      -0.016715870143275777
+     ],
+     "displacement_m": 0.10032763213666152,
+     "stance_fraction_left_right": [
+      0.525,
+      0.692
+     ],
+     "double_support_fraction": 0.21733333333333332,
+     "touchdowns_per_s_left_right": [
+      2.13,
+      2.73
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6457480459226214,
+    "vx": -0.01060593512880098,
+    "vy": 0.004937580370764918,
+    "horizontal_rms": 0.02240806480415508,
+    "displacement_m": 0.09293349452021094,
+    "double_support_fraction": 0.21466666666666664
+   }
+  },
+  "gate_no_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.642320519164009,
+     "vx": -0.00957085584680649,
+     "vy": 0.007377344310589208,
+     "horizontal_rms": 0.022325712007604897,
+     "pivot_forward_left_m": [
+      -0.011485456388955075,
+      -0.014900436092658412
+     ],
+     "displacement_m": 0.07602378721558227,
+     "stance_fraction_left_right": [
+      0.536,
+      0.672
+     ],
+     "double_support_fraction": 0.208,
+     "touchdowns_per_s_left_right": [
+      2.6,
+      3.0
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6461878791101837,
+     "vx": -0.01140276716091826,
+     "vy": 0.0055076408500468604,
+     "horizontal_rms": 0.0234448062377692,
+     "pivot_forward_left_m": [
+      -0.008523280965330105,
+      -0.01764621022700108
+     ],
+     "displacement_m": 0.10244906420838902,
+     "stance_fraction_left_right": [
+      0.532,
+      0.687
+     ],
+     "double_support_fraction": 0.21866666666666668,
+     "touchdowns_per_s_left_right": [
+      2.53,
+      2.93
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6487357394936714,
+     "vx": -0.010844182378678194,
+     "vy": 0.001927755951658687,
+     "horizontal_rms": 0.021453676167091155,
+     "pivot_forward_left_m": [
+      -0.002971558115733337,
+      -0.016715870143275777
+     ],
+     "displacement_m": 0.10032763213666152,
+     "stance_fraction_left_right": [
+      0.525,
+      0.692
+     ],
+     "double_support_fraction": 0.21733333333333332,
+     "touchdowns_per_s_left_right": [
+      2.13,
+      2.73
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6489807441957336,
+     "vx": -0.011590402159201237,
+     "vy": 0.003901130380666661,
+     "horizontal_rms": 0.02247426534833776,
+     "pivot_forward_left_m": [
+      -0.006011165070084227,
+      -0.017859392998732106
+     ],
+     "displacement_m": 0.05277519328460003,
+     "stance_fraction_left_right": [
+      0.537,
+      0.672
+     ],
+     "double_support_fraction": 0.20933333333333334,
+     "touchdowns_per_s_left_right": [
+      2.6,
+      2.93
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6477719256751907,
+     "vx": -0.010830814497639693,
+     "vy": 0.004904809525137896,
+     "horizontal_rms": 0.021059989288324105,
+     "pivot_forward_left_m": [
+      -0.007571815527549263,
+      -0.01672010482138514
+     ],
+     "displacement_m": 0.042830133686265884,
+     "stance_fraction_left_right": [
+      0.525,
+      0.691
+     ],
+     "double_support_fraction": 0.216,
+     "touchdowns_per_s_left_right": [
+      2.2,
+      2.87
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6467993615277577,
+    "vx": -0.010847804408648774,
+    "vy": 0.004723736203619863,
+    "horizontal_rms": 0.022151689809825424,
+    "displacement_m": 0.07488116210629973,
+    "double_support_fraction": 0.21386666666666665
+   }
+  },
+  "gate_latency": {
+   "trials": [
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6504367901529445,
+     "vx": -0.012752638558580836,
+     "vy": -0.0022437496857201766,
+     "horizontal_rms": 0.02408490469835693,
+     "pivot_forward_left_m": [
+      0.0034496045114431155,
+      -0.019606268820652296
+     ],
+     "displacement_m": 0.039481185138537975,
+     "stance_fraction_left_right": [
+      0.557,
+      0.677
+     ],
+     "double_support_fraction": 0.23466666666666666,
+     "touchdowns_per_s_left_right": [
+      2.47,
+      2.87
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.644490959543863,
+     "vx": -0.009850336215596642,
+     "vy": 0.0008703598656693012,
+     "horizontal_rms": 0.02184435001403795,
+     "pivot_forward_left_m": [
+      -0.0013504609378621794,
+      -0.01528390130184013
+     ],
+     "displacement_m": 0.14949925937346908,
+     "stance_fraction_left_right": [
+      0.569,
+      0.679
+     ],
+     "double_support_fraction": 0.248,
+     "touchdowns_per_s_left_right": [
+      2.8,
+      3.27
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6461767230763866,
+     "vx": -0.009849589637025808,
+     "vy": -0.0076345469310364995,
+     "horizontal_rms": 0.02492544153664749,
+     "pivot_forward_left_m": [
+      0.011814951944862916,
+      -0.01524287286322051
+     ],
+     "displacement_m": 0.07389098348555463,
+     "stance_fraction_left_right": [
+      0.563,
+      0.685
+     ],
+     "double_support_fraction": 0.248,
+     "touchdowns_per_s_left_right": [
+      2.6,
+      2.87
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6489300408301983,
+     "vx": -0.013617439344810345,
+     "vy": -0.004033359191631134,
+     "horizontal_rms": 0.02456547282818947,
+     "pivot_forward_left_m": [
+      0.006215399099833812,
+      -0.020984448997597785
+     ],
+     "displacement_m": 0.028229043552178677,
+     "stance_fraction_left_right": [
+      0.561,
+      0.683
+     ],
+     "double_support_fraction": 0.244,
+     "touchdowns_per_s_left_right": [
+      2.67,
+      3.07
+     ]
+    },
+    {
+     "commanded_yaw": 0.6,
+     "achieved_yaw": 0.6569927536275157,
+     "vx": -0.013418921330572983,
+     "vy": -0.004060140164309758,
+     "horizontal_rms": 0.024505297822312814,
+     "pivot_forward_left_m": [
+      0.006179885762654345,
+      -0.02042476306851458
+     ],
+     "displacement_m": 0.06923081057695116,
+     "stance_fraction_left_right": [
+      0.565,
+      0.671
+     ],
+     "double_support_fraction": 0.236,
+     "touchdowns_per_s_left_right": [
+      2.67,
+      3.33
+     ]
+    }
+   ],
+   "mean": {
+    "achieved_yaw": 0.6494054534461817,
+    "vx": -0.011897785017317322,
+    "vy": -0.003420287221405653,
+    "horizontal_rms": 0.02398509337990893,
+    "displacement_m": 0.0720662564253383,
+    "double_support_fraction": 0.2421333333333333
+   }
+  }
+ }
+}

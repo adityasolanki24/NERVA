@@ -1,0 +1,35 @@
+{
+ "accepted_iterations": 367,
+ "accepted_transitions": 59189760,
+ "stop_reason": "step_ceiling",
+ "steps_per_second_measured": 35442.860534501255,
+ "step_ceiling_iterations": 367,
+ "wall_seconds": 1727.1,
+ "uptime_at_exit_s": 1960.27,
+ "frozen_statistics_unchanged": true,
+ "roundtrip": {
+  "equal": true,
+  "finite": true,
+  "max_error": 0.0,
+  "leaves": 25
+ },
+ "final_checkpoint": "000059189760",
+ "checkpoint_hashes": {
+  "_CHECKPOINT_METADATA": "f294f2dec0d77bd98005a2db0d4d8c458fae07f94203122afe7e0467d9a93c3e",
+  "_METADATA": "ccbe2bcf8b904bee9d11ac3a9ec6f5302d287c3f066e4c5c4f77df6be712c4d5",
+  "d/0b59462309dfa4867fa115514d62fa3c": "e66afe73cac190b4fc4be196b893a482cb1d4b6767a1da6fc3911868f805f25a",
+  "manifest.ocdbt": "111f35f56642dc94cea1546424ce1f509ffa7a205c0902bd647ef007d35cb814",
+  "ocdbt.process_0/d/1a7b0ff734a46b6973b78367c783464b": "237c723a206f2bdde6df3ad898c07d5ea921be3738089a68bb143fe3b6b7b3a6",
+  "ocdbt.process_0/d/2668d0727a4323c213596839244b20ea": "06bc8cb2c83d43c35f69bfb39e1ad22b235ab73094a990252178bce38c4a557c",
+  "ocdbt.process_0/d/af28493fda97224073e698a68ce95d17": "48127017d06949e3d81847dc06285ca203ce76d897ac4d19bc782a8970f4c1e2",
+  "ocdbt.process_0/d/b6364808b5c386c4cabe1f5ed48bf586": "114e81a4c2675e44b3c0fb302c0334459244c37e1a78c6087bbab0c6332877f7",
+  "ocdbt.process_0/d/b9198e5ce9a3d26d7528234b17b07bf5": "420e5039588c37875c06959d01b1b21cb459f66d06d95c934d0f1a4f3fa44e4a",
+  "ocdbt.process_0/manifest.ocdbt": "28da9382374439f737b9e0901244305bd0874b6e65aaa67a41e49cd0d07566ff",
+  "ppo_network_config.json": "7e163a3a4ca9d0438b1579987a77b9efa0fea897ea9e8c1e216a8cd0311b76aa"
+ },
+ "candidate_onnx_sha256": "610b1c59446cb9f6067238a61a641a60aa706c48f4a56dc8b07d1956d4813446",
+ "devices": [
+  "cuda:0"
+ ],
+ "motor_readiness": "pending_local_paired_evaluation"
+}

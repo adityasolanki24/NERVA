@@ -1,0 +1,28 @@
+{
+ "candidate": "turn_translation",
+ "gate_preregistration": "b6ec4c5",
+ "preregistration_commit": "366aec9",
+ "implementation_commit": "a009a3ad96c5aa4f2f8c043997e0a6adefe3b46f",
+ "policy": "experiments/cloud_runs/turn_translation-20261011-000711/candidate.onnx",
+ "policy_sha256": "610b1c59446cb9f6067238a61a641a60aa706c48f4a56dc8b07d1956d4813446",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dt_s": 0.02,
+ "scene": "flat_terrain_backlash",
+ "conditions": [
+  "no_latency",
+  "latency"
+ ],
+ "latency_model": "applied action from 0/1/2 control steps ago, uniform, seeded stream (seed, 1)",
+ "push": {
+  "step": 400,
+  "speed_m_s": 0.3
+ },
+ "primary_safety": "shadow only",
+ "cloud_work": false
+}

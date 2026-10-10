@@ -143,6 +143,13 @@ runs without and with training-like latency; all required in both. The base-orig
 steady turn left (0/5 without latency, 2/5 with); no falls in 160 trials, all transitions pass, 80/80 pushes
 recovered. Gate not passed; no expressive training.
 
+**Turn-translation pilot (2026-10-11, `turn_translation_pilot.md`, `results_turn_translation/`):** one change,
+a 4× tighter linear tracking width for the two pure turns, from the base-origin checkpoint (59 M transitions,
+one L4, ≈ US$0.70). **The neutral long motor gate passes in both latency conditions:** every command 5/5
+(turn left 0.021–0.025 m/s), no falls in 160 trials, all transitions, 80/80 pushes, no shadow interventions.
+One training seed, simulation only; margins modest. This is the first validated neutral candidate; next is
+preregistering expressive-objective work on top of it. No deployment or default change.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

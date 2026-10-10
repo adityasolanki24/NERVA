@@ -15,7 +15,8 @@ Local diagnostic only (no paid compute). Evidence: `experiments/locomotion_curri
 - Reference turns are mirror-symmetric (joint RMS 0.041 rad at a half-period shift, equal to the forward
   walk's own 0.040). A first run used the wrong mirror sign convention (0.56 rad, spurious); corrected in
   `e04b728` before writing up.
-- Training delays actions and IMU readings by 0–2 control steps; the native evaluation does not. Disabling
+- Training delays actions by 0–2 control steps; the native evaluation does not. (Its IMU delay acts only on
+  a gravity vector that is not observed, so it is inert; corrected after first writing.) Disabling
   the delays in MJX moves turn translation, lateral pivot and yaw rate roughly half-way to native (e.g. GPU
   pilot yaw 0.572 → 0.616, native 0.711).
 - Scratch checks: identical contact points in both engines on identical states; one-iteration cold-start

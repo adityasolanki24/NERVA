@@ -15,6 +15,11 @@ Differences from upstream `mujoco_infer.py`, all opt-in:
                        run-to-run variation from a deterministic simulator
   obs_noise=True       add the observation noise the policy was TRAINED with
                        (joystick.py noise_config), resampled every control step
+  action_delay=True    apply the action from 0, 1 or 2 control steps ago (uniform, resampled every control
+                       step, its own seeded stream), as the training env's noise_config does
+                       (action_min_delay=0, action_max_delay=3 exclusive; the history starts at zero).
+                       The observation's last actions stay undelayed, as in training. Training's IMU
+                       delay acts only on an unobserved gravity vector, so it has no counterpart here.
   push()               add a velocity to the base, as the training env does
   set_style_vector()   S1 policies only: append the style vector e to the observation
                        and use that style's gait period for the phase clock, as
@@ -99,9 +104,12 @@ def to_arrays(log: list[StepLog], start: int = 0) -> dict[str, np.ndarray]:
     return {name: np.array([getattr(r, name) for r in rows]) for name in StepLog.__dataclass_fields__}
 
 
+ACTION_DELAY_STEPS = 3  # training: randint(action_min_delay=0, action_max_delay=3) → 0, 1 or 2 steps
+
+
 class OpenDuckSim:
     def __init__(self, raw_accel: bool = True, init_joint_noise: float = 0.0,
-                 obs_noise: bool = False, seed: int = 0,
+                 obs_noise: bool = False, seed: int = 0, action_delay: bool = False,
                  policy_path: str | Path = POLICY, scene_extender=None, scene: str | Path = SCENE):
         import mujoco  # noqa: F401  (imported here so `nerva` core never needs it)
         from playground.open_duck_mini_v2.mujoco_infer import MjInfer
@@ -129,6 +137,9 @@ class OpenDuckSim:
 
         rng = np.random.default_rng(seed)
         self._rng = rng
+        # Separate stream: enabling the delay leaves the paired observation-noise sequence unchanged.
+        self._delay_rng = np.random.default_rng([seed, 1]) if action_delay else None
+        self._action_history = None
         self._obs_noise_scale = training_obs_noise_scale() if obs_noise else None
         if init_joint_noise > 0:
             addr = self.inf.get_actuator_joints_addr()
@@ -273,7 +284,14 @@ class OpenDuckSim:
         inf.last_last_action = inf.last_action.copy()
         inf.last_action = action.copy()
 
-        inf.motor_targets = inf.default_actuator + action * inf.action_scale
+        applied = action
+        if self._delay_rng is not None:
+            if self._action_history is None:
+                self._action_history = np.zeros((ACTION_DELAY_STEPS, action.shape[0]))
+            self._action_history = np.roll(self._action_history, 1, axis=0)
+            self._action_history[0] = action
+            applied = self._action_history[self._delay_rng.integers(0, ACTION_DELAY_STEPS)]
+        inf.motor_targets = inf.default_actuator + applied * inf.action_scale
         max_delta = inf.max_motor_velocity * (inf.sim_dt * inf.decimation)
         inf.motor_targets = np.clip(inf.motor_targets,
                                     inf.prev_motor_targets - max_delta,

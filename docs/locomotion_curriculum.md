@@ -136,7 +136,7 @@ IMU. The base-origin reward continuation (`base_origin_velocity_pilot.md`) moved
 
 **Turn asymmetry diagnostic (2026-10-10, `results_turn_asymmetry/`):** in MJX the left turn is within the
 limit (0.022–0.026 m/s); natively it is not. About half of that MJX → native gap comes from the training-only
-0–2 step action/IMU delays; the reference turns are symmetric; contacts match between engines.
+0–2 step action delays; the reference turns are symmetric; contacts match between engines.
 
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.

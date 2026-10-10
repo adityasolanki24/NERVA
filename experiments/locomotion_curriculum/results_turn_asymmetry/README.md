@@ -27,8 +27,10 @@ not the cause.
 
 ## 3. Delays explain about half of the gap (post-hoc)
 
-Training delays actions and IMU readings by a random 0–2 control steps; native evaluation has neither
-(it does add the training observation noise). MJX rollouts with the delays disabled:
+Training delays actions by a random 0–2 control steps; native evaluation does not. Training also
+"delays" the IMU, but only a gravity vector that is not part of the observation, so that delay is inert
+(corrected after first writing; disabling it in the runner changes nothing the policy sees). Native evaluation
+adds the training observation noise. MJX rollouts with the delays disabled:
 
 | | MJX, delays (as trained) | MJX, no delays | native (no delays) |
 |---|---|---|---|

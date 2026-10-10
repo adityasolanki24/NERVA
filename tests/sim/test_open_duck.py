@@ -156,3 +156,36 @@ def test_behaviour_style_vector_reaches_sim_and_keeps_phase_fraction():
     sim.set_behaviour(BehaviourCommand(vx=0.15, style_vector=StyleVector(tempo=1.0, torso_pitch=0.5)))
     assert sim.nb_steps_in_period == 20 and sim.inf.imitation_i == pytest.approx(10.0)
     np.testing.assert_array_equal(sim.style_vector, [1.0, 0.0, 0.5])
+
+
+class _Scripted:
+    """Policy stub returning 0, 1, 2, ... on successive calls (all 14 actions equal)."""
+
+    def __init__(self):
+        self.calls = 0
+
+    def infer(self, obs):
+        self.calls += 1
+        return np.full(14, float(self.calls - 1))
+
+
+def test_action_delay_applies_a_recent_action_and_keeps_obs_history_undelayed():
+    from nerva.sim.open_duck import ACTION_DELAY_STEPS
+    sim = OpenDuckSim(seed=3, action_delay=True)
+    sim.inf.policy = _Scripted()
+    sim.inf.max_motor_velocity = 1e9  # isolate the delay from the speed limit
+    delays = []
+    for _ in range(60):
+        sim.step_physics(sim.inf.decimation)
+        latest = sim.inf.policy.calls - 1
+        applied = (sim.inf.motor_targets[0] - sim.inf.default_actuator[0]) / sim.inf.action_scale
+        delays.append(latest - round(applied) if latest >= 2 else None)
+        assert sim.inf.last_action[0] == latest  # the observation history is the undelayed action
+    seen = {d for d in delays if d is not None}
+    assert seen == set(range(ACTION_DELAY_STEPS))
+
+
+def test_action_delay_does_not_change_the_observation_noise_stream():
+    a = OpenDuckSim(seed=5, obs_noise=True)
+    b = OpenDuckSim(seed=5, obs_noise=True, action_delay=True)
+    assert np.array_equal(a._rng.uniform(size=8), b._rng.uniform(size=8))

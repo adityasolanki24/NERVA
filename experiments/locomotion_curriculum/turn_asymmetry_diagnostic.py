@@ -8,7 +8,7 @@ does not? (After docs/base_origin_velocity_pilot.md; development log 2026-10-10.
 2. Reference symmetry. The fitted turn-left reference, mirrored (left/right legs swapped, hip yaw and roll
    negated), against the turn-right reference over every phase shift; contact and body-velocity mirror error.
 
-3. Delays (added after parts 1–2, post-hoc): the training environment delays actions and IMU readings by a
+3. Delays (added after parts 1–2, post-hoc): the training environment delays actions (and an unobserved gravity vector) by a
    random 0–2 control steps; the native evaluation has neither. MJX rollouts with the delays as trained and
    disabled (maximum delay 1, so always 0), for the base-origin and the GPU pilot candidates.
 

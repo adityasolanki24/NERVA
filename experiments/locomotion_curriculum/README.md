@@ -4,17 +4,25 @@
 
 | step | entry point | notes |
 |---|---|---|
-| train (GPU, capped) | `cloud/jobs/<experiment>.sh` → `cloud/jobs/_neutral_gpu.sh` → `python -m experiments.locomotion_curriculum.gpu_pilot --experiment NAME --out DIR` (named experiments in `EXPERIMENTS`) | launch: `python cloud/launch.py launch --job neutral_gpu_pilot --hw l4 --max-minutes 45 --input-bundle cloud/inputs/neutral_gpu_pilot.txt --wait --cleanup-network` |
+| train (GPU, capped) | `cloud/jobs/<experiment>.sh` → `cloud/jobs/_neutral_gpu.sh` → `python -m experiments.locomotion_curriculum.gpu_pilot --experiment NAME --out DIR` (named, preregistered experiments in `EXPERIMENTS`) | launch: `python cloud/launch.py launch --job <experiment> --hw l4 --max-minutes 45 --input-bundle cloud/inputs/<experiment>.txt --wait --cleanup-network` (requires explicit authorization) |
 | smoke (CPU, tiny) | `python -m experiments.locomotion_curriculum.gpu_pilot --smoke` | checks the whole path; not a result |
-| evaluate + videos | `python -m experiments.locomotion_curriculum.motor_compare --run RUN --out DIR [--render] [--protocol NAME]` | paired native-MuJoCo protocol; `--protocol` picks the preregistered arms and decision rule |
+| evaluate + videos | `python -m experiments.locomotion_curriculum.motor_compare --run RUN --out DIR [--render] [--protocol NAME]` | paired native-MuJoCo protocol (3 seeds); `--protocol` picks the preregistered arms and decision rule |
+| readiness gate | `python -m experiments.locomotion_curriculum.neutral_gate --candidate NAME [--run RUN] --out DIR --raw-dir DIR` | `docs/neutral_motor_gate.md`: 160 trials, 5 seeds, steady/transitions/pushes, each without and with training-like action latency |
+| left-turn report | `python -m experiments.locomotion_curriculum.turn_left_report --run RUN --out DIR` | descriptive (yaw, vx/vy, pivot, contacts, trajectory) |
+
+**Current validated neutral candidate:** `experiments/cloud_runs/turn_translation-20261011-000711/candidate.onnx`
+(SHA256 `610b1c59…`; local, ignored), the first to pass the neutral gate (`results_turn_translation/`). One
+training seed, simulation only; no default or deployment change.
 
 Library code lives in the `nerva` package:
 - `nerva/training/b2_warm_start.py`: B2 conversion, frozen preprocessing, balanced resets, ONNX export.
-- `nerva/training/neutral_joystick.py`: neutral environment and persistent-command variant.
+- `nerva/training/neutral_joystick.py`: neutral environment and its opt-in variants: persistent command,
+  gait-averaged tracking, base-origin reward velocity, tighter pure-turn translation tracking.
 - `nerva/training/neutral_reference.py`: hash-verified references.
 - `nerva/training/parameter_checkpoint.py`: checkpoints.
 - `nerva/training/motor_artifacts.py`: JSON/archive/fingerprint/KL helpers.
-- `nerva/analysis/motor_eval.py`: velocities and motor pass rules.
+- `nerva/analysis/motor_eval.py`: velocities, motor pass rules and push recovery.
+- `nerva/sim/open_duck.py`: native simulator; `action_delay=True` adds training-matched latency.
 
 `learning_support.py`, `gate.py` and `normalization_timing.py` re-export these for the completed runners.
 

@@ -4,6 +4,18 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-11 — Codebase cleanup after the turn-translation pilot (separate commit series)
+
+- One push-recovery metric (`nerva.analysis.motor_eval.push_recovery`) replaces the copies in `gate.py` and
+  `neutral_gate.py`; recomputed values are identical for all 200 stored push trials (B2 gate and both neutral
+  gates).
+- `sim_gap_diagnostic.py`, `turn_pivot_diagnostic.py` and `turn_asymmetry_diagnostic.py` moved to `archive/`
+  byte-identically (SHA-256 checked); result READMEs and the archive mapping point to them.
+- Maintained-workflow README (gate, left-turn report, validated candidate, latency option), cloud job table
+  and the top-level status updated. Full tests (339, including slow) and Ruff pass.
+
+---
+
 ## 2026-10-11 — Turn-translation pilot: first candidate to pass the neutral long motor gate
 
 The single authorized capped run (one L4, 45 min, US$2). Preregistered at `366aec9` before training; the VM

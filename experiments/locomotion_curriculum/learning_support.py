@@ -76,11 +76,14 @@ def conversion_parity(root, make_policy, params):
     return {"probes": 100, "max_action_error": max(errors), "all_pass": max(errors) <= 1e-5}
 
 
-def balanced_environment(reference, episode_length=256):
+def balanced_environment(reference, episode_length=256, replicas=1, persistent_command=False):
+    """Environment i always uses COMMANDS[i mod 7] (replicas environments per command). Defaults are the
+    local pilot's (7 environments, upstream resampling boundary beyond its 256-step episodes);
+    persistent_command blocks upstream's step-500 resampling for longer episodes."""
     import jax
     import jax.numpy as jp
     from brax.envs.wrappers import training
-    from nerva.training.neutral_joystick import NeutralJoystick
+    from nerva.training.neutral_joystick import NeutralJoystick, PersistentNeutralJoystick
     from nerva.training.neutral_wrapper import NeutralAutoResetWrapper
 
     class BalancedVmap(training.VmapWrapper):
@@ -96,9 +99,10 @@ def balanced_environment(reference, episode_length=256):
                 contact = state.obs["state"][-4:-2].astype(bool)
                 obs = self.env._get_obs(state.data, info, contact)
                 return state.replace(obs=obs)
-            return jax.vmap(reset_one)(rng, jp.asarray(COMMANDS))
+            return jax.vmap(reset_one)(rng, jp.tile(jp.asarray(COMMANDS), (replicas, 1)))
 
-    env = BalancedVmap(NeutralJoystick(reference, task="flat_terrain_backlash"))
+    base = PersistentNeutralJoystick if persistent_command else NeutralJoystick
+    env = BalancedVmap(base(reference, task="flat_terrain_backlash"))
     return NeutralAutoResetWrapper(training.EpisodeWrapper(env, episode_length, action_repeat=1))
 
 

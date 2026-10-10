@@ -21,10 +21,13 @@ from __future__ import annotations
 
 import argparse
 import concurrent.futures
+import hashlib
 import os
 import shutil
 import subprocess
 import sys
+import tarfile
+import tempfile
 import time
 from pathlib import Path
 
@@ -107,6 +110,42 @@ def requested_zones(a) -> list[str]:
             sys.exit("--zones must contain at least one zone")
         return list(dict.fromkeys(zones))
     return list(DEFAULT_ZONES)
+
+
+def bundle_files(list_file: Path) -> list[Path]:
+    """Repo-relative files named in a list file (one path per line; directories expand recursively)."""
+    files: list[Path] = []
+    repo = REPO.resolve()
+    for line in list_file.read_text(encoding="utf-8").splitlines():
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        path = (repo / line).resolve()
+        if repo not in path.parents:
+            sys.exit(f"input path outside the repository: {line}")
+        if path.is_dir():
+            files.extend(sorted(p for p in path.rglob("*") if p.is_file()))
+        elif path.is_file():
+            files.append(path)
+        else:
+            sys.exit(f"missing input: {line}")
+    if not files:
+        sys.exit("input bundle is empty")
+    return files
+
+
+def build_bundle(files: list[Path], directory: Path) -> tuple[Path, Path]:
+    """inputs.tar.gz (repo-relative paths) + MANIFEST.sha256 in sha256sum format, checked on the VM."""
+    manifest = directory / "MANIFEST.sha256"
+    archive = directory / "inputs.tar.gz"
+    lines = []
+    with tarfile.open(archive, "w:gz") as tar:
+        for path in files:
+            rel = path.relative_to(REPO.resolve()).as_posix()
+            lines.append(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {rel}")
+            tar.add(path, arcname=rel)
+    manifest.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    return archive, manifest
 
 
 def instance_zone(name: str) -> str:
@@ -235,7 +274,11 @@ def cmd_launch(a):
     g = gcloud()
     input_uri = ""
     input_files: list[Path] = []
-    if a.input_run:
+    bundle: list[Path] = []
+    if a.input_bundle:
+        bundle = bundle_files(Path(a.input_bundle))
+        input_uri = f"gs://{BUCKET}/inputs/{run_id}"
+    elif a.input_run:
         input_uri = f"gs://{BUCKET}/runs/{a.input_run}/out/r1/references"
         if not gcloud_succeeds([g, "storage", "ls", f"{input_uri}/styles.json"]):
             sys.exit(f"input run does not contain an R1 manifest: {input_uri}/styles.json")
@@ -252,7 +295,10 @@ def cmd_launch(a):
           f"zones={','.join(zones)} hard cap={duration} {'SPOT' if a.spot else 'on-demand'}")
     print("  1. upload committed code snapshot:  git archive HEAD -> "
           f"gs://{BUCKET}/code/{sha}.tar.gz")
-    if input_uri:
+    if bundle:
+        size = sum(p.stat().st_size for p in bundle)
+        print(f"     input bundle: {len(bundle)} files, {size / 1e6:.1f} MB (checksummed) -> {input_uri}")
+    elif input_uri:
         source = a.input_run or str(Path(a.input_dir).resolve())
         print(f"     reference input: {source} -> {input_uri}")
     print("  2. try the listed zones in order until VM creation succeeds")
@@ -271,6 +317,10 @@ def cmd_launch(a):
         archive.unlink(missing_ok=True)
     for path in input_files:
         run([g, "storage", "cp", str(path), f"{input_uri}/{path.name}"])
+    if bundle:
+        with tempfile.TemporaryDirectory() as tmp:
+            for path in build_bundle(bundle, Path(tmp)):
+                run([g, "storage", "cp", str(path), f"{input_uri}/{path.name}"])
 
     chosen_zone = ""
     failures: list[str] = []
@@ -497,6 +547,8 @@ def main():
     inputs = s.add_mutually_exclusive_group()
     inputs.add_argument("--input-run", help="R1 cloud run id whose fitted references should be used")
     inputs.add_argument("--input-dir", help="local directory containing styles.json and fitted .pkl files")
+    inputs.add_argument("--input-bundle", help="list file of repo-relative inputs, uploaded as a checksummed "
+                        "inputs.tar.gz + MANIFEST.sha256 that the job verifies before use")
     s.add_argument("--wait", action="store_true", help="wait for deletion and fetch results")
     s.add_argument("--cleanup-network", action="store_true",
                    help="with --wait, remove temporary NAT/router after completion")

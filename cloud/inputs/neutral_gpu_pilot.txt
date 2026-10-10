@@ -1,0 +1,6 @@
+# Inputs for cloud/jobs/neutral_gpu_pilot.sh (docs/gpu_neutral_pilot.md); untracked artifacts only.
+# Starting checkpoint: verified on the VM against results_neutral_learning_corrected/training_summary.json.
+experiments/cloud_runs/neutral-learning-pilot-corrected/checkpoints/000000028672
+# Seven hash-verified neutral references: verified against the tracked trials.json reports.
+experiments/cloud_runs/neutral-reference-repair
+experiments/cloud_runs/neutral-reference-pivot-retry

@@ -63,3 +63,32 @@ class NeutralJoystick(StyleJoystick):
                                              info["current_reference_motion"], command),
                 "stand_still": jp.where(at_rest(command, jp),
                                        jp.sum(jp.abs(joints - self.neutral_pose)) + jp.sum(jp.abs(velocity)), 0.)}
+
+
+class PersistentCommand:
+    """Mixin: keep each environment's command across upstream's resampling boundary.
+
+    Upstream (and StyleJoystick) resample the command once `step > 500`. Balanced curricula with episodes
+    longer than 500 control steps would silently change their declared per-environment command there
+    (docs/gpu_neutral_pilot.md). The command at the start of a step is restored afterwards; resets still
+    set it through the balanced reset wrapper.
+    """
+
+    def step(self, state, action):
+        command = state.info["command"]
+        state = super().step(state, action)
+        state.info["command"] = command
+        return state
+
+
+class PersistentNeutralJoystick(PersistentCommand, NeutralJoystick):
+    """NeutralJoystick whose per-environment command never changes within an episode.
+
+    Also gives the "alive" reward a strong float32 type: upstream's weakly typed scalar changes the
+    state's abstract signature after the first step, forcing one extra compilation of the collector
+    (values are identical; measured 2026-10-10)."""
+
+    def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
+        rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
+        rewards["alive"] = jp.asarray(rewards["alive"], dtype=jp.float32)
+        return rewards

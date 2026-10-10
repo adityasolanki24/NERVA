@@ -179,6 +179,7 @@ def evaluate(root, raw, output, resume=False):
 
 def render(raw, output):
     import imageio.v2 as imageio
+    import imageio_ffmpeg
     import mujoco
     from PIL import Image, ImageDraw
     model = mujoco.MjModel.from_xml_path(str(SCENE_BACKLASH))
@@ -212,7 +213,13 @@ def render(raw, output):
                         label = "Historical B2" if col == 0 else "Trained neutral candidate"
                         draw.text((640 * col + 12, 484), f"{label} | {command} {target} | t={tick * .02:.2f}s", fill="black")
                         status = f"fell at {trial['simulated_seconds']:.2f}s; final pose held" if trial["fell"] else "completed 20s"
-                        draw.text((640 * col + 12, 508), status, fill="red" if trial["fell"] else "black")
+                        decision = "PASS" if trial["metrics"]["all_pass"] else "FAIL"
+                        draw.text((640 * col + 12, 508), f"{status} | motor criteria {decision}",
+                                  fill="red" if not trial["metrics"]["all_pass"] else "black")
+                        velocity = trial["metrics"].get("mean_velocity")
+                        if velocity is not None:
+                            draw.text((640 * col + 12, 524),
+                                      f"Mean vx/vy/yaw: {velocity[0]:+.3f} / {velocity[1]:+.3f} / {velocity[2]:+.3f}", fill="black")
                     writer.append_data(np.asarray(frame))
                     if tick == 250:
                         frame.save(raw / f"comparison_{command}.png")
@@ -222,6 +229,16 @@ def render(raw, output):
                            "bytes": path.stat().st_size, "frames": 500, "fps": 25})
             write_json(output / "videos.json", videos)
             print("video ready", command, flush=True)
+        combined = raw / "comparison_all_commands.mp4"
+        if combined.exists():
+            raise FileExistsError("never overwrite combined video")
+        playlist = raw / "video_playlist.txt"
+        playlist.write_text("".join(f"file '{(raw / entry['file']).as_posix()}'\n" for entry in videos), encoding="utf-8")
+        subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-f", "concat", "-safe", "0",
+                        "-i", str(playlist), "-c", "copy", str(combined)], check=True, timeout=60)
+        write_json(output / "combined_video.json", {"file": combined.name, "commands": list(NAMES),
+            "seconds": 140, "bytes": combined.stat().st_size,
+            "sha256": hashlib.sha256(combined.read_bytes()).hexdigest()})
     finally:
         renderer.close()
 

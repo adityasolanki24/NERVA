@@ -9,6 +9,8 @@ GPU pilot evaluation:
   python -m experiments.locomotion_curriculum.motor_compare --run experiments/cloud_runs/<run> \\
          --out experiments/locomotion_curriculum/results_gpu_pilot
   python -m experiments.locomotion_curriculum.motor_compare --run ... --out ... --render
+
+Gait-averaged tracking evaluation (docs/gait_averaged_tracking_pilot.md): add --protocol gait_averaged_tracking.
 """
 from __future__ import annotations
 
@@ -34,13 +36,20 @@ from nerva.training.neutral_reference import COMMANDS
 NAMES = ("rest", "forward", "backward", "left", "right", "turn_left", "turn_right")
 PILOT = "experiments/cloud_runs/neutral-learning-pilot-corrected"
 SEEDS = (0, 1, 2)
+GPU_PILOT = "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812"
 LABELS = {"b2": "Historical B2", "untrained_neutral": "Untrained neutral clock",
-          "pilot_candidate": "Local pilot candidate (start)", "gpu_candidate": "GPU candidate"}
+          "pilot_candidate": "Local pilot candidate (start)", "gpu_candidate": "GPU candidate",
+          "gpu_pilot_candidate": "GPU pilot candidate (start)", "gait_candidate": "Gait-averaged candidate"}
 
 
 def gpu_pilot_arms(root: Path, run: Path) -> dict[str, Path]:
     return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
             "pilot_candidate": root / PILOT / "candidate.onnx", "gpu_candidate": run / "candidate.onnx"}
+
+
+def gait_averaged_arms(root: Path, run: Path) -> dict[str, Path]:
+    return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
+            "gpu_pilot_candidate": root / GPU_PILOT / "candidate.onnx", "gait_candidate": run / "candidate.onnx"}
 
 
 def export_parity(run: Path) -> dict:
@@ -145,12 +154,44 @@ def gpu_pilot_decision(arms: dict) -> dict:
             "pilot_passes": hypothesis and no_added_falls and improvement, "long_gate_passed": False}
 
 
-def evaluate(root: Path, run: Path, out: Path) -> None:
+def gait_averaged_decision(arms: dict) -> dict:
+    """Criteria fixed in docs/gait_averaged_tracking_pilot.md (preregistration a143ae4)."""
+    new, control, start = arms["gait_candidate"], arms["untrained_neutral"], arms["gpu_pilot_candidate"]
+
+    def speeds_ok(name):
+        values = new["commands"][name]["signed_axis_mean"]
+        return all(v is not None and v >= .5 * .074 for v in values)
+
+    hypothesis = all(speeds_ok(n) for n in ("forward", "backward", "left", "right"))
+    no_added_falls = new["falls"] <= min(control["falls"], start["falls"]) and new["commands"]["rest"]["passes"] == 3
+    ratio = (new["normalized_tracking_rmse"] / control["normalized_tracking_rmse"]
+             if new["normalized_tracking_rmse"] is not None and control["normalized_tracking_rmse"] else None)
+    overall = new["commands_passing"] == 7 and ratio is not None and ratio <= .9
+    return {"criteria": {"hypothesis_four_translation_speeds": hypothesis, "no_added_falls_and_rest": no_added_falls,
+                         "seven_commands_and_10pct_tracking": overall},
+            "gait_to_untrained_error_ratio": ratio,
+            "gait_to_gpu_pilot_error_ratio": (new["normalized_tracking_rmse"] / start["normalized_tracking_rmse"]
+                                              if ratio is not None and start["normalized_tracking_rmse"] else None),
+            "hypothesis_supported": hypothesis and no_added_falls,
+            "pilot_passes": hypothesis and no_added_falls and overall, "long_gate_passed": False}
+
+
+PROTOCOLS = {
+    "gpu_neutral_pilot": {"preregistration": "a3ba5ca", "arms": gpu_pilot_arms, "decision": gpu_pilot_decision,
+                          "columns": ("b2", "pilot_candidate", "gpu_candidate")},
+    "gait_averaged_tracking": {"preregistration": "a143ae4", "arms": gait_averaged_arms,
+                               "decision": gait_averaged_decision,
+                               "columns": ("b2", "gpu_pilot_candidate", "gait_candidate")},
+}
+
+
+def evaluate(root: Path, run: Path, out: Path, protocol: str = "gpu_neutral_pilot") -> None:
     start = time.monotonic()
     raw = run / "eval"
     raw.mkdir(exist_ok=True)
     out.mkdir(parents=True, exist_ok=True)
-    arms = gpu_pilot_arms(root, run)
+    spec = PROTOCOLS[protocol]
+    arms = spec["arms"](root, run)
     hashes = {k: hashlib.sha256(p.read_bytes()).hexdigest() for k, p in arms.items()}
     if hashes["b2"] != B2_SHA256:
         raise ValueError("B2 source hash mismatch")
@@ -158,7 +199,7 @@ def evaluate(root: Path, run: Path, out: Path) -> None:
     write_json(out / "export_parity.json", parity)
     if not parity["all_pass"]:
         raise ValueError("GPU candidate export parity failed")
-    write_json(out / "evaluation_protocol.json", {"preregistration_commit": "a3ba5ca",
+    write_json(out / "evaluation_protocol.json", {"protocol": protocol, "preregistration_commit": spec["preregistration"],
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "policy_hashes": hashes, "commands": dict(zip(NAMES, COMMANDS)), "seeds": list(SEEDS), "seconds": 20,
         "scoring_seconds": [5, 20], "scene": "flat_terrain_backlash", "raw_accel": True, "observation_noise": True,
@@ -174,7 +215,7 @@ def evaluate(root: Path, run: Path, out: Path) -> None:
         print(name, {a: sum(r["metrics"]["all_pass"] for r in rows if r["command"] == name and r["arm"] == a)
                      for a in arms}, flush=True)
     summary = summarize(rows, arms)
-    write_json(out / "motor_summary.json", {"arms": summary, **gpu_pilot_decision(summary),
+    write_json(out / "motor_summary.json", {"arms": summary, **spec["decision"](summary),
                                             "wall_seconds": round(time.monotonic() - start, 1)})
 
 
@@ -244,14 +285,15 @@ def main() -> None:
     ap.add_argument("--run", type=Path, required=True, help="fetched GPU pilot run directory")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--render", action="store_true")
+    ap.add_argument("--protocol", choices=sorted(PROTOCOLS), default="gpu_neutral_pilot")
     a = ap.parse_args()
     root = Path.cwd().resolve()
     if a.render:
-        render(a.run.resolve(), a.out)
+        render(a.run.resolve(), a.out, PROTOCOLS[a.protocol]["columns"])
     else:
         if (a.out / "evaluation.json").exists():
             raise FileExistsError("never overwrite an evaluation")
-        evaluate(root, a.run.resolve(), a.out)
+        evaluate(root, a.run.resolve(), a.out, a.protocol)
 
 
 if __name__ == "__main__":

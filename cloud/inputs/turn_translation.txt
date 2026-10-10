@@ -1,0 +1,6 @@
+# Inputs for cloud/jobs/turn_translation.sh (docs/turn_translation_pilot.md).
+# Starting checkpoint: verified on the VM against results_base_origin_velocity/training_summary.json.
+experiments/cloud_runs/base_origin_velocity-20261010-201858/checkpoints/000060480000
+# Seven hash-verified neutral references: verified against the tracked trials.json reports.
+experiments/cloud_runs/neutral-reference-repair
+experiments/cloud_runs/neutral-reference-pivot-retry

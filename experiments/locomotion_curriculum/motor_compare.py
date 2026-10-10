@@ -12,6 +12,7 @@ GPU pilot evaluation:
 
 Gait-averaged tracking evaluation (docs/gait_averaged_tracking_pilot.md): add --protocol gait_averaged_tracking.
 Base-origin velocity evaluation (docs/base_origin_velocity_pilot.md): add --protocol base_origin_velocity.
+Turn-translation comparison clips (docs/turn_translation_pilot.md): add --protocol turn_translation.
 """
 from __future__ import annotations
 
@@ -39,10 +40,12 @@ PILOT = "experiments/cloud_runs/neutral-learning-pilot-corrected"
 SEEDS = (0, 1, 2)
 GPU_PILOT = "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812"
 GAIT_RUN = "experiments/cloud_runs/gait_averaged_tracking-20261010-170130"
+BASE_RUN = "experiments/cloud_runs/base_origin_velocity-20261010-201858"
 LABELS = {"b2": "Historical B2", "untrained_neutral": "Untrained neutral clock",
           "pilot_candidate": "Local pilot candidate (start)", "gpu_candidate": "GPU candidate",
           "gpu_pilot_candidate": "GPU pilot candidate (start)", "gait_candidate": "Gait-averaged candidate",
-          "gait_start": "Gait-averaged candidate (start)", "base_candidate": "Base-origin candidate"}
+          "gait_start": "Gait-averaged candidate (start)", "base_candidate": "Base-origin candidate",
+          "base_start": "Base-origin candidate (current)", "turn_candidate": "Turn-translation candidate"}
 
 
 def gpu_pilot_arms(root: Path, run: Path) -> dict[str, Path]:
@@ -58,6 +61,21 @@ def gait_averaged_arms(root: Path, run: Path) -> dict[str, Path]:
 def base_origin_arms(root: Path, run: Path) -> dict[str, Path]:
     return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
             "gait_start": root / GAIT_RUN / "candidate.onnx", "base_candidate": run / "candidate.onnx"}
+
+
+def turn_translation_arms(root: Path, run: Path) -> dict[str, Path]:
+    return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
+            "base_start": root / BASE_RUN / "candidate.onnx", "turn_candidate": run / "candidate.onnx"}
+
+
+def turn_translation_summary(arms: dict) -> dict:
+    """Descriptive only: the decision for docs/turn_translation_pilot.md is the neutral gate, not this table."""
+    new, start = arms["turn_candidate"], arms["base_start"]
+    return {"descriptive_only": True, "decision_source": "neutral_gate.py --candidate turn_translation",
+            "turn_candidate_commands_passing": new["commands_passing"],
+            "base_start_commands_passing": start["commands_passing"],
+            "turn_left_horizontal_rms": {"base_start": start["commands"]["turn_left"]["horizontal_rms"],
+                                         "turn_candidate": new["commands"]["turn_left"]["horizontal_rms"]}}
 
 
 def export_parity(run: Path) -> dict:
@@ -215,6 +233,8 @@ PROTOCOLS = {
                                "columns": ("b2", "gpu_pilot_candidate", "gait_candidate")},
     "base_origin_velocity": {"preregistration": "69a6f0f", "arms": base_origin_arms,
                              "decision": base_origin_decision, "columns": ("b2", "gait_start", "base_candidate")},
+    "turn_translation": {"preregistration": "PENDING", "arms": turn_translation_arms,
+                         "decision": turn_translation_summary, "columns": ("b2", "base_start", "turn_candidate")},
 }
 
 

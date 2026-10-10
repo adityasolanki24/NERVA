@@ -5,7 +5,8 @@ trials have no safety override; the deterministic SafetySupervisor runs in shado
 the pilot evaluation's per-trial rules (motor_metrics); transitions and pushes reuse the B2 gate's
 definitions at the neutral command magnitudes.
 
-Usage: python -m experiments.locomotion_curriculum.neutral_gate --out DIR [--raw-dir DIR]
+Usage: python -m experiments.locomotion_curriculum.neutral_gate [--candidate NAME] --out DIR [--raw-dir DIR]
+Candidates are fixed here with their preregistration and policy hash; the protocol is identical for all.
 """
 from __future__ import annotations
 
@@ -30,9 +31,17 @@ from nerva.training.motor_artifacts import write_json
 from nerva.training.neutral_reference import COMMANDS as NEUTRAL_COMMANDS
 from nerva.world.self_state import estimate_self_state
 
-PREREGISTRATION = "b6ec4c5"
-POLICY = "experiments/cloud_runs/base_origin_velocity-20261010-201858/candidate.onnx"
-POLICY_SHA256 = "9394fa5db7fc613f7ee311ec329e39a693f790ba219e26913db7a7464a11c5a2"
+CANDIDATES = {
+    "base_origin_velocity": {  # docs/neutral_motor_gate.md
+        "preregistration": "b6ec4c5",
+        "policy": "experiments/cloud_runs/base_origin_velocity-20261010-201858/candidate.onnx",
+        "sha256": "9394fa5db7fc613f7ee311ec329e39a693f790ba219e26913db7a7464a11c5a2"},
+    "turn_translation": {  # docs/turn_translation_pilot.md; the run's final candidate, hash from its summary
+        "preregistration": "PENDING", "policy": None, "sha256": None},
+}
+PREREGISTRATION = CANDIDATES["base_origin_velocity"]["preregistration"]
+POLICY = CANDIDATES["base_origin_velocity"]["policy"]
+POLICY_SHA256 = CANDIDATES["base_origin_velocity"]["sha256"]
 DT, WINDOW = 0.02, 50
 SEEDS = range(5)
 NAMES = ("rest", "forward", "backward", "left", "right", "turn_left", "turn_right")
@@ -186,13 +195,22 @@ def summarise(rows):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--candidate", choices=sorted(CANDIDATES), default="base_origin_velocity")
+    ap.add_argument("--run", type=Path, help="fetched run directory (turn_translation)")
     ap.add_argument("--out", type=Path, default=Path("experiments/locomotion_curriculum/results_neutral_gate"))
     ap.add_argument("--raw-dir", type=Path, default=Path("experiments/cloud_runs/neutral-gate-local"))
     args = ap.parse_args()
     root = Path.cwd().resolve()
-    policy = root / POLICY
+    spec = dict(CANDIDATES[args.candidate])
+    if spec["policy"] is None:  # a run's final candidate: its hash comes from the run's own training summary
+        summary = json.loads((args.run / "report" / "training_summary.json").read_text(encoding="utf-8"))
+        spec["policy"] = (args.run / "candidate.onnx").resolve().relative_to(root).as_posix()
+        spec["sha256"] = summary["candidate_onnx_sha256"]
+    if spec["preregistration"] == "PENDING":
+        raise SystemExit("candidate is not preregistered")
+    policy = root / spec["policy"]
     policy_hash = hashlib.sha256(policy.read_bytes()).hexdigest()
-    if policy_hash != POLICY_SHA256:
+    if policy_hash != spec["sha256"]:
         raise ValueError("policy hash differs from the preregistration")
     if args.out.exists():
         raise FileExistsError("use a new output directory; never overwrite a previous gate")
@@ -200,9 +218,10 @@ def main():
         raise RuntimeError("commit the implementation before evaluating")
     args.out.mkdir(parents=True)
     write_json(args.out / "protocol.json", {
-        "preregistration_commit": PREREGISTRATION,
+        "candidate": args.candidate, "gate_preregistration": "b6ec4c5",
+        "preregistration_commit": spec["preregistration"],
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-        "policy": POLICY, "policy_sha256": policy_hash, "seeds": list(SEEDS), "dt_s": DT,
+        "policy": spec["policy"], "policy_sha256": policy_hash, "seeds": list(SEEDS), "dt_s": DT,
         "scene": "flat_terrain_backlash", "conditions": ["no_latency", "latency"],
         "latency_model": "applied action from 0/1/2 control steps ago, uniform, seeded stream (seed, 1)",
         "push": {"step": PUSH_STEP, "speed_m_s": PUSH_SPEED}, "primary_safety": "shadow only", "cloud_work": False})

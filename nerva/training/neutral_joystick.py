@@ -166,3 +166,33 @@ class BaseOriginVelocity:
 
 class BaseOriginGaitAveragedNeutralJoystick(BaseOriginVelocity, GaitAveragedTrackingNeutralJoystick):
     """Gait-averaged tracking with rewards measured at the base origin (docs/base_origin_velocity_pilot.md)."""
+
+
+TURN_TRACKING_SIGMA = 0.0025  # pure-turn commands only; upstream tracking_sigma is 0.01
+
+
+def is_pure_turn(command):
+    return jp.logical_and(jp.all(command[:2] == 0), command[2] != 0)
+
+
+class TurnTranslationTracking:
+    """Mixin: for pure-turn commands, the (gait-averaged, base-origin) linear tracking term uses a 4× tighter
+    width, 0.0025 instead of 0.01 (tolerance 0.05 instead of 0.1 m/s).
+
+    With upstream's width, 0.03 m/s of turn translation costs only 9% of the term; the trained turns sit at
+    0.022–0.030 m/s in MJX, and native MuJoCo adds ≈ 0.01 m/s to the left turn (results_turn_asymmetry/,
+    results_neutral_gate/). At 0.03 m/s the tighter width costs 30%. Translation and rest commands, every other
+    term and every scale are unchanged (docs/turn_translation_pilot.md).
+    """
+
+    def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
+        rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
+        mean = window_mean(info["velocity_window"], info["velocity_count"])
+        command = info["command"]
+        tight = planar_tracking(command, mean[:2], TURN_TRACKING_SIGMA, jp)
+        rewards["tracking_lin_vel"] = jp.where(is_pure_turn(command), tight, rewards["tracking_lin_vel"])
+        return rewards
+
+
+class TurnTranslationNeutralJoystick(TurnTranslationTracking, BaseOriginGaitAveragedNeutralJoystick):
+    """Base-origin gait-averaged tracking with a tighter pure-turn translation width."""

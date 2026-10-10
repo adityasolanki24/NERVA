@@ -45,6 +45,11 @@ EXPERIMENTS = {
         "start": "experiments/cloud_runs/gait_averaged_tracking-20261010-170130/checkpoints/000061931520",
         "start_report": "experiments/locomotion_curriculum/results_gait_averaged_tracking/training_summary.json",
         "gait_averaged_tracking": True, "base_origin_velocity": True},
+    "turn_translation": {  # docs/turn_translation_pilot.md
+        "preregistration": "PENDING",
+        "start": "experiments/cloud_runs/base_origin_velocity-20261010-201858/checkpoints/000060480000",
+        "start_report": "experiments/locomotion_curriculum/results_base_origin_velocity/training_summary.json",
+        "gait_averaged_tracking": True, "base_origin_velocity": True, "turn_translation": True},
 }
 STATISTICS_SOURCE = "experiments/locomotion_curriculum/results_neutral_learning_corrected/protocol.json"
 LOSS = {"entropy_cost": .005, "discounting": .97, "reward_scaling": 1., "gae_lambda": .95,
@@ -126,7 +131,8 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     write_json(report / "protocol.json", {
         "experiment": name, "preregistration_commit": experiment["preregistration"],
         "gait_averaged_tracking": experiment["gait_averaged_tracking"],
-        "base_origin_velocity": experiment.get("base_origin_velocity", False), "config": {k: v for k, v in cfg.items()},
+        "base_origin_velocity": experiment.get("base_origin_velocity", False),
+        "turn_translation": experiment.get("turn_translation", False), "config": {k: v for k, v in cfg.items()},
         "loss": LOSS, "network": NETWORK, "devices": devices, "start": admitted,
         "environments": n, "transitions_per_iteration": per_iteration, "reference_manifest": manifest,
         "restoration": "parameters_only; fresh Adam/RNG/environment; snapshots allow parameter+optimizer "
@@ -146,7 +152,8 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     env = balanced_environment(NeutralReference(records), episode_length=cfg["episode_length"],
                                replicas=replicas, persistent_command=True,
                                gait_averaged_tracking=experiment["gait_averaged_tracking"],
-                               base_origin_velocity=experiment.get("base_origin_velocity", False))
+                               base_origin_velocity=experiment.get("base_origin_velocity", False),
+                               turn_translation=experiment.get("turn_translation", False))
     key, reset_key = jax.random.split(jax.random.PRNGKey(cfg["seed"]))
     state = jax.jit(env.reset)(jax.random.split(reset_key, n))
 

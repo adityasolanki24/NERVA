@@ -60,3 +60,27 @@ def motor_metrics(arrays, command, completed):
     else:
         criteria.update(rest_speed=horizontal <= .02, rest_yaw=yaw <= .15, rest_displacement=displacement <= .10)
     return {**result, "criteria": {key: bool(value) for key, value in criteria.items()}, "all_pass": all(criteria.values())}
+
+
+def push_recovery(arrays, axis, push_s=8.0, horizon_s=5.0):
+    """Push recovery (B2 gate definition, docs/b2_robustness_gate.md; reused by the neutral gate).
+
+    Recovery is the first full 1 s window after the push with every tilt sample < 20°, the commanded-axis
+    window mean within max(0.03, 25% of |pre-push [push−2, push) s mean|) of that mean, and |window yaw rate|
+    ≤ 0.20 rad/s; recovery time is the window end minus the push time. It counts only within `horizon_s`
+    and if the robot never tilts past 45°.
+    """
+    t = arrays["t"]
+    v = velocities(arrays)
+    before = (t >= push_s - 2.0 - 1e-9) & (t < push_s - 1e-9)
+    baseline = float(v[before, axis].mean())
+    tolerance = max(0.03, 0.25 * abs(baseline))
+    after = t > push_s + 1e-9
+    filtered = smooth(v[after])
+    tilt = gm.tilt_deg(arrays["base_quat"])
+    stable = np.convolve((tilt[after] < 20.0).astype(int), np.ones(WINDOW, dtype=int), mode="valid") == WINDOW
+    recovered = stable & (np.abs(filtered[:, axis] - baseline) <= tolerance) & (np.abs(filtered[:, 2]) <= 0.20)
+    candidates = np.flatnonzero(recovered)
+    recovery_s = float(t[after][WINDOW - 1 + candidates[0]] - push_s) if len(candidates) else None
+    return {"pre_push_axis_mean": baseline, "velocity_tolerance": tolerance, "recovery_s": recovery_s,
+            "recovery_ok": recovery_s is not None and recovery_s <= horizon_s and not np.any(tilt > 45.0)}

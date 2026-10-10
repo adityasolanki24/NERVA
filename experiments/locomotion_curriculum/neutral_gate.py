@@ -23,7 +23,7 @@ import time
 import numpy as np
 
 from nerva.analysis import gait_metrics as gm
-from nerva.analysis.motor_eval import deployment_metadata, motor_metrics, smooth, velocities
+from nerva.analysis.motor_eval import deployment_metadata, motor_metrics, push_recovery, smooth, velocities
 from nerva.interfaces import BehaviourCommand
 from nerva.safety import SafetySupervisor
 from nerva.sim.open_duck import OpenDuckSim, SCENE_BACKLASH, to_arrays
@@ -98,22 +98,8 @@ def phase_metrics(arrays, start, end, command):
 
 
 def recovery_metrics(arrays, command):
-    """B2 gate push recovery definition."""
-    t = arrays["t"]
-    axis = int(np.argmax(np.abs(COMMANDS[command])))
-    v = velocities(arrays)
-    before = (t >= 6.0 - 1e-9) & (t < 8.0 - 1e-9)
-    baseline = float(v[before, axis].mean())
-    tolerance = max(0.03, 0.25 * abs(baseline))
-    after = t > 8.0 + 1e-9
-    filtered = smooth(v[after])
-    tilt = gm.tilt_deg(arrays["base_quat"])
-    stable = np.convolve((tilt[after] < 20.0).astype(int), np.ones(WINDOW, dtype=int), mode="valid") == WINDOW
-    recovered = stable & (np.abs(filtered[:, axis] - baseline) <= tolerance) & (np.abs(filtered[:, 2]) <= 0.20)
-    candidates = np.flatnonzero(recovered)
-    recovery_s = float(t[after][WINDOW - 1 + candidates[0]] - 8.0) if len(candidates) else None
-    return {"pre_push_axis_mean": baseline, "velocity_tolerance": tolerance, "recovery_s": recovery_s,
-            "recovery_ok": recovery_s is not None and recovery_s <= 5.0 and not np.any(tilt > 45.0)}
+    """Push recovery for this gate's command magnitudes (nerva.analysis.motor_eval.push_recovery)."""
+    return push_recovery(arrays, int(np.argmax(np.abs(COMMANDS[command]))))
 
 
 def command_at(trial, k):

@@ -36,3 +36,18 @@ def test_empty_or_incomplete_comparison_cannot_pass():
     assert not result["pilot_improvement"]
     assert not result["criteria"]["complete"]
     assert result["candidate_to_untrained_error_ratio"] is None
+
+
+def test_deployment_metadata_is_accepted_by_existing_motor_contract(tmp_path):
+    import hashlib
+    from types import SimpleNamespace
+    from nerva.sim.open_duck import OpenDuckSim
+    from experiments.locomotion_curriculum.paired_motor import deployment_metadata
+    path = tmp_path / "policy.onnx"
+    path.write_bytes(b"a retained test artifact")
+    sim = OpenDuckSim.__new__(OpenDuckSim)
+    sim.policy_path, sim.style_vector, sim.head_offset = path, None, np.zeros(4)
+    sim.inf = SimpleNamespace()
+    sim.set_neutral_motor_contract(deployment_metadata(hashlib.sha256(path.read_bytes()).hexdigest()))
+    assert sim.nb_steps_in_period == 27
+    np.testing.assert_array_equal(sim.inf.imitation_phase, [1, 0])

@@ -1,0 +1,8 @@
+{
+ "outcome": "candidate_metadata_interface_abort",
+ "completed_trials": 1,
+ "reason": "evaluator used command_set instead of the existing motor contract's commands field",
+ "training_artifacts_unchanged": true,
+ "completed_B2_trial_preserved": true,
+ "criteria_changed": false
+}

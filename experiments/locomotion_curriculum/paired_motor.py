@@ -23,6 +23,11 @@ NAMES = ("rest", "forward", "backward", "left", "right", "turn_left", "turn_righ
 ARMS = ("b2", "untrained_neutral", "candidate")
 
 
+def deployment_metadata(policy_hash):
+    return {"contract": CONTRACT, "observation_size": 101, "period_steps": 27,
+            "head_commands_zero": True, "commands": COMMANDS, "policy_sha256": policy_hash}
+
+
 def motor_metrics(arrays, command, completed):
     """Never give incomplete or failed rollouts a successful tracking score."""
     if not completed:
@@ -100,7 +105,7 @@ def export_parity(raw):
     return {"probes": 100, "max_action_error": max_error, "all_pass": max_error <= 1e-5}
 
 
-def evaluate(root, raw, output):
+def evaluate(root, raw, output, resume=False):
     start = time.monotonic()
     policy_paths = {"b2": b2_location(root).with_suffix(".onnx"),
                     "untrained_neutral": raw / "initial.onnx", "candidate": raw / "candidate.onnx"}
@@ -108,27 +113,41 @@ def evaluate(root, raw, output):
     if hashes["b2"] != B2_SHA256:
         raise ValueError("B2 source hash mismatch")
     parity = export_parity(raw)
-    write_json(output / "export_parity.json", parity)
+    if not (output / "export_parity.json").exists():
+        write_json(output / "export_parity.json", parity)
     if not parity["all_pass"]:
         raise ValueError("candidate ONNX export parity failed")
-    write_json(output / "evaluation_protocol.json", {"preregistration_commit": "8fd4fd3",
+    protocol = {"preregistration_commit": "8fd4fd3",
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "policy_hashes": hashes, "commands": dict(zip(NAMES, COMMANDS)), "seeds": [0, 1, 2],
         "seconds": 20, "scoring_seconds": [5, 20], "scene": "flat_terrain_backlash", "raw_accel": True,
-        "observation_noise": True, "joint_initial_noise": .02, "safety_override": False, "wall_cap_s": 600})
-    rows = []
+        "observation_noise": True, "joint_initial_noise": .02, "safety_override": False, "wall_cap_s": 600}
+    if resume:
+        original = json.loads((output / "evaluation_protocol.json").read_text(encoding="utf-8"))
+        admitted = json.loads(json.dumps(protocol))
+        if any(original[key] != value for key, value in admitted.items() if key != "implementation_commit"):
+            raise ValueError("resume policies or evaluation protocol changed")
+        write_json(output / "evaluation_resume.json", {"repair_commit": protocol["implementation_commit"],
+                   "original_commit": original["implementation_commit"], "criteria_changed": False,
+                   "reason": "repair candidate metadata field commands; preserve completed trial"})
+        rows = json.loads((output / "evaluation.json").read_text(encoding="utf-8"))
+    else:
+        write_json(output / "evaluation_protocol.json", protocol)
+        rows = []
     for command_name, command in zip(NAMES, COMMANDS):
         for seed in range(3):
             for arm in ARMS:
+                if any(row["command"] == command_name and row["seed"] == seed and row["arm"] == arm for row in rows):
+                    if not (raw / f"{command_name}_{seed}_{arm}.npz").is_file():
+                        raise ValueError("completed trial artifact missing")
+                    continue
                 with contextlib.redirect_stdout(io.StringIO()):
                     sim = OpenDuckSim(policy_path=policy_paths[arm], scene=SCENE_BACKLASH, raw_accel=True,
                                       obs_noise=True, init_joint_noise=.02, seed=seed)
                 if arm == "b2":
                     sim.set_style_vector((0, 0, 0))
                 else:
-                    sim.set_neutral_motor_contract({"contract": CONTRACT, "observation_size": 101,
-                        "period_steps": 27, "head_commands_zero": True, "command_set": COMMANDS,
-                        "policy_sha256": hashes[arm]})
+                    sim.set_neutral_motor_contract(deployment_metadata(hashes[arm]))
                 sim.set_behaviour(BehaviourCommand(vx=command[0], vy=command[1], yaw_rate=command[2]))
                 log, qpos, qvel, fell, reason = [], [], [], False, None
                 max_tilt = 0.
@@ -213,21 +232,22 @@ def main():
     parser.add_argument("--worker", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--retry", action="store_true")
     parser.add_argument("--corrected", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="continue preserved partial evaluation with identical policies")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     suffix = "-corrected" if args.corrected else "-retry" if args.retry else ""
     raw = root / f"experiments/cloud_runs/neutral-learning-pilot{suffix}"
     output = root / ("experiments/locomotion_curriculum/results_neutral_learning" + suffix.replace("-", "_"))
     if args.worker:
-        (render(raw, output) if args.render else evaluate(root, raw, output))
+        (render(raw, output) if args.render else evaluate(root, raw, output, resume=args.resume))
         return
     name = "render" if args.render else "evaluation"
-    if (output / f"{name}.json").exists() or (args.render and (output / "videos.json").exists()):
+    if ((output / f"{name}.json").exists() and not args.resume) or (args.render and (output / "videos.json").exists()):
         raise FileExistsError("never overwrite comparison artifacts")
-    with (raw / f"{name}.log").open("w", encoding="utf-8") as stream:
+    with (raw / f"{name}{'-resume' if args.resume else ''}.log").open("x", encoding="utf-8") as stream:
         subprocess.run([sys.executable, "-m", "experiments.locomotion_curriculum.paired_motor", "--worker",
                         *(["--render"] if args.render else []), *(["--retry"] if args.retry else []),
-                        *(["--corrected"] if args.corrected else [])],
+                        *(["--corrected"] if args.corrected else []), *(["--resume"] if args.resume else [])],
                        stdout=stream, stderr=subprocess.STDOUT,
                        check=True, timeout=600, env={**os.environ, "JAX_PLATFORMS": "cpu"})
     print(name, "complete", flush=True)

@@ -4,6 +4,35 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Base-origin reward velocity: pivot moves to the base, turn right passes, turn left misses (0.034 vs 0.03)
+
+Third authorized capped run (one L4, 45 min cap, US$2 cap), preregistered at `69a6f0f`; VM ran `0b31524`.
+Evidence: `experiments/locomotion_curriculum/results_base_origin_velocity/`.
+
+### What ran
+- One g2-standard-8, us-central1-a, ≈ 33 min, ≈ US$0.70. 375 iterations, 60,480,000 transitions, step
+  ceiling. Inputs 46/46 OK; max KL 0.0160; replay error 0.
+- Fetch verified: 236/236 files, EXIT_CODE 0, checkpoint and ONNX hashes, export parity 1.4e-6. NAT
+  removed; audit shows no billable compute or network resources.
+- 84 paired native trials; seven three-column videos (B2 | gait-averaged | base-origin).
+
+### Observations [measured]
+- No falls. Rest and all four translations 3/3 (84–107% of the request; left overshoot gone).
+- Turn translation halved: left 0.067 → 0.034, right 0.054 → 0.020 m/s. **Turn right passes 3/3**, the
+  first passing pure turn in any arm. Turn left fails only on translation.
+- Pivot moved forward from near the IMU to within 1.4 cm of the base origin (the diagnostic's
+  prediction); turn left keeps a 4.6 cm sideways offset.
+- Normalized RMSE 0.1346 (untrained 0.4250); 6/7 commands pass.
+
+### Decision (preregistered)
+- **H not supported; the pilot fails**, narrowly (turn left). Threshold unchanged; no checkpoint selection.
+
+### Not yet verified
+- The cause of the left-turn sideways offset (left/right asymmetry); a second training seed; the long gate.
+- No default, deployment, safety or expressive change.
+
+---
+
 ## 2026-10-10 — Turn translation is a reward measurement-point mismatch (IMU vs base origin)
 
 Local diagnostic only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_turn_pivot/`

@@ -61,3 +61,16 @@ translations, rest, or adding falls.
 - **H is supported** if 1 and 2 hold. **The pilot passes** if 1–3 hold.
 - Even then: one training seed, no robust-locomotion claim. A pass would justify preregistering the long
   robustness gate (more seeds, pushes, longer trials), not expressive training.
+
+## Outcome (2026-10-10; protocol above unchanged)
+
+- **Run:** one L4 VM, us-central1-a, ≈ 33 min of VM lifetime; 375 accepted iterations,
+  **60,480,000 transitions**, stopped at the step ceiling. Max KL 0.0160; replay error 0; frozen
+  statistics unchanged; exact roundtrip. Estimated cost ≈ US$0.70.
+- **Evaluation:** 84 paired trials, no falls. Base-origin candidate: rest, forward (84%), backward (107%),
+  left (100%), right (106%) 3/3; **turn right 3/3** (translation 0.019–0.020 m/s); turn left 0/3
+  (translation 0.033–0.035 m/s, limit 0.03). Normalized RMSE 0.1346 (ratio to untrained 0.317).
+- The pivot moved from near the IMU (8–11 cm behind the base) to within 1.4 cm of the base origin, as
+  predicted; turn left keeps a 4.6 cm sideways offset.
+- **H not supported; the pilot fails** (criterion 1 on turn left, hence 3). Criterion 2 passes.
+- Full report: `experiments/locomotion_curriculum/results_base_origin_velocity/README.md`.

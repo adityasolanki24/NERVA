@@ -130,7 +130,9 @@ discrete and limited; smoke success does not overturn B2's failed policy gate.
 
 **Turn pivot diagnostic (2026-10-10, `results_turn_pivot/`):** the rewards measure velocity at the IMU,
 8 cm behind the base origin used by the references and the evaluation, and every policy turns about the
-IMU. A base-origin reward continuation is preregistered (`base_origin_velocity_pilot.md`), not launched.
+IMU. The base-origin reward continuation (`base_origin_velocity_pilot.md`) moved the pivot to the base:
+6/7 commands pass (turn right included), no falls, RMSE ratio 0.317. It fails narrowly on turn left
+(translation 0.033–0.035 m/s, a sideways pivot offset). Next: diagnose that asymmetry.
 
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.

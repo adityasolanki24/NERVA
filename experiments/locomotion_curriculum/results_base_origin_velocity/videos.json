@@ -1,0 +1,93 @@
+[
+ {
+  "command": "rest",
+  "file": "comparison_rest.mp4",
+  "sha256": "bfda939211677171fb3165d285de68c9c24231918eb9c1e33908422c3111eba8",
+  "bytes": 1982335,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "forward",
+  "file": "comparison_forward.mp4",
+  "sha256": "8152c9723fc24dbdcaa390aa40984caebaf019e549783709c3836620285c6dec",
+  "bytes": 3901248,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "backward",
+  "file": "comparison_backward.mp4",
+  "sha256": "87874cc5dae783fcf34a7e7dd108a1c13354031419ae05e7e552c4cd8f636b56",
+  "bytes": 3994500,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "left",
+  "file": "comparison_left.mp4",
+  "sha256": "97daee53ff816dd59cb33bba3e4b07b4a843eeab6d0f4af06dff07f7564ec415",
+  "bytes": 3898887,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "right",
+  "file": "comparison_right.mp4",
+  "sha256": "12fa30d03ba66692329a84c402b322563a2a2871e1d48b5d8fdc4dc30e61c543",
+  "bytes": 3846047,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "turn_left",
+  "file": "comparison_turn_left.mp4",
+  "sha256": "6798c6c9deeabc0457182a2d1d639840007ba40bdcdd66d99b3cb69ea3953c6b",
+  "bytes": 4333887,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ },
+ {
+  "command": "turn_right",
+  "file": "comparison_turn_right.mp4",
+  "sha256": "cbaa1c90f0aec96fa08c229dde00074bf7ccf0689abf58e20edbb5d5254c9047",
+  "bytes": 4281870,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gait_start",
+   "base_candidate"
+  ]
+ }
+]

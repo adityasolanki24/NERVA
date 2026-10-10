@@ -96,8 +96,10 @@ entry, docs, commit.
    pilot fails because both turns translate 0.053–0.068 m/s (`gait_averaged_tracking_pilot.md`).
    The turn translation was then traced to the rewards measuring velocity at the IMU
    (8 cm behind the base origin the evaluation and references use); a base-origin reward
-   continuation is preregistered (`base_origin_velocity_pilot.md`), awaiting authorization.
-   Next: that run and the long neutral motor gate before expressive training), evaluated on monotonic
+   continuation (`base_origin_velocity_pilot.md`, 60 M transitions, ≈ US$0.70) moved the turn
+   pivot to the base and passed 6/7 commands (turn right now passes); it fails narrowly because turn
+   left still translates 0.033–0.035 m/s (limit 0.03), from a sideways pivot offset.
+   Next: diagnose the left/right turn asymmetry, then the long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

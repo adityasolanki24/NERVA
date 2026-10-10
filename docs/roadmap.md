@@ -88,9 +88,11 @@ entry, docs, commit.
    transitions on one L4 in 32.7 min (≈ US$0.70): backward and left now pass,
    aggregate error −27% vs the untrained control, no falls; but forward still
    undershoots, rightward motion regressed, and pure-turn translation was not
-   reduced. The pilot fails (`gpu_neutral_pilot.md`). Next: diagnose the
-   left/right asymmetry and turn translation, then a bounded continuation and the
-   long neutral motor gate before expressive training), evaluated on monotonic
+   reduced. The pilot fails (`gpu_neutral_pilot.md`). Diagnosis: the tracking
+   reward pays standing still more than walking correctly at 0.074 m/s (gait sway);
+   turns are mostly a MJX→native gap. A gait-averaged tracking continuation is
+   preregistered (`gait_averaged_tracking_pilot.md`), awaiting authorization; then the
+   turn-gap diagnostic and the long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

@@ -27,9 +27,21 @@ from nerva.training.motor_artifacts import archive, fingerprint, gaussian_kl, wr
 from nerva.training.neutral_reference import COMMANDS
 from nerva.training.parameter_checkpoint import checkpoint_hashes, leaf_comparison, save_parameters, tree_finite
 
-PREREGISTRATION = "a3ba5ca"
-START = "experiments/cloud_runs/neutral-learning-pilot-corrected/checkpoints/000000028672"
-PILOT_REPORT = "experiments/locomotion_curriculum/results_neutral_learning_corrected"
+# Named experiments. Each fixes its preregistration, starting checkpoint (hash-verified against the report that
+# produced it), the source of the frozen statistics hash, and the reward variant. Existing entries never change.
+EXPERIMENTS = {
+    "gpu_neutral_pilot": {  # docs/gpu_neutral_pilot.md
+        "preregistration": "a3ba5ca",
+        "start": "experiments/cloud_runs/neutral-learning-pilot-corrected/checkpoints/000000028672",
+        "start_report": "experiments/locomotion_curriculum/results_neutral_learning_corrected/training_summary.json",
+        "gait_averaged_tracking": False},
+    "gait_averaged_tracking": {  # docs/gait_averaged_tracking_pilot.md
+        "preregistration": "a143ae4",
+        "start": "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812/checkpoints/000060318720",
+        "start_report": "experiments/locomotion_curriculum/results_gpu_pilot/training_summary.json",
+        "gait_averaged_tracking": True},
+}
+STATISTICS_SOURCE = "experiments/locomotion_curriculum/results_neutral_learning_corrected/protocol.json"
 LOSS = {"entropy_cost": .005, "discounting": .97, "reward_scaling": 1., "gae_lambda": .95,
         "clipping_epsilon": .2, "normalize_advantage": True, "vf_coefficient": .5}
 FULL = {"replicas": 1152, "episode_length": 1000, "unroll_length": 20, "num_minibatches": 32, "epochs": 4,
@@ -48,14 +60,14 @@ def uptime_s() -> float | None:
         return None
 
 
-def verify_start(root: Path) -> dict:
-    """Every file of the starting checkpoint must match the hashes the local pilot recorded."""
-    summary = json.loads((root / PILOT_REPORT / "training_summary.json").read_text(encoding="utf-8"))
-    actual = checkpoint_hashes(root / START)
+def verify_start(root: Path, experiment: dict) -> dict:
+    """Every file of the starting checkpoint must match the hashes recorded by the run that produced it."""
+    summary = json.loads((root / experiment["start_report"]).read_text(encoding="utf-8"))
+    actual = checkpoint_hashes(root / experiment["start"])
     if actual != summary["checkpoint_hashes"]:
         raise ValueError("starting checkpoint hash mismatch")
-    statistics = json.loads((root / PILOT_REPORT / "protocol.json").read_text(encoding="utf-8"))["statistics_sha256"]
-    return {"checkpoint": START, "files": len(actual), "statistics_sha256": statistics}
+    statistics = json.loads((root / STATISTICS_SOURCE).read_text(encoding="utf-8"))["statistics_sha256"]
+    return {"checkpoint": experiment["start"], "files": len(actual), "statistics_sha256": statistics}
 
 
 def per_command(values, replicas):
@@ -64,7 +76,7 @@ def per_command(values, replicas):
     return values.mean(axis=(0, 2)).tolist()
 
 
-def run(root: Path, raw: Path, cfg: dict) -> None:
+def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> None:
     import jax
     import jax.numpy as jp
     import optax
@@ -85,8 +97,9 @@ def run(root: Path, raw: Path, cfg: dict) -> None:
     report.mkdir(parents=True, exist_ok=True)
     devices = [str(d) for d in jax.devices()]
     records, manifest = verified_references(root)
-    admitted = verify_start(root)
-    params = checkpoint.load(root / START)
+    experiment = EXPERIMENTS[name]
+    admitted = verify_start(root, experiment)
+    params = checkpoint.load(root / experiment["start"])
     normalizer = params[0]
     frozen = fingerprint(normalizer)
     if frozen != admitted["statistics_sha256"]:
@@ -106,7 +119,8 @@ def run(root: Path, raw: Path, cfg: dict) -> None:
         raise ValueError("environments must divide into minibatches")
     expected = np.tile(np.asarray(COMMANDS, dtype=np.float32), (replicas, 1))
     write_json(report / "protocol.json", {
-        "preregistration_commit": PREREGISTRATION, "config": {k: v for k, v in cfg.items()},
+        "experiment": name, "preregistration_commit": experiment["preregistration"],
+        "gait_averaged_tracking": experiment["gait_averaged_tracking"], "config": {k: v for k, v in cfg.items()},
         "loss": LOSS, "network": NETWORK, "devices": devices, "start": admitted,
         "environments": n, "transitions_per_iteration": per_iteration, "reference_manifest": manifest,
         "restoration": "parameters_only; fresh Adam/RNG/environment; snapshots allow parameter+optimizer "
@@ -124,7 +138,8 @@ def run(root: Path, raw: Path, cfg: dict) -> None:
 
     os.chdir(OPEN_DUCK_ROOT / "Open_Duck_Playground")
     env = balanced_environment(NeutralReference(records), episode_length=cfg["episode_length"],
-                               replicas=replicas, persistent_command=True)
+                               replicas=replicas, persistent_command=True,
+                               gait_averaged_tracking=experiment["gait_averaged_tracking"])
     key, reset_key = jax.random.split(jax.random.PRNGKey(cfg["seed"]))
     state = jax.jit(env.reset)(jax.random.split(reset_key, n))
 
@@ -260,6 +275,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, help="output directory (cloud: /work/out)")
     parser.add_argument("--smoke", action="store_true", help="tiny CPU check; not a result")
+    parser.add_argument("--experiment", choices=sorted(EXPERIMENTS), default="gpu_neutral_pilot")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     if args.smoke:
@@ -275,8 +291,11 @@ def main() -> None:
         raw, cfg = args.out, FULL
     if (raw / "report" / "training_summary.json").exists():
         raise FileExistsError("never overwrite pilot artifacts")
+    if not args.smoke and EXPERIMENTS[args.experiment]["preregistration"] == "PENDING":
+        raise SystemExit("experiment is not preregistered yet")
+    raw = raw.resolve()  # the trainer later changes into the upstream checkout; never write there
     raw.mkdir(parents=True, exist_ok=True)
-    run(root, raw, cfg)
+    run(root, raw, cfg, args.experiment)
 
 
 if __name__ == "__main__":

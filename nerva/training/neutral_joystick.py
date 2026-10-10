@@ -92,3 +92,38 @@ class PersistentNeutralJoystick(PersistentCommand, NeutralJoystick):
         rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
         rewards["alive"] = jp.asarray(rewards["alive"], dtype=jp.float32)
         return rewards
+
+
+TRACKING_WINDOW = 27  # one gait period (0.54 s at 50 Hz)
+
+
+def window_mean(window, count):
+    """Mean of the newest `count` rows of a rolling window (newest first)."""
+    rows = jp.arange(window.shape[0]) < count
+    return jp.sum(window * rows[:, None], axis=0) / jp.maximum(count, 1)
+
+
+class GaitAveragedTrackingNeutralJoystick(PersistentNeutralJoystick):
+    """Tracking rewards on body velocity averaged over one gait period instead of instantaneous velocity.
+
+    At the neutral 0.074 m/s commands the gait's own within-stride sway (≈0.15 m/s RMS) dominates an
+    instantaneous comparison: the upstream-form tracking reward pays a robot standing still 1.45 but one
+    following its reference gait perfectly only 0.77; on the period average the reference scores 2.49
+    (development log 2026-10-10). Everything else (imitation, costs, alive, noise, pushes) is unchanged.
+    """
+
+    def _initialize_reference(self, info):
+        super()._initialize_reference(info)
+        info.update(velocity_window=jp.zeros((TRACKING_WINDOW, 3)), velocity_count=jp.int32(0))
+
+    def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
+        rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
+        current = jp.concatenate([self.get_local_linvel(data)[:2], self.get_gyro(data)[2:3]])
+        window = jp.roll(info["velocity_window"], 1, axis=0).at[0].set(current)
+        count = jp.minimum(info["velocity_count"] + 1, TRACKING_WINDOW)
+        info["velocity_window"], info["velocity_count"] = window, count
+        mean = window_mean(window, count)
+        sigma = self._config.reward_config.tracking_sigma
+        rewards["tracking_lin_vel"] = planar_tracking(info["command"], mean[:2], sigma, jp)
+        rewards["tracking_ang_vel"] = upstream.reward_tracking_ang_vel(info["command"], jp.zeros(3).at[2].set(mean[2]), sigma)
+        return rewards

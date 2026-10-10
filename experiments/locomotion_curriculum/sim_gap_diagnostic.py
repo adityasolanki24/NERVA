@@ -64,6 +64,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, default=Path("experiments/locomotion_curriculum/results_sim_gap"))
     args = ap.parse_args()
+    args.out = args.out.resolve()  # before chdir into the upstream checkout (never write there)
     root = Path.cwd().resolve()
     from nerva.sim.open_duck import OPEN_DUCK_ROOT
     from nerva.training.neutral_reference import NeutralReference, verified_references

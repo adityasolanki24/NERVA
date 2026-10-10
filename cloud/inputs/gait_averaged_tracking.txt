@@ -1,0 +1,6 @@
+# Inputs for cloud/jobs/gait_averaged_tracking.sh (docs/gait_averaged_tracking_pilot.md).
+# Starting checkpoint: verified on the VM against results_gpu_pilot/training_summary.json.
+experiments/cloud_runs/neutral_gpu_pilot-20261010-152812/checkpoints/000060318720
+# Seven hash-verified neutral references: verified against the tracked trials.json reports.
+experiments/cloud_runs/neutral-reference-repair
+experiments/cloud_runs/neutral-reference-pivot-retry

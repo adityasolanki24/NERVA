@@ -4,6 +4,52 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Why the GPU pilot undershoots: the tracking reward prefers standing; turns are a sim gap
+
+Local diagnostics only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_sim_gap/`.
+
+1. **Reference audit [measured]:** all seven verified references have correct means.
+   - Translation 0.0738 m/s; turns 0.5986 rad/s with ≤ 0.004 m/s mean translation.
+   - The within-stride lateral sway is ≈ 0.15–0.16 m/s RMS.
+2. **Tracking reward [measured on the references]:** upstream's 2.5·exp(−|c − v|²/0.01) on instantaneous
+   velocity scores:
+
+   | behaviour | score |
+   |---|---|
+   | perfect reference gait | 0.77–0.80 |
+   | **standing still** | **1.45** |
+   | half-speed gait | 0.58–0.74 |
+   | perfect gait, averaged over one 0.54 s period | 2.49 |
+
+   At 0.074 m/s the tracking term rewards standing over walking correctly. This explains a persistent
+   undershoot, and plausibly the S5/S6 standing collapse [hypothesis].
+3. **Sim-to-sim [measured]** (`sim_gap_diagnostic.py`; deterministic MJX training-environment rollouts
+   vs native MuJoCo, reading fixed in advance):
+   - The GPU candidate undershoots in MJX without pushes too: forward +0.039, backward −0.047, left
+     +0.047, right −0.021 m/s. That is learned, not a gap.
+   - Turns: MJX yaw 0.565 / −0.607 rad/s with drift −0.018 / +0.022; native 0.711 / −0.669 with
+     +0.043 / −0.025. The turn failures are largely a MJX → native gap.
+   - Pushes make translation worse (forward +0.020).
+   - The diagnostic's first run wrote its JSON inside the upstream checkout (relative path after
+     `chdir`). The files were moved back, upstream verified clean, and the runner (and `gpu_pilot.py`)
+     now resolve output paths first.
+
+**Change (opt-in):** `GaitAveragedTrackingNeutralJoystick`.
+- Tracking rewards use the mean body velocity over the last ≤ 27 steps (one gait period); the window
+  resets with the episode.
+- Tests: the window mean; references prefer walking over standing only under the averaged form; a slow
+  MJX step/autoreset test.
+- `gpu_pilot.py` now selects named experiments. The original `gpu_neutral_pilot` smoke still reproduces
+  KL 0.01112 / 0.00278 exactly.
+
+**Next run preregistered** (`a143ae4`, `docs/gait_averaged_tracking_pilot.md`): continuation from the GPU
+candidate with only the reward changed. Job `gait_averaged_tracking`, the same 45 min / ≤ US$2 envelope.
+**Not launched: awaiting explicit authorization** (the previous authorization covered exactly one run).
+The turn gap is out of scope for that run and needs its own diagnostic.
+323 tests pass (slow included); Ruff clean.
+
+---
+
 ## 2026-10-10 — Capped GPU neutral continuation: 60 M transitions; backward/left pass, right regresses, turns unchanged; pilot fails
 
 **Preregistration:** `a3ba5ca`, before implementation (`docs/gpu_neutral_pilot.md`). One authorized paid

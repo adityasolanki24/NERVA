@@ -31,5 +31,10 @@ def test_bundle_list_rejects_paths_outside_the_repository(tmp_path):
 
 
 def test_gpu_pilot_job_has_independent_time_guards():
-    job = (launch.REPO / "cloud" / "jobs" / "neutral_gpu_pilot.sh").read_text(encoding="utf-8")
+    job = (launch.REPO / "cloud" / "jobs" / "_neutral_gpu.sh").read_text(encoding="utf-8")
     assert "timeout --signal=INT" in job and "sha256sum -c" in job and "sleep 180" in job
+
+
+def test_every_listed_input_bundle_resolves():
+    for listing in sorted((launch.REPO / "cloud" / "inputs").glob("*.txt")):
+        assert launch.bundle_files(listing), listing

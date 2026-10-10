@@ -48,11 +48,15 @@ class NeutralJoystick(StyleJoystick):
         info["current_reference_motion"] = self.SREF.get_reference_motion(
             info["command"][0], info["command"][1], info["command"][2], info["imitation_i"])
 
+    def reward_linvel(self, data):
+        """Body-frame linear velocity used by the tracking and imitation rewards (upstream: the IMU site)."""
+        return self.get_local_linvel(data)
+
     def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
         del metrics, done, first_contact
         joints = self.get_actuator_joints_qpos(data.qpos)
         velocity = self.get_actuator_joints_qvel(data.qvel)
-        linear, angular = self.get_local_linvel(data), self.get_gyro(data)
+        linear, angular = self.reward_linvel(data), self.get_gyro(data)
         command = info["command"]
         return {"tracking_lin_vel": planar_tracking(command, linear, self._config.reward_config.tracking_sigma, jp),
                 "tracking_ang_vel": upstream.reward_tracking_ang_vel(command, angular, self._config.reward_config.tracking_sigma),
@@ -118,7 +122,7 @@ class GaitAveragedTrackingNeutralJoystick(PersistentNeutralJoystick):
 
     def _get_reward(self, data, action, info, metrics, done, first_contact, contact):
         rewards = super()._get_reward(data, action, info, metrics, done, first_contact, contact)
-        current = jp.concatenate([self.get_local_linvel(data)[:2], self.get_gyro(data)[2:3]])
+        current = jp.concatenate([self.reward_linvel(data)[:2], self.get_gyro(data)[2:3]])
         window = jp.roll(info["velocity_window"], 1, axis=0).at[0].set(current)
         count = jp.minimum(info["velocity_count"] + 1, TRACKING_WINDOW)
         info["velocity_window"], info["velocity_count"] = window, count
@@ -127,3 +131,38 @@ class GaitAveragedTrackingNeutralJoystick(PersistentNeutralJoystick):
         rewards["tracking_lin_vel"] = planar_tracking(info["command"], mean[:2], sigma, jp)
         rewards["tracking_ang_vel"] = upstream.reward_tracking_ang_vel(info["command"], jp.zeros(3).at[2].set(mean[2]), sigma)
         return rewards
+
+
+def imu_offset(model):
+    """IMU site position in the base frame; the site must sit on the floating base with identity orientation."""
+    import mujoco
+    import numpy as np
+    site = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, "imu")
+    if model.body(model.site_bodyid[site]).name != "base" or not np.allclose(model.site_quat[site], (1, 0, 0, 0)):
+        raise ValueError("IMU site is not an unrotated site on the floating base")
+    return np.asarray(model.site_pos[site], dtype=np.float32)
+
+
+def base_origin_velocity(imu_linvel, gyro, offset):
+    """Rigid-body shift of the IMU velocimeter reading to the base origin (both in the base frame)."""
+    return imu_linvel - jp.cross(gyro, offset)
+
+
+class BaseOriginVelocity:
+    """Mixin: tracking and imitation rewards use body velocity at the base origin instead of the IMU site.
+
+    The IMU sits 8 cm behind the base origin. The verified references and the native evaluation measure
+    the base origin; upstream's rewards measure the IMU. Turning in place about the base therefore reads as
+    0.6 rad/s × 0.08 m ≈ 0.048 m/s of IMU translation in training, and the trained turns pivot near the IMU
+    instead (results_turn_pivot/; development log 2026-10-10). Observations, the critic's privileged inputs,
+    costs, alive, noise and pushes are unchanged.
+    """
+
+    def reward_linvel(self, data):
+        if not hasattr(self, "_imu_offset"):
+            self._imu_offset = imu_offset(self._mj_model)  # NumPy constant: never cache a traced value
+        return base_origin_velocity(self.get_local_linvel(data), self.get_gyro(data), self._imu_offset)
+
+
+class BaseOriginGaitAveragedNeutralJoystick(BaseOriginVelocity, GaitAveragedTrackingNeutralJoystick):
+    """Gait-averaged tracking with rewards measured at the base origin (docs/base_origin_velocity_pilot.md)."""

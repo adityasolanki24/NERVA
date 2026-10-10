@@ -80,15 +80,17 @@ def conversion_parity(root, make_policy, params):
 
 
 def balanced_environment(reference, episode_length=256, replicas=1, persistent_command=False,
-                         gait_averaged_tracking=False):
+                         gait_averaged_tracking=False, base_origin_velocity=False):
     """Environment i always uses COMMANDS[i mod 7] (replicas environments per command). Defaults are the
     local pilot's (7 environments, upstream resampling boundary beyond its 256-step episodes);
-    persistent_command blocks upstream's step-500 resampling for longer episodes."""
+    persistent_command blocks upstream's step-500 resampling for longer episodes; base_origin_velocity
+    (with gait_averaged_tracking) measures the rewards' body velocity at the base origin."""
     import jax
     import jax.numpy as jp
     from brax.envs.wrappers import training
     from nerva.training.neutral_joystick import (
-        GaitAveragedTrackingNeutralJoystick, NeutralJoystick, PersistentNeutralJoystick,
+        BaseOriginGaitAveragedNeutralJoystick, GaitAveragedTrackingNeutralJoystick, NeutralJoystick,
+        PersistentNeutralJoystick,
     )
     from nerva.training.neutral_wrapper import NeutralAutoResetWrapper
 
@@ -109,7 +111,10 @@ def balanced_environment(reference, episode_length=256, replicas=1, persistent_c
 
     if gait_averaged_tracking and not persistent_command:
         raise ValueError("gait-averaged tracking is defined for the persistent-command environment")
-    base = (GaitAveragedTrackingNeutralJoystick if gait_averaged_tracking
+    if base_origin_velocity and not gait_averaged_tracking:
+        raise ValueError("base-origin velocity is defined for the gait-averaged environment")
+    base = (BaseOriginGaitAveragedNeutralJoystick if base_origin_velocity
+            else GaitAveragedTrackingNeutralJoystick if gait_averaged_tracking
             else PersistentNeutralJoystick if persistent_command else NeutralJoystick)
     env = BalancedVmap(base(reference, task="flat_terrain_backlash"))
     return NeutralAutoResetWrapper(training.EpisodeWrapper(env, episode_length, action_repeat=1))

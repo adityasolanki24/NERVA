@@ -40,6 +40,11 @@ EXPERIMENTS = {
         "start": "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812/checkpoints/000060318720",
         "start_report": "experiments/locomotion_curriculum/results_gpu_pilot/training_summary.json",
         "gait_averaged_tracking": True},
+    "base_origin_velocity": {  # docs/base_origin_velocity_pilot.md
+        "preregistration": "69a6f0f",
+        "start": "experiments/cloud_runs/gait_averaged_tracking-20261010-170130/checkpoints/000061931520",
+        "start_report": "experiments/locomotion_curriculum/results_gait_averaged_tracking/training_summary.json",
+        "gait_averaged_tracking": True, "base_origin_velocity": True},
 }
 STATISTICS_SOURCE = "experiments/locomotion_curriculum/results_neutral_learning_corrected/protocol.json"
 LOSS = {"entropy_cost": .005, "discounting": .97, "reward_scaling": 1., "gae_lambda": .95,
@@ -120,7 +125,8 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     expected = np.tile(np.asarray(COMMANDS, dtype=np.float32), (replicas, 1))
     write_json(report / "protocol.json", {
         "experiment": name, "preregistration_commit": experiment["preregistration"],
-        "gait_averaged_tracking": experiment["gait_averaged_tracking"], "config": {k: v for k, v in cfg.items()},
+        "gait_averaged_tracking": experiment["gait_averaged_tracking"],
+        "base_origin_velocity": experiment.get("base_origin_velocity", False), "config": {k: v for k, v in cfg.items()},
         "loss": LOSS, "network": NETWORK, "devices": devices, "start": admitted,
         "environments": n, "transitions_per_iteration": per_iteration, "reference_manifest": manifest,
         "restoration": "parameters_only; fresh Adam/RNG/environment; snapshots allow parameter+optimizer "
@@ -139,7 +145,8 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     os.chdir(OPEN_DUCK_ROOT / "Open_Duck_Playground")
     env = balanced_environment(NeutralReference(records), episode_length=cfg["episode_length"],
                                replicas=replicas, persistent_command=True,
-                               gait_averaged_tracking=experiment["gait_averaged_tracking"])
+                               gait_averaged_tracking=experiment["gait_averaged_tracking"],
+                               base_origin_velocity=experiment.get("base_origin_velocity", False))
     key, reset_key = jax.random.split(jax.random.PRNGKey(cfg["seed"]))
     state = jax.jit(env.reset)(jax.random.split(reset_key, n))
 

@@ -69,6 +69,7 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 | `demo_s1` / `reactive_demo` | render demo videos offscreen | CPU | 1–1.5 h |
 | `neutral_gpu_pilot` | capped neutral motor continuation (`docs/gpu_neutral_pilot.md`); needs `--input-bundle cloud/inputs/neutral_gpu_pilot.txt` | L4 | 45 min |
 | `gait_averaged_tracking` | same trainer with gait-averaged tracking (`docs/gait_averaged_tracking_pilot.md`); needs `--input-bundle cloud/inputs/gait_averaged_tracking.txt` | L4 | 45 min |
+| `base_origin_velocity` | gait-averaged tracking with rewards measured at the base origin (`docs/base_origin_velocity_pilot.md`); needs `--input-bundle cloud/inputs/base_origin_velocity.txt` | L4 | 45 min |
 
 ## Environment
 

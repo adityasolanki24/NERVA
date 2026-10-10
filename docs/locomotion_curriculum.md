@@ -128,6 +128,10 @@ discrete and limited; smoke success does not overturn B2's failed policy gate.
 - Both turns fail: yaw rate ≈ 0.6 rad/s but translation 0.053–0.068 m/s. H supported; pilot fails.
 - Next: diagnose turn drift and the MJX → native turn gap, then the long readiness gate.
 
+**Turn pivot diagnostic (2026-10-10, `results_turn_pivot/`):** the rewards measure velocity at the IMU,
+8 cm behind the base origin used by the references and the evaluation, and every policy turns about the
+IMU. A base-origin reward continuation is preregistered (`base_origin_velocity_pilot.md`), not launched.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

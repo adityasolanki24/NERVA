@@ -11,6 +11,7 @@ GPU pilot evaluation:
   python -m experiments.locomotion_curriculum.motor_compare --run ... --out ... --render
 
 Gait-averaged tracking evaluation (docs/gait_averaged_tracking_pilot.md): add --protocol gait_averaged_tracking.
+Base-origin velocity evaluation (docs/base_origin_velocity_pilot.md): add --protocol base_origin_velocity.
 """
 from __future__ import annotations
 
@@ -37,9 +38,11 @@ NAMES = ("rest", "forward", "backward", "left", "right", "turn_left", "turn_righ
 PILOT = "experiments/cloud_runs/neutral-learning-pilot-corrected"
 SEEDS = (0, 1, 2)
 GPU_PILOT = "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812"
+GAIT_RUN = "experiments/cloud_runs/gait_averaged_tracking-20261010-170130"
 LABELS = {"b2": "Historical B2", "untrained_neutral": "Untrained neutral clock",
           "pilot_candidate": "Local pilot candidate (start)", "gpu_candidate": "GPU candidate",
-          "gpu_pilot_candidate": "GPU pilot candidate (start)", "gait_candidate": "Gait-averaged candidate"}
+          "gpu_pilot_candidate": "GPU pilot candidate (start)", "gait_candidate": "Gait-averaged candidate",
+          "gait_start": "Gait-averaged candidate (start)", "base_candidate": "Base-origin candidate"}
 
 
 def gpu_pilot_arms(root: Path, run: Path) -> dict[str, Path]:
@@ -50,6 +53,11 @@ def gpu_pilot_arms(root: Path, run: Path) -> dict[str, Path]:
 def gait_averaged_arms(root: Path, run: Path) -> dict[str, Path]:
     return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
             "gpu_pilot_candidate": root / GPU_PILOT / "candidate.onnx", "gait_candidate": run / "candidate.onnx"}
+
+
+def base_origin_arms(root: Path, run: Path) -> dict[str, Path]:
+    return {"b2": b2_location(root).with_suffix(".onnx"), "untrained_neutral": root / PILOT / "initial.onnx",
+            "gait_start": root / GAIT_RUN / "candidate.onnx", "base_candidate": run / "candidate.onnx"}
 
 
 def export_parity(run: Path) -> dict:
@@ -176,12 +184,37 @@ def gait_averaged_decision(arms: dict) -> dict:
             "pilot_passes": hypothesis and no_added_falls and overall, "long_gate_passed": False}
 
 
+def base_origin_decision(arms: dict) -> dict:
+    """Criteria fixed in docs/base_origin_velocity_pilot.md (preregistration 69a6f0f)."""
+    new, control, start = arms["base_candidate"], arms["untrained_neutral"], arms["gait_start"]
+
+    def turn_ok(name):
+        values = new["commands"][name]["horizontal_rms"]
+        return all(v is not None and v <= .03 for v in values)
+
+    hypothesis = turn_ok("turn_left") and turn_ok("turn_right")
+    kept = all(new["commands"][n]["passes"] == 3 for n in ("rest", "forward", "backward", "left", "right"))
+    no_regression = kept and new["falls"] <= min(control["falls"], start["falls"])
+    ratio = (new["normalized_tracking_rmse"] / control["normalized_tracking_rmse"]
+             if new["normalized_tracking_rmse"] is not None and control["normalized_tracking_rmse"] else None)
+    overall = new["commands_passing"] == 7 and ratio is not None and ratio <= .9
+    return {"criteria": {"hypothesis_turn_translation_at_base": hypothesis, "no_regression": no_regression,
+                         "seven_commands_and_10pct_tracking": overall},
+            "base_to_untrained_error_ratio": ratio,
+            "base_to_gait_start_error_ratio": (new["normalized_tracking_rmse"] / start["normalized_tracking_rmse"]
+                                               if ratio is not None and start["normalized_tracking_rmse"] else None),
+            "hypothesis_supported": hypothesis and no_regression,
+            "pilot_passes": hypothesis and no_regression and overall, "long_gate_passed": False}
+
+
 PROTOCOLS = {
     "gpu_neutral_pilot": {"preregistration": "a3ba5ca", "arms": gpu_pilot_arms, "decision": gpu_pilot_decision,
                           "columns": ("b2", "pilot_candidate", "gpu_candidate")},
     "gait_averaged_tracking": {"preregistration": "a143ae4", "arms": gait_averaged_arms,
                                "decision": gait_averaged_decision,
                                "columns": ("b2", "gpu_pilot_candidate", "gait_candidate")},
+    "base_origin_velocity": {"preregistration": "69a6f0f", "arms": base_origin_arms,
+                             "decision": base_origin_decision, "columns": ("b2", "gait_start", "base_candidate")},
 }
 
 

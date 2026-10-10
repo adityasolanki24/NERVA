@@ -36,3 +36,27 @@ def test_rest_or_added_falls_fail():
 def test_turn_failures_block_only_the_overall_pilot():
     d = decide(arm(passing=5))
     assert d["hypothesis_supported"] and not d["pilot_passes"]
+
+
+def base_arm(turn=.02, **kwargs):
+    a = arm(**kwargs)
+    for n in NAMES:
+        a["commands"][n]["horizontal_rms"] = [turn] * 3
+    return a
+
+
+def decide_base(new):
+    from experiments.locomotion_curriculum.motor_compare import base_origin_decision
+    return base_origin_decision({"base_candidate": new, "untrained_neutral": base_arm(rmse=1.),
+                                 "gait_start": base_arm(rmse=.15)})
+
+
+def test_base_origin_turn_translation_decides_the_hypothesis():
+    assert decide_base(base_arm())["pilot_passes"]
+    assert not decide_base(base_arm(turn=.031))["hypothesis_supported"]
+
+
+def test_base_origin_requires_translations_kept():
+    new = base_arm()
+    new["commands"]["right"]["passes"] = 2
+    assert not decide_base(new)["hypothesis_supported"]

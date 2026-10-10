@@ -94,7 +94,10 @@ entry, docs, commit.
    continuation (62 M transitions, ≈ US$0.70) then passed forward, backward, left and
    right in 3/3 seeds with no falls (RMSE ratio 0.352 vs untrained): H supported, but the
    pilot fails because both turns translate 0.053–0.068 m/s (`gait_averaged_tracking_pilot.md`).
-   Next: the turn-drift/turn-gap diagnosis and the long neutral motor gate before expressive training), evaluated on monotonic
+   The turn translation was then traced to the rewards measuring velocity at the IMU
+   (8 cm behind the base origin the evaluation and references use); a base-origin reward
+   continuation is preregistered (`base_origin_velocity_pilot.md`), awaiting authorization.
+   Next: that run and the long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

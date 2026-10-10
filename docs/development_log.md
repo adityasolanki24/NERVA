@@ -4,6 +4,38 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Turn translation is a reward measurement-point mismatch (IMU vs base origin)
+
+Local diagnostic only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_turn_pivot/`
+(`turn_pivot_diagnostic.py`, post-hoc on the saved native rollouts).
+
+### Observations [measured]
+- The turn metric's translation is almost entirely a constant pivot offset: every evaluated policy,
+  including historical B2, turns about a point 4–11 cm behind the base origin (net 20 s displacement
+  only 0.01–0.12 m).
+- Upstream's tracking and imitation rewards read velocity at the IMU site (−0.08, 0, 0.05 m). Turn
+  translation at the IMU is ≈ 0.02 m/s for every arm (one exception), versus 0.034–0.067 m/s at the base
+  origin, which the evaluation and the references use. Feet and CoM sit ≈ 3 cm behind the base.
+- The reference turn pivots at the base origin; on the gait-averaged tracking term it scores 0.998 at the
+  base and 0.782 at the IMU.
+- For the gait-averaged candidate, translation (`cross`) is the only failing turn criterion.
+
+### Reading
+The rewards pay the policy to pivot about the IMU instead of turning like the reference; the sharper
+gait-averaged term strengthened that, which fits the larger base translation [inference; causal test is a run].
+
+### Change (opt-in)
+- `BaseOriginGaitAveragedNeutralJoystick`: tracking and imitation use v_base = v_IMU − ω × r_IMU.
+  Observations and critic inputs unchanged.
+- Tests: the shift matches native free-joint velocity to 1e-5; the reference turn scores ≥ 0.99 only at
+  the base; slow MJX environment test. CPU smoke of the trainer passes (2 iterations, no recompilation,
+  exact roundtrip).
+- Next run preregistered at `69a6f0f` (`docs/base_origin_velocity_pilot.md`); trainer experiment
+  `base_origin_velocity`, job `cloud/jobs/base_origin_velocity.sh`, evaluator protocol
+  `base_origin_velocity`. **Not launched; needs authorization.**
+
+---
+
 ## 2026-10-10 — Gait-averaged tracking: all four translations pass in every seed; turns still fail
 
 Second authorized capped run (one L4, 45 min cap, US$2 cap), preregistered at `a143ae4`; VM ran

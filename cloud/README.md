@@ -38,6 +38,8 @@ python cloud/launch.py network-up --yes # temporary egress for private VMs (smal
 python cloud/launch.py launch --job smoke --max-minutes 60       # shows plan; add --yes to start
 python cloud/launch.py launch --job throughput_benchmark --hw l4 --max-minutes 45 --wait --cleanup-network
 python cloud/launch.py launch --job s1_smoke --input-dir experiments/cloud_runs/R1/r1/references --max-minutes 45
+python cloud/launch.py launch --job neutral_gpu_pilot --hw l4 --max-minutes 45 --input-bundle cloud/inputs/neutral_gpu_pilot.txt --wait --cleanup-network
+#   --input-bundle LIST: uploads only the listed repo-relative files as inputs.tar.gz + MANIFEST.sha256; the job verifies them
 python cloud/launch.py status [RUN]     # running VMs; with RUN, tail of that run's log
 python cloud/launch.py fetch RUN        # results → experiments/cloud_runs/RUN/ (git-ignored)
 python cloud/launch.py kill RUN --yes   # delete a VM immediately
@@ -65,6 +67,7 @@ gcloud compute instances list --project "$env:NERVA_GCP_PROJECT"
 | `s1_pilot` … `s5_pilot` | seven-style policies: S1 base, S2 feet-height −30, S3 head commands applied, S4 S3 + backward emphasis, S5 feet-height −10 | L4 | 3 h |
 | `s1_eval` / `s2_eval` / `s3_eval` | style evaluation of a trained policy (MuJoCo rollouts) | CPU | 1 h |
 | `demo_s1` / `reactive_demo` | render demo videos offscreen | CPU | 1–1.5 h |
+| `neutral_gpu_pilot` | capped neutral motor continuation (`docs/gpu_neutral_pilot.md`); needs `--input-bundle cloud/inputs/neutral_gpu_pilot.txt` | L4 | 45 min |
 
 ## Environment
 

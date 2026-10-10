@@ -1,0 +1,3122 @@
+[
+ {
+  "arm": "b2",
+  "command": "rest",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.187389370645171,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.013134038184496563,
+    -0.000545185967795077,
+    -0.031155008573375217
+   ],
+   "horizontal_rms": 0.015432083324622842,
+   "yaw_rms": 0.03273187266462133,
+   "displacement_m": 0.2565472780747165,
+   "lift_mm": [
+    26.685517576497894,
+    16.81940562462884
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "rest",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.356120732110059,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -6.160022163663043e-07,
+    0.00013652913689865266,
+    0.0005019817923305517
+   ],
+   "horizontal_rms": 0.0014573285093130977,
+   "yaw_rms": 0.004900605309078094,
+   "displacement_m": 0.015784038216497934,
+   "lift_mm": [
+    0.1964802050744949,
+    0.1672807477837916
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "rest",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.45953034464191,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -2.6830188553105223e-05,
+    0.00020028115983953317,
+    0.0003444931831236276
+   ],
+   "horizontal_rms": 0.001438972495388739,
+   "yaw_rms": 0.004872025668241697,
+   "displacement_m": 0.01595704985625004,
+   "lift_mm": [
+    0.20785652284977624,
+    0.15943528585189237
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "rest",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.082593265838085,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -2.265073560204886e-05,
+    -3.961788080030441e-05,
+    5.968549280970074e-05
+   ],
+   "horizontal_rms": 0.0002711700116297837,
+   "yaw_rms": 0.000849787405680557,
+   "displacement_m": 0.010862326042745356,
+   "lift_mm": [
+    0.02103164097673471,
+    0.022279338349622674
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "rest",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.957187850806493,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.013256007138708682,
+    0.0033768186482496486,
+    -0.0329156351439924
+   ],
+   "horizontal_rms": 0.0159405692725489,
+   "yaw_rms": 0.03354059354993171,
+   "displacement_m": 0.2610606295440617,
+   "lift_mm": [
+    26.601109531356087,
+    17.608732362186018
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "rest",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.411232870827844,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.00010899127412132407,
+    0.00012237483158662765,
+    0.00012061323052970513
+   ],
+   "horizontal_rms": 0.0013610983336734166,
+   "yaw_rms": 0.004773774670010527,
+   "displacement_m": 0.01238847136217721,
+   "lift_mm": [
+    0.16988856674124506,
+    0.16585228216612571
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "rest",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.999809271589957,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.00012975064850659267,
+    0.0001796131367735676,
+    4.356850377349425e-05
+   ],
+   "horizontal_rms": 0.001319812995643969,
+   "yaw_rms": 0.004934917023852039,
+   "displacement_m": 0.01582349949798115,
+   "lift_mm": [
+    0.18747406911161224,
+    0.16528790664010506
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "rest",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.570540608161043,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -2.0275092791510517e-05,
+    -8.062858761557332e-06,
+    -2.317786874538915e-05
+   ],
+   "horizontal_rms": 0.00023596581671437932,
+   "yaw_rms": 0.0005344882872470324,
+   "displacement_m": 0.009951664588709361,
+   "lift_mm": [
+    0.02106926189268622,
+    0.019461786977897477
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "rest",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.138149976956987,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.013252770081916828,
+    0.0011104358239717503,
+    -0.030059575654115402
+   ],
+   "horizontal_rms": 0.015805249821368165,
+   "yaw_rms": 0.03254966790206699,
+   "displacement_m": 0.26047462745738376,
+   "lift_mm": [
+    26.314705412864065,
+    16.735435612010882
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "rest",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.13327356405444,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -4.288612477812956e-06,
+    0.00029356300363601146,
+    0.00038302243866411166
+   ],
+   "horizontal_rms": 0.0012390507251485011,
+   "yaw_rms": 0.005296246180860159,
+   "displacement_m": 0.020196913565182183,
+   "lift_mm": [
+    0.20599195923272753,
+    0.14614144006979768
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "rest",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.05808073253835,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -2.7232628798044594e-05,
+    0.00033193523127976845,
+    0.0002729468956884307
+   ],
+   "horizontal_rms": 0.0012156143995369043,
+   "yaw_rms": 0.0053045261398914955,
+   "displacement_m": 0.022482358531025166,
+   "lift_mm": [
+    0.22054964161328075,
+    0.1440742638788143
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "rest",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.04391524397399,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -1.9801559417638666e-05,
+    1.3340843184754947e-05,
+    -1.3183913077161278e-05
+   ],
+   "horizontal_rms": 0.0002937454131656056,
+   "yaw_rms": 0.0006686129037289054,
+   "displacement_m": 0.013759335085403144,
+   "lift_mm": [
+    0.022950248169806634,
+    0.025051566999350575
+   ],
+   "criteria": {
+    "completed": true,
+    "rest_speed": true,
+    "rest_yaw": true,
+    "rest_displacement": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "forward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.006308874318018,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.030915702751886272,
+    0.011464625352638619,
+    -0.04818738325030188
+   ],
+   "horizontal_rms": 0.033812930501265555,
+   "yaw_rms": 0.05037221750257636,
+   "displacement_m": 0.6426300899778079,
+   "lift_mm": [
+    30.949287459070504,
+    22.78711195732526
+   ],
+   "signed_axis_mean": 0.030915702751886306,
+   "axis_tracking_rmse": 0.043196225861356526,
+   "normalized_axis_rmse": 0.5837327819102234,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.013394314546173925,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "forward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.601331812156632,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.030866601426031176,
+    0.00930263813708642,
+    -0.04792781069712571
+   ],
+   "horizontal_rms": 0.033123970994641094,
+   "yaw_rms": 0.05067528784904875,
+   "displacement_m": 0.6269910703527425,
+   "lift_mm": [
+    31.727735368739268,
+    22.025866795643296
+   ],
+   "signed_axis_mean": 0.030866601426031166,
+   "axis_tracking_rmse": 0.043059665875465815,
+   "normalized_axis_rmse": 0.581887376695484,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.011049334421340807,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "forward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.833703308734089,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.03233554405247225,
+    0.009192172704123378,
+    -0.05402875172839995
+   ],
+   "horizontal_rms": 0.03415018423825254,
+   "yaw_rms": 0.05604896550388595,
+   "displacement_m": 0.6415023054648452,
+   "lift_mm": [
+    30.6385373910839,
+    23.8957001200891
+   ],
+   "signed_axis_mean": 0.03233554405247224,
+   "axis_tracking_rmse": 0.0417826569005522,
+   "normalized_axis_rmse": 0.5646304986561108,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.010581330968764457,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "forward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.104699440661324,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.031544836001591886,
+    0.026698188380865295,
+    -0.0034015394084930713
+   ],
+   "horizontal_rms": 0.04178880965424748,
+   "yaw_rms": 0.014888522770147565,
+   "displacement_m": 0.8119151939806369,
+   "lift_mm": [
+    37.70272893631151,
+    24.578251274263145
+   ],
+   "signed_axis_mean": 0.03154483600159189,
+   "axis_tracking_rmse": 0.04251238435905372,
+   "normalized_axis_rmse": 0.574491680527753,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.027133706532146345,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "forward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.393531512038255,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.030483690662753412,
+    0.010864688232377052,
+    -0.04747224819884162
+   ],
+   "horizontal_rms": 0.033214146767026116,
+   "yaw_rms": 0.051188883223156526,
+   "displacement_m": 0.6449155650257842,
+   "lift_mm": [
+    31.358463520608144,
+    22.413585926701632
+   ],
+   "signed_axis_mean": 0.03048369066275336,
+   "axis_tracking_rmse": 0.04363482143079058,
+   "normalized_axis_rmse": 0.5896597490647376,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012941192939494741,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "forward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.610533637543263,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.03138628140808871,
+    0.011207170326072576,
+    -0.05425017756602888
+   ],
+   "horizontal_rms": 0.03413108840641214,
+   "yaw_rms": 0.05683243057368118,
+   "displacement_m": 0.6555009749599593,
+   "lift_mm": [
+    31.52574383736325,
+    21.568639043990913
+   ],
+   "signed_axis_mean": 0.03138628140808872,
+   "axis_tracking_rmse": 0.042706192747388044,
+   "normalized_axis_rmse": 0.5771107128025411,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.013100877003080182,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "forward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.356194326914425,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.03164945472439831,
+    0.010059790508562752,
+    -0.058278728978307784
+   ],
+   "horizontal_rms": 0.03428318422957051,
+   "yaw_rms": 0.06165397372029598,
+   "displacement_m": 0.6471428772908322,
+   "lift_mm": [
+    30.687001279333945,
+    23.28527061833609
+   ],
+   "signed_axis_mean": 0.03164945472439833,
+   "axis_tracking_rmse": 0.04249092003642155,
+   "normalized_axis_rmse": 0.5742016221138048,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012697426310764513,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "forward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.567977140371655,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.03133662024412659,
+    0.028501988222654213,
+    -0.0027287218554866155
+   ],
+   "horizontal_rms": 0.04340550518678888,
+   "yaw_rms": 0.013749837746702328,
+   "displacement_m": 0.8365642721908317,
+   "lift_mm": [
+    36.97469737853456,
+    25.610666691466374
+   ],
+   "signed_axis_mean": 0.03133662024412657,
+   "axis_tracking_rmse": 0.04263179307822056,
+   "normalized_axis_rmse": 0.5761053118678455,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.029660839972412822,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "forward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.531800810354026,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.030424112900597974,
+    0.011315827749552917,
+    -0.04830460771234028
+   ],
+   "horizontal_rms": 0.0334844717655528,
+   "yaw_rms": 0.05101594311107825,
+   "displacement_m": 0.63800056896217,
+   "lift_mm": [
+    31.261360229598292,
+    22.378336005451455
+   ],
+   "signed_axis_mean": 0.030424112900597985,
+   "axis_tracking_rmse": 0.043468101361096356,
+   "normalized_axis_rmse": 0.5874067751499508,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.013121922501825147,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "forward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.922163054616743,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.031235922480349728,
+    0.01115348684277753,
+    -0.04813074936913352
+   ],
+   "horizontal_rms": 0.03381525029166444,
+   "yaw_rms": 0.050173282982504466,
+   "displacement_m": 0.6531930468507571,
+   "lift_mm": [
+    30.70350770088177,
+    23.365143345393836
+   ],
+   "signed_axis_mean": 0.031235922480349728,
+   "axis_tracking_rmse": 0.04287547027917132,
+   "normalized_axis_rmse": 0.5793982470158286,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012469176127419226,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "forward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.281663877718787,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.03219861201565971,
+    0.010451378541396992,
+    -0.0561760432748727
+   ],
+   "horizontal_rms": 0.03489590053414113,
+   "yaw_rms": 0.0591196751276621,
+   "displacement_m": 0.6390527884594777,
+   "lift_mm": [
+    30.555117129409478,
+    23.615147961258884
+   ],
+   "signed_axis_mean": 0.0321986120156597,
+   "axis_tracking_rmse": 0.041758029295363985,
+   "normalized_axis_rmse": 0.5642976931805944,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012720794924816231,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "forward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.295443995556571,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.031961891252621895,
+    0.027092873986584123,
+    -0.0019211740146156207
+   ],
+   "horizontal_rms": 0.04229493371603511,
+   "yaw_rms": 0.01242600283657882,
+   "displacement_m": 0.8209951481328323,
+   "lift_mm": [
+    37.43188813127988,
+    24.919146933387815
+   ],
+   "signed_axis_mean": 0.03196189125262186,
+   "axis_tracking_rmse": 0.04237413124714973,
+   "normalized_axis_rmse": 0.5726233952317531,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.027853934192415292,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "backward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.765072387584969,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016202110278987148,
+    0.0015183561122163096,
+    0.008657902234352621
+   ],
+   "horizontal_rms": 0.01934595746083766,
+   "yaw_rms": 0.01375964493852174,
+   "displacement_m": 0.3334730745689311,
+   "lift_mm": [
+    27.005031787938883,
+    18.17146560628886
+   ],
+   "signed_axis_mean": 0.01620211027898715,
+   "axis_tracking_rmse": 0.05806917247714027,
+   "normalized_axis_rmse": 0.7847185469883821,
+   "stationary_fraction": 0.06419400855920114,
+   "orthogonal_rms": 0.00999667548538362,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "backward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.543272220770946,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01560769505560301,
+    -0.0003713140613730595,
+    0.0072294700377988005
+   ],
+   "horizontal_rms": 0.01795633124498529,
+   "yaw_rms": 0.012244916948169702,
+   "displacement_m": 0.32083300432623896,
+   "lift_mm": [
+    26.099356927679715,
+    19.212291996830523
+   ],
+   "signed_axis_mean": 0.015607695055603003,
+   "axis_tracking_rmse": 0.05882598305867967,
+   "normalized_axis_rmse": 0.7949457170091848,
+   "stationary_fraction": 0.12125534950071326,
+   "orthogonal_rms": 0.007807814923660288,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": false,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "backward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.617773669811214,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016599200303604286,
+    -0.0033260102380085793,
+    9.085040950949728e-05
+   ],
+   "horizontal_rms": 0.01980632730927675,
+   "yaw_rms": 0.010027985677238466,
+   "displacement_m": 0.34050337202214254,
+   "lift_mm": [
+    28.45782956680106,
+    19.115423591129666
+   ],
+   "signed_axis_mean": 0.016599200303604254,
+   "axis_tracking_rmse": 0.05732526717955111,
+   "normalized_axis_rmse": 0.7746657726966366,
+   "stationary_fraction": 0.028530670470756064,
+   "orthogonal_rms": 0.009285784276233486,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "backward",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.388231126789215,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.06488534345144913,
+    0.01538739359899407,
+    0.027019567485668253
+   ],
+   "horizontal_rms": 0.06709180880191916,
+   "yaw_rms": 0.03203075745180932,
+   "displacement_m": 1.291519425935483,
+   "lift_mm": [
+    33.00739229828003,
+    27.230576013088896
+   ],
+   "signed_axis_mean": 0.06488534345144914,
+   "axis_tracking_rmse": 0.009569151550521774,
+   "normalized_axis_rmse": 0.1293128587908348,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.016222619162908004,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "backward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.227577461142333,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.015151852904965341,
+    0.004645548218446045,
+    0.008461716225813057
+   ],
+   "horizontal_rms": 0.018635984491555863,
+   "yaw_rms": 0.011492121373162724,
+   "displacement_m": 0.33284180551431,
+   "lift_mm": [
+    26.073643844920763,
+    18.73053088722488
+   ],
+   "signed_axis_mean": 0.015151852904965356,
+   "axis_tracking_rmse": 0.058864652428008785,
+   "normalized_axis_rmse": 0.7954682760541728,
+   "stationary_fraction": 0.05135520684736091,
+   "orthogonal_rms": 0.009748784345140522,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "backward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.664213152642633,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.014925591027475043,
+    0.004686391250458247,
+    0.0037737719648810526
+   ],
+   "horizontal_rms": 0.017388307428213616,
+   "yaw_rms": 0.011575287330481087,
+   "displacement_m": 0.3231754237776797,
+   "lift_mm": [
+    26.676125657984688,
+    19.033032931476587
+   ],
+   "signed_axis_mean": 0.014925591027475031,
+   "axis_tracking_rmse": 0.05905648444020748,
+   "normalized_axis_rmse": 0.7980606005433444,
+   "stationary_fraction": 0.008559201141226819,
+   "orthogonal_rms": 0.008142603561543942,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "backward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.456493971110204,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016594416204286214,
+    0.004158902378157316,
+    0.00036189486960084514
+   ],
+   "horizontal_rms": 0.018606875809530538,
+   "yaw_rms": 0.013392047850845386,
+   "displacement_m": 0.3502405518557164,
+   "lift_mm": [
+    26.4244359965272,
+    19.067389271011653
+   ],
+   "signed_axis_mean": 0.016594416204286193,
+   "axis_tracking_rmse": 0.05802896596289642,
+   "normalized_axis_rmse": 0.7841752157148165,
+   "stationary_fraction": 0.06419400855920114,
+   "orthogonal_rms": 0.008071095095039333,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "backward",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.913496263977125,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.06575993040655362,
+    0.014660523898894887,
+    0.018604625143320917
+   ],
+   "horizontal_rms": 0.06761430589694258,
+   "yaw_rms": 0.02696384937504715,
+   "displacement_m": 1.3244735613463638,
+   "lift_mm": [
+    32.8411543665135,
+    27.254544229520295
+   ],
+   "signed_axis_mean": 0.06575993040655355,
+   "axis_tracking_rmse": 0.00893896282677868,
+   "normalized_axis_rmse": 0.12079679495646865,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.01568785235880329,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "backward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.997128664572882,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.015017810897218434,
+    0.0021190346607362492,
+    0.007301887789954258
+   ],
+   "horizontal_rms": 0.016954498952638012,
+   "yaw_rms": 0.01301029673457462,
+   "displacement_m": 0.31878184116383423,
+   "lift_mm": [
+    25.901812281356253,
+    18.329760750325384
+   ],
+   "signed_axis_mean": 0.015017810897218436,
+   "axis_tracking_rmse": 0.059213782674211804,
+   "normalized_axis_rmse": 0.8001862523542136,
+   "stationary_fraction": 0.06419400855920114,
+   "orthogonal_rms": 0.007397949838839552,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "backward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.838636615506463,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01614905940305424,
+    0.0001905290797263623,
+    0.004769603440805405
+   ],
+   "horizontal_rms": 0.01888628306499724,
+   "yaw_rms": 0.010181843455938708,
+   "displacement_m": 0.32908257978764827,
+   "lift_mm": [
+    26.691168038793958,
+    18.484119501611097
+   ],
+   "signed_axis_mean": 0.016149059403054215,
+   "axis_tracking_rmse": 0.05804420661118116,
+   "normalized_axis_rmse": 0.7843811704213671,
+   "stationary_fraction": 0.06419400855920114,
+   "orthogonal_rms": 0.009144171922576126,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "backward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 15.236793446171353,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016233767107033614,
+    0.0007234091974956749,
+    8.952857437307303e-05
+   ],
+   "horizontal_rms": 0.017912611144471808,
+   "yaw_rms": 0.008964940130968102,
+   "displacement_m": 0.34068015390307327,
+   "lift_mm": [
+    26.933466220210708,
+    18.02902626861258
+   ],
+   "signed_axis_mean": 0.01623376710703364,
+   "axis_tracking_rmse": 0.058177428806422106,
+   "normalized_axis_rmse": 0.7861814703570555,
+   "stationary_fraction": 0.052781740370898715,
+   "orthogonal_rms": 0.007542771196223732,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "backward",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.395074725620615,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.06504835281517986,
+    0.014926985429301216,
+    0.02154494739649588
+   ],
+   "horizontal_rms": 0.06731109197591993,
+   "yaw_rms": 0.02776097538673729,
+   "displacement_m": 1.2999406432668097,
+   "lift_mm": [
+    32.8558086821421,
+    27.19160134694549
+   ],
+   "signed_axis_mean": 0.06504835281517987,
+   "axis_tracking_rmse": 0.009192894818776007,
+   "normalized_axis_rmse": 0.12422830836183794,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.016421034467452085,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.563959970273874,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.012609922280554724,
+    0.033821201051586515,
+    -0.021824461861704544
+   ],
+   "horizontal_rms": 0.03632472732870713,
+   "yaw_rms": 0.02590180024782354,
+   "displacement_m": 0.6901559465468747,
+   "lift_mm": [
+    27.927057522648187,
+    17.595424148209396
+   ],
+   "signed_axis_mean": 0.03382120105158649,
+   "axis_tracking_rmse": 0.041476022727037584,
+   "normalized_axis_rmse": 0.5604867936086161,
+   "stationary_fraction": 0.0042796005706134095,
+   "orthogonal_rms": 0.012585667666986827,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.89337341780561,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.011930047280115135,
+    0.032407966771843495,
+    -0.01995103105774337
+   ],
+   "horizontal_rms": 0.03604927574771,
+   "yaw_rms": 0.022019778814761245,
+   "displacement_m": 0.7185451099756999,
+   "lift_mm": [
+    28.176630451542103,
+    16.455200091616724
+   ],
+   "signed_axis_mean": 0.03240796677184346,
+   "axis_tracking_rmse": 0.041767369880711745,
+   "normalized_axis_rmse": 0.5644239173069155,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012121169296743887,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.373079084000874,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.011498523612021198,
+    0.03523273560033322,
+    -0.026679360955129818
+   ],
+   "horizontal_rms": 0.03836394132289548,
+   "yaw_rms": 0.028773967016902196,
+   "displacement_m": 0.7307680999715446,
+   "lift_mm": [
+    27.79101237053811,
+    17.579662652663277
+   ],
+   "signed_axis_mean": 0.035232735600333256,
+   "axis_tracking_rmse": 0.0393245649786073,
+   "normalized_axis_rmse": 0.53141304025145,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.011894419557790773,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.13074164995187,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01821134359597944,
+    0.07059477984731312,
+    0.009230268011307467
+   ],
+   "horizontal_rms": 0.07245749883467029,
+   "yaw_rms": 0.021144727480897203,
+   "displacement_m": 1.3932070124463436,
+   "lift_mm": [
+    41.40783515034581,
+    22.805733114293794
+   ],
+   "signed_axis_mean": 0.07059477984731317,
+   "axis_tracking_rmse": 0.009888479486401171,
+   "normalized_axis_rmse": 0.1336281011675834,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.018624595939683037,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.403943385248665,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.011288967038046622,
+    0.037666680257426914,
+    -0.023660900786259806
+   ],
+   "horizontal_rms": 0.04006894057898537,
+   "yaw_rms": 0.02575310784575527,
+   "displacement_m": 0.7444329259950687,
+   "lift_mm": [
+    27.65455485655433,
+    16.83243554760633
+   ],
+   "signed_axis_mean": 0.03766668025742685,
+   "axis_tracking_rmse": 0.03786391296331018,
+   "normalized_axis_rmse": 0.5116744995041916,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.01194017215966581,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.553146038937223,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.011447903337818399,
+    0.03765305206788827,
+    -0.025349247063794888
+   ],
+   "horizontal_rms": 0.04022684069366867,
+   "yaw_rms": 0.027914358276292132,
+   "displacement_m": 0.7601086790813157,
+   "lift_mm": [
+    28.412382228130664,
+    17.134763966465606
+   ],
+   "signed_axis_mean": 0.03765305206788826,
+   "axis_tracking_rmse": 0.0375865326103298,
+   "normalized_axis_rmse": 0.5079261163558081,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.011996107028079182,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.613326028844112,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.010574108271518305,
+    0.036841960054753514,
+    -0.023709443928956776
+   ],
+   "horizontal_rms": 0.03934418745058613,
+   "yaw_rms": 0.027021622283108008,
+   "displacement_m": 0.7444714401850397,
+   "lift_mm": [
+    28.023344083891768,
+    17.047754176528702
+   ],
+   "signed_axis_mean": 0.036841960054753535,
+   "axis_tracking_rmse": 0.037424128600995074,
+   "normalized_axis_rmse": 0.5057314675810145,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.011191521125093936,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.701197501991697,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01818071263618079,
+    0.07003009536340457,
+    -0.0009596589841741545
+   ],
+   "horizontal_rms": 0.07194880399539277,
+   "yaw_rms": 0.01268432681939746,
+   "displacement_m": 1.3883474265784663,
+   "lift_mm": [
+    41.723648888552866,
+    22.78334022823327
+   ],
+   "signed_axis_mean": 0.07003009536340458,
+   "axis_tracking_rmse": 0.010599740345406679,
+   "normalized_axis_rmse": 0.14323973439738755,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.01842047647093481,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.382126820176385,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.011614134320441786,
+    0.03518584708460226,
+    -0.021552284589664798
+   ],
+   "horizontal_rms": 0.03828438697664377,
+   "yaw_rms": 0.023495522652210648,
+   "displacement_m": 0.6852588416187904,
+   "lift_mm": [
+    28.08775077544479,
+    16.54266194974581
+   ],
+   "signed_axis_mean": 0.03518584708460232,
+   "axis_tracking_rmse": 0.03991270846765891,
+   "normalized_axis_rmse": 0.539360925238634,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012042785920825442,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.519475209313262,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.012042469300813074,
+    0.0346477897230259,
+    -0.023550990126947245
+   ],
+   "horizontal_rms": 0.038232838560941465,
+   "yaw_rms": 0.025466252337380577,
+   "displacement_m": 0.719055007044254,
+   "lift_mm": [
+    27.852237692125197,
+    16.86040964711666
+   ],
+   "signed_axis_mean": 0.0346477897230259,
+   "axis_tracking_rmse": 0.04030321145445292,
+   "normalized_axis_rmse": 0.5446379926277422,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012593903162835473,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.678837963302575,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.012423237271948011,
+    0.037033786176277554,
+    -0.02568290437391107
+   ],
+   "horizontal_rms": 0.039370830870270705,
+   "yaw_rms": 0.027078949527565236,
+   "displacement_m": 0.7442604533635107,
+   "lift_mm": [
+    27.610188718226123,
+    17.77984029107465
+   ],
+   "signed_axis_mean": 0.037033786176277526,
+   "axis_tracking_rmse": 0.038708205150793235,
+   "normalized_axis_rmse": 0.5230838533890978,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.012798258880369773,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.578883678369163,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.017362875556224358,
+    0.07089846773840655,
+    -0.0029810145352240454
+   ],
+   "horizontal_rms": 0.07266113516595919,
+   "yaw_rms": 0.016794869541087352,
+   "displacement_m": 1.390614449896206,
+   "lift_mm": [
+    41.34012664915926,
+    23.07729909845876
+   ],
+   "signed_axis_mean": 0.07089846773840673,
+   "axis_tracking_rmse": 0.010845155946842424,
+   "normalized_axis_rmse": 0.14655616144381656,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.01783386223075499,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.259518379723144,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.0036010075897470748,
+    -0.037974286536847625,
+    -0.026521923533431798
+   ],
+   "horizontal_rms": 0.03907251212549538,
+   "yaw_rms": 0.02863751309307077,
+   "displacement_m": 0.721224266198835,
+   "lift_mm": [
+    27.730902762501792,
+    21.399295796909225
+   ],
+   "signed_axis_mean": 0.03797428653684765,
+   "axis_tracking_rmse": 0.03705591633229687,
+   "normalized_axis_rmse": 0.5007556261121199,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.00508132196085985,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.393670076441694,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.003944837857920264,
+    -0.03907746787571385,
+    -0.026778221487446272
+   ],
+   "horizontal_rms": 0.04075936746409123,
+   "yaw_rms": 0.029740018001645677,
+   "displacement_m": 0.7239069102779133,
+   "lift_mm": [
+    27.46531283677632,
+    21.82673998333679
+   ],
+   "signed_axis_mean": 0.03907746787571388,
+   "axis_tracking_rmse": 0.03521330230751673,
+   "normalized_axis_rmse": 0.47585543658806395,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.0049356053372288525,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.86442391776917,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.004806730532180607,
+    -0.04022471822367861,
+    -0.033017619861734925
+   ],
+   "horizontal_rms": 0.04177083755677649,
+   "yaw_rms": 0.03490294420259445,
+   "displacement_m": 0.7315053766685947,
+   "lift_mm": [
+    27.313298075440294,
+    22.39643028379383
+   ],
+   "signed_axis_mean": 0.04022471822367861,
+   "axis_tracking_rmse": 0.035020746122964685,
+   "normalized_axis_rmse": 0.4732533259860093,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005658701414833836,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.746375189783139,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01804700734831922,
+    -0.021012302253199885,
+    0.02736618673120163
+   ],
+   "horizontal_rms": 0.030291167498788196,
+   "yaw_rms": 0.02967335720831897,
+   "displacement_m": 0.5493493776504664,
+   "lift_mm": [
+    29.647911378092598,
+    28.96255898918884
+   ],
+   "signed_axis_mean": 0.021012302253199867,
+   "axis_tracking_rmse": 0.05275736605049831,
+   "normalized_axis_rmse": 0.7129373790607879,
+   "stationary_fraction": 0.10841654778887304,
+   "orthogonal_rms": 0.01864741509190325,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": false,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.947585841250985,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.005918504873407579,
+    -0.03081359728289598,
+    -0.028852655414257442
+   ],
+   "horizontal_rms": 0.03268748993135961,
+   "yaw_rms": 0.03068829214993775,
+   "displacement_m": 0.6544204002506542,
+   "lift_mm": [
+    26.767401204551287,
+    20.811447299146145
+   ],
+   "signed_axis_mean": 0.030813597282895965,
+   "axis_tracking_rmse": 0.04390918390557687,
+   "normalized_axis_rmse": 0.5933673500753631,
+   "stationary_fraction": 0.0014265335235378032,
+   "orthogonal_rms": 0.006516435886948854,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.950922316612548,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.004816850680330321,
+    -0.03423907715146585,
+    -0.0235558962296074
+   ],
+   "horizontal_rms": 0.03650643025161965,
+   "yaw_rms": 0.025212928748258808,
+   "displacement_m": 0.7198559861108732,
+   "lift_mm": [
+    28.536209205281672,
+    21.595532041697176
+   ],
+   "signed_axis_mean": 0.03423907715146585,
+   "axis_tracking_rmse": 0.0394511916003552,
+   "normalized_axis_rmse": 0.5331242108156108,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005065765063978982,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.534014033171522,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.004511219528929341,
+    -0.03713976528832712,
+    -0.032508408005535665
+   ],
+   "horizontal_rms": 0.039014798823347685,
+   "yaw_rms": 0.03516185489640501,
+   "displacement_m": 0.7510003273228503,
+   "lift_mm": [
+    26.750624890712217,
+    22.552062470897102
+   ],
+   "signed_axis_mean": 0.03713976528832706,
+   "axis_tracking_rmse": 0.03675988629345344,
+   "normalized_axis_rmse": 0.4967552201818033,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005077017276417901,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 11.31940799399871,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016955665550734904,
+    -0.023236168509955697,
+    0.028265424774103848
+   ],
+   "horizontal_rms": 0.03138408630197095,
+   "yaw_rms": 0.029445160714696574,
+   "displacement_m": 0.5745557174226833,
+   "lift_mm": [
+    29.75255001681116,
+    29.022296441833795
+   ],
+   "signed_axis_mean": 0.02323616850995573,
+   "axis_tracking_rmse": 0.05076693964354255,
+   "normalized_axis_rmse": 0.6860397249127372,
+   "stationary_fraction": 0.09272467902995721,
+   "orthogonal_rms": 0.017637838856847356,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.694213433504919,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.0045315654965592984,
+    -0.03304105587456972,
+    -0.023665087781569363
+   ],
+   "horizontal_rms": 0.03498354086332481,
+   "yaw_rms": 0.02671093480329045,
+   "displacement_m": 0.670729581904985,
+   "lift_mm": [
+    26.376642440396363,
+    22.282327125373058
+   ],
+   "signed_axis_mean": 0.033041055874569715,
+   "axis_tracking_rmse": 0.041287118072939256,
+   "normalized_axis_rmse": 0.5579340280126927,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005524964516224146,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 14.150461804441553,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.0047600378048755715,
+    -0.03418037032013961,
+    -0.025968031240592347
+   ],
+   "horizontal_rms": 0.035557136037960395,
+   "yaw_rms": 0.027137061018717802,
+   "displacement_m": 0.6876926154845346,
+   "lift_mm": [
+    26.694988593682645,
+    21.486216364812755
+   ],
+   "signed_axis_mean": 0.034180370320139625,
+   "axis_tracking_rmse": 0.040726956783948026,
+   "normalized_axis_rmse": 0.5503642808641626,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005888129638032183,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 13.42517944256903,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    0.004262697766008584,
+    -0.03798117636111679,
+    -0.031427418731638755
+   ],
+   "horizontal_rms": 0.039208211619046925,
+   "yaw_rms": 0.033067195693311895,
+   "displacement_m": 0.7547639925826797,
+   "lift_mm": [
+    27.146125325283116,
+    22.320220512598095
+   ],
+   "signed_axis_mean": 0.03798117636111676,
+   "axis_tracking_rmse": 0.036936079740489104,
+   "normalized_axis_rmse": 0.49913621270931224,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.005673434385224794,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": true
+   },
+   "all_pass": true
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.972898682523306,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01611127123335818,
+    -0.019336594677704738,
+    0.020316960311045587
+   ],
+   "horizontal_rms": 0.028135475380443066,
+   "yaw_rms": 0.027294748539303967,
+   "displacement_m": 0.5175756003198176,
+   "lift_mm": [
+    29.26676634950904,
+    28.944892120489367
+   ],
+   "signed_axis_mean": 0.019336594677704728,
+   "axis_tracking_rmse": 0.0544650760049097,
+   "normalized_axis_rmse": 0.7360145406068879,
+   "stationary_fraction": 0.15263908701854492,
+   "orthogonal_rms": 0.016535814006080805,
+   "criteria": {
+    "completed": true,
+    "direction": false,
+    "tracking": false,
+    "stationary": false,
+    "cross": true
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.084158013270489,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.009211892534743641,
+    0.034125167389831894,
+    0.5753893055206749
+   ],
+   "horizontal_rms": 0.036491093496312806,
+   "yaw_rms": 0.5732463321221398,
+   "displacement_m": 0.020389100016473614,
+   "lift_mm": [
+    39.72508315122415,
+    30.24979859276067
+   ],
+   "signed_axis_mean": 0.5753893055206754,
+   "axis_tracking_rmse": 0.03294301754333307,
+   "normalized_axis_rmse": 0.05490502923888845,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.036491093496312806,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.251957919448438,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.009813117626135556,
+    0.03488186866601967,
+    0.5732289014446145
+   ],
+   "horizontal_rms": 0.037667605516100586,
+   "yaw_rms": 0.572052105536325,
+   "displacement_m": 0.09398390437853461,
+   "lift_mm": [
+    39.36724449611142,
+    30.711140407040446
+   ],
+   "signed_axis_mean": 0.5732289014446144,
+   "axis_tracking_rmse": 0.03407145540230978,
+   "normalized_axis_rmse": 0.05678575900384964,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.037667605516100586,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.739484708166634,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.009555000958946208,
+    0.03144677861706184,
+    0.5668618034550938
+   ],
+   "horizontal_rms": 0.0341663224973914,
+   "yaw_rms": 0.5660099817857644,
+   "displacement_m": 0.06370325096118995,
+   "lift_mm": [
+    41.03328203493607,
+    30.045004198530055
+   ],
+   "signed_axis_mean": 0.5668618034550936,
+   "axis_tracking_rmse": 0.04095119943179947,
+   "normalized_axis_rmse": 0.06825199905299913,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.0341663224973914,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_left",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.786489764145692,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.004569548233444594,
+    0.04393766922721995,
+    0.7117601485247805
+   ],
+   "horizontal_rms": 0.04433493779642046,
+   "yaw_rms": 0.7112862798333873,
+   "displacement_m": 0.05919545774495574,
+   "lift_mm": [
+    35.128717070923386,
+    29.890781496605165
+   ],
+   "signed_axis_mean": 0.71176014852478,
+   "axis_tracking_rmse": 0.11416215790901245,
+   "normalized_axis_rmse": 0.1902702631816874,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04433493779642046,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.693431356279966,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.006666787764315002,
+    0.036218595794945976,
+    0.5584246162464602
+   ],
+   "horizontal_rms": 0.03790723412623818,
+   "yaw_rms": 0.5598214935001128,
+   "displacement_m": 0.08007622126324875,
+   "lift_mm": [
+    38.6668930323096,
+    30.231802380312747
+   ],
+   "signed_axis_mean": 0.55842461624646,
+   "axis_tracking_rmse": 0.04604422484711197,
+   "normalized_axis_rmse": 0.07674037474518662,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.03790723412623818,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.740847329455947,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.0051982330764153584,
+    0.0327682779349808,
+    0.5506743612706511
+   ],
+   "horizontal_rms": 0.03436852236528046,
+   "yaw_rms": 0.5507799169251372,
+   "displacement_m": 0.07017973720905749,
+   "lift_mm": [
+    38.53180958237554,
+    29.13602677547105
+   ],
+   "signed_axis_mean": 0.5506743612706512,
+   "axis_tracking_rmse": 0.05550782135328761,
+   "normalized_axis_rmse": 0.09251303558881269,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.03436852236528046,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.577985888661026,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.006733831792537306,
+    0.033966085053639856,
+    0.5513969664618841
+   ],
+   "horizontal_rms": 0.035346525843627644,
+   "yaw_rms": 0.5526862034314757,
+   "displacement_m": 0.06303447555184258,
+   "lift_mm": [
+    39.60925323767277,
+    29.72728309922184
+   ],
+   "signed_axis_mean": 0.5513969664618841,
+   "axis_tracking_rmse": 0.05523904656785665,
+   "normalized_axis_rmse": 0.09206507761309442,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.035346525843627644,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_left",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.364816931291221,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.005501880460806307,
+    0.04115179012132004,
+    0.7159208858871633
+   ],
+   "horizontal_rms": 0.04111722893098174,
+   "yaw_rms": 0.7152308681592364,
+   "displacement_m": 0.07043167895293015,
+   "lift_mm": [
+    35.19272232790757,
+    29.543253648032177
+   ],
+   "signed_axis_mean": 0.7159208858871625,
+   "axis_tracking_rmse": 0.11814264820410678,
+   "normalized_axis_rmse": 0.1969044136735113,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04111722893098174,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.865165817324506,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.006276754008392186,
+    0.031297208383605016,
+    0.5576939943884834
+   ],
+   "horizontal_rms": 0.03301100355428097,
+   "yaw_rms": 0.5558817449586675,
+   "displacement_m": 0.05318678827417374,
+   "lift_mm": [
+    39.26920965777379,
+    29.59832104217099
+   ],
+   "signed_axis_mean": 0.557693994388483,
+   "axis_tracking_rmse": 0.04731727659626505,
+   "normalized_axis_rmse": 0.07886212766044175,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.03301100355428097,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.199189143310166,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.007333628639053631,
+    0.03216556209481678,
+    0.5512472241938376
+   ],
+   "horizontal_rms": 0.034994670460098604,
+   "yaw_rms": 0.5512223349854473,
+   "displacement_m": 0.10255062358823705,
+   "lift_mm": [
+    38.44910011233572,
+    28.9732171086391
+   ],
+   "signed_axis_mean": 0.5512472241938379,
+   "axis_tracking_rmse": 0.05343180600037097,
+   "normalized_axis_rmse": 0.08905301000061829,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.034994670460098604,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 12.534159318275677,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.008605211145197644,
+    0.028824209091762816,
+    0.5559834154262024
+   ],
+   "horizontal_rms": 0.03175629629434225,
+   "yaw_rms": 0.5551553588311356,
+   "displacement_m": 0.057821424219040234,
+   "lift_mm": [
+    40.01859143247129,
+    29.674604923626394
+   ],
+   "signed_axis_mean": 0.5559834154262028,
+   "axis_tracking_rmse": 0.05014246619434198,
+   "normalized_axis_rmse": 0.08357077699056996,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.03175629629434225,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_left",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.558604797215537,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.0058232346525758805,
+    0.04291615912217466,
+    0.7056431549877697
+   ],
+   "horizontal_rms": 0.04323459850279133,
+   "yaw_rms": 0.7045640886128153,
+   "displacement_m": 0.08244436222534765,
+   "lift_mm": [
+    35.04085137637197,
+    30.43290145668154
+   ],
+   "signed_axis_mean": 0.7056431549877704,
+   "axis_tracking_rmse": 0.10653754188090234,
+   "normalized_axis_rmse": 0.1775625698015039,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04323459850279133,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.062768620222297,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.01714317817656163,
+    -0.038656653197338645,
+    -0.5844973568041678
+   ],
+   "horizontal_rms": 0.04386817848157577,
+   "yaw_rms": 0.5889556792795955,
+   "displacement_m": 0.026718908152017266,
+   "lift_mm": [
+    37.89209660951939,
+    35.41059604695569
+   ],
+   "signed_axis_mean": 0.5844973568041676,
+   "axis_tracking_rmse": 0.026478236064709105,
+   "normalized_axis_rmse": 0.044130393441181845,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04386817848157577,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.606970192637203,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.015628197893979467,
+    -0.04159246267158819,
+    -0.5784076125435659
+   ],
+   "horizontal_rms": 0.04558927425592257,
+   "yaw_rms": 0.5810301087580396,
+   "displacement_m": 0.07125954684659805,
+   "lift_mm": [
+    38.058748500669516,
+    34.72033458784245
+   ],
+   "signed_axis_mean": 0.5784076125435657,
+   "axis_tracking_rmse": 0.025059945252135472,
+   "normalized_axis_rmse": 0.04176657542022579,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04558927425592257,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.658777695155319,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.014093334052724586,
+    -0.0404364719881324,
+    -0.598710672935262
+   ],
+   "horizontal_rms": 0.0441989614136681,
+   "yaw_rms": 0.6012087043355466,
+   "displacement_m": 0.053069157854383785,
+   "lift_mm": [
+    38.77615744147219,
+    34.338877101430235
+   ],
+   "signed_axis_mean": 0.5987106729352627,
+   "axis_tracking_rmse": 0.022210972283394463,
+   "normalized_axis_rmse": 0.037018287138990774,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.0441989614136681,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_right",
+  "seed": 0,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.757111435719958,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.029361565319752703,
+    -0.023173274979774925,
+    -0.6744872928106288
+   ],
+   "horizontal_rms": 0.039192761095022705,
+   "yaw_rms": 0.675477779531921,
+   "displacement_m": 0.038314385808291225,
+   "lift_mm": [
+    33.1664809902531,
+    31.68796279077081
+   ],
+   "signed_axis_mean": 0.6744872928106296,
+   "axis_tracking_rmse": 0.07752719802103715,
+   "normalized_axis_rmse": 0.1292119967017286,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.039192761095022705,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.140344058877442,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016219712893447414,
+    -0.03865280359430013,
+    -0.5935526027866279
+   ],
+   "horizontal_rms": 0.043540086829195086,
+   "yaw_rms": 0.5967658759568202,
+   "displacement_m": 0.07791267638864953,
+   "lift_mm": [
+    38.68480949141132,
+    35.18556492771911
+   ],
+   "signed_axis_mean": 0.5935526027866274,
+   "axis_tracking_rmse": 0.02526040814315544,
+   "normalized_axis_rmse": 0.042100680238592404,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.043540086829195086,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.904937044783184,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016072091801673398,
+    -0.03948510161892609,
+    -0.5898169468194312
+   ],
+   "horizontal_rms": 0.04404342291756756,
+   "yaw_rms": 0.5918468171474323,
+   "displacement_m": 0.06721349033548277,
+   "lift_mm": [
+    38.504507089212034,
+    35.417000944024146
+   ],
+   "signed_axis_mean": 0.589816946819431,
+   "axis_tracking_rmse": 0.021125495592025114,
+   "normalized_axis_rmse": 0.03520915932004186,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04404342291756756,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 9.909591906943117,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.014330322602620356,
+    -0.04150735874545808,
+    -0.6064288005166025
+   ],
+   "horizontal_rms": 0.04519409740398998,
+   "yaw_rms": 0.6067147903286079,
+   "displacement_m": 0.061065171134918904,
+   "lift_mm": [
+    38.375755130614365,
+    35.674787136779216
+   ],
+   "signed_axis_mean": 0.6064288005166024,
+   "axis_tracking_rmse": 0.022944652727068783,
+   "normalized_axis_rmse": 0.038241087878447974,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04519409740398998,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_right",
+  "seed": 1,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 8.749234731870132,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.02803839252986471,
+    -0.02418534655896167,
+    -0.6638741679672358
+   ],
+   "horizontal_rms": 0.0390655796051736,
+   "yaw_rms": 0.6655868308784627,
+   "displacement_m": 0.008257076207123553,
+   "lift_mm": [
+    33.16842488379837,
+    31.745887301889
+   ],
+   "signed_axis_mean": 0.6638741679672354,
+   "axis_tracking_rmse": 0.06843693099253752,
+   "normalized_axis_rmse": 0.1140615516542292,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.0390655796051736,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "b2",
+  "command": "turn_right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.208806942569916,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.018369711341216528,
+    -0.03783933556816646,
+    -0.5818887901994007
+   ],
+   "horizontal_rms": 0.0436702282557964,
+   "yaw_rms": 0.5840925142258612,
+   "displacement_m": 0.11930378860191077,
+   "lift_mm": [
+    37.960495855583346,
+    34.86696271914502
+   ],
+   "signed_axis_mean": 0.5818887901994011,
+   "axis_tracking_rmse": 0.024791063214646,
+   "normalized_axis_rmse": 0.04131843869107667,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.0436702282557964,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "untrained_neutral",
+  "command": "turn_right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.565358839070907,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.016839954552997274,
+    -0.04035180704448771,
+    -0.582657508565685
+   ],
+   "horizontal_rms": 0.04489710127836103,
+   "yaw_rms": 0.5853119171556747,
+   "displacement_m": 0.09506013071486476,
+   "lift_mm": [
+    37.26870765712116,
+    34.60595670527594
+   ],
+   "signed_axis_mean": 0.582657508565685,
+   "axis_tracking_rmse": 0.025569959253782217,
+   "normalized_axis_rmse": 0.0426165987563037,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04489710127836103,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "pilot_candidate",
+  "command": "turn_right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.36745587886736,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.013416554796677527,
+    -0.0392342715426949,
+    -0.5910878855421858
+   ],
+   "horizontal_rms": 0.043433130752029904,
+   "yaw_rms": 0.5918608757321314,
+   "displacement_m": 0.10816399091519739,
+   "lift_mm": [
+    38.436029737268186,
+    34.714623406049625
+   ],
+   "signed_axis_mean": 0.5910878855421856,
+   "axis_tracking_rmse": 0.0227166557814443,
+   "normalized_axis_rmse": 0.037861092969073834,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.043433130752029904,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ },
+ {
+  "arm": "gpu_candidate",
+  "command": "turn_right",
+  "seed": 2,
+  "completed": true,
+  "fell": false,
+  "stop_reason": null,
+  "simulated_seconds": 20.0,
+  "max_tilt_deg": 10.155552178294002,
+  "metrics": {
+   "tracking_available": true,
+   "mean_velocity": [
+    -0.028820359798872375,
+    -0.026305101934806955,
+    -0.667464135119208
+   ],
+   "horizontal_rms": 0.04168038090107574,
+   "yaw_rms": 0.6693355542721818,
+   "displacement_m": 0.0471677253363312,
+   "lift_mm": [
+    32.60409051332591,
+    30.912970377011995
+   ],
+   "signed_axis_mean": 0.667464135119208,
+   "axis_tracking_rmse": 0.07406813809227622,
+   "normalized_axis_rmse": 0.12344689682046037,
+   "stationary_fraction": 0.0,
+   "orthogonal_rms": 0.04168038090107574,
+   "criteria": {
+    "completed": true,
+    "direction": true,
+    "tracking": true,
+    "stationary": true,
+    "cross": false
+   },
+   "all_pass": false
+  }
+ }
+]

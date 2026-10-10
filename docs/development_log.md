@@ -4,6 +4,79 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Capped GPU neutral continuation: 60 M transitions; backward/left pass, right regresses, turns unchanged; pilot fails
+
+**Preregistration:** `a3ba5ca`, before implementation (`docs/gpu_neutral_pilot.md`). One authorized paid
+pilot: ≤ 1 GPU VM, 45 min hard lifetime, ≤ US$2.
+
+**Implementation** (`1d423dd`):
+- `experiments/locomotion_curriculum/gpu_pilot.py`: minibatch PPO with upstream's batch structure
+  (8,064 environments, unroll 20, 32 minibatches, 4 epochs), LR 1e-4, the pilot's loss settings, and
+  frozen B2-cropped statistics.
+- Starting point: the local pilot's final checkpoint, hash-verified on the VM.
+- Balanced environments: environment i runs `COMMANDS[i mod 7]`, with 1,000-step episodes.
+- `PersistentNeutralJoystick` blocks upstream's step-500 command resampling (test added). It also gives
+  the "alive" reward a strong dtype: the weak dtype forced one extra collector compilation (values are
+  identical, measured in the CPU smoke).
+- Stops: deadline at uptime 2,220 s, the throughput-based step ceiling, and integrity stops.
+- Launcher `--input-bundle`: a checksummed `inputs.tar.gz` + `MANIFEST.sha256`, only 46 files/6.7 MB (the
+  start checkpoint and seven references). Job `cloud/jobs/neutral_gpu_pilot.sh`: GPU assertion, checksum
+  verification, 180 s result sync, independent `timeout`.
+- The CPU smoke passed end to end before launch.
+
+**Run** [measured]: `neutral_gpu_pilot-20261010-152812`, g2-standard-8 (1× L4), us-central1-c,
+on-demand at $0.8536/h (current list price).
+- The first attempt hit **STOCKOUT** in all three us-central1 zones (no VM, NAT removed); the retry
+  succeeded.
+- VM lifetime 04:29:59 → 05:02:39 UTC (32.7 min); bootstrap 236 s; first iteration (compile + reset)
+  319 s.
+- **374 accepted iterations = 60,318,720 transitions**, stopped at the step ceiling.
+  - Rule: 36,291 steps/s over iterations 2–4 → 374 iterations. Steady state 3.77 s per iteration
+    (≈ 42,800 steps/s).
+- GPU mean utilization 71%. Inputs 46/46 verified. Replay error 0; max KL 0.0192; statistics unchanged;
+  exact roundtrip.
+- 236/236 files fetched; checkpoint and ONNX hashes re-verified locally.
+- Estimated total ≈ US$0.70.
+- Training reward 0.33 → 0.49 for every command; true terminations 0.13–0.18% per step.
+
+**Evaluation** [measured]: 84 native-MuJoCo trials (`motor_compare.py`, same protocol as the pilot), no
+falls in any arm.
+
+| command | GPU candidate | detail |
+|---|---|---|
+| rest | 3/3 | |
+| forward | 0/3 | +0.031 m/s, 43% |
+| backward | **3/3** | 0.065 m/s; pilot 0.017 |
+| left | **3/3** | 0.071 m/s; pilot 0.036 |
+| right | **0/3** | 0.021 m/s; pilot 0.038, start 3/3 |
+| turns | 0/3 | translation 0.039–0.044 m/s > 0.03; over-rotation 0.66–0.71 rad/s |
+
+- Normalized RMSE 0.3104 vs untrained 0.4250 (ratio 0.730) and pilot 0.4130.
+- **Criteria 1 and 3 fail; H is not supported; the pilot fails.** No checkpoint selection, no default
+  promotion, no expressive objectives. Turn-time lateral drift is also present in historical B2 and the
+  pilot.
+- Seven three-column clips and a combined 140 s video are local (hashes in the results folder).
+
+**Cleanup (separate commit `d928fb2`):**
+- Shared helpers moved unchanged into `nerva/training/b2_warm_start.py`, `nerva/training/motor_artifacts.py`
+  and `nerva/analysis/motor_eval.py`, with re-export shims in `learning_support.py`, `gate.py`,
+  `normalization_timing.py` and `paired_motor.py`. None of their hashes is recorded in results;
+  `neutral_ppo_smoke.py`'s is, and it is untouched.
+- Six leaf runners moved byte-identically to `experiments/locomotion_curriculum/archive/`, with a mapping
+  README. Runners that other code imports stay in place, marked completed.
+- Maintained entry points: `gpu_pilot.py`, `motor_compare.py`, and the cloud job.
+
+**Cloud state** [measured]: no instances, disks, addresses, forwarding rules, routers or snapshots. The
+results bucket and runner identity are retained intentionally.
+
+**Next (not run):** diagnose the left/right asymmetry before more training.
+- Mirror-symmetric evaluation, and per-command lateral velocity in the training environment vs native
+  evaluation.
+- Audit why pure turns translate in every arm (reference vs reward).
+- Then preregister a bounded continuation addressing the measured cause. No expressive objectives.
+
+---
+
 ## 2026-10-10 — Actual balanced neutral learning, paired motor results and videos
 
 Preregistered `8fd4fd3` before implementation/evaluation, baseline `e42735a`.

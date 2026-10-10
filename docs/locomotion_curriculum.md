@@ -113,6 +113,13 @@ explicitly capped neutral continuation for low-speed tracking and pure-turn
 translation, then the long readiness gate; no expressive objectives yet.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
+**GPU continuation (2026-10-10, `gpu_neutral_pilot.md`):**
+- 60,318,720 transitions from the pilot's final checkpoint on one L4 (32.7 min VM, ≈ US$0.70).
+- Backward and left pass, normalized RMSE ratio 0.730, no falls.
+- Forward undershoots, right regresses from 3/3 to 0/3, and both turns still translate 0.039–0.044 m/s.
+- The pilot fails; no checkpoint selection.
+- Next: diagnose the asymmetry and turn translation before training further.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

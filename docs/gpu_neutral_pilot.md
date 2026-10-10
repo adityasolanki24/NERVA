@@ -122,3 +122,28 @@ not move the policy, and ⅓ of B2's original 3e-4, because this is a fine-tune.
 Seven 20 s comparison clips (seed 0): historical B2 | local pilot candidate | GPU candidate, labelled
 with command, measured velocity and PASS/FAIL, plus a combined video. Raw artifacts stay in ignored
 local storage; small reports and hashes are committed.
+
+## Outcome (2026-10-10; protocol above unchanged)
+
+- **Run:** one L4 VM, us-central1-c, 32.7 min of VM lifetime. The first attempt hit L4 stockout in all
+  zones and created no VM.
+- **Training:** 374 accepted iterations, **60,318,720 transitions**, stopped at the step ceiling.
+  - Ceiling rule: 36,291 steps/s measured over iterations 2–4; steady state ≈ 42,800 steps/s.
+  - Max KL 0.0192; replay error 0; frozen statistics unchanged; exact checkpoint roundtrip.
+- **Estimated cost:** ≈ US$0.70.
+- **Evaluation:** 84 paired trials, no falls in any arm.
+- **GPU candidate per command:**
+
+  | command | passes | detail |
+  |---|---|---|
+  | rest | 3/3 | |
+  | forward | 0/3 | 43% of the request |
+  | backward | **3/3** | |
+  | left | **3/3** | |
+  | right | **0/3** | regressed from the start's 3/3 |
+  | both turns | 0/3 | translation 0.039–0.044 m/s |
+
+  Normalized RMSE 0.3104 vs untrained 0.4250 (ratio 0.730).
+- **H not supported; the pilot fails** (criteria 1 and 3). The changes are asymmetric (left up, right
+  down, forward drift), consistent with a learned lateral bias [hypothesis].
+- Full report: `experiments/locomotion_curriculum/results_gpu_pilot/README.md`.

@@ -1,0 +1,63 @@
+{
+ "preregistration_commit": "a3ba5ca",
+ "implementation_commit": "908cd6a33a1acc8ab7733594f018fbda6421a1b8",
+ "policy_hashes": {
+  "b2": "6ebfe384f4bcb8f06657ba597825744a01a69146ab07583b5f993f15b7f2c9a1",
+  "untrained_neutral": "9096b5e999fa574f44b7245f44bec0bd78f9cdb165bc2f4f45aa68822583ca09",
+  "pilot_candidate": "909d00cb33a08abf24dbeeecb5bd2d3c3046a0f653422340eca718a5f1b0eaee",
+  "gpu_candidate": "1f9089d9c0104d76e064362539df0b2d0e8af524fd2335fd00e05e0445f068d7"
+ },
+ "commands": {
+  "rest": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "forward": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "backward": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "left": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "right": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "turn_left": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "turn_right": [
+   0.0,
+   0.0,
+   -0.6
+  ]
+ },
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "seconds": 20,
+ "scoring_seconds": [
+  5,
+  20
+ ],
+ "scene": "flat_terrain_backlash",
+ "raw_accel": true,
+ "observation_noise": true,
+ "joint_initial_noise": 0.02,
+ "safety_override": false,
+ "checkpoint_selection": "final accepted only"
+}

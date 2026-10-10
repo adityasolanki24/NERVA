@@ -84,9 +84,13 @@ entry, docs, commit.
    pilot: normalized tracking error improves only 2.82% versus its untrained
    control and five commands fail. Rest improvement is already present with the
    neutral clock before training. Seven comparison videos are retained locally.
-   Next preregister a longer capped neutral continuation addressing low-speed
-   tracking and pure-turn translation, then the long neutral motor gate
-   before expressive training), evaluated on monotonic
+   A preregistered capped GPU continuation (2026-10-10) then trained 60.3 M
+   transitions on one L4 in 32.7 min (≈ US$0.70): backward and left now pass,
+   aggregate error −27% vs the untrained control, no falls; but forward still
+   undershoots, rightward motion regressed, and pure-turn translation was not
+   reduced. The pilot fails (`gpu_neutral_pilot.md`). Next: diagnose the
+   left/right asymmetry and turn translation, then a bounded continuation and the
+   long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

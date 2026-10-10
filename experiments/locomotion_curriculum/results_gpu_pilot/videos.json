@@ -1,0 +1,93 @@
+[
+ {
+  "command": "rest",
+  "file": "comparison_rest.mp4",
+  "sha256": "7e841730a6f01d3f216bcfeb70ee16cc166c1eb075bd41a7a7ced2781746ab39",
+  "bytes": 2207100,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "forward",
+  "file": "comparison_forward.mp4",
+  "sha256": "38a8abe14a9dfef131838b50310c1ca4fb47468e210989e6350f1721082195c4",
+  "bytes": 3828568,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "backward",
+  "file": "comparison_backward.mp4",
+  "sha256": "2203cc005a4747a97bba72b14fd65ec3bd634a35da1295ad9d8c46176eb1a3b4",
+  "bytes": 3820606,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "left",
+  "file": "comparison_left.mp4",
+  "sha256": "033009777509958f0550b8989835fd5d1cfe1609949d4f13b7dbb82df03ed532",
+  "bytes": 3831458,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "right",
+  "file": "comparison_right.mp4",
+  "sha256": "239a486b94cbf8a53dccbd2d122bbf20a6a928e1e449b58201c63cfe4e72f155",
+  "bytes": 3799192,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "turn_left",
+  "file": "comparison_turn_left.mp4",
+  "sha256": "d72a9418b56837a518601570c3087ee315ae14b7a3561f6258479cecfcf13f98",
+  "bytes": 4272782,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ },
+ {
+  "command": "turn_right",
+  "file": "comparison_turn_right.mp4",
+  "sha256": "62fec9cd61145216ab6c26154e08f2db06941abe5ead2f01800b170f45bb310b",
+  "bytes": 4255774,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "pilot_candidate",
+   "gpu_candidate"
+  ]
+ }
+]

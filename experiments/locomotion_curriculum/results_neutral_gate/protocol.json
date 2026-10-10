@@ -1,0 +1,26 @@
+{
+ "preregistration_commit": "b6ec4c5",
+ "implementation_commit": "d29bf8eeaec3e928dc1f930cef2eb09bac9a873a",
+ "policy": "experiments/cloud_runs/base_origin_velocity-20261010-201858/candidate.onnx",
+ "policy_sha256": "9394fa5db7fc613f7ee311ec329e39a693f790ba219e26913db7a7464a11c5a2",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dt_s": 0.02,
+ "scene": "flat_terrain_backlash",
+ "conditions": [
+  "no_latency",
+  "latency"
+ ],
+ "latency_model": "applied action from 0/1/2 control steps ago, uniform, seeded stream (seed, 1)",
+ "push": {
+  "step": 400,
+  "speed_m_s": 0.3
+ },
+ "primary_safety": "shadow only",
+ "cloud_work": false
+}

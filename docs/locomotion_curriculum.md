@@ -138,6 +138,11 @@ IMU. The base-origin reward continuation (`base_origin_velocity_pilot.md`) moved
 limit (0.022–0.026 m/s); natively it is not. About half of that MJX → native gap comes from the training-only
 0–2 step action delays; the reference turns are symmetric; contacts match between engines.
 
+**Neutral long motor gate (2026-10-10, `neutral_motor_gate.md`, `results_neutral_gate/`):** every condition
+runs without and with training-like latency; all required in both. The base-origin candidate fails only on
+steady turn left (0/5 without latency, 2/5 with); no falls in 160 trials, all transitions pass, 80/80 pushes
+recovered. Gate not passed; no expressive training.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

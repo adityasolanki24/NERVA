@@ -102,8 +102,10 @@ entry, docs, commit.
    A local diagnostic then showed the left turn passes in MJX (0.022–0.026 m/s): the miss is a
    MJX → native gap, about half of it because training adds 0–2 step action delays that the
    native evaluation lacks (`results_turn_asymmetry/`).
-   Next: decide, by a new preregistration, how the evaluation should model latency; close the rest
-   of the gap; then the long neutral motor gate before expressive training), evaluated on monotonic
+   The neutral long motor gate (`neutral_motor_gate.md`; every condition with and without
+   training-like latency) then failed only on the steady left turn (0/5 without, 2/5 with latency);
+   no falls in 160 trials, all transitions, 80/80 pushes recovered.
+   Next: remove the left-turn sideways offset, then re-run the same gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

@@ -4,6 +4,32 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Neutral long motor gate (with and without latency): fails only on the steady left turn
+
+Local only (no paid compute). Preregistered at `b6ec4c5` (`docs/neutral_motor_gate.md`); runner `d29bf8e`.
+Evidence: `experiments/locomotion_curriculum/results_neutral_gate/`.
+
+### Changes
+- `OpenDuckSim(action_delay=True)`: training-matched 0–2 step action delay, own seeded stream (paired
+  observation noise unchanged), undelayed last-action history. Default off; upstream reproduction test
+  still passes. Tests for the delay distribution and stream independence.
+- Corrected an earlier claim: training's IMU delay acts only on an unobserved gravity vector, so only the
+  action delay matters.
+
+### What ran
+- 80 trials × 2 latency conditions for the base-origin candidate: 7 steady commands × 5 seeds, 5 transition
+  sequences, 40 pushes.
+
+### Observations [measured]
+- Fails only steady turn left: 0/5 without latency, 2/5 with latency. Everything else passes in both.
+- No falls, all transitions, 80/80 pushes recovered (max 1.54 s), no shadow-safety interventions.
+- Latency helps the left turn, slightly slows forward and loosens the right turn (both still pass).
+
+### Decision
+- Gate fails, as expected. One remaining issue: the left-turn sideways pivot offset.
+
+---
+
 ## 2026-10-10 — Left-turn miss is a MJX → native gap; about half comes from training-only delays
 
 Local diagnostic only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_turn_asymmetry/`

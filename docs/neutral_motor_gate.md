@@ -60,3 +60,12 @@ unchanged `SafetySupervisor` runs in shadow and its interventions are reported, 
 criterion, including every failing command and seed; shadow-safety counts are diagnostics. A pass would
 still be one training seed and simulation only: it would justify preregistering expressive-objective work,
 not hardware deployment.
+
+## Outcome (2026-10-10; protocol above unchanged)
+
+- Runner `d29bf8e`; 160 trials, local CPU, 287 s.
+- **The gate fails** only on criterion 2: steady turn left passes 0/5 without latency (0.033–0.035 m/s) and
+  2/5 with latency (0.030–0.033). Every other command passes 5/5 in both conditions.
+- Stability, transitions and pushes pass in both conditions: no falls in 160 trials, every phase passes,
+  80/80 pushes recovered (max 1.54 s), no shadow-safety interventions.
+- Report: `experiments/locomotion_curriculum/results_neutral_gate/README.md`.

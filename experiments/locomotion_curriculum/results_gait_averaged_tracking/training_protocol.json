@@ -1,0 +1,154 @@
+{
+ "experiment": "gait_averaged_tracking",
+ "preregistration_commit": "a143ae4",
+ "gait_averaged_tracking": true,
+ "config": {
+  "replicas": 1152,
+  "episode_length": 1000,
+  "unroll_length": 20,
+  "num_minibatches": 32,
+  "epochs": 4,
+  "learning_rate": 0.0001,
+  "seed": 41,
+  "checkpoint_every": 20,
+  "deadline_uptime_s": 2220,
+  "max_steps": 80000000,
+  "kl_limit": 0.1,
+  "logit_tolerance": 0.001,
+  "log_prob_tolerance": 0.01,
+  "timed_iterations": [
+   2,
+   3,
+   4
+  ],
+  "max_iterations": null,
+  "wall_s": null
+ },
+ "loss": {
+  "entropy_cost": 0.005,
+  "discounting": 0.97,
+  "reward_scaling": 1.0,
+  "gae_lambda": 0.95,
+  "clipping_epsilon": 0.2,
+  "normalize_advantage": true,
+  "vf_coefficient": 0.5
+ },
+ "network": {
+  "policy_hidden_layer_sizes": [
+   512,
+   256,
+   128
+  ],
+  "value_hidden_layer_sizes": [
+   512,
+   256,
+   128
+  ],
+  "policy_obs_key": "state",
+  "value_obs_key": "privileged_state"
+ },
+ "devices": [
+  "cuda:0"
+ ],
+ "start": {
+  "checkpoint": "experiments/cloud_runs/neutral_gpu_pilot-20261010-152812/checkpoints/000060318720",
+  "files": 11,
+  "statistics_sha256": "9fcb8bc0a438ee275bed824bb888ecbf3c0556c22c785c2a913a1c7840e04e9e"
+ },
+ "environments": 8064,
+ "transitions_per_iteration": 161280,
+ "reference_manifest": {
+  "contract": "neutral_motor_v1",
+  "mixed_provenance": true,
+  "references": [
+   {
+    "condition": "stand",
+    "command": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_repair/trials.json",
+    "report_sha256": "5b50f1ca313136e27a97a5473fb24354f0681dea311c6a9ce5d2d89cd8a18fcc",
+    "recording_sha256": "590c69356c8aa733b1a5dd31d6b9a1a5bfb22d80770bf857b415280ecbfe3e63",
+    "reference_sha256": "c43a930615623b1f0abc08fbb5d1a0f3918aec90d958b80e2587ba809d3554e2"
+   },
+   {
+    "condition": "forward",
+    "command": [
+     0.074,
+     0.0,
+     0.0
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_repair/trials.json",
+    "report_sha256": "5b50f1ca313136e27a97a5473fb24354f0681dea311c6a9ce5d2d89cd8a18fcc",
+    "recording_sha256": "abc747bf8be0595dcd2b2fa68d8971dd62da30ed895a30658be8099a2094747d",
+    "reference_sha256": "396b0fe1f020f7d2518c3244fa02144e247fdba744cc287db80e87385c30d04e"
+   },
+   {
+    "condition": "backward",
+    "command": [
+     -0.074,
+     0.0,
+     0.0
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_repair/trials.json",
+    "report_sha256": "5b50f1ca313136e27a97a5473fb24354f0681dea311c6a9ce5d2d89cd8a18fcc",
+    "recording_sha256": "3d037affc49a6e9609f6083d4ebed79134fd27404862b8c7acf85bbc83a4c224",
+    "reference_sha256": "287e9a088aaee5ff2b6b09f64692445afae79ebed790f68dcca36d30596afacf"
+   },
+   {
+    "condition": "left",
+    "command": [
+     0.0,
+     0.074,
+     0.0
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_repair/trials.json",
+    "report_sha256": "5b50f1ca313136e27a97a5473fb24354f0681dea311c6a9ce5d2d89cd8a18fcc",
+    "recording_sha256": "426c00fdd8085a4627f2146f0029b25eed1ed5913d49a66d5caf1a88b94c21b0",
+    "reference_sha256": "115369594c1464d6ae41428810fc8751a4369ef5fe1c0738d72d81c2061ba187"
+   },
+   {
+    "condition": "right",
+    "command": [
+     0.0,
+     -0.074,
+     0.0
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_repair/trials.json",
+    "report_sha256": "5b50f1ca313136e27a97a5473fb24354f0681dea311c6a9ce5d2d89cd8a18fcc",
+    "recording_sha256": "bb0970cb8f34a600400424c7386880eefdb11928f50d02ec5f432b8b055a456f",
+    "reference_sha256": "3243a69be0768116633212f5744d654f1df815741cc6910e4a5835d5aa302c03"
+   },
+   {
+    "condition": "turn_left",
+    "command": [
+     0.0,
+     0.0,
+     0.6
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_pivot_retry/trials.json",
+    "report_sha256": "eb0462532f45a1655791f2e3c272ed6bae8399a34c077830517eb6ad77b7cd08",
+    "recording_sha256": "125953d7160f6a46f1b69fcff10260b4429744b243167a8bdf3fd0dda93795ef",
+    "reference_sha256": "3019b640c9cebb3a2ea77406f8b4a1782a67401a4b195800ff00344a23965bf6"
+   },
+   {
+    "condition": "turn_right",
+    "command": [
+     0.0,
+     0.0,
+     -0.6
+    ],
+    "report": "experiments/locomotion_curriculum/results_reference_pivot_retry/trials.json",
+    "report_sha256": "eb0462532f45a1655791f2e3c272ed6bae8399a34c077830517eb6ad77b7cd08",
+    "recording_sha256": "1ca037191f3316e377bb2bb5e9073085704c5ce67eb823b7afc4598c38cbdc72",
+    "reference_sha256": "093e0d3efd77e47effd9444ebcc9c030b34f5fedcb085c8d2c7718478722c1fb"
+   }
+  ],
+  "learned_motor_readiness": false
+ },
+ "restoration": "parameters_only; fresh Adam/RNG/environment; snapshots allow parameter+optimizer restart, not physical-environment resume",
+ "runner_sha256": "a62d01e347b94b7ab3ab205fd37e270131572c11c58f2d83dfa5ceadba6f8c27",
+ "code_commit": "3dad8c8671f53bdabe6db3c788ce1ce191179962"
+}

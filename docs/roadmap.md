@@ -90,9 +90,11 @@ entry, docs, commit.
    undershoots, rightward motion regressed, and pure-turn translation was not
    reduced. The pilot fails (`gpu_neutral_pilot.md`). Diagnosis: the tracking
    reward pays standing still more than walking correctly at 0.074 m/s (gait sway);
-   turns are mostly a MJX→native gap. A gait-averaged tracking continuation is
-   preregistered (`gait_averaged_tracking_pilot.md`), awaiting authorization; then the
-   turn-gap diagnostic and the long neutral motor gate before expressive training), evaluated on monotonic
+   turns are mostly a MJX→native gap. The preregistered gait-averaged tracking
+   continuation (62 M transitions, ≈ US$0.70) then passed forward, backward, left and
+   right in 3/3 seeds with no falls (RMSE ratio 0.352 vs untrained): H supported, but the
+   pilot fails because both turns translate 0.053–0.068 m/s (`gait_averaged_tracking_pilot.md`).
+   Next: the turn-drift/turn-gap diagnosis and the long neutral motor gate before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

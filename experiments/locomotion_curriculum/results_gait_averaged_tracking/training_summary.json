@@ -1,0 +1,34 @@
+{
+ "accepted_iterations": 384,
+ "accepted_transitions": 61931520,
+ "stop_reason": "step_ceiling",
+ "steps_per_second_measured": 35728.28761942278,
+ "step_ceiling_iterations": 384,
+ "wall_seconds": 1796.4,
+ "uptime_at_exit_s": 1964.96,
+ "frozen_statistics_unchanged": true,
+ "roundtrip": {
+  "equal": true,
+  "finite": true,
+  "max_error": 0.0,
+  "leaves": 25
+ },
+ "final_checkpoint": "000061931520",
+ "checkpoint_hashes": {
+  "_CHECKPOINT_METADATA": "02eb3500b8fb494197eb4eb86503834bcb6194dee0490e197ae4c92d218a8658",
+  "_METADATA": "ccbe2bcf8b904bee9d11ac3a9ec6f5302d287c3f066e4c5c4f77df6be712c4d5",
+  "d/270c15c493a4835b72c968f794f5af06": "c61769d67e69185bf2de01ceea072ddbc44c4a98d99a0b99ddc14abcd3d92af9",
+  "manifest.ocdbt": "d708a837c12d74d68ae9c0c285ab5e648d98720c11b5cee87b7eb5a061bc8eee",
+  "ocdbt.process_0/d/18af98c78f115679785d7ccef99fb279": "420e5039588c37875c06959d01b1b21cb459f66d06d95c934d0f1a4f3fa44e4a",
+  "ocdbt.process_0/d/3dc8231cc5294e5258bfecc4f05a16e7": "9690d7ccfbf060b549084573954787409ce9b6194b51a906cc3c4b558cd8d40c",
+  "ocdbt.process_0/d/4aa8ced57f7a843af9fe39f1fe0dbfff": "db11665ed05b9f7dc5eee343d0f6a049a83de9c34ce33788345eaf10f7bfdca0",
+  "ocdbt.process_0/d/e4926e4b2455c147eae142c6134524f0": "b40d392391adf7b563d076fd6fdd2ecced58782348d7b68320d3a27516217c7d",
+  "ocdbt.process_0/manifest.ocdbt": "184577d6d940b1ac189cc42d656f77a880301828d8279b54255280a833910b1f",
+  "ppo_network_config.json": "7e163a3a4ca9d0438b1579987a77b9efa0fea897ea9e8c1e216a8cd0311b76aa"
+ },
+ "candidate_onnx_sha256": "7dae0fa758402ee4dca6f1317d13cc135b29557ee5b5c160a146815754da3412",
+ "devices": [
+  "cuda:0"
+ ],
+ "motor_readiness": "pending_local_paired_evaluation"
+}

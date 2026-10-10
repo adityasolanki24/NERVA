@@ -1,0 +1,93 @@
+[
+ {
+  "command": "rest",
+  "file": "comparison_rest.mp4",
+  "sha256": "03437e3e32cb305f8be72c184a065ee26151a5a3c6da1e77d5caf741315472dc",
+  "bytes": 1920046,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "forward",
+  "file": "comparison_forward.mp4",
+  "sha256": "13959e152e3562f3b8bb235808f7a3a85bebd15b3ea797041a054a5a74007706",
+  "bytes": 3897988,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "backward",
+  "file": "comparison_backward.mp4",
+  "sha256": "71a5ce7f4ec358649ad0e2494575980acf2115a05e014f94003107c814f651f5",
+  "bytes": 3959494,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "left",
+  "file": "comparison_left.mp4",
+  "sha256": "5ba8e7e01bd1897d0f3992e540e7beb4b9ee767abb43259c55afc238664d2fb1",
+  "bytes": 3900178,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "right",
+  "file": "comparison_right.mp4",
+  "sha256": "72146d0b5577d028452d8854368da36e1c9dea84eb63ce3df71048609730e7fc",
+  "bytes": 3854292,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "turn_left",
+  "file": "comparison_turn_left.mp4",
+  "sha256": "be60a9c71702ed1754d96840d777b18208326e493c536cce4345e9d59fb4f9fd",
+  "bytes": 4346425,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ },
+ {
+  "command": "turn_right",
+  "file": "comparison_turn_right.mp4",
+  "sha256": "9dda33e0f6eebe2b2911881a1d6fe570f61d068c3863f88add63e74ba9617f10",
+  "bytes": 4311176,
+  "frames": 500,
+  "fps": 25,
+  "columns": [
+   "b2",
+   "gpu_pilot_candidate",
+   "gait_candidate"
+  ]
+ }
+]

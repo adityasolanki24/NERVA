@@ -4,6 +4,44 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Gait-averaged tracking: all four translations pass in every seed; turns still fail
+
+Second authorized capped run (one L4, 45 min cap, US$2 cap), preregistered at `a143ae4`; VM ran
+`3dad8c8`; evaluator `72326ce` committed before results. Evidence:
+`experiments/locomotion_curriculum/results_gait_averaged_tracking/`.
+
+### What ran
+- One g2-standard-8 in us-central1-a (first zone, no stockout), ≈ 33 min VM lifetime, ≈ US$0.70.
+- 384 accepted iterations, 61,931,520 transitions, step-ceiling stop (35,728 steps/s by the
+  preregistered rule). Inputs 47/47 OK; max KL 0.0147; replay error 0; frozen statistics unchanged.
+- Fetch verified locally: 242/242 files, EXIT_CODE 0, checkpoint and ONNX hashes match, export parity
+  1.1e-6. NAT removed; audit shows no instances, disks, addresses, forwarding rules, routers or snapshots.
+- 84 paired native trials and seven three-column videos (B2 | GPU pilot | gait-averaged).
+
+### Observations [measured]
+- No falls in any arm. Gait-averaged candidate passes rest, forward (79% of the request), backward
+  (108%), left (122%) and right (88%) in 3/3 seeds. The start passed 3/7.
+- Normalized RMSE 0.1496 (untrained 0.4250, GPU pilot 0.3104).
+- Turns fail: yaw rate 0.59–0.62 rad/s (close to 0.60), but translation 0.053–0.068 m/s, worse than
+  the start (0.039–0.044).
+
+### Decision (preregistered)
+- **H supported; the pilot fails** (criterion 3, turns). One seed, final checkpoint, no selection.
+- Possible causes of the larger turn drift [hypothesis, untested]: the averaged term ignores drift that
+  cancels within 0.54 s; the MJX → native turn gap.
+
+### Turn-gap solver check [measured, diagnostic only]
+- MJX with 10 solver iterations turns like MJX with 1 (+0.567 / −0.594 vs +0.565 / −0.607 rad/s).
+- Native with 10 iterations ≈ native default (+0.720 vs +0.711); native without warmstart barely turns
+  (+0.08). The iteration count is not the cause; warmstart/contact differences remain open.
+  Recorded in `results_sim_gap/README.md`.
+
+### Not yet verified
+- The cause of the turn translation; a second training seed; the long robustness gate.
+- No default, deployment, safety or expressive change.
+
+---
+
 ## 2026-10-10 — Why the GPU pilot undershoots: the tracking reward prefers standing; turns are a sim gap
 
 Local diagnostics only (no paid compute). Evidence: `experiments/locomotion_curriculum/results_sim_gap/`.

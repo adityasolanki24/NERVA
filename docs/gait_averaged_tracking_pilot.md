@@ -64,3 +64,25 @@ evaluation, without added falls and without losing rest.
 
 - **H is supported** if 1 and 2 hold. **The pilot passes** if 1–3 hold.
 - Even then: one seed, no robust-locomotion claim. The long gate and a turn-gap diagnostic come next.
+
+## Outcome (2026-10-10; protocol above unchanged)
+
+- **Run:** one L4 VM, us-central1-a, ≈ 33 min of VM lifetime; 384 accepted iterations,
+  **61,931,520 transitions**, stopped at the step ceiling (35,728 steps/s measured). Max KL 0.0147;
+  replay error 0; frozen statistics unchanged; exact checkpoint roundtrip. Estimated cost ≈ US$0.70.
+- **Evaluation:** 84 paired trials, no falls in any arm. Gait-averaged candidate:
+
+  | command | passes | detail |
+  |---|---|---|
+  | rest | 3/3 | |
+  | forward | **3/3** | 79% of the request (start 43%) |
+  | backward | **3/3** | 108% |
+  | left | **3/3** | 122% (overshoot) |
+  | right | **3/3** | 88% (start 0/3) |
+  | both turns | 0/3 | yaw 0.59–0.62 rad/s, but translation 0.053–0.068 m/s (worse than the start) |
+
+  Normalized RMSE 0.1496 vs untrained 0.4250 (ratio 0.352).
+- **H supported; the pilot fails** (criterion 3: turns). Turn translation increased, consistent with the
+  averaged term not penalizing drift that cancels within a window, plus the unaddressed MJX → native gap
+  [hypothesis].
+- Full report: `experiments/locomotion_curriculum/results_gait_averaged_tracking/README.md`.

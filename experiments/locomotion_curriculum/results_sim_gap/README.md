@@ -44,3 +44,20 @@ tracking term pays more for standing still than for walking correctly**. The ref
 translation 0.0738 m/s; turns ≤ 0.004 m/s mean translation and 0.5986 rad/s.
 
 Files: `rollouts.json`, `summary.json`. Follow-up: `docs/gait_averaged_tracking_pilot.md`.
+
+## 3. Turn gap: is it the solver iteration count? (2026-10-10, diagnostic only)
+
+Upstream's XML uses one solver iteration. GPU candidate, same commands and seeds, deterministic, 5–20 s means.
+Scratch scripts, not committed; the upstream checkout was left unchanged (verified clean).
+
+| setting | turn left yaw (rad/s) | turn right yaw (rad/s) |
+|---|---|---|
+| MJX, 1 iteration (as trained) | +0.565 | −0.607 |
+| MJX, 10 iterations | +0.567 | −0.594 |
+| native, default | +0.711 | −0.669 |
+| native, 10 iterations | +0.720 | — |
+| native, warmstart disabled | +0.08 (barely moves) | — |
+
+**Reading:** the iteration count explains neither side of the gap. Native turning depends strongly on
+warmstart, which MJX does not use in the same way, so warmstart and contact-model differences remain the
+open candidates. Not resolved here.

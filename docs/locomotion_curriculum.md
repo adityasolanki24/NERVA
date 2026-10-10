@@ -120,6 +120,14 @@ discrete and limited; smoke success does not overturn B2's failed policy gate.
 - The pilot fails; no checkpoint selection.
 - Next: diagnose the asymmetry and turn translation before training further.
 
+**Gait-averaged tracking continuation (2026-10-10, `gait_averaged_tracking_pilot.md`):**
+- Only the tracking term changed (mean velocity over one 0.54 s gait period), from the GPU candidate;
+  61,931,520 transitions on one L4 (≈ 33 min VM, ≈ US$0.70).
+- Forward, backward, left and right pass 3/3 (79–122% of the request), rest 3/3, no falls; RMSE ratio
+  0.352 vs untrained.
+- Both turns fail: yaw rate ≈ 0.6 rad/s but translation 0.053–0.068 m/s. H supported; pilot fails.
+- Next: diagnose turn drift and the MJX → native turn gap, then the long readiness gate.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

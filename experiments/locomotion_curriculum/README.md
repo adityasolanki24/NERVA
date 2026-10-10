@@ -4,9 +4,9 @@
 
 | step | entry point | notes |
 |---|---|---|
-| train (GPU, capped) | `cloud/jobs/neutral_gpu_pilot.sh` → `python -m experiments.locomotion_curriculum.gpu_pilot --out DIR` | launch: `python cloud/launch.py launch --job neutral_gpu_pilot --hw l4 --max-minutes 45 --input-bundle cloud/inputs/neutral_gpu_pilot.txt --wait --cleanup-network` |
+| train (GPU, capped) | `cloud/jobs/<experiment>.sh` → `cloud/jobs/_neutral_gpu.sh` → `python -m experiments.locomotion_curriculum.gpu_pilot --experiment NAME --out DIR` (named experiments in `EXPERIMENTS`) | launch: `python cloud/launch.py launch --job neutral_gpu_pilot --hw l4 --max-minutes 45 --input-bundle cloud/inputs/neutral_gpu_pilot.txt --wait --cleanup-network` |
 | smoke (CPU, tiny) | `python -m experiments.locomotion_curriculum.gpu_pilot --smoke` | checks the whole path; not a result |
-| evaluate + videos | `python -m experiments.locomotion_curriculum.motor_compare --run RUN --out DIR [--render]` | paired native-MuJoCo protocol, any number of arms |
+| evaluate + videos | `python -m experiments.locomotion_curriculum.motor_compare --run RUN --out DIR [--render] [--protocol NAME]` | paired native-MuJoCo protocol; `--protocol` picks the preregistered arms and decision rule |
 
 Library code lives in the `nerva` package:
 - `nerva/training/b2_warm_start.py`: B2 conversion, frozen preprocessing, balanced resets, ONNX export.

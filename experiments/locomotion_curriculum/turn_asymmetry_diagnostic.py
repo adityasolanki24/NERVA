@@ -35,7 +35,11 @@ TURNS = {"turn_left": 5, "turn_right": 6}
 STEPS, START = 1000, 250
 # Joint order of the reference rows 0:16 (and velocities 16:32).
 LEFT, RIGHT = [0, 1, 2, 3, 4], [11, 12, 13, 14, 15]
-NEGATE = [0, 1]  # hip yaw and hip roll flip sign under the sagittal mirror
+# Hip yaw, roll and pitch flip sign under the sagittal mirror (the legs' pitch axes are mirrored in the model:
+# standing hip pitch is −0.56 rad left, +0.68 right). The first run used [0, 1] and reported a spurious
+# 0.56 rad mirror error; corrected 2026-10-10 before writing up (sign search: [0, 1, 2] is the only
+# convention giving the forward walk's own left/right error, ≈ 0.04 rad).
+NEGATE = [0, 1, 2]
 
 
 def turn_metrics(quat, linvel):
@@ -111,8 +115,12 @@ def reference_symmetry(reference):
     errors = [float(np.sqrt(np.mean((np.roll(mirrored, k, axis=0)[:, joints] - right[:, joints]) ** 2)))
               for k in range(27)]
     best = int(np.argmin(errors))
+    forward = np.array([np.asarray(reference.get_reference_motion(*COMMANDS[1], i)) for i in range(27)])
+    self_mirror = mirror(forward)
+    walk = min(float(np.sqrt(np.mean((np.roll(self_mirror, k, axis=0)[:, joints] - forward[:, joints]) ** 2)))
+               for k in range(27))
     shifted = np.roll(mirrored, best, axis=0)
-    return {"best_phase_shift_steps": best, "joint_rms_rad_at_best_shift": errors[best],
+    return {"forward_walk_self_mirror_joint_rms_rad": walk, "best_phase_shift_steps": best, "joint_rms_rad_at_best_shift": errors[best],
             "joint_rms_rad_unshifted": errors[0],
             "contact_mismatch_fraction": float(np.mean((shifted[:, 32:34] > .5) != (right[:, 32:34] > .5))),
             "body_velocity_rms_at_best_shift": float(np.sqrt(np.mean((shifted[:, 34:40] - right[:, 34:40]) ** 2))),

@@ -104,11 +104,18 @@ nerva/                      the NERVA package
     pad_style.py                PAD → expressive style vector
     style.py                    style definitions (gait clock, S1 style vector)
   safety.py                   deterministic safety supervisor (independent override; no affect inputs)
-  analysis/gait_metrics.py    gait measurements on simulation logs
-  training/                   learning the locomotion policy (JAX/MJX; cloud only)
-    style_joystick.py           style-conditioned training environment
-    train_style.py              training script
-    reference_validation.py     checks for generated reference gaits
+  analysis/
+    gait_metrics.py             gait measurements on simulation logs
+    motor_eval.py               neutral command-tracking metrics and pass rules
+  training/                   learning the locomotion policy (JAX/MJX)
+    neutral_joystick.py         neutral motor environment (+ persistent-command variant for long episodes)
+    neutral_reference.py        hash-verified seven-command neutral references
+    b2_warm_start.py            B2 → neutral conversion, frozen preprocessing, balanced resets, ONNX export
+    parameter_checkpoint.py     auditable parameter checkpoints
+    motor_artifacts.py          JSON/archive/fingerprint/KL helpers
+    style_joystick.py           style-conditioned training environment (S-policies)
+    train_style.py              training script (S-policies)
+    reference_kinematics.py, reference_validation.py   reference sampling and checks
 experiments/                runnable studies, one folder each, with results and a README (see experiments/README.md)
 cloud/                      Google Cloud runner: capped, self-deleting VMs and the job scripts (see cloud/README.md)
 scripts/                    small tools around the Open Duck baseline (see scripts/README.md)

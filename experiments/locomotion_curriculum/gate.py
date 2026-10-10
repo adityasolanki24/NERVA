@@ -24,6 +24,8 @@ from nerva.safety import SafetySupervisor
 from nerva.sim.capabilities import capabilities_for
 from nerva.sim.open_duck import OpenDuckSim, SCENE_BACKLASH, to_arrays
 from nerva.world.self_state import estimate_self_state
+from nerva.analysis.motor_eval import smooth, velocities  # noqa: F401,E402
+from nerva.training.motor_artifacts import write_json  # noqa: F401,E402
 
 DT = 0.02
 WINDOW = 50
@@ -61,19 +63,6 @@ def protocol_trials():
     for i, (pitch, yaw) in enumerate(((-0.15, 0.0), (0.15, 0.0), (0.0, -0.08), (0.0, 0.08))):
         out += [Trial(f"walking_head_{i}_{s}", "walking_head", s, pitch=pitch, yaw=yaw) for s in SEEDS]
     return out
-
-
-def smooth(values):
-    values = np.asarray(values)
-    return np.stack([np.convolve(values[:, i], np.ones(WINDOW) / WINDOW, mode="valid")
-                     for i in range(values.shape[1])], axis=1)
-
-
-def velocities(arrays):
-    rpy = gm.quat_to_rpy(arrays["base_quat"])
-    linear = gm.heading_frame_velocity(arrays["base_linvel"], rpy[:, 2])
-    yaw = np.gradient(np.unwrap(rpy[:, 2]), DT)
-    return np.column_stack([linear, yaw])
 
 
 def segment_metrics(arrays, start, end, command):
@@ -217,10 +206,6 @@ def summarise(rows):
                            "shadow_interventions": sum(r["safety_interventions"] for r in rs),
                            "mean_shadow_stop_fraction": float(np.mean([r["safety_stop_fraction"] for r in rs])) if rs else None}
                        for g, rs in groups.items()}}
-
-
-def write_json(path, value):
-    path.write_text(json.dumps(value, indent=1, allow_nan=False) + "\n", encoding="utf-8")
 
 
 def main():

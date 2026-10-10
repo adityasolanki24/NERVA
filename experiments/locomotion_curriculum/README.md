@@ -1,5 +1,32 @@
 # Robust locomotion before expressive objectives
 
+## Maintained neutral motor workflow (supported entry points)
+
+| step | entry point | notes |
+|---|---|---|
+| train (GPU, capped) | `cloud/jobs/neutral_gpu_pilot.sh` → `python -m experiments.locomotion_curriculum.gpu_pilot --out DIR` | launch: `python cloud/launch.py launch --job neutral_gpu_pilot --hw l4 --max-minutes 45 --input-bundle cloud/inputs/neutral_gpu_pilot.txt --wait --cleanup-network` |
+| smoke (CPU, tiny) | `python -m experiments.locomotion_curriculum.gpu_pilot --smoke` | checks the whole path; not a result |
+| evaluate + videos | `python -m experiments.locomotion_curriculum.motor_compare --run RUN --out DIR [--render]` | paired native-MuJoCo protocol, any number of arms |
+
+Library code lives in the `nerva` package:
+- `nerva/training/b2_warm_start.py`: B2 conversion, frozen preprocessing, balanced resets, ONNX export.
+- `nerva/training/neutral_joystick.py`: neutral environment and persistent-command variant.
+- `nerva/training/neutral_reference.py`: hash-verified references.
+- `nerva/training/parameter_checkpoint.py`: checkpoints.
+- `nerva/training/motor_artifacts.py`: JSON/archive/fingerprint/KL helpers.
+- `nerva/analysis/motor_eval.py`: velocities and motor pass rules.
+
+`learning_support.py`, `gate.py` and `normalization_timing.py` re-export these for the completed runners.
+
+## Completed experiments (frozen; reproduce at the recorded commit)
+
+Runners still imported by other code stay here unchanged: `gate.py`, `normalization_*.py`,
+`identity_*.py`, `neutral_ppo_smoke.py`, `neutral_learning.py`, `paired_motor.py`, `reference_subset.py`
+and `record_reference.py`. Leaf runners nothing else imports are in `archive/` (byte-identical, with a
+mapping). Every result directory, preregistration and raw artifact is preserved.
+
+## History
+
 `gate.py` implements the fixed neutral B2 readiness gate, preregistered in
 `docs/b2_robustness_gate.md`. It runs 115 local motor trials, with affect absent
 and deterministic safety observed separately. No training or cloud launch.

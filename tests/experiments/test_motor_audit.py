@@ -6,7 +6,7 @@ import pytest
 jp = pytest.importorskip("jax.numpy")
 pytest.importorskip("playground.open_duck_mini_v2.joystick")
 
-from experiments.locomotion_curriculum.motor_audit import (  # noqa: E402
+from experiments.locomotion_curriculum.archive.motor_audit import (  # noqa: E402
     angular_probes, extract_angular_helper, make_probe, synthetic_rewards, tracking_probes,
 )
 

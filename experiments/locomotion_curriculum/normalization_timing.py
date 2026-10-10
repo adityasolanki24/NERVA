@@ -19,35 +19,10 @@ from experiments.locomotion_curriculum.neutral_ppo_smoke import NETWORK_CONFIG, 
 from nerva.training.parameter_checkpoint import (
     checkpoint_hashes, count_value, leaf_comparison, require_contract, save_parameters, tree_finite, write_contract,
 )
+from nerva.training.motor_artifacts import archive, fingerprint, gaussian_kl, tree_arrays  # noqa: F401,E402
 
 PREREGISTRATION = "0901b11"
 VARIANCE_EPS = .0001
-
-
-def tree_arrays(tree):
-    import jax
-    from flax import serialization
-    state = serialization.to_state_dict(tree)
-    leaves, structure = jax.tree_util.tree_flatten_with_path(state)
-    return {jax.tree_util.keystr(path) or "root": np.asarray(value) for path, value in leaves}, str(structure)
-
-
-def fingerprint(tree):
-    arrays, structure = tree_arrays(tree)
-    digest = hashlib.sha256(structure.encode())
-    for name, array in arrays.items():
-        digest.update(json.dumps([name, array.dtype.str, array.shape]).encode())
-        digest.update(array.tobytes(order="C"))
-    return digest.hexdigest()
-
-
-def archive(path, tree):
-    arrays, _ = tree_arrays(tree)
-    if path.exists():
-        raise FileExistsError("never overwrite a captured artifact")
-    np.savez_compressed(path, **arrays)
-    return {"file_sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "tree_sha256": fingerprint(tree),
-            "bytes": path.stat().st_size, "leaves": len(arrays)}
 
 
 def first_batch_keys(seed=7):
@@ -92,16 +67,6 @@ def make_collector(env, make_policy, axis_name, *, return_state=False, extra_fie
         return (data, updated, next_state, next_epoch_key) if return_state else (data, updated)
 
     return jax.pmap(capture, axis_name=axis_name)
-
-
-def gaussian_kl(old_loc, old_scale, new_loc, new_scale, log_epsilon=0.):
-    """Independent float64 KL(old || new), optionally matching Brax's log stabilizer."""
-    old_loc, old_scale, new_loc, new_scale = [np.asarray(x, dtype=np.float64)
-                                            for x in (old_loc, old_scale, new_loc, new_scale)]
-    if np.any(old_scale <= 0) or np.any(new_scale <= 0):
-        raise ValueError("Gaussian scales must be positive")
-    return np.sum(np.log(new_scale / old_scale + log_epsilon)
-                  + (old_scale**2 + (old_loc - new_loc)**2) / (2 * new_scale**2) - .5, axis=-1)
 
 
 def decide(integrity, old_kl, updated_kl):

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from experiments.locomotion_curriculum.long_turn import KinematicRecorder, analyse, summarise
+from experiments.locomotion_curriculum.archive.long_turn import KinematicRecorder, analyse, summarise
 
 
 def trace(rate=.6, drift=.0):

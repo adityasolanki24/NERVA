@@ -22,9 +22,8 @@ import time
 
 import numpy as np
 
-from experiments.locomotion_curriculum.gate import write_json
-from experiments.locomotion_curriculum.learning_support import NETWORK, SHAPE, balanced_environment, export_policy
-from experiments.locomotion_curriculum.normalization_timing import archive, fingerprint, gaussian_kl
+from nerva.training.b2_warm_start import NETWORK, SHAPE, balanced_environment, export_policy
+from nerva.training.motor_artifacts import archive, fingerprint, gaussian_kl, write_json
 from nerva.training.neutral_reference import COMMANDS
 from nerva.training.parameter_checkpoint import checkpoint_hashes, leaf_comparison, save_parameters, tree_finite
 

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from experiments.locomotion_curriculum.derivative_alignment import compare, known_checks
+from experiments.locomotion_curriculum.archive.derivative_alignment import compare, known_checks
 from nerva.training.reference_kinematics import fit_reference
 
 

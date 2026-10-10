@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from experiments.locomotion_curriculum.turn_diagnostic import analyse, design
+from experiments.locomotion_curriculum.archive.turn_diagnostic import analyse, design
 
 
 def synthetic(drift=(0., 0.), rate=.6):

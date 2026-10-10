@@ -37,7 +37,7 @@ CANDIDATES = {
         "policy": "experiments/cloud_runs/base_origin_velocity-20261010-201858/candidate.onnx",
         "sha256": "9394fa5db7fc613f7ee311ec329e39a693f790ba219e26913db7a7464a11c5a2"},
     "turn_translation": {  # docs/turn_translation_pilot.md; the run's final candidate, hash from its summary
-        "preregistration": "PENDING", "policy": None, "sha256": None},
+        "preregistration": "366aec9", "policy": None, "sha256": None},
 }
 PREREGISTRATION = CANDIDATES["base_origin_velocity"]["preregistration"]
 POLICY = CANDIDATES["base_origin_velocity"]["policy"]

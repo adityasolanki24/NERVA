@@ -233,7 +233,7 @@ PROTOCOLS = {
                                "columns": ("b2", "gpu_pilot_candidate", "gait_candidate")},
     "base_origin_velocity": {"preregistration": "69a6f0f", "arms": base_origin_arms,
                              "decision": base_origin_decision, "columns": ("b2", "gait_start", "base_candidate")},
-    "turn_translation": {"preregistration": "PENDING", "arms": turn_translation_arms,
+    "turn_translation": {"preregistration": "366aec9", "arms": turn_translation_arms,
                          "decision": turn_translation_summary, "columns": ("b2", "base_start", "turn_candidate")},
 }
 

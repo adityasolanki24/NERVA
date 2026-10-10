@@ -46,7 +46,7 @@ EXPERIMENTS = {
         "start_report": "experiments/locomotion_curriculum/results_gait_averaged_tracking/training_summary.json",
         "gait_averaged_tracking": True, "base_origin_velocity": True},
     "turn_translation": {  # docs/turn_translation_pilot.md
-        "preregistration": "PENDING",
+        "preregistration": "366aec9",
         "start": "experiments/cloud_runs/base_origin_velocity-20261010-201858/checkpoints/000060480000",
         "start_report": "experiments/locomotion_curriculum/results_base_origin_velocity/training_summary.json",
         "gait_averaged_tracking": True, "base_origin_velocity": True, "turn_translation": True},

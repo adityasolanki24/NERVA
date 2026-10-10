@@ -1,0 +1,1458 @@
+[
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.203,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.227,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.209,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.221,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "all_pass": false,
+  "error_type": "CalledProcessError"
+ }
+]

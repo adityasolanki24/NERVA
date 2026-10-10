@@ -1,0 +1,6 @@
+{
+ "repair_commit": "4747b99f7058f5ebe336ab1b5810576a0933bbf7",
+ "original_commit": "2de752807baee8d3752a7f411457cf1234eece85",
+ "criteria_changed": false,
+ "reason": "repair candidate metadata field commands; preserve completed trial"
+}

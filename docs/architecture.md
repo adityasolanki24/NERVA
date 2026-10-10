@@ -260,8 +260,13 @@ passes fixed preprocessing (KL 0.0237), detects deferred deployment drift
 Adam rebase/continuation is unvalidated. Identity-preprocessing on-policy
 screen passes 32 transitions and the subsequent carried-batch screen passes
 128 new transitions/16 updates (max post-SGD KL 0.00801). Only two commands
-were sampled. Next balanced seven-command local coverage/curriculum and paired
-controls before the long motor gate; no learned-readiness claim.
+were sampled. The subsequent local balanced pilot converts B2's constant-zero
+style inputs into first-layer biases, freezes its retained statistics, and trains
+28,672 new transitions/128 updates in the neutral backlash environment. Parameter
+restore and deterministic ONNX parity pass. All 63 paired native trials survive,
+but five commands fail the fixed motor criteria; no learned-readiness claim.
+The neutral rest clock already fixes short rest migration without SGD. Seven
+comparison clips are retained; the default/reactive controller stays unchanged.
 Affect and deterministic safety are separate and unchanged.
 
 ## 5. Timescales

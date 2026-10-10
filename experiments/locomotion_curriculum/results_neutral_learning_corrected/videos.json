@@ -1,0 +1,58 @@
+[
+ {
+  "command": "rest",
+  "file": "comparison_rest.mp4",
+  "sha256": "5892f1e211ba8e998ef7b50bdb04472ee1f915b8e0820f891db9c738363811aa",
+  "bytes": 2779797,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "forward",
+  "file": "comparison_forward.mp4",
+  "sha256": "2ddc4bccfc915d055c641e9f4110db7b20a95d3d88b0b303b49d264b0d68a583",
+  "bytes": 3602090,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "backward",
+  "file": "comparison_backward.mp4",
+  "sha256": "52c849206537e4aa7e8ba8bb47e9a4e97caa4f4d7a54be3d74422a9d9bdaf77d",
+  "bytes": 3593805,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "left",
+  "file": "comparison_left.mp4",
+  "sha256": "c76ff6f6a8e09d43adcc16117c5c19e3bd2b7d9157a7295310413cc13e015cc0",
+  "bytes": 3612676,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "right",
+  "file": "comparison_right.mp4",
+  "sha256": "3ef0b88f332a69fbbcd27e2842c9ba04550624955c70d618cc5d66a6d2855b81",
+  "bytes": 3603352,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "turn_left",
+  "file": "comparison_turn_left.mp4",
+  "sha256": "34fe67a55c545f7c159ba6a9641c3f4f0abb0e3c836e983e17bbf7b5c86da600",
+  "bytes": 4080991,
+  "frames": 500,
+  "fps": 25
+ },
+ {
+  "command": "turn_right",
+  "file": "comparison_turn_right.mp4",
+  "sha256": "66415e3b77dde92b82c7cb83bb734cde85d904d3ed97d4d44ca6197ee5c3ddf0",
+  "bytes": 4086627,
+  "frames": 500,
+  "fps": 25
+ }
+]

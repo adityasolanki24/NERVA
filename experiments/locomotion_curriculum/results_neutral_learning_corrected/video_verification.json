@@ -1,0 +1,50 @@
+{
+ "all_pass": true,
+ "videos": [
+  {
+   "file": "comparison_all_commands.mp4",
+   "decoded_frames": 3500,
+   "seconds": 140.0
+  },
+  {
+   "file": "comparison_backward.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_forward.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_left.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_rest.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_right.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_turn_left.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  },
+  {
+   "file": "comparison_turn_right.mp4",
+   "decoded_frames": 500,
+   "seconds": 20.0
+  }
+ ],
+ "visual_review": [
+  "rest",
+  "forward",
+  "turn_left"
+ ]
+}

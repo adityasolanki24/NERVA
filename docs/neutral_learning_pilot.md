@@ -80,3 +80,23 @@ rollouts and report that limitation. No cloud run or artifact deletion.
 After a failed pilot, recommend the cause supported by motor data and a concrete
 bounded next run. After a passing pilot, preregister the full long motor gate
 before adding expressive objectives. The original B2 gate failure remains valid.
+
+## Outcome (2026-10-10; fixed protocol above retained)
+
+28,672 new local transitions/128 accepted updates finish in 300.11 s. All seven
+commands are covered; maximum post-update KL 2.485e-5 and exact 25-leaf restore.
+All 63 paired motor trials finish without falls. Rest/rightward motion pass all
+three seeds; forward/backward/left undershoot speed and both turns exceed the
+horizontal translation limit. Overall pilot **fails**. Moving-command normalized
+axis RMSE improves 2.82% versus the untrained converted control, below 10%.
+Rest displacement improves from B2's 0.257–0.261 m to 0.016–0.022 m, but the
+untrained neutral clock already passes rest; this is not credited to PPO.
+
+Three interface/integrity stops are preserved: collector argument order before
+collection, float32-versus-float64 command admission after 224 transitions and
+zero SGD, and deployment metadata field mismatch after one completed B2 trial.
+The corrected run retains criteria/budget; evaluation resumes with unchanged
+policy hashes and reuses the completed trial. Seven clips and a combined video
+show actual native rollouts. Full aggregate report:
+`experiments/locomotion_curriculum/results_neutral_learning_corrected/README.md`.
+No default promotion, expressive training, cloud launch or artifact deletion.

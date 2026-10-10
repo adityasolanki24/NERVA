@@ -1,5 +1,11 @@
 # Research questions
 
+Current phase (2026-10-10): robust neutral locomotion before further expressive
+objectives. The balanced learned-controller pilot and visible paired motor
+rollouts are complete; its fixed overall criterion fails. See
+`neutral_learning_pilot.md` and the development log. The earlier architecture
+round below is historical; affect remains Bv4 and physical safety stays separate.
+
 Status (2026-10-02): RQ1–RQ1c are answered for the pretrained policy; the style-conditioned policies
 (S1–S6) continued RQ1 (`style_policy_design.md`). The **active questions are RQ7–RQ9** below, which tie
 the architecture refactor (`architecture.md` §2) to falsifiable comparisons instead of feature
@@ -42,8 +48,13 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
   (`normalization_schedule_comparison.md`). Identity on-policy/restore screen
   passes 32 transitions; carried multi-batch follow-up passes 128 new
   transitions/16 updates, max deployed KL 0.00801, only two commands sampled
-  (`identity_multibatch_stability.md`). Next: balanced seven-command local
-  curriculum/coverage and paired controls before the long motor gate.
+  (`identity_multibatch_stability.md`). The balanced B2 warm-start pilot
+  (`neutral_learning_pilot.md`) then completes 28,672 local transitions and
+  63 paired motor trials, no falls. It fails overall: only rest/rightward motion
+  pass all three seeds; normalized tracking error improves 2.82%, below 10%.
+  Rest improvement is present before SGD with the neutral clock. Visible
+  seven-command rollouts are retained. Next: longer capped neutral continuation
+  addressing low-speed tracking and turn translation before the long motor gate.
   Expressive curriculum remains blocked;
   no general-stability or motor-quality claim.
 

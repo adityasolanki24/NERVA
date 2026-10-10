@@ -99,9 +99,18 @@ transform Adam. The [identity on-policy/restore screen](identity_preprocessing_s
 passes 32 transitions (deployed fresh/warm KL 0.058854/0.243470), exact restoration
 and zero statistics influence. The [carried-batch check](identity_multibatch_stability.md)
 passes 128 new transitions/16 updates, max post-SGD KL 0.008009 and value loss
-0.126727. It samples only lateral -0.074 m/s and yaw +0.6 rad/s. Next preregister
-balanced seven-command local learning/coverage and paired controls before larger
-training or the long readiness gate.
+0.126727. It samples only lateral -0.074 m/s and yaw +0.6 rad/s. The subsequent
+[balanced learned-controller pilot](neutral_learning_pilot.md) completes 28,672
+local transitions/128 accepted updates from B2 walking weights, with frozen B2
+statistics and all seven commands. All 63 paired 20 s native motor trials finish
+without falls. The candidate passes rest and rightward motion across all three
+seeds, but five commands fail and normalized tracking error improves only 2.82%
+versus the converted untrained control (criterion: >=10%). Rest displacement
+falls from historical B2's 0.257–0.261 m to 0.016–0.022 m; the untrained neutral
+clock already passes rest, so this is not credited to PPO. Seven comparison
+clips and a combined video are retained locally. Next preregister a longer,
+explicitly capped neutral continuation for low-speed tracking and pure-turn
+translation, then the long readiness gate; no expressive objectives yet.
 There is no validated learned candidate. Subset command coverage is
 discrete and limited; smoke success does not overturn B2's failed policy gate.
 Do not relax the gate or start expressive training. B2 retains its

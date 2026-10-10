@@ -1,3 +1,4 @@
 # Additional deterministic ONNX exporter used by the local neutral learning pilot.
 # Install into the existing, pinned Open Duck training/inference environment.
-onnx==1.17.0
+# Match the repository's existing patched cloud exporter pin.
+onnx==1.22.0

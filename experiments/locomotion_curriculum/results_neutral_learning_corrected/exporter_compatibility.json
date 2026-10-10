@@ -1,0 +1,11 @@
+{
+ "evaluated_exporter_version": "1.17.0",
+ "verified_exporter_version": "1.22.0",
+ "native_onnxruntime_version": "1.21.0",
+ "new_export_sha256": "909d00cb33a08abf24dbeeecb5bd2d3c3046a0f653422340eca718a5f1b0eaee",
+ "literal_artifact_equality": true,
+ "probes": 100,
+ "max_action_error": 0.0,
+ "existing_artifacts_preserved": true,
+ "all_pass": true
+}

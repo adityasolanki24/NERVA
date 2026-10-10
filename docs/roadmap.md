@@ -78,8 +78,14 @@ entry, docs, commit.
    deferred deployment KL 10.288, affine inference rebase preserves outputs.
    Identity on-policy/restore screen passes 32 transitions. Its carried-batch
    follow-up passes all 128 new transitions/16 post-SGD checks (max KL 0.00801),
-   covering only two commands. Next preregister balanced seven-command local
-   learning/coverage and paired controls, then the long neutral motor gate
+   covering only two commands. The balanced B2 warm-start pilot now completes
+   28,672 local transitions/128 updates and 63 paired motor trials with no falls.
+   It passes rest and rightward motion across three seeds, but fails the overall
+   pilot: normalized tracking error improves only 2.82% versus its untrained
+   control and five commands fail. Rest improvement is already present with the
+   neutral clock before training. Seven comparison videos are retained locally.
+   Next preregister a longer capped neutral continuation addressing low-speed
+   tracking and pure-turn translation, then the long neutral motor gate
    before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and

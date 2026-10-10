@@ -4,6 +4,81 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-10 — Actual balanced neutral learning, paired motor results and videos
+
+Preregistered `8fd4fd3` before implementation/evaluation, baseline `e42735a`.
+Convert the retained B2 walking checkpoint (300,482,560 steps) by folding its
+three normalized constant-zero style inputs into first-layer biases. Preserve
+512/256/128 SiLU policy/value networks and freeze the retained 101/212 input
+statistics. This replaces the tiny random 32-wide plumbing network as the
+learning initialization; it does not change historical or default controllers.
+100 B2 ONNX probes agree within 7.45e-7 before collection.
+
+**Actual training completes:** seven balanced backlash environments, commands
+rest, +/-0.074 m/s forward/lateral and +/-0.60 rad/s yaw; seed 27, episode 256,
+unroll 32, one clipped-gradient Adam step per 224 new transitions, LR 1e-5.
+128 accepted updates/**28,672 new transitions in 300.11 s**, below the 1,200 s
+hard cap. Maximum current-batch post-update Gaussian KL 2.485e-5 (limit 0.05),
+frozen statistics unchanged, exact 25-leaf checkpoint roundtrip. Parameter warm
+start initializes fresh Adam/RNG/environment; those states carry within the run.
+Fifteen true training episode terminations (one forward, fourteen left-turn)
+and 108 timeouts are reported separately; no claim that stochastic training
+survives every episode. Raw checkpoints, optimizer/batch/key snapshots and logs
+remain ignored and are not a full physical-environment resume interface.
+
+**Actual motor comparison completes:** 63 independent 20 s native MuJoCo trials,
+seven commands, seeds 0/1/2, historical B2 versus untrained converted neutral
+clock versus learned candidate, same backlash/noise/zero-head settings, scoring
+5–20 s. All trials complete without falls. The candidate passes rest and rightward
+motion in all three seeds, but forward/backward/left undershoot the speed limit
+and both turns fail horizontal translation RMS (mean 0.03376/0.04428 m/s versus
+<=0.03). Yaw tracking passes. Dimensionless moving-axis RMSE: B2 0.430156,
+untrained neutral 0.425003, candidate 0.413030. **Overall pilot fails:** 2.82%
+error reduction versus the declared control misses >=10%, and only 2/7 commands
+pass. Error reduction versus historical B2 is 3.98%; no best-checkpoint selection.
+Rest displacement drops from B2's 0.257–0.261 m to 0.016–0.022 m, but the
+untrained neutral clock already passes rest. Credit this to rest semantics,
+not PPO. No default promotion or expressive objectives; the long gate remains
+unmet. These low-speed commands differ from the original B2 gate, which remains
+a separate completed negative result.
+
+Seven 20 s B2/candidate comparison clips and a combined 140 s video show actual
+native rollouts with requested/measured motion and PASS/FAIL labels. All eight
+videos decode to the expected frame counts/durations; rest/forward/left-turn
+keyframes visually reviewed. Large artifacts stay in ignored local storage;
+public reports/hashes in `results_neutral_learning_corrected/`.
+
+Preserve three implementation/integrity stops: reversed collector arguments
+before collection; float32-versus-float64 coverage rejection after 224 collected
+transitions with zero SGD; wrong deployment metadata field after one completed
+B2 trial. Regression tests cover collector integration, canonical representation
+and existing deployment contract. Criteria/tolerances/budget stay fixed. The
+retry accounting originally omitted its stopped collected batch; an explicit
+companion correction records 224 without rewriting the preserved report.
+Evaluation resumes with identical policy hashes and retains/reuses its completed
+trial. No raw artifact is deleted or replaced.
+
+Verification: **312 full tests including slow pass in 289.93 s**, same two
+historical cast warnings; Ruff passes. Add eight meaningful conversion/export/
+balanced-reset/coverage/metric/deployment tests. Align the optional exporter with
+the repository's existing ONNX 1.22.0 pin after the initial 1.17.0 export; all
+eight focused tests pass again in 7.27 s. The final policy re-export is literally
+byte-identical to the evaluated artifact, with zero action difference on 100
+probes; originals remain preserved. Other scientific packages and all four
+upstream checkouts remain unchanged. Public-content/finite-JSON/size checks pass;
+no secrets, identities, personal absolute paths or large artifacts are committed.
+No training/evaluation/test worker remains. Final read-only cloud audit has no
+instances, disks, addresses, forwarding rules, routers or snapshots; existing
+results bucket and runner identity retained. No paid compute or cloud launch.
+
+Next: preregister a longer explicitly capped neutral parameter continuation,
+for example a 300k-step local budget, targeting low-speed tracking and turn
+translation with held-out motor rollouts. More steps are a hypothesis, not a
+promised fix. Preserve this failed pilot and pass the long motor gate before
+adding expressive objectives; do not reopen S1–S6 or repeat plumbing milestones.
+
+---
+
 ## 2026-10-10 — Carried identity PPO batches pass every post-update stability screen
 
 Preregistered `8c9c16b`, implementation `91356c7`, baseline `9514ad8`.

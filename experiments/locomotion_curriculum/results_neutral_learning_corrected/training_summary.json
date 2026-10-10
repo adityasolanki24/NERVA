@@ -1,0 +1,28 @@
+{
+ "accepted_updates": 128,
+ "accepted_transitions": 28672,
+ "collected_transitions": 28672,
+ "stop_reason": "transition_cap",
+ "wall_seconds": 300.11,
+ "frozen_statistics_unchanged": true,
+ "roundtrip": {
+  "equal": true,
+  "finite": true,
+  "max_error": 0.0,
+  "leaves": 25
+ },
+ "checkpoint_hashes": {
+  "_CHECKPOINT_METADATA": "04673f36eaad9af2380c99319f0734c099d452fcb39c4777333a1482ba7dab4d",
+  "_METADATA": "ccbe2bcf8b904bee9d11ac3a9ec6f5302d287c3f066e4c5c4f77df6be712c4d5",
+  "d/5cf74c68caf74200d194425f9d18a843": "02acfd94a28f7e0a46dd350d1aef950cfa8131d3e62fbbdfcb7bc04764f18804",
+  "manifest.ocdbt": "0dc460e4294d77efc2e2cd2ad8e2692e073eb2093e2b7ebc260b93db802903d3",
+  "ocdbt.process_0/d/5ad8806e8a689472be96dc7390e1b4df": "420e5039588c37875c06959d01b1b21cb459f66d06d95c934d0f1a4f3fa44e4a",
+  "ocdbt.process_0/d/88630338b31b4b30445540ce8a028437": "ef8e44e884ff7716aa493f810cc2ef6ac55a879ce05cdbfb7b1e66674be92e96",
+  "ocdbt.process_0/d/9c28a2b2dc812aab630f9c6af9e25655": "906b253e7f6fb1310d2e33aca30d455048bed2e1f8f7217cd81dababe7f4eaee",
+  "ocdbt.process_0/d/fd478065f7b13f93d8e96312d370c572": "6dbab02e5a840c8866ed747dad60447558982ecfcf025d8e493a403e34d0dabe",
+  "ocdbt.process_0/manifest.ocdbt": "e348ff8e4c06faa040f07d76792c1d7b66f56d9e70a1ac03792bfa5a7ed46491",
+  "ppo_network_config.json": "7e163a3a4ca9d0438b1579987a77b9efa0fea897ea9e8c1e216a8cd0311b76aa"
+ },
+ "cloud_work": false,
+ "motor_readiness": "pending_paired_evaluation"
+}

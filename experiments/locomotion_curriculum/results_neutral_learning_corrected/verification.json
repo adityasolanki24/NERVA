@@ -1,0 +1,16 @@
+{
+ "full_suite_command": "python -m pytest -q --runslow",
+ "full_suite_passed": 312,
+ "full_suite_wall_seconds": 289.93,
+ "historical_warnings": 2,
+ "post_exporter_update_focused_tests_passed": 8,
+ "post_exporter_update_focused_wall_seconds": 7.27,
+ "ruff": "passed",
+ "all_eight_videos_decode": true,
+ "exporter_update_preserves_evaluated_policy_bytes": true,
+ "upstream_checkouts_clean": 4,
+ "cloud_work": false,
+ "large_artifacts": "ignored_local_storage",
+ "default_policy_promoted": false,
+ "physical_safety_and_affect_changed": false
+}

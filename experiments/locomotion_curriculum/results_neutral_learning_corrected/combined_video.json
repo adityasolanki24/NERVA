@@ -1,0 +1,15 @@
+{
+ "file": "comparison_all_commands.mp4",
+ "commands": [
+  "rest",
+  "forward",
+  "backward",
+  "left",
+  "right",
+  "turn_left",
+  "turn_right"
+ ],
+ "seconds": 140,
+ "bytes": 25354792,
+ "sha256": "7ffd7cf38df577f227ab3c3e759cb627d0d810da24af9fc1175672dd43d3342c"
+}

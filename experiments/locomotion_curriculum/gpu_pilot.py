@@ -128,7 +128,9 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     if styled:  # E1′: zero-weight style inputs; outputs identical to the start for every e
         params = add_style_inputs(params, STYLE_WIDTH)
         shape = {k: (v[0] + STYLE_WIDTH,) for k, v in SHAPE.items()}
-        cfg = {**cfg, "max_steps": min(cfg["max_steps"], experiment["max_steps"])} if cfg["max_iterations"] is None else cfg
+        # The experiment's own ceiling replaces the 80 M default. (E1′ run e1_prime-20261011-132718 used code that
+        # took min(80 M, 160 M) = 80 M here: results_e1prime/README.md records that deviation.)
+        cfg = {**cfg, "max_steps": experiment["max_steps"]} if cfg["max_iterations"] is None else cfg
     normalizer = params[0]
     frozen = fingerprint(normalizer)
     factory = functools.partial(networks.make_ppo_networks, **NETWORK)

@@ -55,7 +55,7 @@ EXPERIMENTS = {
         "start": "experiments/cloud_runs/turn_translation-20261011-000711/checkpoints/000059189760",
         "start_report": "experiments/locomotion_curriculum/results_turn_translation/training_summary.json",
         "gait_averaged_tracking": True, "base_origin_velocity": True, "turn_translation": True,
-        "style_conditioning": True, "max_steps": 160_000_000},
+        "style_conditioning": True, "max_steps": 160_000_000, "matmul_precision": "highest"},
 }
 STYLE_WIDTH = 2
 STATISTICS_SOURCE = "experiments/locomotion_curriculum/results_neutral_learning_corrected/protocol.json"
@@ -104,6 +104,11 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     from nerva.training.neutral_reference import NeutralReference, verified_references
 
     start = time.monotonic()
+    experiment = EXPERIMENTS[name]
+    if experiment.get("matmul_precision"):
+        # E1′ attempt 1 stopped on GPU replay error 1e-2 (results_e1prime_attempt1_integrity_stop/): full float32
+        # matmuls keep collection and replay numerically consistent. Earlier experiments keep the default.
+        jax.config.update("jax_default_matmul_precision", experiment["matmul_precision"])
 
     def remaining() -> float:
         if cfg["deadline_uptime_s"] is not None and uptime_s() is not None:
@@ -114,7 +119,6 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     report.mkdir(parents=True, exist_ok=True)
     devices = [str(d) for d in jax.devices()]
     records, manifest = verified_references(root)
-    experiment = EXPERIMENTS[name]
     admitted = verify_start(root, experiment)
     params = checkpoint.load(root / experiment["start"])
     if fingerprint(params[0]) != admitted["statistics_sha256"]:
@@ -146,6 +150,7 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
         "gait_averaged_tracking": experiment["gait_averaged_tracking"],
         "base_origin_velocity": experiment.get("base_origin_velocity", False),
         "turn_translation": experiment.get("turn_translation", False), "style_conditioning": styled,
+        "matmul_precision": experiment.get("matmul_precision", "default"),
         "observation_shape": shape, "frozen_statistics_sha256": frozen,
         "config": {k: v for k, v in cfg.items()},
         "loss": LOSS, "network": NETWORK, "devices": devices, "start": admitted,

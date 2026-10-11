@@ -142,3 +142,15 @@ the neutral gate.
 - Network widening with zero-initialized e weights, plus a test of identical actions at start.
 - ONNX export and native inference with 103 inputs; an E1 evaluator for §5–6. Tests for each.
 - No changes to upstream code, the neutral contract defaults, deterministic safety or the affect defaults.
+
+## Outcome (2026-10-11; protocol above unchanged): stopped at Phase A, no training
+
+- Attempt 1: infrastructure abort (shell path conversion), no recordings (`results_e1_references_abort_pathconv/`).
+- **Full range** (`results_e1_references/`): fails. Pitch-only extremes pass all seven commands; every
+  |e_height| = 1 style fails (COM 0.203 m: joint limits; 0.227 m: knees, joint-velocity fit, limits).
+  Reproducibility exact; one interpolation point 0.051 rad.
+- **Range rule applied once, height halved** (`results_e1_references_p1.0_h0.5/`): still fails. All
+  e_height = +1 styles (COM 0.221 m) fail the joint-velocity fit (0.53–0.61 > 0.5 rad/s); all styles with
+  e_height ≤ 0 and every pitch pass; interpolation passes (≤ 0.0074 rad).
+- **E1 stops as preregistered: no training run, no compute request, no evaluation.** Measured: torso pitch
+  −10°…+2° and lowering the body to 0.209 m are feasible references; raising it above ≈ 0.218 m is not.

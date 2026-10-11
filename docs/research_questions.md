@@ -13,6 +13,12 @@ accumulation. Each criterion is fixed before the corresponding run and recorded 
 
 ## RQ1 (active): expressive conditioning of locomotion
 
+**Status (2026-10-11):** a neutral policy now passes the long motor gate (`results_turn_translation/`). The
+first continuous-conditioning experiment E1 (torso pitch × body height, `expressive_posture_experiment.md`)
+stopped at its reference gate [measured]: pitch −10°…+2° is a feasible reference space, while raising the
+body above ≈ 0.218 m is not. No style-conditioned policy has been trained on top of the validated neutral
+candidate yet. [future] The next experiment must be preregistered over the measured feasible space.
+
 **Status (2026-09-28), method A (gait-clock rate):**
 - **RQ1, same command: yes.** There are measurable, consistent differences and no walking falls.
 - **RQ1b, speed matched at 0.045 m/s: the differences remain.** The command confound is ruled out for the main effect (pitch).

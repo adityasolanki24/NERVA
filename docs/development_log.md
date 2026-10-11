@@ -4,6 +4,33 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-11 — E1 stopped at Phase A: body-height references above neutral are infeasible
+
+Executed E1 (`630610f`) from the frozen state: git clean, starting checkpoint
+`turn_translation-20261011-000711/checkpoints/000059189760` (11 file hashes match; ONNX `610b1c59…`), the seven
+admitted neutral references verified. Runner `e1_references.py` (`77b1223`) reuses the admitted-set recorder
+(repair preset, geometric turns) and the unchanged admission function; local WSL, Placo 0.6.3.
+
+### What ran [measured]
+- Attempt 1: all 91 recorder calls failed in 7.9 s: Git Bash rewrote the Linux interpreter path. No recordings;
+  preserved as an abort.
+- Full range (91 recordings, 695 s): **fail**. Pitch-only styles (±1, 0) pass all commands. Every
+  |e_height| = 1 style fails: COM 0.203 m breaks joint limits while walking; COM 0.227 m loses positive knees
+  and fails the joint-velocity fit and limits. Regenerated neutral set identical (0.000 rad).
+- Range rule (once): height halved, COM 0.209–0.221 m (91 recordings, 640 s): **fail**. The three COM 0.221 m
+  styles fail the joint-velocity fit (0.53–0.61 > 0.5 rad/s); every e_height ≤ 0 style passes at every pitch;
+  interpolation ≤ 0.0074 rad.
+- The joint-velocity fit error rises steadily as the COM rises and the knees straighten: 0.18 (0.209 m), 0.22
+  (0.215), 0.34 (0.218), 0.57 (0.221) rad/s.
+
+### Decision (preregistered)
+- **E1 stops before training.** No conditioning implementation, smoke run, compute request or evaluation was
+  made, because the preregistration forbids training after a second Phase A failure.
+- [measured] Feasible reference space: torso pitch −10°…+2° at any height down to 0.209 m. [future] Using it
+  (for example pitch plus a below-neutral height range) requires a new preregistration.
+
+---
+
 ## 2026-10-11 — E1 expressive posture conditioning preregistered (nothing run)
 
 - `docs/expressive_posture_experiment.md`: two continuous axes, torso pitch (S1-feasible −10°…+2°) and body

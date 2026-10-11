@@ -1,0 +1,9115 @@
+[
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.17351818010633258,
+   "base_height_m": 0.17739999999999997
+  },
+  "recording_sha256": "899769869da7c9dd0e2e4c6b2a7ee31308936103b6d831eb8c718458f0b615f1",
+  "reference_sha256": "de4f160a205f32a3f39f151bd1c571238712a3a11844bb357ceea7fcd0f51579",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.3877787807814457e-17,
+    1.3877787807814457e-16,
+    1.2212453270876722e-15,
+    1.3322676295501878e-15,
+    8.326672684688674e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.3877787807814457e-17,
+    2.949029909160572e-17,
+    1.3322676295501878e-15,
+    1.5543122344752192e-15,
+    7.771561172376096e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.1044899999999986,
+   1.1773
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.1764529743589743
+  },
+  "recording_sha256": "1dcb37ffab09ebc1100962baabe28d29576dbafdf1804fb9788504e5ceab031f",
+  "reference_sha256": "360167ed5cf9772566cd3b49d28e39b124870d10c644fa7c7d9bcd70da7446ac",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    9.874715317439647e-06,
+    5.372871350692978e-05,
+    0.0010779730478852685,
+    0.0019932289217842367,
+    0.0009244828411038612,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0136883489954961e-05,
+    5.6254866740536135e-05,
+    0.0011033552325157106,
+    0.0020318167548009783,
+    0.0009351208507992551
+   ],
+   "joint_velocity": [
+    0.0007685519149580223,
+    0.004354288547477667,
+    0.09914471425731428,
+    0.1841087924610628,
+    0.08585899867987072,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000808033945644756,
+    0.004584571815943245,
+    0.09994981368179094,
+    0.18378728451884002,
+    0.08443740474057618
+   ],
+   "linear_body": [
+    0.0005701453666736941,
+    0.0010437284232722593,
+    0.001175806045392709
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.99541,
+   1.04721
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07191871308354293,
+   0.014588333333333361,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.17651000000000003
+  },
+  "recording_sha256": "d71ef4e42ef480c7453c659eac35b32d6ac61c4e1706b5223dd100dd7768f435",
+  "reference_sha256": "804fecd72b77766865c32f7db1d6bc1186a1ac9b1fb665213a0c97936249d154",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.0141994057947378e-05,
+    5.33782170103717e-05,
+    0.001076534407016304,
+    0.0019759992904440343,
+    0.0009052701832063712,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0180942819064813e-05,
+    5.6774988661538124e-05,
+    0.0010971017114548246,
+    0.0020281809025131836,
+    0.0009436773000454049
+   ],
+   "joint_velocity": [
+    0.0008130190363227781,
+    0.004299119957423354,
+    0.09935941495132547,
+    0.18180472187433575,
+    0.08292656264971382,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0008408434315082054,
+    0.004622162958648589,
+    0.09901121049260084,
+    0.18366959967700722,
+    0.0858778055813211
+   ],
+   "linear_body": [
+    0.000519303613919478,
+    0.0010673791660787794,
+    0.0012074355562547128
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.01588,
+   1.06852
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07169076568877307,
+   0.01458880952380954,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.17646712820512822
+  },
+  "recording_sha256": "422c28e2d6f1957b1a452bb8b55140a347718a944f55c5b42122fea73b6addb4",
+  "reference_sha256": "6743fea19e2b295d2ee4211d87b80c6bd1d17785987ec2b7538fe35d6d500cf9",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.0746139192358853e-05,
+    6.278312917934972e-05,
+    0.0010723982640651192,
+    0.0019739371185358893,
+    0.0009033175881476789,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2522617580896743e-05,
+    6.815179489464522e-05,
+    0.001117900153516322,
+    0.0020691116411855667,
+    0.0009522657844295841
+   ],
+   "joint_velocity": [
+    0.0008421122839698282,
+    0.005156877143209484,
+    0.09805715861183828,
+    0.1804606009771397,
+    0.08255884447265471,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0010344059034032476,
+    0.0055953334823509344,
+    0.10097029689812928,
+    0.1870227439931722,
+    0.08617214910776867
+   ],
+   "linear_body": [
+    0.00036484027048986186,
+    0.0009874955710885177,
+    0.0011925948346858675
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.95218,
+   0.97616
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   6.531559612271003e-05,
+   0.0876057142857143,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.1765054358974359
+  },
+  "recording_sha256": "cfa98d597b04d2a509b598ec6392cd711e7de9ef3b4cb38e6f01f4feb48cfdaa",
+  "reference_sha256": "a623b4d9ff7aca44694af28f5d37766b7d68106ef69a2264d1dc683da115f69d",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.6188973360138626e-05,
+    9.156671952001902e-05,
+    0.0011063164237805271,
+    0.0020503350707577754,
+    0.0009475727246101252,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.902828133892222e-05,
+    0.00010179051167120049,
+    0.0010972257547614377,
+    0.0020316399302973943,
+    0.0009385317057863098
+   ],
+   "joint_velocity": [
+    0.0014483489114869097,
+    0.008086284966617388,
+    0.10266739135701576,
+    0.19058710117334343,
+    0.0882667266563616,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0016971708164486036,
+    0.00906655222369157,
+    0.0993485121123556,
+    0.1841719630612919,
+    0.08525019751895725
+   ],
+   "linear_body": [
+    0.0002626748168487981,
+    0.0012079982782159588,
+    0.0012564788975612826
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.91306,
+   1.01112
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0001615290343081297,
+   -0.058453571428571355,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.04432,
+    0.00351
+   ],
+   "planner_step": [
+    0.00115,
+    -0.0071,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.1745331427212642,
+   "base_height_m": 0.17617569230769234
+  },
+  "recording_sha256": "ec7e578577a4ebca5578fccdacce3b1340d7fc2c275fb70f5af3011d6807346f",
+  "reference_sha256": "d075176338de8438f610a2c38bf35c5fa47bbada13fbe91da8f34d8a7c1ef876",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010798935444552951,
+    6.774524912141882e-05,
+    0.0010301797875400325,
+    0.002000920096166309,
+    0.0009752149293668523,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.28746232315839e-05,
+    7.171329555854682e-05,
+    0.0011351122311855143,
+    0.0020361674613825964,
+    0.0009078140847845465
+   ],
+   "joint_velocity": [
+    0.010023537593550551,
+    0.005849697495747829,
+    0.09512431219126423,
+    0.18479932699527804,
+    0.09006609982867134,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008424723550951155,
+    0.0062668209129557685,
+    0.10280053370685188,
+    0.18421810920835516,
+    0.0820837195385591
+   ],
+   "linear_body": [
+    0.0006438964232914633,
+    0.0011800751968348466,
+    0.0012078405916084113
+   ],
+   "angular_body": [
+    0.0009988809945148639,
+    0.00040658196340067265,
+    0.005431017161289432
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.98393,
+   1.05658
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0059273134699955096,
+   0.01709598607392691,
+   0.5959628483357932
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.04432,
+    0.00351
+   ],
+   "planner_step": [
+    1e-05,
+    0.00719,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.1745331427212642,
+   "base_height_m": 0.17618753846153845
+  },
+  "recording_sha256": "5ef5c1eef56bc71657fe4f8969ecdd30d54f8036bb06ad1390b768ab6d08d204",
+  "reference_sha256": "1690baf5839080c479892b7dc2f6d94d76e91e89001ea29554976865b032b9ac",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010513034834623645,
+    5.9484351744473665e-05,
+    0.001124492972691832,
+    0.001992719166611631,
+    0.000874767706611066,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.53609743815809e-05,
+    7.097840602695554e-05,
+    0.0010552500054810602,
+    0.0020344522362327204,
+    0.0009851150944400289
+   ],
+   "joint_velocity": [
+    0.00978288539981498,
+    0.004881172608798819,
+    0.10339467822466739,
+    0.1835117334200108,
+    0.08066607480029499,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007697716623631668,
+    0.006149850727715876,
+    0.09512193937983554,
+    0.1839852161481061,
+    0.08940795375723021
+   ],
+   "linear_body": [
+    0.0005992868157527673,
+    0.001141276653940126,
+    0.0012583885173800494
+   ],
+   "angular_body": [
+    0.0009988809945148639,
+    0.00040658196340067265,
+    0.005431017161289432
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.99489,
+   1.04215
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004185145629480339,
+   0.014582901527406586,
+   -0.5959628483357932
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.17351818010633258,
+   "base_height_m": 0.18459
+  },
+  "recording_sha256": "1327c7212698e2928c54876dcd9745b677c1cdf03c47be1a5bd3904b74db84d5",
+  "reference_sha256": "51c907b4795f20565eaaa58e6bb6a04816cff5324664e037ac85519d1ad0f850",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.85722573273506e-17,
+    6.938893903907228e-17,
+    6.661338147750939e-16,
+    8.881784197001252e-16,
+    1.1102230246251565e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.938893903907228e-18,
+    8.673617379884035e-18,
+    2.220446049250313e-16,
+    6.661338147750939e-16,
+    4.440892098500626e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.9137999999999991,
+   0.9991799999999993
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.18365256410256414
+  },
+  "recording_sha256": "af0222822785336f39ccdac6c3abfabf6a950178122c1630c253c233f8d6655d",
+  "reference_sha256": "1e8a4ad3cfb945d6fcbbce0263e9f0686ebeb7978e63900d7ffefa03424465be",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.050872827031227e-05,
+    5.90086083357911e-05,
+    0.0012823850202659732,
+    0.00241486275379214,
+    0.0011407036573789246,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.0068919246008175e-05,
+    5.683315506747074e-05,
+    0.0013007454537598295,
+    0.0024427174017370304,
+    0.0011472831461684597
+   ],
+   "joint_velocity": [
+    0.0007159854490699347,
+    0.00435717513869528,
+    0.12009070710497845,
+    0.22692090705367995,
+    0.10755856472006654,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0007869651829066588,
+    0.004510976336416381,
+    0.11795904585791724,
+    0.2212590355537378,
+    0.10379071839794687
+   ],
+   "linear_body": [
+    0.0005714532431019935,
+    0.0010099734288022237,
+    0.0015669567808422832
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.79199,
+   0.85512
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07195763904479768,
+   0.014327857142857165,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.18369682051282052
+  },
+  "recording_sha256": "1be077c7ec44b8ab23143ce04434c01ab183b080722666328af53a1d76dfda54",
+  "reference_sha256": "ddaba9abbf99625c809d2bf86b62f850edbc2657e695a54cddeb5de69c3e2593",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    9.695785009414875e-06,
+    5.113191247306124e-05,
+    0.0012851850784647103,
+    0.002403573369813376,
+    0.0011242736356636416,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.852763671390073e-06,
+    5.570295769976925e-05,
+    0.001285937451914858,
+    0.002427349310550442,
+    0.0011488271477239338
+   ],
+   "joint_velocity": [
+    0.000738053371441482,
+    0.004020512287994964,
+    0.11915557773047455,
+    0.22237528423672748,
+    0.10373784811777025,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0007850615921396791,
+    0.004494410471324854,
+    0.11653190161653841,
+    0.2206997154883417,
+    0.10490964846383626
+   ],
+   "linear_body": [
+    0.0005419732348570171,
+    0.0010496012843789163,
+    0.00122883798592486
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.81421,
+   0.87838
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07165359738407547,
+   0.014328095238095272,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745406028045416,
+   "base_height_m": 0.18366046153846152
+  },
+  "recording_sha256": "b6fa87c695b399c0d9512c307cb395eb3128680e5c2e3074c5fa4bcefed1b5eb",
+  "reference_sha256": "20390db3b254581847b72e8678a61656034058e5cdab61f49d4353f1e85fdd71",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.4169146928149475e-05,
+    7.889483723544403e-05,
+    0.0016820726146044276,
+    0.0031624414226967264,
+    0.0014797909161166523,
+    1.04759951695888e-06,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.4650600951804199e-05,
+    8.262268703647232e-05,
+    0.0015761232957971583,
+    0.0029484751799938743,
+    0.0013720633084405097
+   ],
+   "joint_velocity": [
+    0.0011350687822739602,
+    0.006401057175760071,
+    0.15260565209090707,
+    0.28643536224544486,
+    0.13376439505320414,
+    9.400277244879031e-05,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0012439624460515197,
+    0.007051826684240495,
+    0.1441197143322293,
+    0.2695057937932215,
+    0.12538954330526605
+   ],
+   "linear_body": [
+    0.0004411963189038834,
+    0.0013100846914456605,
+    0.0035471026018030326
+   ],
+   "angular_body": [
+    0.0,
+    8.674428517316176e-05,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.73563,
+   0.77027
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   9.510679375123879e-05,
+   0.0873447619047619,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.1837131282051282
+  },
+  "recording_sha256": "45e143b001adb8623d254abaf20b5f1fc1ced3b4346725b254d658f1a6798eb7",
+  "reference_sha256": "91c73ae43d137a899620b344d0e993cb2ab3a21a141f5c46c5e7b24cb797e3c8",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.6351121746384986e-05,
+    0.00015221424624673057,
+    0.0021031390510670056,
+    0.003995542196106646,
+    0.0018920630980687522,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.4092038844714282e-05,
+    0.00013843392838597937,
+    0.0014536331857678696,
+    0.0027287090367738792,
+    0.001278028858435168
+   ],
+   "joint_velocity": [
+    0.002431843074631644,
+    0.013818115288921932,
+    0.19533515386201408,
+    0.3716985105431248,
+    0.17635299809072527,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0022053683965340427,
+    0.012755678324987014,
+    0.13166716192900288,
+    0.24760826685383172,
+    0.1162383979979326
+   ],
+   "linear_body": [
+    0.00042141837295773025,
+    0.00199526072400217,
+    0.0038804610289673207
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.69005,
+   0.81007
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0002064305788094249,
+   -0.05869928571428564,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.04371,
+    0.00349
+   ],
+   "planner_step": [
+    0.00114,
+    -0.00701,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.1745331427212642,
+   "base_height_m": 0.18338133333333334
+  },
+  "recording_sha256": "feb9f34004097b9506ac381e4b45a41100d8a881d9ddb113c102a3dfa5a1f008",
+  "reference_sha256": "0d4c391841f37215f2526a655144969d3d0e00a62457db2e3c38d0fb4a1d7dcb",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010857701640339932,
+    6.388257273061337e-05,
+    0.0012557529443220962,
+    0.0024545413319474983,
+    0.001202316830484318,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.263657772389303e-05,
+    6.845055623828308e-05,
+    0.0013352015054785976,
+    0.0024574562737613255,
+    0.001127994539435916
+   ],
+   "joint_velocity": [
+    0.010090563943942357,
+    0.0053491357330538725,
+    0.11711590444858076,
+    0.22901068049527806,
+    0.11218979988354301,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008409475647181683,
+    0.005899038093623524,
+    0.12128210222125753,
+    0.22316381009128533,
+    0.10242436678820684
+   ],
+   "linear_body": [
+    0.0006809063124885536,
+    0.0011667346680345708,
+    0.0012752839856609807
+   ],
+   "angular_body": [
+    0.0009988809945148639,
+    0.00040658196340067265,
+    0.005431017161289432
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.77616,
+   0.86433
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005996815152355283,
+   0.016841786038568313,
+   0.5959628483357932
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.04331,
+    0.00487
+   ],
+   "planner_step": [
+    -0.00022,
+    0.00705,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.17453318457651032,
+   "base_height_m": 0.1833926153846154
+  },
+  "recording_sha256": "c81ff085e4cb1ab3ef4980d450ffd2ef2aa4dc70a9671e67391d8aedd7c43ad9",
+  "reference_sha256": "2a1c2d25e2f2507d47811ce9ef133f6bc2153983b6c88ade79bbdbcd1e398861",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010532016038845125,
+    5.790643402468679e-05,
+    0.0013356295145591428,
+    0.0024383329341259707,
+    0.0011076646934235213,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.542833355513452e-05,
+    6.891831884587201e-05,
+    0.0012578505704132993,
+    0.002442078031300254,
+    0.0011897930841212774
+   ],
+   "joint_velocity": [
+    0.009815163223307385,
+    0.004753238454977954,
+    0.12317523346301122,
+    0.2252514215581626,
+    0.1024952435406468,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007695245149797842,
+    0.005902609850000874,
+    0.1137417576918012,
+    0.22155063961663446,
+    0.10828469929157868
+   ],
+   "linear_body": [
+    0.0006696871944913696,
+    0.0011432124913826934,
+    0.0012874791955866964
+   ],
+   "angular_body": [
+    0.001006034719188248,
+    0.00040085230504469674,
+    0.0055220264249638456
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.78879,
+   0.84773
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004975141301253456,
+   0.01405922345460414,
+   -0.5959724015380026
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.17351818010633258,
+   "base_height_m": 0.19178000000000003
+  },
+  "recording_sha256": "338400defef04aa543c67e43a7dd07da4426ad4824bc24b93cdf8d9a685d35c2",
+  "reference_sha256": "9e0675729ad96bd72d03d26751da524580b34fb9d8ebed868342551af7b555c6",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.0816681711721685e-17,
+    4.163336342344337e-17,
+    4.440892098500626e-16,
+    5.551115123125783e-16,
+    2.7755575615628914e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.85722573273506e-17,
+    6.071532165918825e-18,
+    1.1102230246251565e-15,
+    2.220446049250313e-16,
+    5.551115123125783e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.6761699999999995,
+   0.7859499999999998
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745407065540206,
+   "base_height_m": 0.19092276923076926
+  },
+  "recording_sha256": "fb3c5974099bf52a97f3d54e703a919533d35b096915a1f5627f9657bd23aeb5",
+  "reference_sha256": "721389da12c52272ee0f9d3047be6fd6388c34cb5b5dce9773b07b14cc6c5b03",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    3.253710893783266e-05,
+    0.00018482245102047454,
+    0.0031785873915966874,
+    0.006132614605408686,
+    0.002955445790600355,
+    1.4720003159053516e-06,
+    9.102873263554385e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.3534962817683756e-05,
+    0.00019359560060353998,
+    0.0028249745423446107,
+    0.0053081798696513974,
+    0.002487231686205639
+   ],
+   "joint_velocity": [
+    0.0029982001522283444,
+    0.01703069308872685,
+    0.2930873139434263,
+    0.5670710671866452,
+    0.27415183973254065,
+    0.00011400811475158113,
+    7.792570264221313e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.002852713728350759,
+    0.01664593606612592,
+    0.25256001333637473,
+    0.47422139110433353,
+    0.22206121615967236
+   ],
+   "linear_body": [
+    0.0015356245142377164,
+    0.0029064744213713246,
+    0.008157421763223153
+   ],
+   "angular_body": [
+    1.303907714500884e-05,
+    2.076089792272613e-16,
+    0.0001490293513204034
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.51857,
+   0.6093
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07198200037418498,
+   0.014140788673907336,
+   4.7438027881078644e-07
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.17453910102035597,
+   "base_height_m": 0.1908815384615385
+  },
+  "recording_sha256": "4e0a3658b3ee414025447693dfe4108873a463a503b40f9db23a1875f38b99ed",
+  "reference_sha256": "b94d26511035b5c1f829624d66ba77ae95cabbdec08a6eabf0467789c9f6bed5",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    2.9485215342629856e-05,
+    0.00016768586983380824,
+    0.0031613252162243314,
+    0.005956707065670857,
+    0.0027965483441889046,
+    1.1692499050562468e-06,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.594640060893845e-05,
+    0.00014702405948049602,
+    0.0026848549591508403,
+    0.00511619015236451,
+    0.002439814495266599
+   ],
+   "joint_velocity": [
+    0.002570128961743854,
+    0.014365826169283797,
+    0.29127204776007926,
+    0.5470578672437907,
+    0.2559077471287646,
+    7.77591920732264e-05,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0022357005216837823,
+    0.012658879228024335,
+    0.2387079978527792,
+    0.4553838294479961,
+    0.21750426257917965
+   ],
+   "linear_body": [
+    0.0009787840826653532,
+    0.00236585491294871,
+    0.007367027231793364
+   ],
+   "angular_body": [
+    0.0,
+    0.00022157276496126077,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.54743,
+   0.63819
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.0716051283205478,
+   0.014116904761904778,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745398181903757,
+   "base_height_m": 0.1909008205128205
+  },
+  "recording_sha256": "5eb0a31a8e78bc1abea49ab8dd3fbfd4fe0e6748d6a5752401e0213c31abdea2",
+  "reference_sha256": "8376c835763c1eca758cbab29763df9584cd86f77a31d1c2d14d6f39801c31e6",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    3.088490233819507e-05,
+    0.00017721436510628402,
+    0.0035426845448509256,
+    0.006791405403795076,
+    0.0032468101930980342,
+    1.8021440072797923e-06,
+    8.47874591298523e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.645571653462501e-05,
+    0.0002689649872718803,
+    0.002788326541639848,
+    0.0052799092495944945,
+    0.0024892919918747497
+   ],
+   "joint_velocity": [
+    0.0026855723232993363,
+    0.015392059728335017,
+    0.33200249758745426,
+    0.6364469985956399,
+    0.3042851907759404,
+    0.00012067183447679392,
+    6.961856053691384e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0040597258675225106,
+    0.023313690681668497,
+    0.24221875026624065,
+    0.4580636353729219,
+    0.21569701045423922
+   ],
+   "linear_body": [
+    0.0006977327034476137,
+    0.003172664953625955,
+    0.00862108294523663
+   ],
+   "angular_body": [
+    2.0381796217086915e-05,
+    0.00015167251408900573,
+    0.00023295251920031916
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.45271,
+   0.48833
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00013412978370231767,
+   0.08709403048435993,
+   -1.778091562876227e-18
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1745394615602727,
+   "base_height_m": 0.19100605128205125
+  },
+  "recording_sha256": "d7d9ed7df67cbb325a30c3688cad11d57d6aba1c335905f971f9d1da6ea498c4",
+  "reference_sha256": "648d176d700f56542f8bbea6dd9a401031e3e9040f75d681dabe97dc762685c4",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    3.8177220868016534e-05,
+    0.0002138219052928108,
+    0.0028329704537193934,
+    0.005492357235803839,
+    0.0026587882344602785,
+    1.1890628220857695e-06,
+    1.0461770544820463e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.6745755830465123e-05,
+    0.00015208162627125733,
+    0.00212872131581533,
+    0.004062500930801479,
+    0.0019360731646821043
+   ],
+   "joint_velocity": [
+    0.0033961934781746726,
+    0.01909199048365656,
+    0.25970720966921673,
+    0.5044947402197903,
+    0.24476187024735344,
+    8.390454818424854e-05,
+    4.7448543252842786e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0024920682375996913,
+    0.014099689483811222,
+    0.19744397840361363,
+    0.3773914549535263,
+    0.1801707509748281
+   ],
+   "linear_body": [
+    0.001016939673621575,
+    0.002667548086295506,
+    0.005986317967296949
+   ],
+   "angular_body": [
+    1.3538069483236383e-05,
+    4.7376013124777064e-05,
+    0.00015473255436559491
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.3509,
+   0.55648
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00027192470118312794,
+   -0.05879569103290782,
+   4.7438027881078644e-07
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.04294,
+    0.00346
+   ],
+   "planner_step": [
+    0.00112,
+    -0.00688,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.17453347396817764,
+   "base_height_m": 0.19063620512820512
+  },
+  "recording_sha256": "a107e0e33f1ab75eca3bfc2c91b1275b9da18ab2a9f26a46a3c6f5b0529faf00",
+  "reference_sha256": "861ab84dd7839f708f2e5afa8a169f81847c4f9c1796af70bd2b5c8d069e1412",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00011424604447829375,
+    0.00018233660247578206,
+    0.0031806090555341854,
+    0.00618156352800346,
+    0.0030009008653100007,
+    1.4689751451016213e-06,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00010054720639193302,
+    0.00019309918252148576,
+    0.0030292870050500696,
+    0.005683712503254181,
+    0.002660140805155812
+   ],
+   "joint_velocity": [
+    0.010747234663181929,
+    0.016697349453498753,
+    0.2936676590435161,
+    0.571177546856529,
+    0.27746407946369994,
+    0.00012410406898448543,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008922228359247303,
+    0.016511977923674565,
+    0.2669183259915336,
+    0.49965995360712606,
+    0.2333218655413362
+   ],
+   "linear_body": [
+    0.0012577799173345305,
+    0.003009070630070447,
+    0.007954540947072524
+   ],
+   "angular_body": [
+    0.0009812534121548377,
+    0.00041752463738751664,
+    0.005414048580288071
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.49181,
+   0.61935
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.006100831442963097,
+   0.016688192582175364,
+   0.5959628888380517
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -1,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -10.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.04294,
+    0.00346
+   ],
+   "planner_step": [
+    0.0,
+    0.00697,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.1745334900588983,
+   "base_height_m": 0.19063476923076927
+  },
+  "recording_sha256": "013b50f327945ee2fb08521fd855da2a98fab6a3821908412101a3580b77682a",
+  "reference_sha256": "8cb1a68b0118e63f6edc37c72ac971581f120b4d2136211a5f7866f7b2dd3bc0",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010239059259359963,
+    0.00017515602870532258,
+    0.003444552388743429,
+    0.006442736480026923,
+    0.0029996077102793293,
+    1.2827725875263001e-06,
+    6.227370117979456e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.459867168347198e-05,
+    0.0002086032317355589,
+    0.003045585794469759,
+    0.005825629930245395,
+    0.002780182156770677
+   ],
+   "joint_velocity": [
+    0.009331812757789064,
+    0.014973723811838821,
+    0.3176854930625108,
+    0.5950363363848001,
+    0.27745771660069346,
+    0.00010730589840258886,
+    6.097134096131901e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00857615435358388,
+    0.01669068451596101,
+    0.26993934825700555,
+    0.5161437696492788,
+    0.2462180833497606
+   ],
+   "linear_body": [
+    0.0008606564731164902,
+    0.0029966044182084964,
+    0.00898140843257158
+   ],
+   "angular_body": [
+    0.0010279990997786937,
+    0.00042088003692882344,
+    0.005368501523235567
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.50977,
+   0.59652
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004173927207817978,
+   0.013999685268013757,
+   -0.5959624191365845
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.06887808567803363,
+   "base_height_m": 0.17365
+  },
+  "recording_sha256": "a9f3ebe297e0a36d5f138134e435cef8e8abf36356ccb394a92fa6ee0eeb5a1c",
+  "reference_sha256": "8805a4fe11e6359b02fa9a1e6ad293b699c16edef2d6b22655ccbd961816c4ed",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.3877787807814457e-17,
+    1.1102230246251565e-16,
+    5.551115123125783e-16,
+    4.440892098500626e-16,
+    1.1102230246251565e-15,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.938893903907228e-18,
+    5.204170427930421e-18,
+    1.6653345369377348e-15,
+    1.3322676295501878e-15,
+    7.771561172376096e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.1217199999999996,
+   1.1847999999999987
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17272928205128205
+  },
+  "recording_sha256": "82e3669500394ada16747b4e641823c586772fb06a54ad79f6d1a92ffe46ddc7",
+  "reference_sha256": "acb669737edc1b9a8163a11a19d7e95ff9ddfa5dd42aef6ec3808ac92b66fba4",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.503380387518805e-06,
+    5.550237501632909e-05,
+    0.0010249902379359662,
+    0.001969084834043649,
+    0.0009505787236327724,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.174579396245976e-06,
+    5.867030115039476e-05,
+    0.00105354285241651,
+    0.002011221901568125,
+    0.000964633670245341
+   ],
+   "joint_velocity": [
+    0.000287928762123017,
+    0.004437239462600397,
+    0.09409904792539407,
+    0.18152400008924544,
+    0.08802986218124251,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0003723886944760388,
+    0.004780288832247563,
+    0.09549961482935555,
+    0.1819954812459054,
+    0.08709185765900374
+   ],
+   "linear_body": [
+    0.000553448737656528,
+    0.0010527584393472953,
+    0.00113321251417898
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.03039,
+   1.08186
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07285862038586104,
+   0.014588333333333352,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17278687179487176
+  },
+  "recording_sha256": "cfee896be07e175638ce25deb133c03582348db71be64a0ff0ee55f3f516a04e",
+  "reference_sha256": "b48a32b06468236500b43f64e4bed1f0cb40870ca96169467ce6e97dbe8baed9",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.19023138543376e-06,
+    5.4443172889820286e-05,
+    0.0010310507995643266,
+    0.001965864581377058,
+    0.0009401665721019318,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.750913462515655e-06,
+    5.8320199427165046e-05,
+    0.001050331802264191,
+    0.002014601233214303,
+    0.0009736295570596553
+   ],
+   "joint_velocity": [
+    0.0003043441912009409,
+    0.004401202980669493,
+    0.09528338445028484,
+    0.1811180603365905,
+    0.08628280074381768,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00038108767964959524,
+    0.004780083331991491,
+    0.09479885102691274,
+    0.18231611099860745,
+    0.08843798889903581
+   ],
+   "linear_body": [
+    0.000596148085516532,
+    0.001021597093703725,
+    0.0011804453395447626
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.03908,
+   1.08971
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.0725188170511516,
+   0.01459380952380954,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17274764102564105
+  },
+  "recording_sha256": "0ae2315180584279ad9e2bc7c28b83f0740037df10ffc141c381f122e1c61770",
+  "reference_sha256": "075c4783b1f5c5600ad451e287da187439411f79d5538bc71abb7872af73829f",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    6.540069426334418e-06,
+    6.36214880888919e-05,
+    0.0010235360888255164,
+    0.001960013815709661,
+    0.0009375632306877588,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.360690880241988e-06,
+    6.917412505622464e-05,
+    0.0010696922504094507,
+    0.0020533794230138,
+    0.0009837101459249404
+   ],
+   "joint_velocity": [
+    0.00046434447866376325,
+    0.0051594949843335085,
+    0.09358398267137054,
+    0.17920625671560686,
+    0.08570544531321547,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0005060630549437803,
+    0.005625252238483618,
+    0.09664565735151597,
+    0.18556724314545806,
+    0.08892098297718294
+   ],
+   "linear_body": [
+    0.0004002966138421574,
+    0.0009712364954811718,
+    0.0011716175069317932
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.96381,
+   0.98786
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00012834082121030224,
+   0.08760571428571427,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.1727865641025641
+  },
+  "recording_sha256": "8735f957edca1cd34fe5923d6e62405fee8dcb28ec3b2b852beed8512550a97a",
+  "reference_sha256": "e3ac39fd375ff10c6b01abfbbd0a353104324e08a2be7b3d25d7cba9069ef218",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    6.230691169327001e-06,
+    9.309120225925987e-05,
+    0.0010565618797244152,
+    0.0020328895242961455,
+    0.0009764327764659315,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    7.942301848204993e-06,
+    0.00010406045149671818,
+    0.0010490052997012154,
+    0.0020166437207907294,
+    0.0009683072821541456
+   ],
+   "joint_velocity": [
+    0.0005361762090648799,
+    0.008254378067513824,
+    0.0981246531905218,
+    0.18891131945564715,
+    0.09083580776774158,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0006373932848567066,
+    0.009294083843062975,
+    0.0950069032281048,
+    0.1827421378974348,
+    0.08785410368017019
+   ],
+   "linear_body": [
+    0.0003778938807042036,
+    0.0012039207815796146,
+    0.0012257206103177415
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.92451,
+   1.02285
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0002105606407919439,
+   -0.05845833333333328,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.037,
+    0.00318
+   ],
+   "planner_step": [
+    0.001,
+    -0.00593,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981362996571343,
+   "base_height_m": 0.17244846153846152
+  },
+  "recording_sha256": "fc74351b23cf14defc117b716bcd61da109da1c48993a564f646bb8000aa3a43",
+  "reference_sha256": "9a046515c6ac773f2f96357b2846c18e60b5ad58ddd36d91c86761a6e0738949",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010892820393921225,
+    6.829601611614538e-05,
+    0.0009846080254412766,
+    0.0019879344162817554,
+    0.001007005297550682,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.977801188044555e-05,
+    7.540567669516274e-05,
+    0.0010838458835381625,
+    0.0020108319714411786,
+    0.0009309704954594922
+   ],
+   "joint_velocity": [
+    0.010113293261222494,
+    0.005863454521528275,
+    0.09094440976411101,
+    0.18361310281936186,
+    0.09297216764811768,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008135881737222492,
+    0.0065776804614490975,
+    0.09817156973911717,
+    0.18192427744184914,
+    0.08406556870189902
+   ],
+   "linear_body": [
+    0.0006664686353832071,
+    0.001178882256074496,
+    0.0012184371722053448
+   ],
+   "angular_body": [
+    0.0005692264835720412,
+    0.0003923464707423502,
+    0.005489597645361187
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.98527,
+   1.07404
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005736486996683245,
+   0.016942736830785197,
+   0.6036891794234641
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.037,
+    0.00318
+   ],
+   "planner_step": [
+    -3e-05,
+    0.00601,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981362996571343,
+   "base_height_m": 0.1724606153846154
+  },
+  "recording_sha256": "79eb36555a2fb9137e09eae1540880552c12cfc185047c53e3d6101ccac5dac3",
+  "reference_sha256": "bf158035cc064bcc06d816e88a1957ceac84f412003dc443772cd80b7eba439f",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010644997594319946,
+    6.017244079764178e-05,
+    0.0010719358343297032,
+    0.001967432873564667,
+    0.0009008352228684783,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.671093703007722e-05,
+    7.02581559355642e-05,
+    0.0010095096783453528,
+    0.002022722058881118,
+    0.0010163716805537593
+   ],
+   "joint_velocity": [
+    0.0098878363164227,
+    0.004950203041573454,
+    0.09850150138554796,
+    0.1810941395976584,
+    0.08300499460817827,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007865784115136235,
+    0.00603253455493356,
+    0.09096959177976234,
+    0.18286191784707354,
+    0.09216016473236151
+   ],
+   "linear_body": [
+    0.0005881722008441743,
+    0.001141023482399273,
+    0.0011304406340887753
+   ],
+   "angular_body": [
+    0.0005692264835720412,
+    0.0003923464707423502,
+    0.005489597645361187
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.01432,
+   1.04239
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004154964683435588,
+   0.014732474977387177,
+   -0.6036891794234641
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.06887808567803363,
+   "base_height_m": 0.18793
+  },
+  "recording_sha256": "a84e59ffba6ee9911198a7b16536ca61d7fefa8fef7c10cc5778176f1610fa6d",
+  "reference_sha256": "54bcad24d9fa03dd8ca80f324e124bb3c3f7cf1c19886b8be33ea72a4cad806d",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    7.632783294297951e-17,
+    8.326672684688674e-17,
+    8.326672684688674e-16,
+    1.3322676295501878e-15,
+    0.0,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.551115123125783e-17,
+    1.214306433183765e-17,
+    3.3306690738754696e-16,
+    1.3322676295501878e-15,
+    1.1102230246251565e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.7022199999999986,
+   0.7962399999999986
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.18706569230769232
+  },
+  "recording_sha256": "420093681b134fc35f50478982a1e5a04e05c90934f4c5a32124ad3e2d3fa8d2",
+  "reference_sha256": "7b97591fca09043d0b8910fa51bc512e080717bf84e99354fd591e0ff3076bac",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    1.106150664709176e-05,
+    0.0001658892426009683,
+    0.0029976345021910404,
+    0.005816650057298415,
+    0.00282255427474482,
+    3.200447752460439e-16,
+    1.2827725874765598e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2378278092884389e-05,
+    0.00017370168725353317,
+    0.0026945936780584713,
+    0.005118282697130289,
+    0.0024290441769929004
+   ],
+   "joint_velocity": [
+    0.000985350425527508,
+    0.014542852086657235,
+    0.2723115913890036,
+    0.5307953572548075,
+    0.25883484633224324,
+    6.4018582627671645e-15,
+    0.00010730589840259998,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0010142570194677332,
+    0.0146976479697235,
+    0.2394276156383436,
+    0.4543796002174903,
+    0.2154618873253958
+   ],
+   "linear_body": [
+    0.0012594767675939015,
+    0.0025027355198433765,
+    0.0073037280071970075
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.57702,
+   0.66166
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07295145271843373,
+   0.014118095238095261,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.18709456410256411
+  },
+  "recording_sha256": "0986b4b457baaeca2a28a0c5aae32792b802d5109fb2a5c230744e67bbbcb7f7",
+  "reference_sha256": "14e45d406cb282d8a25e59adee0123ad54f8c3cb8383596638986c6bbca5fe59",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    1.1234525004785235e-05,
+    0.0001646833012479244,
+    0.003048477755612873,
+    0.005799885313573002,
+    0.002754083299547426,
+    1.4689751451016213e-06,
+    9.915397115026953e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2516686518031385e-05,
+    0.00016745878717057302,
+    0.0026783573640554005,
+    0.005160226846826129,
+    0.002490698623451316
+   ],
+   "joint_velocity": [
+    0.0009852589716675055,
+    0.014308883469595347,
+    0.27895390959521066,
+    0.5290108778200774,
+    0.2502998661557238,
+    0.00012410406898448543,
+    8.11310747094223e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0010283965352187471,
+    0.014172157683309965,
+    0.236985836242341,
+    0.45702023861478075,
+    0.22089306930304223
+   ],
+   "linear_body": [
+    0.0014606198582195412,
+    0.0024110738258356725,
+    0.00729487150931719
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.58306,
+   0.6659
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07241473041373316,
+   0.014113095238095254,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.1870816923076923
+  },
+  "recording_sha256": "d4c4a84d56d3d0494dc9f83d1aa10f598cb5728ac42b41a5e0e315a10d416779",
+  "reference_sha256": "bc0d8bcc4a2bab9a2e1666288c14409862022e23559efc29725f3750dee416b2",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    1.1024556851210813e-05,
+    0.0001654986143026218,
+    0.0032617174785537126,
+    0.006274579791501608,
+    0.0030120271054145564,
+    1.0610094882094613e-06,
+    1.0610094880597683e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.8859350956098323e-05,
+    0.00026539584700946086,
+    0.002674763918821235,
+    0.005103027064862364,
+    0.00242939198482522
+   ],
+   "joint_velocity": [
+    0.0009678676624736594,
+    0.014496489409813757,
+    0.31025192824929393,
+    0.5974709110771377,
+    0.28713253016326634,
+    7.031672984359064e-05,
+    7.031672984468813e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.001618625341567509,
+    0.02285300762863329,
+    0.2344079163668599,
+    0.4468280556804762,
+    0.21249661898228467
+   ],
+   "linear_body": [
+    0.0010629481831902143,
+    0.0029716886461455174,
+    0.008186440529442052
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.47609,
+   0.5105
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00019484508628087307,
+   0.08708904761904762,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.18717846153846154
+  },
+  "recording_sha256": "7bd0bbb12084081882fdbc7b8a358929970e4e64add91eab2a9d610138d69a95",
+  "reference_sha256": "47d3d50330af2180f1f2da749e97bd01141682c0b063ce57958a8fac9427a38a",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    1.5956127378336555e-05,
+    0.00023374435278592862,
+    0.002845506357040332,
+    0.005529001538306054,
+    0.002684347493770713,
+    8.696592184869159e-07,
+    8.696592185842216e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2120463565790064e-05,
+    0.0001718888122019768,
+    0.002146907552107262,
+    0.004141856488240447,
+    0.0019953146819858296
+   ],
+   "joint_velocity": [
+    0.001441116565145706,
+    0.021416094950970115,
+    0.26695569747000647,
+    0.519248491571266,
+    0.25234372800025556,
+    4.775725687223461e-05,
+    4.775725687205676e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0011214782062725053,
+    0.01610869664080866,
+    0.1993371563636534,
+    0.3849156120273869,
+    0.18565283904275584
+   ],
+   "linear_body": [
+    0.0009933886917602357,
+    0.0030121808076733333,
+    0.006670584423219877
+   ],
+   "angular_body": [
+    3.083722005463252e-06,
+    0.0,
+    8.830489785214666e-05
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.37909,
+   0.57687
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0003743140975138914,
+   -0.058821428571428545,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.03564,
+    0.00313
+   ],
+   "planner_step": [
+    0.00097,
+    -0.00571,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981314528666238,
+   "base_height_m": 0.18681179487179486
+  },
+  "recording_sha256": "ef6d967c36187595d56a59503861cc15a5f1e90a40f3a291ba4f21058b97dba4",
+  "reference_sha256": "cabcf34bc5c190aec91af4e753b561a2b8f5c2c361eee6ff25e01896b473bce4",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010912382587616157,
+    0.00018002666354283335,
+    0.0030429190680549114,
+    0.00596137548812403,
+    0.002919664061184891,
+    1.2123440786138406e-06,
+    1.4873633475887506e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.09713469007772e-05,
+    0.00016629156284632976,
+    0.0026990364062290154,
+    0.005118402767440246,
+    0.002425406220636067
+   ],
+   "joint_velocity": [
+    0.010195924380107906,
+    0.01670808506937141,
+    0.27983925898765133,
+    0.5488439145305849,
+    0.26906524150874506,
+    9.185483834116498e-05,
+    0.00010609600058723153,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008184079610661312,
+    0.014472020055005048,
+    0.23586144389230812,
+    0.4466845904365442,
+    0.21138763882023273
+   ],
+   "linear_body": [
+    0.0013693689290158624,
+    0.002806882229085003,
+    0.0067694513964589005
+   ],
+   "angular_body": [
+    0.0005739771404885837,
+    0.0004352464301235888,
+    0.005477438051089413
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.49592,
+   0.6461
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00594019579950889,
+   0.01650690024931497,
+   0.6036891969719634
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.03564,
+    0.00313
+   ],
+   "planner_step": [
+    -4e-05,
+    0.00579,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981329817079504,
+   "base_height_m": 0.18680671794871798
+  },
+  "recording_sha256": "35db887297a22f7d0fcb4789de2e4e9dc945ed74b491b039a252565a9bf95b95",
+  "reference_sha256": "2b9005662d08274750d76954faf0a5fb4e6a2db6f5101c22d1c95cef356cde96",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010557283551810498,
+    0.0001797289769406038,
+    0.0033614164736783638,
+    0.0063235992751783,
+    0.0029665750541650444,
+    8.478745913017052e-07,
+    8.47874591298523e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.826885636179019e-05,
+    0.00020959740725567887,
+    0.0029245307116242754,
+    0.005659687473408669,
+    0.002737246830352149
+   ],
+   "joint_velocity": [
+    0.009776078380622033,
+    0.01459128068351329,
+    0.305740603403738,
+    0.5759186075064727,
+    0.2705276790560218,
+    6.961856053579349e-05,
+    6.961856053691384e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00797984775334758,
+    0.016718828947566766,
+    0.25989156927573914,
+    0.5031701530210251,
+    0.24347191989688402
+   ],
+   "linear_body": [
+    0.0016137411359817397,
+    0.002916462430750502,
+    0.008616836486155431
+   ],
+   "angular_body": [
+    0.0005852170305994561,
+    0.00039110913579410334,
+    0.005482104620429164
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.54363,
+   0.59833
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004119279798630175,
+   0.014137539103124905,
+   -0.6036887844079192
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.035752454804417896,
+   "base_height_m": 0.17133
+  },
+  "recording_sha256": "41fd8fcda56472bceb6cd64a44d4dda88b833a912c4eee299089cee9c9c4d8b1",
+  "reference_sha256": "132ffdac487b273ba5aa6338a64b3bb2cc3bdc4eb47f07347a9946c527e73fee",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    9.71445146547012e-17,
+    1.3877787807814457e-17,
+    4.996003610813204e-16,
+    0.0,
+    7.771561172376096e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.326672684688674e-17,
+    1.9081958235744878e-17,
+    9.992007221626409e-16,
+    1.7763568394002505e-15,
+    2.220446049250313e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.07996,
+   1.14673
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.16979430769230766
+  },
+  "recording_sha256": "dd9305c327822bb1980d20298125b516fdd2a9203954f363a01b5047df8eb741",
+  "reference_sha256": "17c80c972071daf970d1d04cdb07cda534123381d415ae08f3642bffed772f73",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.2126534261669333e-06,
+    5.5060700780539214e-05,
+    0.0009957596997865869,
+    0.0019929243802654486,
+    0.0010019451543922622,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.984873394805706e-06,
+    5.891243389165489e-05,
+    0.0010270402193010386,
+    0.0020376153790115517,
+    0.0010173187122711124
+   ],
+   "joint_velocity": [
+    0.00023082621936123946,
+    0.0044439415592755485,
+    0.09126905591904791,
+    0.18348012175625902,
+    0.09263071334734925,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00033615386098722895,
+    0.004807555159407896,
+    0.09321044094700949,
+    0.1844694455069876,
+    0.09185974029483111
+   ],
+   "linear_body": [
+    0.0006722809586328511,
+    0.0010704159590526235,
+    0.0010460582393407123
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.01727,
+   1.07003
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0729942359059313,
+   0.014588333333333356,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.16985082051282052
+  },
+  "recording_sha256": "0b59a0964837a77333da4ce40174009659fa57ce6d2a57e23761063d2fe56dfd",
+  "reference_sha256": "5b5c6b6be937bea060e1061e913f3513d3dde12b52f85d83e331ede9763f9822",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.8388884683127905e-06,
+    5.563585288608735e-05,
+    0.0010090136084778716,
+    0.00200234892621947,
+    0.0009972338383203456,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.909408234657651e-06,
+    5.926000416252971e-05,
+    0.0010257248855245155,
+    0.0020464258894155795,
+    0.0010278414155149164
+   ],
+   "joint_velocity": [
+    0.000257317542954814,
+    0.004498464339673424,
+    0.09350001806199364,
+    0.1848366297038815,
+    0.09169742399256355,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00039251816576028225,
+    0.004862839054450095,
+    0.0926055823637086,
+    0.1852207366957063,
+    0.09327708038134082
+   ],
+   "linear_body": [
+    0.0006754134685868424,
+    0.0010282850454859623,
+    0.0011018130605141725
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.99565,
+   1.04787
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07255554536604054,
+   0.014593809523809563,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.16981451282051283
+  },
+  "recording_sha256": "3998aabb07f7c7ec70253ac6b8659dde7bc3075fa5931ad3ffd62d9f1b8756b8",
+  "reference_sha256": "80fdcc2487f2e4afcb0e9cff9292e0d69450d3a196f5429cd0a6d1b418e9dd94",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.519081137574008e-06,
+    6.444558674005229e-05,
+    0.0009969146264613867,
+    0.0019893292079900334,
+    0.0009926890307097264,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.6815309785769905e-06,
+    6.877366627575175e-05,
+    0.0010459472994999118,
+    0.002087566222176296,
+    0.0010416107866887741
+   ],
+   "joint_velocity": [
+    0.00024244050245960755,
+    0.005309407825213691,
+    0.09110388878667418,
+    0.18186799294440337,
+    0.0907696055027662,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00023256901915174295,
+    0.005605419943270003,
+    0.09456264926322218,
+    0.18871138733569987,
+    0.09413297654632646
+   ],
+   "linear_body": [
+    0.0005164174758503494,
+    0.0009750112882586861,
+    0.0011209842510630024
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.9413,
+   0.96603
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00018570137332747424,
+   0.08761047619047625,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.16985476923076923
+  },
+  "recording_sha256": "37fd26572820ad9cff88412e65393bd535dee0e9f076aa30fc5103a3673fed42",
+  "reference_sha256": "d0afb2eb593e6da6bc213173744f4445a5ee2c13d5163303c43e3e55f8a3dc6e",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.56095197165672e-06,
+    9.425464797173377e-05,
+    0.0010362429070589674,
+    0.0020708408075985484,
+    0.0010355351682917076,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.693264984821589e-06,
+    0.00010361881013367902,
+    0.0010230014692341036,
+    0.0020476030447733654,
+    0.0010243730166929939
+   ],
+   "joint_velocity": [
+    0.0003744829705621744,
+    0.008329594171190495,
+    0.0963562320953992,
+    0.19258594171869511,
+    0.09632545062396196,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00039682823790573114,
+    0.009241821568387853,
+    0.09273922231629199,
+    0.18564968895274542,
+    0.09291590521620335
+   ],
+   "linear_body": [
+    0.0004675536296832386,
+    0.0012489383480883086,
+    0.001049526539985474
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.90077,
+   1.00189
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00025825497394148115,
+   -0.058458333333333286,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.0287,
+    0.00192
+   ],
+   "planner_step": [
+    0.00068,
+    -0.0046,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.03490664191620265,
+   "base_height_m": 0.16951133333333335
+  },
+  "recording_sha256": "f87ca8d837fa09ad6412c666dad11db5e2f83c7956ba8aa71ff3c1cc56615beb",
+  "reference_sha256": "45b9692a2e196a912f6cde628d7c0aa1b80b7e5577940ae6417fe8520e09c502",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010624604380061937,
+    7.051077978008221e-05,
+    0.0009632878318084434,
+    0.002026393012383242,
+    0.0010627648228527377,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.544064177245448e-05,
+    7.875786944330936e-05,
+    0.0010532724186890022,
+    0.0020291344249486042,
+    0.0009790163580501257
+   ],
+   "joint_velocity": [
+    0.009888330370292473,
+    0.006009724534096499,
+    0.08909359737536243,
+    0.18728541526576517,
+    0.09817687947894624,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007729084295729941,
+    0.006914912686224088,
+    0.09548900223630327,
+    0.1836417307365882,
+    0.08839974248362506
+   ],
+   "linear_body": [
+    0.0007378960464822468,
+    0.0011560750378674669,
+    0.0011005219197198508
+   ],
+   "angular_body": [
+    0.0005243900795041849,
+    0.0004292183536415236,
+    0.005494212954080926
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.95267,
+   1.06064
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00491606567128995,
+   0.01705001559126539,
+   0.6047906448045741
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   -1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.209,
+  "pivot": {
+   "offset_body_xy": [
+    0.02919,
+    0.00286
+   ],
+   "planner_step": [
+    -8e-05,
+    0.00475,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.03490664502271097,
+   "base_height_m": 0.1695224615384615
+  },
+  "recording_sha256": "9579fada74eeab2c9945c9d8abb6d2d4790c77dd4fab371abd20834a0c125f05",
+  "reference_sha256": "99c079df3c07a9f9115acccd11e04d10d520f71cc90225d840d679d1912881a4",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010731991204655305,
+    6.158655855406712e-05,
+    0.0010423907240464914,
+    0.001989534350251546,
+    0.0009494487337381275,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.726765086530606e-05,
+    6.871242878641728e-05,
+    0.0009901948985331652,
+    0.002059046007690447,
+    0.0010721917510540032
+   ],
+   "joint_velocity": [
+    0.009962236654262059,
+    0.005092515154244909,
+    0.09581477924449093,
+    0.1831279680236812,
+    0.0874675225351351,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007913987754486701,
+    0.005881824664950137,
+    0.08927945146707277,
+    0.1861584428785127,
+    0.09714501727663272
+   ],
+   "linear_body": [
+    0.0006995557171054173,
+    0.0011007665529135465,
+    0.000985390750598767
+   ],
+   "angular_body": [
+    0.0005243929631724637,
+    0.0004286811276935541,
+    0.005476645542049324
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.00084,
+   1.01022
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004087254833708873,
+   0.014895718230380394,
+   -0.6047906448375145
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03573245382992474,
+   "base_height_m": 0.17779
+  },
+  "recording_sha256": "22a1c7d71f268ad6d64791a81a6775e2f63b35f736ded7ac97c109387e0f3255",
+  "reference_sha256": "0d8658952579edc06b6e0e435629240a47552bf1fc51fc525e2134c588eb7cd0",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.0816681711721685e-17,
+    1.5265566588595902e-16,
+    1.6653345369377348e-16,
+    1.1102230246251565e-15,
+    7.216449660063518e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.938893903907228e-18,
+    8.673617379884035e-18,
+    1.0547118733938987e-15,
+    1.1102230246251565e-15,
+    7.771561172376096e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.9190499999999989,
+   0.98138
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.1769024615384615
+  },
+  "recording_sha256": "0218b8863f861393d9f9798cb55b8fc5a0ffc5223cf588bb93252462e8553601",
+  "reference_sha256": "d671d7987b9599c91a59ac4c4dd30aa88b98f0246a6ff0441c49abad582ba305",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.7648951618072265e-06,
+    5.424799581256999e-05,
+    0.0012172608256705707,
+    0.002425015386861822,
+    0.0012123199127624348,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.21141767446701e-06,
+    5.773731117615997e-05,
+    0.0012333347706849887,
+    0.0024396261813832754,
+    0.0012106985550555352
+   ],
+   "joint_velocity": [
+    0.0002997313824093149,
+    0.004298768350842036,
+    0.11225018943912349,
+    0.22438982304337227,
+    0.11257666726423277,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0003268393943033496,
+    0.004685111234402013,
+    0.11232454840829421,
+    0.22171621318639398,
+    0.10974984083031235
+   ],
+   "linear_body": [
+    0.0006817315950767532,
+    0.0010705907596139477,
+    0.0012046609853815149
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.8131,
+   0.87742
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07303824904954921,
+   0.014317857142857182,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.1769485128205128
+  },
+  "recording_sha256": "571610eb995ab15f507d1a704f4b32f03bce6ececfd24f1e6b98587e22bd63a6",
+  "reference_sha256": "809fe80576c93b6b54f5b55cd731aa3f7a6a7a81e0bdba9bacc7eea12521c93e",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.572743475379005e-06,
+    6.113206241014979e-05,
+    0.001228750157684481,
+    0.0024312436635836703,
+    0.0012067999346126622,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.848627175306534e-06,
+    5.908113980954705e-05,
+    0.0012388517714472785,
+    0.0024651298554207663,
+    0.0012315717549519856
+   ],
+   "joint_velocity": [
+    0.00025157960402267794,
+    0.004553374268620095,
+    0.1155917306783154,
+    0.22819735953436104,
+    0.11296605571115953,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0002804834067976477,
+    0.004705560368805807,
+    0.11200859561926448,
+    0.22344283311010987,
+    0.11193896556177849
+   ],
+   "linear_body": [
+    0.0007849968766552402,
+    0.001036080803084316,
+    0.0012888279098553059
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.78953,
+   0.85319
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07252309638971981,
+   0.014327857142857163,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.17691830769230768
+  },
+  "recording_sha256": "da688973627fa77f91d7da1fb3a9c3f2515a71f916c2dfb5036dfb231a4e72f8",
+  "reference_sha256": "d978b64d1673f48f6a274661a9342818ca186f50ea7f6154dbbe6b524477d793",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.127727242598578e-06,
+    8.711221786302858e-05,
+    0.0017141625110380129,
+    0.0033580718944145388,
+    0.0016452894291121222,
+    3.200447752460439e-16,
+    1.0475995169614113e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.6893594840792615e-06,
+    9.37153330828905e-05,
+    0.001571200905952657,
+    0.003079190501512256,
+    0.001509801949999079
+   ],
+   "joint_velocity": [
+    0.0003079873319532062,
+    0.007080519955710499,
+    0.15456471736442448,
+    0.30291184710053914,
+    0.1484069970795673,
+    6.4018582627671645e-15,
+    9.40027724486921e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00037169654588088794,
+    0.008036086588839177,
+    0.143845266600018,
+    0.281820148813593,
+    0.13814478636975325
+   ],
+   "linear_body": [
+    0.0011955952005421775,
+    0.0014252080018557812,
+    0.003842602809332863
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.72233,
+   0.75821
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0002143271872766109,
+   0.08733500000000007,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490236350981883,
+   "base_height_m": 0.1769748205128205
+  },
+  "recording_sha256": "26f4d6bca96cc82634b0897e950292f1f6247f9c03bf5bd69531d8f67fdcb3c7",
+  "reference_sha256": "84c497a6f0ab0ace7cc6fc456aa841d40c3e738cdfa1ab9249d489a9b180c5ef",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    6.945241284551743e-06,
+    0.00016701096091931625,
+    0.0021238100708008295,
+    0.004152776061801514,
+    0.002029953602275406,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.8917531427836975e-06,
+    0.00015004458828008592,
+    0.0014269993782679046,
+    0.002794639332774552,
+    0.0013704856809946282
+   ],
+   "joint_velocity": [
+    0.0005745493905640541,
+    0.015308844716844865,
+    0.19781620540073042,
+    0.3871552120562532,
+    0.1893856552405457,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0005097873890963477,
+    0.013889096601209136,
+    0.12948359923961753,
+    0.25396196908450025,
+    0.12473018650980527
+   ],
+   "linear_body": [
+    0.0012247632668111333,
+    0.002227937011451614,
+    0.0038087380965954425
+   ],
+   "angular_body": [
+    0.0,
+    0.00021924840741402766,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.67478,
+   0.79919
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0003148612648853068,
+   -0.05869857142857145,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.02859,
+    0.00283
+   ],
+   "planner_step": [
+    0.00083,
+    -0.00457,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.03490671281581485,
+   "base_height_m": 0.17662789743589738
+  },
+  "recording_sha256": "8480b8b27f1a0363d62a65211067d5814a3f65f12899a518da2a7e6bf9515b52",
+  "reference_sha256": "ddd6bec272e4dd0e811fcf919e93405f95a9cb4b822f276fe0e58cbe35c7bbef",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010685098256844022,
+    7.553182161250795e-05,
+    0.001218015447892652,
+    0.0025076791987943057,
+    0.001292158985435666,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.677153610002166e-05,
+    7.67639251408509e-05,
+    0.0012714800309510147,
+    0.0024628228846278336,
+    0.001193309865571473
+   ],
+   "joint_velocity": [
+    0.009934193418627389,
+    0.005827538992736033,
+    0.11465107275083297,
+    0.2359368667215872,
+    0.12144809002609099,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00782704921105322,
+    0.0065854262997355915,
+    0.11533498395675776,
+    0.22322243293547706,
+    0.10803297328179086
+   ],
+   "linear_body": [
+    0.000882287443472589,
+    0.0011386290012213385,
+    0.0013993501924423764
+   ],
+   "angular_body": [
+    0.0005145410685635498,
+    0.00042885469162571666,
+    0.005470522401624117
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.73859,
+   0.86792
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005543683650770379,
+   0.016511807435824734,
+   0.6047906447869551
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.02859,
+    0.00283
+   ],
+   "planner_step": [
+    -8e-05,
+    0.00465,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.034906645468111105,
+   "base_height_m": 0.17663779487179487
+  },
+  "recording_sha256": "188f540f2171a339dedd7a311c6d898c7f10cc30cd685dbb083dc71cfbdb20b2",
+  "reference_sha256": "8d0f7bbe45bc9bce4bf1f0dab695f00db1a8946d16f25b12b0c117e1f43e02d9",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010787099646281307,
+    5.773148116867154e-05,
+    0.0012555828958402623,
+    0.0024180336120376675,
+    0.0011638221011242456,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.59732140651945e-05,
+    6.59674457491927e-05,
+    0.0012168924430874903,
+    0.002494088842474291,
+    0.0012800250973981884
+   ],
+   "joint_velocity": [
+    0.010029741246031431,
+    0.004766850083477424,
+    0.11568414392022047,
+    0.22304159905416962,
+    0.10747531577343789,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007785941297879263,
+    0.005588165140438856,
+    0.11013179387577081,
+    0.22618579507824677,
+    0.11629598156757051
+   ],
+   "linear_body": [
+    0.0008346229270539332,
+    0.0011238714662485186,
+    0.001100898275515411
+   ],
+   "angular_body": [
+    0.0005247763038648681,
+    0.00042861492372766756,
+    0.0054704457239308155
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.79532,
+   0.8104
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004078846504597176,
+   0.01457188472707857,
+   -0.6047906447869551
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03573245382992474,
+   "base_height_m": 0.18487000000000006
+  },
+  "recording_sha256": "a7407d55a35c65a1d0c912713130b057802188db419d427ba4798449cddde3aa",
+  "reference_sha256": "e9a93f84c1e418b0fc823ceff620cfe0bd2fa596950f3951b3365c9a7dbc02f6",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.7755575615628914e-17,
+    5.551115123125783e-17,
+    1.6653345369377348e-16,
+    8.881784197001252e-16,
+    1.6653345369377348e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.85722573273506e-17,
+    1.5612511283791264e-17,
+    3.3306690738754696e-16,
+    5.551115123125783e-16,
+    2.220446049250313e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.6831499999999991,
+   0.7639
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490185045359473,
+   "base_height_m": 0.18401174358974356
+  },
+  "recording_sha256": "561a59f93153d373507f4f5b4452ed7a0d539b4a971e77d155649e03965de99c",
+  "reference_sha256": "6abe5422e75e0b53cb5eb63850d7154863106e566980da672fff09ae774a8483",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    6.7857659504496236e-06,
+    0.00017145678568523693,
+    0.0030612599060611837,
+    0.006010327942970571,
+    0.002954097256819225,
+    3.200447752460439e-16,
+    1.2881266913266768e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.6669264440226466e-06,
+    0.00015723258037666983,
+    0.00266971526683014,
+    0.0051318152106652245,
+    0.002471683872694495
+   ],
+   "joint_velocity": [
+    0.0005753710737098265,
+    0.01494268161166984,
+    0.28147970163901365,
+    0.5553170384353154,
+    0.27423931242963545,
+    6.4018582627671645e-15,
+    0.00010637932634393883,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000519327039432327,
+    0.013704647648675967,
+    0.23898727372855674,
+    0.45875485695657864,
+    0.22070791177698115
+   ],
+   "linear_body": [
+    0.0021812327246563375,
+    0.0024226754476273037,
+    0.007066708585122401
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.54119,
+   0.63265
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07311756352737026,
+   0.014102619047619058,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490410790098081,
+   "base_height_m": 0.18410738461538456
+  },
+  "recording_sha256": "4d26e7ea793c29d106bd6b587e7adcd537fbb7d210ab713271480ff08a0d856a",
+  "reference_sha256": "72cc973bd874f552d70784fabb69cd4879662cb8895c9ebc02097afa468e4807",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    7.433227179323593e-06,
+    0.00019260635739063285,
+    0.0032164642419851754,
+    0.0061577091547725124,
+    0.002947877166382022,
+    1.8177117106610953e-06,
+    1.4548966953860819e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.345970986932523e-06,
+    0.00019930898555584254,
+    0.002816189297201989,
+    0.005476088076299516,
+    0.002670408425533905
+   ],
+   "joint_velocity": [
+    0.0006709474004303719,
+    0.017795929189784322,
+    0.29898767334951354,
+    0.5712938728963712,
+    0.2728920705995569,
+    0.00014044968491744127,
+    0.00010071048115878799,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0006807078949506845,
+    0.017171610523443452,
+    0.2508465000110216,
+    0.4877033711441509,
+    0.23794396747969182
+   ],
+   "linear_body": [
+    0.0029884165871681113,
+    0.0028993295204289755,
+    0.0077951889702392654
+   ],
+   "angular_body": [
+    0.0,
+    0.00022918894029047148,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.5102,
+   0.60232
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07239289808329395,
+   0.01413595238095238,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.03490328701102224,
+   "base_height_m": 0.18406799999999998
+  },
+  "recording_sha256": "404ccde588ca3aa9d6e9ef637a7d9c0681282964fa9bdf5e69d3036524296b94",
+  "reference_sha256": "060608540e024f20b8f5b10ed6d84446e0d938f749ce8ed4bcec2cdc4cd59581",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    8.539496273867716e-06,
+    0.00020216082539732346,
+    0.003791760128161064,
+    0.00733418008433323,
+    0.0035444672547675195,
+    3.200447752460439e-16,
+    1.112952239521181e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.1237530941700605e-05,
+    0.00029491899356877226,
+    0.0028223209577952447,
+    0.005416791880719113,
+    0.0025987181392613384
+   ],
+   "joint_velocity": [
+    0.0006703994861028032,
+    0.01749507889959509,
+    0.3487061437427008,
+    0.6758457571533717,
+    0.3272876659847063,
+    6.4018582627671645e-15,
+    7.952213026314146e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0009871603792459688,
+    0.025708784537866427,
+    0.2428182022281288,
+    0.4661643697718156,
+    0.22369749647977968
+   ],
+   "linear_body": [
+    0.0024895521933103377,
+    0.0034527588694018615,
+    0.008464171259072803
+   ],
+   "angular_body": [
+    0.0,
+    5.907824765001592e-05,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.43253,
+   0.47028
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00025781930289624547,
+   0.08708880952380954,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": 0.034904415735145654,
+   "base_height_m": 0.1841832820512821
+  },
+  "recording_sha256": "f2d78f03e05b57a5d0063926f34bebcd4f5308594f2a933cb47dce6186780d7f",
+  "reference_sha256": "bd923441482ba4e59020b4fc29a9c9e87a35ce7a453c4a4a83a181726d6d35ff",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    9.218104300708814e-06,
+    0.00022729075108966708,
+    0.002845664229600561,
+    0.005552100129186498,
+    0.0027093575113047445,
+    1.1302813165916063e-06,
+    1.2261072580160446e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    7.0650172225618345e-06,
+    0.00015084564776035556,
+    0.0021119695162091674,
+    0.004118186992531366,
+    0.0020094981801489975
+   ],
+   "joint_velocity": [
+    0.0007637867279463949,
+    0.019696595328669055,
+    0.25348050106759673,
+    0.4956633502940876,
+    0.24242922258634816,
+    9.368744119137006e-05,
+    0.00010278162823370965,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0006057167234916649,
+    0.013731916009159267,
+    0.19423163385806738,
+    0.3801597399257668,
+    0.18617802642937523
+   ],
+   "linear_body": [
+    0.0016327874080226143,
+    0.00253323035629649,
+    0.00537488892437608
+   ],
+   "angular_body": [
+    0.0,
+    0.0001134200471500938,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.3222,
+   0.54184
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0005222177746110041,
+   -0.05879404761904758,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.02781,
+    0.0028
+   ],
+   "planner_step": [
+    0.00082,
+    -0.00445,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.0349071651798156,
+   "base_height_m": 0.18379399999999996
+  },
+  "recording_sha256": "2a438e9b771cd291bfd82e8b4cbd9e7b6ddcbb2fd9849d0835669eaef1344f0e",
+  "reference_sha256": "a9df0f8f9f2d6ff93897fd732cc6ecddc9912cabe41f1cabb44f4a52149a95ee",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010639252090212826,
+    0.0002536863969179565,
+    0.003342145335412939,
+    0.0065689468101759185,
+    0.0032298151289403623,
+    6.338779190162955e-07,
+    1.4689751450862328e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.499442184112898e-05,
+    0.00019065588417516385,
+    0.002808500276528938,
+    0.00535812962885986,
+    0.0025578948821280124
+   ],
+   "joint_velocity": [
+    0.009872872510484153,
+    0.022577753097670517,
+    0.3087266495854072,
+    0.6077272588297948,
+    0.2992385402532325,
+    4.966095549279957e-05,
+    0.00012410406898613803,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007710121145726555,
+    0.01642679530021263,
+    0.2447277439245869,
+    0.466834515887515,
+    0.2229341996364311
+   ],
+   "linear_body": [
+    0.00262140252239516,
+    0.003383312811919847,
+    0.008124998776822817
+   ],
+   "angular_body": [
+    0.0005529618141897811,
+    0.0004564380577969624,
+    0.00545387797946672
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.4339,
+   0.6235
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005739011852140207,
+   0.016354962483649017,
+   0.6047902280638418
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   1,
+   1
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": 2.0,
+  "walk_com_height_m": 0.221,
+  "pivot": {
+   "offset_body_xy": [
+    0.02781,
+    0.0028
+   ],
+   "planner_step": [
+    -9e-05,
+    0.00452,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": 0.0349069359200759,
+   "base_height_m": 0.1837891794871795
+  },
+  "recording_sha256": "2218c1233bce46696790ed5a154fa7b1ed4ff308aed8e1fefab15a70f0a3e0f1",
+  "reference_sha256": "a4e65be8e5f259b08562040d0c33177b2a0cac371646e9f2fb5eba472c1a70ca",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010879208097807648,
+    0.00016494827248234563,
+    0.003288117628629489,
+    0.006271440035849983,
+    0.002986976748709193,
+    1.1299300922970596e-06,
+    1.4548966953860819e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.668970918375535e-05,
+    0.00016075648165047622,
+    0.002832550044050358,
+    0.005559332403639105,
+    0.0027293224096637154
+   ],
+   "joint_velocity": [
+    0.010147255255356221,
+    0.013853964200632115,
+    0.30354789899334816,
+    0.5791810069692834,
+    0.27597810268446454,
+    9.635352705459481e-05,
+    0.00010071048115878799,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007841078428996616,
+    0.013879012382651096,
+    0.2541514597595326,
+    0.4987314183821366,
+    0.2448129295423882
+   ],
+   "linear_body": [
+    0.0025854924388187097,
+    0.0025748436825127445,
+    0.00738740905619609
+   ],
+   "angular_body": [
+    0.0005404169114735792,
+    0.00044336626406759526,
+    0.005436173803008769
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.51899,
+   0.54566
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004015468033868004,
+   0.014291393997856297,
+   -0.6047902397992554
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.12119622916578819,
+   "base_height_m": 0.17900999999999997
+  },
+  "recording_sha256": "5d19a7e9485740f874398881f1ac57786919de165a32a13ce4662a47b9e74ea4",
+  "reference_sha256": "8f446262fd1b3c91ff1608fdd66dc7e60e286cf5774594f0ca6ca592ad7b7c94",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.1796119636642288e-16,
+    4.163336342344337e-17,
+    9.992007221626409e-16,
+    0.0,
+    4.996003610813204e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.551115123125783e-17,
+    5.204170427930421e-18,
+    6.661338147750939e-16,
+    2.220446049250313e-15,
+    4.440892098500626e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.02646,
+   1.0994599999999979
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.17808184615384615
+  },
+  "recording_sha256": "ed817593ffdbf4d7eaa88933d87ab2175a0ab536152873fed717774a570f82d8",
+  "reference_sha256": "49bfd6cd8b964a89de58335ed4c63354d670ed654422091d3055898e88baedc1",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    7.277740533286758e-06,
+    5.276163128692259e-05,
+    0.001128772473739777,
+    0.002139822244863686,
+    0.0010199217188692786,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    7.704312715636219e-06,
+    5.767342580767252e-05,
+    0.0011523241912163465,
+    0.002174016809287733,
+    0.0010286084436963115
+   ],
+   "joint_velocity": [
+    0.0005864890141913389,
+    0.0042336812296343675,
+    0.10386742747590319,
+    0.19772639490181196,
+    0.09470956223530436,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0005855657319145687,
+    0.004679300717402762,
+    0.10448657319553208,
+    0.1969040987149696,
+    0.09300694283342294
+   ],
+   "linear_body": [
+    0.0005268531997125101,
+    0.0010443392986476576,
+    0.001202855106078527
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.92245,
+   0.97842
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07251154950391667,
+   0.01445309523809526,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.17813492307692305
+  },
+  "recording_sha256": "6739c3ea3fd236349a105dd310ec07ca6c843a849aa7b14567afe289fa4bab14",
+  "reference_sha256": "92dbd6d3b35685988a07a2baeacf36a074aec24fc5dfc4b44bbc60730392a9ae",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    7.330118589170155e-06,
+    5.3274363166858936e-05,
+    0.0011299741184330062,
+    0.002126492680522284,
+    0.00100236998391083,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    7.932324750736557e-06,
+    5.6945170144641795e-05,
+    0.0011471086985870196,
+    0.0021747135464830194,
+    0.001038254995787129
+   ],
+   "joint_velocity": [
+    0.0005810407061641161,
+    0.004250570812233992,
+    0.10441461140271005,
+    0.19593317261245188,
+    0.09202630887966706,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0006037393240578151,
+    0.004666393389940196,
+    0.10366022174358965,
+    0.1971714634287847,
+    0.09450035691146219
+   ],
+   "linear_body": [
+    0.0005334739025547112,
+    0.0010000129990404558,
+    0.0011916129252301747
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.94164,
+   0.99887
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07218778057193903,
+   0.014463095238095261,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.17809492307692307
+  },
+  "recording_sha256": "73b4ee396ef241f62298e0ac98e88c83d1c8d6fa147a9f2bf7d136487e3b5a08",
+  "reference_sha256": "8c85fa0a59a4471eefa81f4563ec8df1859f25f9a0602ac2c1efa938247440d2",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    8.773265059085924e-06,
+    6.23635540083459e-05,
+    0.001127371708980201,
+    0.002129079640066445,
+    0.0010034828834687584,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.344858640310356e-06,
+    6.714965270655958e-05,
+    0.0011781699215130709,
+    0.0022329950105144584,
+    0.0010549504491924144
+   ],
+   "joint_velocity": [
+    0.000694336626850732,
+    0.005048719364412506,
+    0.1030492866015554,
+    0.1946077971725795,
+    0.09170581541231464,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000768139697745813,
+    0.005458287176252135,
+    0.10654446070748827,
+    0.2020341508070991,
+    0.09552223107144149
+   ],
+   "linear_body": [
+    0.00044087510626234183,
+    0.0009690327288278571,
+    0.0012022073501544482
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.86158,
+   0.88995
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00010690202662133234,
+   0.08747523809523815,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.17813394871794871
+  },
+  "recording_sha256": "bb8cc6bd3f76c7d3997918d6447caa21e803c4a9346d5f63a9e00e307bba46e9",
+  "reference_sha256": "43267d2f51d100f71c99c1aaf551c3e3b3d59a64e9e499a142561bb5778ab4bf",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.2364960298086407e-05,
+    9.331559254483332e-05,
+    0.0011763542372828974,
+    0.0022362428197529975,
+    0.0010620162356170298,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2247476346601918e-05,
+    0.0001015008236836541,
+    0.001158626719058598,
+    0.002199730383616525,
+    0.0010423063768837996
+   ],
+   "joint_velocity": [
+    0.0010475674473059244,
+    0.007955018425581602,
+    0.11096469897235836,
+    0.2112289571018167,
+    0.10045168687673427,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.001069608352125697,
+    0.008956266320188588,
+    0.10493594436176618,
+    0.19943899395204248,
+    0.09466980101196489
+   ],
+   "linear_body": [
+    0.0004118192717785039,
+    0.0012390822391638023,
+    0.0014291892693365452
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.82023,
+   0.9266
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00020534967623760044,
+   -0.058588809523809494,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": {
+   "offset_body_xy": [
+    0.04044,
+    0.00334
+   ],
+   "planner_step": [
+    0.00107,
+    -0.00648,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.122173964441608,
+   "base_height_m": 0.17780666666666664
+  },
+  "recording_sha256": "f189f1d66582f1360d694deb308d85f29b1ca8b1a59bc1192ad816ac2cf2c871",
+  "reference_sha256": "4015f282dac0cf8fa7ebec2776c0847187eb7d4210eaaa97d4043cc002a65cdb",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.0001083368643106706,
+    6.621274218420916e-05,
+    0.0010934594328065256,
+    0.0021655484377113908,
+    0.0010752732094441058,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.966819612046783e-05,
+    7.215415526967631e-05,
+    0.0011858478084154753,
+    0.0021845084504158643,
+    0.0010039178639123668
+   ],
+   "joint_velocity": [
+    0.01005499349559119,
+    0.005684632019632186,
+    0.10110899286986433,
+    0.2003201304269703,
+    0.09944855776783772,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008136213805118255,
+    0.006256369989896552,
+    0.10756046152479658,
+    0.19791976531322222,
+    0.09088051879356368
+   ],
+   "linear_body": [
+    0.0006080987655694684,
+    0.0011717217658467327,
+    0.00118049309233821
+   ],
+   "angular_body": [
+    0.0007986566862573571,
+    0.0004442916602644285,
+    0.00552097009686106
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.89125,
+   0.97844
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005872453737359797,
+   0.016890002304415837,
+   0.6006540154004429
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   -0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.212,
+  "pivot": {
+   "offset_body_xy": [
+    0.04044,
+    0.00334
+   ],
+   "planner_step": [
+    -1e-05,
+    0.00657,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.122173964441608,
+   "base_height_m": 0.17781866666666665
+  },
+  "recording_sha256": "b20a1c1b6425a47007df4c635132f9d542b0ee2245f35ae760f3a663e1304c84",
+  "reference_sha256": "3af28e11a6533ad12937d08e04ac1d99665c8d5c17f04152881b7c8ec9b07bd2",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010578984272170371,
+    5.889476799763652e-05,
+    0.0011764049649402625,
+    0.0021467238297006386,
+    0.0009737616917152679,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.59864606048511e-05,
+    6.920153414468304e-05,
+    0.0011128357384605617,
+    0.0021903677348262154,
+    0.0010804008242963478
+   ],
+   "joint_velocity": [
+    0.009859271880820662,
+    0.004863184804277058,
+    0.10822898058801816,
+    0.19780398115977987,
+    0.08986798082698572,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007769058399077579,
+    0.005958176168667085,
+    0.10043995779113964,
+    0.19829751289135095,
+    0.09810384197640214
+   ],
+   "linear_body": [
+    0.0005805045039957549,
+    0.0010882722491056772,
+    0.001134734609509588
+   ],
+   "angular_body": [
+    0.0007986566862573571,
+    0.0004442916602644285,
+    0.00552097009686106
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.91233,
+   0.95412
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004170573502159496,
+   0.014500771602417367,
+   -0.6006540154004429
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.12119622916578819,
+   "base_height_m": 0.18618
+  },
+  "recording_sha256": "de8b01e2a36dff5c2fc40b0a7e317601663dfce3a5996a2defb1163105554d6a",
+  "reference_sha256": "7422c3ec4d10d0954d1b76347b5d1cab9e0df4eea17f202d72d7f29183981249",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    6.938893903907228e-18,
+    1.249000902703301e-16,
+    1.2212453270876722e-15,
+    4.440892098500626e-16,
+    2.7755575615628914e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.85722573273506e-17,
+    1.3877787807814457e-17,
+    5.551115123125783e-16,
+    0.0,
+    6.661338147750939e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.81937,
+   0.90774
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.18527061538461537
+  },
+  "recording_sha256": "a2f2d56403d86a1d0280e46dd2b3f35aaebe68bd65b610ab3221ee3a92f12dd6",
+  "reference_sha256": "31a45a84519e8a3f29762988e3b4ef2229251e89eb93482bb71386546b57c7f9",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.0182959557523766e-05,
+    7.997743592265505e-05,
+    0.001903880981665463,
+    0.0036466454780741996,
+    0.001748256444371331,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.294977494983254e-06,
+    7.094113641985052e-05,
+    0.0015520044689712076,
+    0.0029433093797631175,
+    0.0013954186873987413
+   ],
+   "joint_velocity": [
+    0.0008401850145375959,
+    0.006732869743076612,
+    0.17707113647151546,
+    0.34029956586704935,
+    0.16377990139702492,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000750564212584934,
+    0.005955933109397227,
+    0.14055369631965361,
+    0.2658636060064095,
+    0.12568601351045539
+   ],
+   "linear_body": [
+    0.0006946667116231793,
+    0.001367783012174718,
+    0.0032539429337167486
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.69852,
+   0.76973
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07254637274770095,
+   0.014209285714285737,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.1852942564102564
+  },
+  "recording_sha256": "da99c8a8be87568c7aaddce0957a4eff1135503bd7722aceb956c7407f76f9ba",
+  "reference_sha256": "2614a4c6c9dd575a99f09ea55588ce2d9dfe18240d0646bdd1fafe2c2c368cd2",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.1282384828446634e-05,
+    8.753266166228242e-05,
+    0.0017419286068426658,
+    0.003313171540020435,
+    0.001575370072778685,
+    9.102873262932881e-07,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.445273645795055e-06,
+    6.920939189323036e-05,
+    0.0015812193040642753,
+    0.003041011641838371,
+    0.0014656942872668295
+   ],
+   "joint_velocity": [
+    0.0008956396809549169,
+    0.006949309571494893,
+    0.1592136957454372,
+    0.30173182176658997,
+    0.14286743006877836,
+    7.79257026426946e-05,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0008105751139851294,
+    0.0059020427385186765,
+    0.14370884649473376,
+    0.27751539810671527,
+    0.13435772014968564
+   ],
+   "linear_body": [
+    0.0006529405257457069,
+    0.0013382355789601768,
+    0.003059876349107231
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.72015,
+   0.79277
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07214817023128518,
+   0.014207619047619071,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.18526933333333334
+  },
+  "recording_sha256": "001a25dae58f0363427b43a4ef7927447ba97479288ed5bc57d8a3be57af9d67",
+  "reference_sha256": "7faf98d8292dd561098452bf0c7e394064d08af5fa2b6712f29d12d4754f34e3",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.576034303000967e-05,
+    0.00012713364318638081,
+    0.0026094114830981724,
+    0.004971323777804616,
+    0.0023616987556032247,
+    8.478745913017052e-07,
+    1.0475995169614113e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.1023398430725148e-05,
+    0.00016803169629486182,
+    0.0023979257145689595,
+    0.004536502306148835,
+    0.0021375164841883547
+   ],
+   "joint_velocity": [
+    0.001273916390662314,
+    0.010354895730566853,
+    0.23678881823641132,
+    0.45059036199861396,
+    0.21375073732352595,
+    6.961856053579349e-05,
+    9.40027724486921e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.001763775681708136,
+    0.014374699941560013,
+    0.21963435887225802,
+    0.41533777788965454,
+    0.1955954553968436
+   ],
+   "linear_body": [
+    0.0005565422566552921,
+    0.002231636739811664,
+    0.007419347046593251
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.61559,
+   0.659
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0001458739858439866,
+   0.0872145238095238,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.1221753947296445,
+   "base_height_m": 0.1853416923076923
+  },
+  "recording_sha256": "e03b33fe0569248a0af193672c2fc62dd9be0af1d4e4a1716daa08a5c7894420",
+  "reference_sha256": "803cf0d991399bc2796a1351ec7e0a5dbbcfdc2a928501f25c13a2ea23184e45",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.8466686774882005e-05,
+    0.00023185007698121396,
+    0.0026441749065991937,
+    0.005087444911397791,
+    0.0024404185182899866,
+    1.035647512499481e-06,
+    4.4112603979544045e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.4766873979571107e-05,
+    0.00019907608811724033,
+    0.0021019096613045262,
+    0.0040204609410243435,
+    0.001920952272059674
+   ],
+   "joint_velocity": [
+    0.00270878114548252,
+    0.022245110402798852,
+    0.25526469960442094,
+    0.4917119718873529,
+    0.23614512519699057,
+    9.017052112244363e-05,
+    3.0018886201864448e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0022874955653553815,
+    0.018664866039216958,
+    0.18911127923187487,
+    0.36163411263306916,
+    0.17272669842434143
+   ],
+   "linear_body": [
+    0.0006956426703782876,
+    0.003262250123257697,
+    0.006376859983252938
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.56314,
+   0.70324
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0002668702907420014,
+   -0.058784285714285726,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": {
+   "offset_body_xy": [
+    0.03977,
+    0.00331
+   ],
+   "planner_step": [
+    0.00105,
+    -0.00637,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.12217398394179586,
+   "base_height_m": 0.1850010769230769
+  },
+  "recording_sha256": "405e8601ca06544582fe1146b583ec7670793f4e8f2e37aded820a43d65d4bd8",
+  "reference_sha256": "7e54a9b332f9c1deb7307bb6d36bdab26d4681c03567dc38bb6ef830133fc065",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.0001092729352043076,
+    8.812721712299672e-05,
+    0.0018833929761018304,
+    0.0036903598382969738,
+    0.0018113169150233892,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.12920157240041e-05,
+    8.280731790845356e-05,
+    0.0015758636218937366,
+    0.002945741035180601,
+    0.001374419080644003
+   ],
+   "joint_velocity": [
+    0.010134991041496174,
+    0.0077631287016554406,
+    0.17617129705005752,
+    0.34534603329670127,
+    0.16959673738970438,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008316651375276037,
+    0.007325913695748814,
+    0.14314769977752817,
+    0.26755360194914624,
+    0.12485066437248349
+   ],
+   "linear_body": [
+    0.0007911818121478006,
+    0.001519444017960454,
+    0.002760336696355464
+   ],
+   "angular_body": [
+    0.0008002692609686419,
+    0.0004321692993305717,
+    0.005490087741512652
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.6567,
+   0.76799
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005956239112572953,
+   0.016655896974394343,
+   0.6006540054734858
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   -0.5,
+   0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -7.0,
+  "walk_com_height_m": 0.218,
+  "pivot": {
+   "offset_body_xy": [
+    0.03977,
+    0.00331
+   ],
+   "planner_step": [
+    -1e-05,
+    0.00646,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.12217383417829848,
+   "base_height_m": 0.18500071794871797
+  },
+  "recording_sha256": "32ac1627e31584c8e3fae66a768f5babda4b1f234bf43a68c2f2b371ef225466",
+  "reference_sha256": "d5af31b728314abddd6ce8254c81b66df1a71ea01a388c3ca15c960d423561a0",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010842539055926548,
+    9.16144011836934e-05,
+    0.001898045049373409,
+    0.0035495357238782142,
+    0.0016525414402143617,
+    9.102873262932881e-07,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.60735160007106e-05,
+    7.724242397234557e-05,
+    0.0015723364134881792,
+    0.0030731900782754403,
+    0.0015035023445176341
+   ],
+   "joint_velocity": [
+    0.00999208532331512,
+    0.0069318094476029345,
+    0.17231183232864467,
+    0.32189940811132667,
+    0.14964561447545158,
+    7.79257026426946e-05,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007769276654966547,
+    0.006113352772708093,
+    0.1412858969922637,
+    0.27665357105203364,
+    0.1355784550206491
+   ],
+   "linear_body": [
+    0.0007373951115891927,
+    0.0015046118935999522,
+    0.0036728566490816395
+   ],
+   "angular_body": [
+    0.0007769462737122737,
+    0.0004372545049610722,
+    0.005526910274730897
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.68279,
+   0.73848
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.0041556558964175976,
+   0.01418960864503749,
+   -0.6006540253959565
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01656693342542337,
+   "base_height_m": 0.17563
+  },
+  "recording_sha256": "35a29b34eaf60ca2decc1e651f99a3154d966d6b8e848d494feacf26c4a922ce",
+  "reference_sha256": "4a853a549a6a00a69786b1bc043cba539af4652311efb843add8a8deed61227e",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    7.632783294297951e-17,
+    6.938893903907228e-17,
+    5.551115123125783e-16,
+    4.440892098500626e-16,
+    7.771561172376096e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.551115123125783e-17,
+    6.938893903907228e-18,
+    5.551115123125783e-16,
+    6.661338147750939e-16,
+    1.2212453270876722e-15
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   1.0288199999999996,
+   1.0912299999999993
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746018873340155,
+   "base_height_m": 0.17472876923076924
+  },
+  "recording_sha256": "4b993b33503a2d82c1c0ab0b845836f6dca29d85a9183e2891409777dbcb18d5",
+  "reference_sha256": "10aef6435c28186bae21c1a469c86e2d88df67e8bc9eb668980b973b992f56aa",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.838872066459521e-06,
+    5.448530455116678e-05,
+    0.0010900540019376519,
+    0.0021393935817330453,
+    0.0010544770466806499,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.000016563914202e-06,
+    5.802333673148148e-05,
+    0.0011179943038132846,
+    0.002178990147746507,
+    0.00106629991910817
+   ],
+   "joint_velocity": [
+    0.00027181068436486744,
+    0.004383803177856408,
+    0.10009937979615623,
+    0.1972957365715246,
+    0.09766854843024037,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00021074312198047653,
+    0.004722365475421689,
+    0.1014935000480115,
+    0.1974740659932172,
+    0.09642357382700514
+   ],
+   "linear_body": [
+    0.0007205522519046935,
+    0.0010607328015761683,
+    0.0011246617714614088
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.94223,
+   0.99824
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07304594942054111,
+   0.014457857142857179,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746018873340155,
+   "base_height_m": 0.17478066666666667
+  },
+  "recording_sha256": "b01a0b90dc5ea521f05224f5e9e8a8eb0f8cb8137feedb84ba2ba9f79abde3fc",
+  "reference_sha256": "f99cce22ebd1f7952553eb026d4aa66fca88cfd7d57c0653f15e80dadf5a3d74",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.723120366335872e-06,
+    5.529655117405784e-05,
+    0.001100174651989392,
+    0.002143761177411594,
+    0.0010479987240600956,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.191234764069511e-06,
+    5.858981295500943e-05,
+    0.0011144051968717064,
+    0.0021863808287946843,
+    0.0010786387806189651
+   ],
+   "joint_velocity": [
+    0.00025806415896471424,
+    0.004395199984283588,
+    0.10187676645963857,
+    0.19793692387160472,
+    0.09641682705810325,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0002507189721597536,
+    0.004805828158629028,
+    0.10075071825049323,
+    0.1981330509359199,
+    0.09804233823169899
+   ],
+   "linear_body": [
+    0.0006681600807818857,
+    0.0010510069616244703,
+    0.0011016622849159654
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.92615,
+   0.98185
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07262163097709347,
+   0.01445833333333335,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746018873340155,
+   "base_height_m": 0.17474523076923076
+  },
+  "recording_sha256": "fba7a187331b5e6cd15b7187c02453bce7fe0db9d7542461e42cb65652cd4c57",
+  "reference_sha256": "5685fd8e3992e86dc350afc370c59092b5a1b6961ed9d495166728d5e4dccad6",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.4106006959014536e-06,
+    6.34928471376756e-05,
+    0.0010953994667639588,
+    0.0021430885924373414,
+    0.0010487863444388255,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.540722676091019e-06,
+    6.772774797037929e-05,
+    0.001146191711388122,
+    0.0022439027413657664,
+    0.0010984478359639242
+   ],
+   "joint_velocity": [
+    0.0002558789939954745,
+    0.0052092911719799646,
+    0.1001721378960917,
+    0.1959763232057142,
+    0.09592717001839841,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00024244326093399705,
+    0.005551082702154018,
+    0.10367454609697212,
+    0.20305678972628588,
+    0.09940035908361418
+   ],
+   "linear_body": [
+    0.0005183989918411614,
+    0.0009562080457624693,
+    0.001179457163775006
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.85572,
+   0.88455
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00017221923130553992,
+   0.0874702380952381,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746018873340155,
+   "base_height_m": 0.1747848717948718
+  },
+  "recording_sha256": "cc188f191a1abdeef57c44d8caff70432e8c51cd9dd823458a91c9be67b12707",
+  "reference_sha256": "773da0813c88ca3d55b1b6e07e80492f806c48adb88572aed07b3a9a30665f28",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.641818648307086e-06,
+    9.638697217699843e-05,
+    0.001148267349923872,
+    0.002253447682546776,
+    0.001105901154738301,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.592875300440851e-06,
+    0.00010455732648336063,
+    0.001128225384230055,
+    0.0022137850461643118,
+    0.0010876163143438999
+   ],
+   "joint_velocity": [
+    0.00025765082336792386,
+    0.008103383897184426,
+    0.10848924816390344,
+    0.2130710709329316,
+    0.10460954059755609,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00027752978543248554,
+    0.009228923111762802,
+    0.10215426763432013,
+    0.2006144968858639,
+    0.09862963771105815
+   ],
+   "linear_body": [
+    0.0004425661305230989,
+    0.0012120640990442553,
+    0.0014193711807146962
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.81359,
+   0.92169
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00025709845001025517,
+   -0.058593571428571384,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": {
+   "offset_body_xy": [
+    0.03287,
+    0.00301
+   ],
+   "planner_step": [
+    0.00092,
+    -0.00526,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.017454095392905954,
+   "base_height_m": 0.17445087179487181
+  },
+  "recording_sha256": "486dd7ab2aa30f765036bcb34567b5fad65960c3a55019c3bd8da73fa732eb59",
+  "reference_sha256": "acccc9b8f66ac13bc6c918088544e089638e320fdc191d12d5c07cf488178d07",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010795289560065001,
+    6.768469062289066e-05,
+    0.0010652570881028408,
+    0.0021839335770356388,
+    0.0011215243572345827,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.771263458794349e-05,
+    7.61435708383201e-05,
+    0.001144867974571816,
+    0.0021793412293921494,
+    0.0010355777221854208
+   ],
+   "joint_velocity": [
+    0.010031874752702136,
+    0.005790304763062789,
+    0.09861580941963337,
+    0.20210208678496416,
+    0.10373062776963816,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007932546528195677,
+    0.006643076580685149,
+    0.10386489039389736,
+    0.1974841281709106,
+    0.09370228777236948
+   ],
+   "linear_body": [
+    0.0007063252291000413,
+    0.0011683062807285884,
+    0.0011398881234131596
+   ],
+   "angular_body": [
+    0.0005325061795144984,
+    0.00048459826716013113,
+    0.005575845811725191
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.87454,
+   0.9802
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005645128502984612,
+   0.01672145401498307,
+   0.6050694035160048
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   -0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.212,
+  "pivot": {
+   "offset_body_xy": [
+    0.03287,
+    0.00301
+   ],
+   "planner_step": [
+    -5e-05,
+    0.00534,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.017454095392905954,
+   "base_height_m": 0.17446148717948715
+  },
+  "recording_sha256": "b11147102c9aa5dc7d497d2218b3b484f2b90767b7bfd347c414f41342f4fbbc",
+  "reference_sha256": "2201026c32244f1a2093bf7cd67495cb4e81eec42d8ef339fa13d5e167fe1841",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010706962108566013,
+    5.9513500378938755e-05,
+    0.001137317677222318,
+    0.0021441478061912916,
+    0.001009222541033116,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.732828599691464e-05,
+    6.781216506693731e-05,
+    0.0010851171097147575,
+    0.002206981555667059,
+    0.001124308304137307
+   ],
+   "joint_velocity": [
+    0.009967037703217134,
+    0.004850104450757432,
+    0.10460248286610162,
+    0.1975135907792009,
+    0.09306340258620803,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007885251553792915,
+    0.005814337632219618,
+    0.09797299920747823,
+    0.19976833618755124,
+    0.10199148805919019
+   ],
+   "linear_body": [
+    0.0007454495746007452,
+    0.0011080603048318255,
+    0.0011402871248557466
+   ],
+   "angular_body": [
+    0.0005325061795144984,
+    0.00048459826716013113,
+    0.005575845811725191
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.91541,
+   0.93722
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004124603317151406,
+   0.014654715856231541,
+   -0.6050694035160048
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01656693342542337,
+   "base_height_m": 0.18275
+  },
+  "recording_sha256": "6c2bcf7373179f531d7b6cb0dafe90b4279a8a55140c9aad85e292d494e03e91",
+  "reference_sha256": "3b8d1cdcf49f3e4226806dd68629aaa2512a34e63db0da9c60a3c40fabde4aad",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.163336342344337e-17,
+    1.6653345369377348e-16,
+    4.440892098500626e-16,
+    0.0,
+    4.996003610813204e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    2.7755575615628914e-17,
+    2.42861286636753e-17,
+    2.220446049250313e-16,
+    1.1102230246251565e-16,
+    4.996003610813204e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.82229,
+   0.89807
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746018873340155,
+   "base_height_m": 0.18185738461538464
+  },
+  "recording_sha256": "8937de83480e47062c634147c4e164496c3284819c1b28126ea6a639e946fee7",
+  "reference_sha256": "fb3e5f6ea9dbc2ab88b67bc50788d198537bedc033842a79bae22f561d0e1cbe",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    2.8812107556936092e-06,
+    7.625494812473692e-05,
+    0.0017489109498081171,
+    0.0034160575339762704,
+    0.0016715975326954192,
+    3.200447752460439e-16,
+    9.102873263554385e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.7630963173881305e-06,
+    7.047982945381668e-05,
+    0.0015580718163596963,
+    0.00300664020083117,
+    0.0014549483594281196
+   ],
+   "joint_velocity": [
+    0.00020582052994251763,
+    0.0063261183355250074,
+    0.1602844834069415,
+    0.3142276129484283,
+    0.15439830029794666,
+    6.4018582627671645e-15,
+    7.792570264221313e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00024368945041112856,
+    0.006007958135309038,
+    0.14235600713856944,
+    0.27414241631715985,
+    0.13234602252998284
+   ],
+   "linear_body": [
+    0.0009799283324778243,
+    0.0012819777321687997,
+    0.002834529162148951
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.72269,
+   0.79317
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07309323087114578,
+   0.014198095238095263,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.01746008615778434,
+   "base_height_m": 0.1819091794871795
+  },
+  "recording_sha256": "8944a0ea8a8481b77bd68f3c9feb972a6cb3fc9f6c5f2ff8de94313012575f87",
+  "reference_sha256": "de6d4fae7fcaa3b3ab8dd05f4302e01176f29003c8e26a5f47ab3f2a80948a14",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.986909494843892e-06,
+    7.822134844238418e-05,
+    0.001892213330615522,
+    0.003664808285871872,
+    0.001775743731328236,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    3.406756985948626e-06,
+    7.32321621380388e-05,
+    0.001528725833011859,
+    0.0029809710869212725,
+    0.0014598545251617273
+   ],
+   "joint_velocity": [
+    0.00035330647516823425,
+    0.006608834406791308,
+    0.17619770226782547,
+    0.34042022668559474,
+    0.16451884606065723,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00020625728879085836,
+    0.006105748775420099,
+    0.1378343179545182,
+    0.26966770386375755,
+    0.13257030504056852
+   ],
+   "linear_body": [
+    0.0011282454170463447,
+    0.001288858915315289,
+    0.003033739013074542
+   ],
+   "angular_body": [
+    0.0,
+    8.096129516913702e-05,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.69987,
+   0.77069
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.07257743515296493,
+   0.014204523809523828,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.017459881006549927,
+   "base_height_m": 0.1818748205128205
+  },
+  "recording_sha256": "b3b48db40c84b9a1553a6663cf1c86922545c52d034aaa134ed89075067af54a",
+  "reference_sha256": "525c6f2e4ae209c3ffb881292bf1ea3ee3c2fc9b3f592f44b5e2ddfe4fd86b7e",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.7681468442372248e-06,
+    0.00012300361240754357,
+    0.002583048886767809,
+    0.004980250822225313,
+    0.0023986826194610225,
+    3.200447752460439e-16,
+    8.47874591298523e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.498179572232589e-06,
+    0.0001617509261458634,
+    0.0023154580829718883,
+    0.0044454222193066354,
+    0.0021321812513658764
+   ],
+   "joint_velocity": [
+    0.00027987386602765235,
+    0.010119932076058326,
+    0.23532873291125317,
+    0.4534468003566423,
+    0.21822278546226329,
+    6.4018582627671645e-15,
+    6.961856053691384e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000364867804901844,
+    0.014180640791026107,
+    0.21334928897132008,
+    0.40944626473988815,
+    0.19628574289748055
+   ],
+   "linear_body": [
+    0.0014084299965269876,
+    0.0021290402732887107,
+    0.00717130946558875
+   ],
+   "angular_body": [
+    0.0,
+    0.00018722483160981876,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.60784,
+   0.65215
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0002007821478453032,
+   0.08720952380952378,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.017459368128463888,
+   "base_height_m": 0.1819490256410256
+  },
+  "recording_sha256": "860a768f00be7e4e8666d877de5d6ea63effcb29a48d66cf97c6102be5c67857",
+  "reference_sha256": "c8bed1cad626f848cf2150c0ec360b3ccf841bd2712b93e0781afb07182501ff",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": false,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": false,
+  "rmse_per_component": {
+   "joint_position": [
+    5.1123626860549546e-06,
+    0.0002503164594611934,
+    0.0026918671808519785,
+    0.005215457812079348,
+    0.0025259785986427767,
+    3.200447752460439e-16,
+    1.0356475124729604e-06,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.539216762580525e-06,
+    0.0002118676800549551,
+    0.0021580540697072725,
+    0.004179662283914458,
+    0.0020233449718642734
+   ],
+   "joint_velocity": [
+    0.00045392719788423457,
+    0.023793650999875206,
+    0.2600067462040671,
+    0.5040482760476087,
+    0.24424951875905548,
+    6.4018582627671645e-15,
+    9.017052112150031e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.00046402308151670315,
+    0.019787808802165647,
+    0.1932495796643049,
+    0.37409763320317285,
+    0.18107817907263335
+   ],
+   "linear_body": [
+    0.0013344963295185228,
+    0.0034214382697976484,
+    0.00658647393460315
+   ],
+   "angular_body": [
+    0.0,
+    0.0001168444878701592,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.55406,
+   0.69713
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0003403502356353605,
+   -0.05878857142857141,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": {
+   "offset_body_xy": [
+    0.0322,
+    0.00298
+   ],
+   "planner_step": [
+    0.0009,
+    -0.00515,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.017454020588705,
+   "base_height_m": 0.1816018461538461
+  },
+  "recording_sha256": "90e1ed3e2e2552d428f84b76b6ab0dd9bcb58d4b96329ffcec3ebe5b2edae80f",
+  "reference_sha256": "c093dd9aee270b5fad8b1494e7a6c36517b94fcf6efff7de3a5745568c588e9f",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010715548176824258,
+    0.00010383565290814755,
+    0.0020005341852732117,
+    0.0039795619292901565,
+    0.001979620423378898,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.620844819702824e-05,
+    9.073758345123184e-05,
+    0.0015425109695087174,
+    0.002931150450096772,
+    0.0013933809978472912
+   ],
+   "joint_velocity": [
+    0.009956582904726858,
+    0.009096728363648601,
+    0.18607544708672263,
+    0.3703608295239543,
+    0.184325613885822,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0078017777004895416,
+    0.008121183025322434,
+    0.13991735473294914,
+    0.2660436096856685,
+    0.12657292492341146
+   ],
+   "linear_body": [
+    0.001210076716401733,
+    0.0017089817270913973,
+    0.003046922072421426
+   ],
+   "angular_body": [
+    0.0005266089171302855,
+    0.0004836355833579579,
+    0.005596507259517074
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.63521,
+   0.76985
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005739537688739318,
+   0.016488454889532503,
+   0.6050694005323021
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0.5,
+   0.5
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -1.0,
+  "walk_com_height_m": 0.218,
+  "pivot": {
+   "offset_body_xy": [
+    0.0322,
+    0.00298
+   ],
+   "planner_step": [
+    -6e-05,
+    0.00523,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.017453831115747095,
+   "base_height_m": 0.18160010256410256
+  },
+  "recording_sha256": "ff25a6bbe1e3ebae490dc801e10123629889ff28b061dccd70f560f11804fc41",
+  "reference_sha256": "fe98ac707044427a55a36debc6be0866f21c5b910800d6c067c440916f9a7cc7",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010815831297538281,
+    9.190910934784465e-05,
+    0.0018463141289923235,
+    0.0035054032887011878,
+    0.001660558300251648,
+    3.200447752460439e-16,
+    9.102873263554385e-07,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.689282569044292e-05,
+    7.378342839284532e-05,
+    0.0016103953841938978,
+    0.0032052453860713145,
+    0.0015963920091061796
+   ],
+   "joint_velocity": [
+    0.010042431371795548,
+    0.006782071600363701,
+    0.16775991106210453,
+    0.3184704731750203,
+    0.1508197674383085,
+    6.4018582627671645e-15,
+    7.792570264221313e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007870374250582126,
+    0.005754919071725419,
+    0.1455728034912426,
+    0.29017536452622605,
+    0.144757631476833
+   ],
+   "linear_body": [
+    0.0011118195848009642,
+    0.0014606818045694206,
+    0.003753282640792377
+   ],
+   "angular_body": [
+    0.000525835202089527,
+    0.00048797988354858145,
+    0.005575967455920238
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.68647,
+   0.71782
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004103146461054624,
+   0.014334619283831469,
+   -0.6050694044859718
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "stand",
+  "command": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.06887808567803363,
+   "base_height_m": 0.18080000000000007
+  },
+  "recording_sha256": "142e3e8f27993e3f9f988e331a117aa8029a3b9c053dbce9323089a316a93d33",
+  "reference_sha256": "c43a930615623b1f0abc08fbb5d1a0f3918aec90d958b80e2587ba809d3554e2",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    3.469446951953614e-17,
+    1.1102230246251565e-16,
+    3.3306690738754696e-16,
+    7.771561172376096e-16,
+    6.661338147750939e-16,
+    3.3306690738754696e-16,
+    1.1102230246251565e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    5.551115123125783e-17,
+    8.673617379884035e-18,
+    7.771561172376096e-16,
+    1.5543122344752192e-15,
+    6.661338147750939e-16
+   ],
+   "joint_velocity": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "linear_body": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.9338699999999992,
+   1.00763
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "forward",
+  "command": [
+   0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17988282051282053
+  },
+  "recording_sha256": "abc747bf8be0595dcd2b2fa68d8971dd62da30ed895a30658be8099a2094747d",
+  "reference_sha256": "396b0fe1f020f7d2518c3244fa02144e247fdba744cc287db80e87385c30d04e",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    4.916502038165071e-06,
+    5.345931435333563e-05,
+    0.00121825640657679,
+    0.0023608359461663097,
+    0.0011476639600748958,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.978603587930436e-06,
+    5.6916174823649184e-05,
+    0.001238850813567395,
+    0.0023835380078125984,
+    0.0011517408267088288
+   ],
+   "joint_velocity": [
+    0.00037718919591637616,
+    0.004221916272751993,
+    0.11229521932329255,
+    0.2185380710288524,
+    0.10667426968132204,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0004045204094885597,
+    0.0045846875106247305,
+    0.11258462088618387,
+    0.2163230734480999,
+    0.10438980966722182
+   ],
+   "linear_body": [
+    0.0006971542916381335,
+    0.0010411340996399692,
+    0.0012370100903354333
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.83341,
+   0.89512
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.07290010421978542,
+   0.014322619047619079,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "backward",
+  "command": [
+   -0.074,
+   0.0,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17992984615384616
+  },
+  "recording_sha256": "3d037affc49a6e9609f6083d4ebed79134fd27404862b8c7acf85bbc83a4c224",
+  "reference_sha256": "287e9a088aaee5ff2b6b09f64692445afae79ebed790f68dcca36d30596afacf",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    5.236230465427069e-06,
+    5.2164226466325555e-05,
+    0.0012228893157082367,
+    0.0023519611642205777,
+    0.0011336322232847348,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    4.212990208610265e-06,
+    5.751845241556232e-05,
+    0.0012334513999266302,
+    0.0023891810830497196,
+    0.0011622019199573536
+   ],
+   "joint_velocity": [
+    0.0003855699872538829,
+    0.004111347761309059,
+    0.11324959317490728,
+    0.21727121585936168,
+    0.1043731968760897,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.000321900023403992,
+    0.004666243538659555,
+    0.11164639202232551,
+    0.21696113117590524,
+    0.10590474388593434
+   ],
+   "linear_body": [
+    0.0005467729171587925,
+    0.0010378513030408984,
+    0.0011995347972833478
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.84094,
+   0.90153
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.0724884766213876,
+   0.014328095238095258,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "left",
+  "command": [
+   0.0,
+   0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17989641025641026
+  },
+  "recording_sha256": "426c00fdd8085a4627f2146f0029b25eed1ed5913d49a66d5caf1a88b94c21b0",
+  "reference_sha256": "115369594c1464d6ae41428810fc8751a4369ef5fe1c0738d72d81c2061ba187",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    5.54395863685485e-06,
+    7.51033131034408e-05,
+    0.0015403092244880927,
+    0.002959688523595594,
+    0.001419964126992237,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    6.703326954150101e-06,
+    7.926657704473037e-05,
+    0.0014675866839906626,
+    0.0028139170892108357,
+    0.001348612650090088
+   ],
+   "joint_velocity": [
+    0.000447134515520031,
+    0.006155287719413493,
+    0.14023567041952434,
+    0.26931199993850835,
+    0.12912301865578973,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0005852007048597255,
+    0.006666031614998417,
+    0.1339488777840288,
+    0.2567306870850576,
+    0.12299871242486045
+   ],
+   "linear_body": [
+    0.0005803626029612902,
+    0.001260896308059764,
+    0.003053477458243683
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.75033,
+   0.78479
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00015242452318722544,
+   0.08734476190476187,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "right",
+  "command": [
+   0.0,
+   -0.074,
+   0.0
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": null,
+  "features": {
+   "base_pitch_rad": -0.0698141206512237,
+   "base_height_m": 0.17994717948717945
+  },
+  "recording_sha256": "bb0970cb8f34a600400424c7386880eefdb11928f50d02ec5f432b8b055a456f",
+  "reference_sha256": "3243a69be0768116633212f5744d654f1df815741cc6910e4a5835d5aa302c03",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    1.0083554684616928e-05,
+    0.00014463310649353298,
+    0.001963651296855667,
+    0.0037854676727107723,
+    0.0018214779798327813,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    9.766992074976032e-06,
+    0.00013612856449094748,
+    0.0013699920678002817,
+    0.002629542777970222,
+    0.0012619746226151308
+   ],
+   "joint_velocity": [
+    0.0008912971191129719,
+    0.013195211050651386,
+    0.18312400573174684,
+    0.35342251172794853,
+    0.17029282687078834,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0008959325138456559,
+    0.012537644990630679,
+    0.12426836497749005,
+    0.2388938284113486,
+    0.11483400457808343
+   ],
+   "linear_body": [
+    0.0007208888352715825,
+    0.001992339366822166,
+    0.003397706668766741
+   ],
+   "angular_body": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.70495,
+   0.82434
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.00025735121592505633,
+   -0.0587047619047619,
+   0.0
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "turn_left",
+  "command": [
+   0.0,
+   0.0,
+   0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.0364,
+    0.00316
+   ],
+   "planner_step": [
+    0.00099,
+    -0.00583,
+    0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981362996571343,
+   "base_height_m": 0.17960938461538464
+  },
+  "recording_sha256": "125953d7160f6a46f1b69fcff10260b4429744b243167a8bdf3fd0dda93795ef",
+  "reference_sha256": "3019b640c9cebb3a2ea77406f8b4a1782a67401a4b195800ff00344a23965bf6",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.00010726549289200482,
+    6.475818320923383e-05,
+    0.0012108064085224093,
+    0.002433226579942079,
+    0.0012249198855129768,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.862040884582333e-05,
+    7.289670267930514e-05,
+    0.0012718477191694518,
+    0.0024021086225511183,
+    0.0011322800833767175
+   ],
+   "joint_velocity": [
+    0.009960089575254178,
+    0.0053976227229392175,
+    0.11297407514674378,
+    0.22695143442010893,
+    0.11417444466749248,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.008048222096878575,
+    0.006333478705157787,
+    0.11556226084338309,
+    0.2180505048458365,
+    0.10272050645771749
+   ],
+   "linear_body": [
+    0.0007504484265996244,
+    0.0011691976822735249,
+    0.0012610591762572095
+   ],
+   "angular_body": [
+    0.0005692264835720412,
+    0.0003923464707423502,
+    0.005489597645361187
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.77836,
+   0.8846
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   0.005803800693074896,
+   0.016680077397426173,
+   0.6036891794234641
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ },
+ {
+  "e": [
+   0,
+   0
+  ],
+  "condition": "turn_right",
+  "command": [
+   0.0,
+   0.0,
+   -0.6
+  ],
+  "walk_trunk_pitch_deg": -4.0,
+  "walk_com_height_m": 0.215,
+  "pivot": {
+   "offset_body_xy": [
+    0.0364,
+    0.00316
+   ],
+   "planner_step": [
+    -3e-05,
+    0.00591,
+    -0.162
+   ],
+   "installed_planner_geometry_verified": true
+  },
+  "features": {
+   "base_pitch_rad": -0.06981362996571343,
+   "base_height_m": 0.1796206666666667
+  },
+  "recording_sha256": "1ca037191f3316e377bb2bb5e9073085704c5ce67eb823b7afc4598c38cbdc72",
+  "reference_sha256": "093e0d3efd77e47effd9444ebcc9c030b34f5fedcb085c8d2c7718478722c1fb",
+  "criteria": {
+   "positive_knees": true,
+   "joint_position_fit": true,
+   "joint_velocity_fit": true,
+   "linear_fit": true,
+   "angular_fit": true,
+   "contact_fit": true,
+   "command_tracking": true,
+   "joint_limits": true
+  },
+  "all_pass": true,
+  "rmse_per_component": {
+   "joint_position": [
+    0.0001077193182053874,
+    5.80301720505957e-05,
+    0.001269331746740336,
+    0.0023742579659212946,
+    0.0011083291285216108,
+    3.200447752460439e-16,
+    6.41195849244388e-16,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    8.594675721047472e-05,
+    6.746468495535305e-05,
+    0.001211575632965279,
+    0.0024206861962851574,
+    0.0012119888352970269
+   ],
+   "joint_velocity": [
+    0.010001297484005798,
+    0.004725075948909917,
+    0.1168676612878164,
+    0.2189920071188206,
+    0.10237030951856478,
+    6.4018582627671645e-15,
+    6.407313339136854e-15,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.007764028027481703,
+    0.0057950084998342356,
+    0.10954538010235922,
+    0.2194948616197129,
+    0.11018685838529017
+   ],
+   "linear_body": [
+    0.0007152349050009618,
+    0.0011087214670121401,
+    0.001135254866658505
+   ],
+   "angular_body": [
+    0.0005692264835720412,
+    0.0003923464707423502,
+    0.005489597645361187
+   ]
+  },
+  "contact_agreement": 1.0,
+  "knee_min_rad": [
+   0.81193,
+   0.8484
+  ],
+  "knee_limit_exceeded": false,
+  "mean_vx_vy_wz": [
+   -0.004149066192527719,
+   0.014414435587592098,
+   -0.6036891794234641
+  ],
+  "timestamp_dt_range_s": [
+   0.019999999999999574,
+   0.021000000000000796
+  ],
+  "train_samples": 95,
+  "heldout_samples": 100
+ }
+]

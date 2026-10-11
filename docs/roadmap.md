@@ -110,8 +110,10 @@ entry, docs, commit.
    (`turn_translation_pilot.md`): every command 5/5, no falls, all transitions, 80/80 pushes.
    One training seed, simulation only, modest margins.
    E1 (continuous torso-pitch and body-height conditioning by imitation of verified styled
-   references, starting from this candidate) is preregistered (`expressive_posture_experiment.md`);
-   reference generation and evaluation are local, the single training run awaits authorization before expressive training), evaluated on monotonic
+   references, starting from this candidate) was preregistered (`expressive_posture_experiment.md`)
+   and **stopped at its reference gate**: torso pitch −10°…+2° is feasible, but raising the body above
+   ≈ 0.218 m fails the reference joint-velocity fit even after the one allowed range halving.
+   No training was run. Next: a new preregistration over the measured feasible space before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

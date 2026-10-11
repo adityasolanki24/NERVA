@@ -155,6 +155,9 @@ e = (torso pitch, body height) by imitating bilinearly interpolated verified sty
 period, no new reward objective; Phase A reference/interpolation gate (local), one capped GPU run
 (needs authorization), then the unchanged neutral gate at e = 0 plus monotonicity, range, cross-talk and
 style-space task criteria with a held-out combination. Tempo (E2) and stage-4 objectives come later.
+**Outcome:** stopped at Phase A (`results_e1_references*/`). Pitch is feasible over −10°…+2°; body height
+fails above neutral (COM 0.221 m: joint-velocity fit 0.53–0.61 > 0.5 rad/s) even after the single
+preregistered halving. No training. A follow-up needs its own preregistration.
 
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.

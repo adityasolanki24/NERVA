@@ -45,6 +45,13 @@ The detailed record of every run, measurement and correction is `docs/developmen
 
 **Licence:** `LICENSE` is currently empty, so no licence has been chosen yet. That is the author's decision and still open.
 
+## Related project: APM (separate repository)
+
+The embodiment-independent Affective Processing Module and its AffectLink interface now live in their own private
+repository, `affective-processing-module`. NERVA is APM's first experimental embodiment, connected through a thin
+adapter that lives in APM and reads NERVA telemetry in observe-only mode. Nothing in NERVA depends on APM; NERVA's
+own affect, locomotion and safety code is unchanged.
+
 ## Setup (inference only)
 
 Tested on Windows 11 with Python 3.12, CPU only. Training runs on Linux with an NVIDIA GPU (`cloud/`).

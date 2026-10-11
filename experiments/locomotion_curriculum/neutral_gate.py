@@ -38,6 +38,8 @@ CANDIDATES = {
         "sha256": "9394fa5db7fc613f7ee311ec329e39a693f790ba219e26913db7a7464a11c5a2"},
     "turn_translation": {  # docs/turn_translation_pilot.md; the run's final candidate, hash from its summary
         "preregistration": "366aec9", "policy": None, "sha256": None},
+    "e1_prime": {  # docs/expressive_posture_e1prime.md: neutral retention at e = (0, 0), styled 103-input contract
+        "preregistration": "0c221cf", "policy": None, "sha256": None, "styled": True},
 }
 PREREGISTRATION = CANDIDATES["base_origin_velocity"]["preregistration"]
 POLICY = CANDIDATES["base_origin_velocity"]["policy"]
@@ -107,11 +109,13 @@ def command_at(trial, k):
     return BehaviourCommand(*COMMANDS[name])
 
 
-def rollout(policy, policy_hash, trial, latency, raw_dir):
+def rollout(policy, policy_hash, trial, latency, raw_dir, styled=False, style=(0., 0.)):
     with contextlib.redirect_stdout(io.StringIO()):  # upstream constructor prints local paths
         sim = OpenDuckSim(policy_path=policy, scene=SCENE_BACKLASH, raw_accel=True, obs_noise=True,
                           init_joint_noise=0.02, seed=trial.seed, action_delay=latency)
-    sim.set_neutral_motor_contract(deployment_metadata(policy_hash))
+    sim.set_neutral_motor_contract(deployment_metadata(policy_hash, styled))
+    if styled:
+        sim.set_neutral_style(*style)
     supervisor = SafetySupervisor()
     log, stops, completed = [], [], True
     for k in range(int(round(trial.seconds / DT))):
@@ -205,6 +209,7 @@ def main():
     args.out.mkdir(parents=True)
     write_json(args.out / "protocol.json", {
         "candidate": args.candidate, "gate_preregistration": "b6ec4c5",
+        "style": [0., 0.] if spec.get("styled") else None,
         "preregistration_commit": spec["preregistration"],
         "implementation_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "policy": spec["policy"], "policy_sha256": policy_hash, "seeds": list(SEEDS), "dt_s": DT,
@@ -215,7 +220,7 @@ def main():
     trials = protocol_trials()
     for latency in (False, True):
         for trial in trials:
-            rows.append(rollout(policy, policy_hash, trial, latency, args.raw_dir))
+            rows.append(rollout(policy, policy_hash, trial, latency, args.raw_dir, spec.get("styled", False)))
             write_json(args.out / "trials.json", rows)
         print("latency" if latency else "no latency", "done", flush=True)
     report = summarise(rows)

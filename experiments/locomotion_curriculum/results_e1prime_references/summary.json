@@ -1,0 +1,112 @@
+{
+ "preregistration_commit": "0c221cf",
+ "implementation_commit": "d44b6ac520fa78b04f04b0459675db8ca231b9f4",
+ "grid_hashes_and_criteria": true,
+ "styles": 42,
+ "checkpoint_interpolation_ok": true,
+ "neutral_reproducibility_ok": true,
+ "neutral_anchor_exact": true,
+ "phase_a_prime_passes": true,
+ "checkpoints": {
+  "(-0.5, 0.5) stand": {
+   "leg_rmse_rad": 0.004177939459230853,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) forward": {
+   "leg_rmse_rad": 0.003748942857010493,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) backward": {
+   "leg_rmse_rad": 0.003724807146888263,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) left": {
+   "leg_rmse_rad": 0.003772115568333808,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) right": {
+   "leg_rmse_rad": 0.003933055855935705,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) turn_left": {
+   "leg_rmse_rad": 0.003835135626446883,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(-0.5, 0.5) turn_right": {
+   "leg_rmse_rad": 0.003829092495132793,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) stand": {
+   "leg_rmse_rad": 0.007282723262969471,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) forward": {
+   "leg_rmse_rad": 0.0037408907774521658,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) backward": {
+   "leg_rmse_rad": 0.0037665683435621996,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) left": {
+   "leg_rmse_rad": 0.0037982062408686013,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) right": {
+   "leg_rmse_rad": 0.0039666131848121716,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) turn_left": {
+   "leg_rmse_rad": 0.003878826772163264,
+   "contact_agreement": 1.0,
+   "ok": true
+  },
+  "(0.5, 0.5) turn_right": {
+   "leg_rmse_rad": 0.003844436793462642,
+   "contact_agreement": 1.0,
+   "ok": true
+  }
+ },
+ "reference_feature_changes": {
+  "stand": {
+   "delta_pitch_rad": 0.2092506339362573,
+   "delta_height_m": -0.007150000000000073
+  },
+  "forward": {
+   "delta_pitch_rad": 0.20944255700761533,
+   "delta_height_m": -0.007153538461538489
+  },
+  "backward": {
+   "delta_pitch_rad": 0.20944255700761533,
+   "delta_height_m": -0.007142974358974402
+  },
+  "left": {
+   "delta_pitch_rad": 0.20944245325813632,
+   "delta_height_m": -0.0071487692307692086
+  },
+  "right": {
+   "delta_pitch_rad": 0.20944307006383944,
+   "delta_height_m": -0.007160615384615349
+  },
+  "turn_left": {
+   "delta_pitch_rad": 0.20943985553707906,
+   "delta_height_m": -0.00716092307692312
+  },
+  "turn_right": {
+   "delta_pitch_rad": 0.2094398300446214,
+   "delta_height_m": -0.0071600512820513
+  }
+ }
+}

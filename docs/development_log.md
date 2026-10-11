@@ -4,6 +4,46 @@ Newest entry first. Each entry records what was done, what was actually run, and
 
 ---
 
+## 2026-10-11 — E1′ trained and evaluated: pitch control is real but small, crouch ignored; neutral skill retained
+
+Preregistered at `0c221cf` (`docs/expressive_posture_e1prime.md`). Evidence: `experiments/locomotion_curriculum/results_e1prime/`.
+
+### Implementation (before training) [measured]
+- Phase A′ (`e1prime_references.py`): 42 hash-verified grid references, checkpoint interpolation ≤ 0.0074 rad,
+  exact neutral anchor; reference changes 12.0° pitch, −7.2 mm height.
+- `StyledNeutralReference` (bilinear, exact nodes and anchor); `StyleConditioning` env mixin (e in policy and
+  critic observations, styled imitation and rest targets); `StyleCurriculumWrapper` (per-episode resampling at
+  every reset, 20% neutral anchor, scale 0.25 → 1, held-out rejection); `add_style_inputs` (zero-weight widening:
+  identical outputs for any e, statistics prefix bit-exact); 103-input ONNX; styled native contract.
+- Tests for each, including slow MJX autoreset resampling. CPU smoke: gradients reach the style weights, styles
+  sampled, coverage and statistics intact, e = 0 within 0.008 of the neutral actions.
+- The launcher passes the VM lifetime to the job (45 min keeps the 2,580 s timeout; 90 min gives 5,280 s).
+
+### Training [measured]
+- Compute cap authorized by the user: one L4, 90 min, US$3.
+- Attempt 1: replay-integrity stop at iteration 1 (logits error 0.0101 vs 1e-3; earlier GPU runs exactly 0), so
+  0 transitions, ≈ US$0.2. Cause inferred: reduced-precision GPU matmuls. Fix: full float32 precision for E1′. The
+  user authorized a relaunch.
+- Attempt 2: 496 iterations, **79,994,880 transitions**, ≈ 51 min VM, ≈ US$0.95; max KL 0.0149; replay ≤ 4.2e-5.
+  **Deviation:** the ceiling was 80 M, not the preregistered ≤ 160 M (min() bug; fixed in `33bbe74`).
+
+### Evaluation [measured]
+- Neutral gate at e = 0: **passes** both latency conditions; turns slightly better than the neutral candidate;
+  walking pitch ≈ 1° lower; right step 0.101 m/s.
+- Pitch: monotonic for all moving commands, 1.1°–3.4° (9–30% of the reference); independent of speed (speed
+  changes < 0.01 m/s; unchanged after speed adjustment); no effect at rest.
+- Crouch: ≤ 0.2 mm (reference 7.2 mm), so the input is ignored; the pitch axis leaks 1.5–2.7 mm of height.
+- Held-out points: stable, 3/3 on every command, no falls. Speed ratios 0.93–1.15. No shadow interventions.
+- Ramps: pitch ρ 0.93–0.99 with one over-limit jump in 2/3 seeds; crouch none.
+- Videos (local): extremes for forward, rest and turn left; held-out; both ramps.
+
+### Decision (preregistered)
+- **E1′ fails** (criteria 3, 4, 5, 8). Neutral retention, style-space task and speed criteria pass.
+- [hypothesis] Small joint-target differences for a 7 mm crouch, imitation weighting, and the shortened training
+  may each limit the effect. No PAD connection, no default change.
+
+---
+
 ## 2026-10-11 — E1 stopped at Phase A: body-height references above neutral are infeasible
 
 Executed E1 (`630610f`) from the frozen state: git clean, starting checkpoint

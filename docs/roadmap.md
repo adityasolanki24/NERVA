@@ -113,7 +113,11 @@ entry, docs, commit.
    references, starting from this candidate) was preregistered (`expressive_posture_experiment.md`)
    and **stopped at its reference gate**: torso pitch −10°…+2° is feasible, but raising the body above
    ≈ 0.218 m fails the reference joint-velocity fit even after the one allowed range halving.
-   No training was run. Next: a new preregistration over the measured feasible space before expressive training), evaluated on monotonic
+   No training was run. E1′ (pitch × below-neutral crouch, neutral-anchored curriculum, one 90-min L4
+   run, 80 M transitions) then **failed**: pitch became controllable, monotonic and speed-independent
+   but only 1–3.4° (9–30% of the reference), crouch was ignored; the neutral gate still passed at e = 0
+   and no style point fell (`expressive_posture_e1prime.md`). Next: decide how to strengthen the style
+   signal (preregistered), before any PAD → e connection before expressive training), evaluated on monotonic
    control, cross-talk and task performance.
 3. Then: learned vs utility action selection; optional semantic cues; Isaac person animation and
    detectors; human evaluation.

@@ -1,0 +1,46 @@
+{
+ "forward": {
+  "neutral_within_trial_slope_rad_per_mps": 0.010239120234806713,
+  "speed_change_mps": -0.0008536118703202922,
+  "pitch_change_rad": 0.0462665013018278,
+  "pitch_change_explained_by_speed_rad": -8.740234574067708e-06,
+  "pitch_change_speed_adjusted_rad": 0.04627524153640187,
+  "speed_at_pitch_minus_plus": [
+   0.07324445027072778,
+   0.07239083840040748
+  ]
+ },
+ "backward": {
+  "neutral_within_trial_slope_rad_per_mps": 0.2175471420641826,
+  "speed_change_mps": -0.002391173290999027,
+  "pitch_change_rad": 0.018991350837840433,
+  "pitch_change_explained_by_speed_rad": -0.0005201929156370443,
+  "pitch_change_speed_adjusted_rad": 0.019511543753477478,
+  "speed_at_pitch_minus_plus": [
+   0.0830829346574002,
+   0.08069176136640117
+  ]
+ },
+ "left": {
+  "neutral_within_trial_slope_rad_per_mps": 0.0061288471154656516,
+  "speed_change_mps": -0.009183830546487345,
+  "pitch_change_rad": 0.041004211523499076,
+  "pitch_change_explained_by_speed_rad": -5.6286293353764304e-05,
+  "pitch_change_speed_adjusted_rad": 0.041060497816852844,
+  "speed_at_pitch_minus_plus": [
+   0.0978869903579273,
+   0.08870315981143996
+  ]
+ },
+ "right": {
+  "neutral_within_trial_slope_rad_per_mps": 0.04838477696631494,
+  "speed_change_mps": -0.008976636351867517,
+  "pitch_change_rad": 0.059321645022822965,
+  "pitch_change_explained_by_speed_rad": -0.00043433254779282483,
+  "pitch_change_speed_adjusted_rad": 0.05975597757061579,
+  "speed_at_pitch_minus_plus": [
+   0.10254788112794533,
+   0.09357124477607781
+  ]
+ }
+}

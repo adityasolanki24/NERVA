@@ -115,3 +115,18 @@ Native inference appends e after the 101 state values (103-input ONNX).
   checkpoint changes after results.
 - **Not claimed:** emotional readability (needs human evaluation), deployment, default changes. PAD → e stays
   unconnected until E1′ passes.
+
+## Outcome (2026-10-11; protocol above unchanged except the recorded deviation)
+
+- **Phase A′:** pass (42 grid references, checkpoint interpolation, exact neutral anchor).
+- **Training:** attempt 1 stopped by the replay-integrity check before any update (GPU reduced-precision
+  matmuls; 0 transitions, ≈ US$0.2). After the full-precision fix and a user-authorized relaunch, attempt 2 trained
+  **79,994,880 transitions** in ≈ 51 min of VM (≈ US$0.95; ≈ US$1.15 in total). **Deviation:** a code bug capped the
+  ceiling at 80 M instead of the preregistered ≤ 160 M (≈ 133 M available by the throughput rule); fixed in
+  `33bbe74`. The curriculum, the anchor and the held-out exclusion ran as specified.
+- **Criteria:** 1 pass; 2 (neutral gate at e = 0) **pass**; 3 **fail** (pitch 9–30% of the reference, crouch
+  ≈ 0); 4 **fail** (pitch monotonic while moving, not at rest; crouch not); 5 **fail** (the pitch axis moves height
+  more than the crouch axis); 6 **pass** (all commands 3/3 at trained and held-out points, no falls); 7 **pass**
+  (speed ratio 0.93–1.15); 8 **fail** (pitch ramps ρ ≥ 0.93 but 2/3 have a jump > 25%; crouch ramps none).
+- **H not supported; E1′ fails.** Pitch is controllable, monotonic and speed-independent but small (1–3.4°);
+  crouch is ignored. Report: `experiments/locomotion_curriculum/results_e1prime/README.md`.

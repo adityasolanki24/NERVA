@@ -1,0 +1,11 @@
+{
+ "timed_iterations": {
+  "2": 6.762393232000022,
+  "3": 4.423723953000035,
+  "4": 4.446824644000003
+ },
+ "steps_per_second": 30950.028810472977,
+ "ceiling_iterations": 496,
+ "ceiling_transitions": 79994880,
+ "remaining_s_at_decision": 4298.37
+}

@@ -159,6 +159,12 @@ style-space task criteria with a held-out combination. Tempo (E2) and stage-4 ob
 fails above neutral (COM 0.221 m: joint-velocity fit 0.53–0.61 > 0.5 rad/s) even after the single
 preregistered halving. No training. A follow-up needs its own preregistration.
 
+**E1′ (2026-10-11, `expressive_posture_e1prime.md`, `results_e1prime/`):** pitch × below-neutral crouch with a
+neutral-anchored curriculum; 80 M transitions (a ceiling bug; ≤ 160 M preregistered). **Fails:** pitch is
+monotonic and speed-independent but 9–30% of the reference range; crouch is ignored; cross-talk and ramp
+continuity fail. The neutral gate passes at e = 0, and every style point, including held-out ones, walks without
+falls.
+
 Do not relax the gate or start expressive training. B2 retains its
 previously verified reactive role; the affect default remains Bv4.
 

@@ -18,6 +18,11 @@ first continuous-conditioning experiment E1 (torso pitch × body height, `expres
 stopped at its reference gate [measured]: pitch −10°…+2° is a feasible reference space, while raising the
 body above ≈ 0.218 m is not. No style-conditioned policy has been trained on top of the validated neutral
 candidate yet. [future] The next experiment must be preregistered over the measured feasible space.
+**Update (E1′, same day) [measured]:** the first continuous style policy on top of the validated neutral
+controller kept the neutral gate and stayed stable across the style space, but expressed pitch at only 9–30%
+of the reference and ignored a 7 mm crouch. Imitation-only conditioning yields small, monotonic posture changes
+here, consistent with S1's ≈ 1/3 pitch magnitude. Open: how to enlarge the expressed range without new failure
+modes.
 
 **Status (2026-09-28), method A (gait-clock rate):**
 - **RQ1, same command: yes.** There are measurable, consistent differences and no walking falls.

@@ -1,0 +1,58 @@
+[
+ {
+  "file": "e1prime_forward_extremes.mp4",
+  "sha256": "fbd7b92b22618791ee653bbadd91cc22dcf60cb98b2186c1a0f1bdc920b1c242",
+  "columns": [
+   "neutral candidate",
+   "E1' e=0",
+   "E1' pitch-",
+   "E1' pitch+",
+   "E1' crouch"
+  ]
+ },
+ {
+  "file": "e1prime_rest_extremes.mp4",
+  "sha256": "61cc46333135fadf93a3cd9966ace969e7fcb3452af17826afe443a7b40a1225",
+  "columns": [
+   "neutral candidate",
+   "E1' e=0",
+   "E1' pitch-",
+   "E1' pitch+",
+   "E1' crouch"
+  ]
+ },
+ {
+  "file": "e1prime_turn_left_extremes.mp4",
+  "sha256": "70044d8b150f66a425654fde7d0c61b98c6953e27bffb468347432f3be22d18e",
+  "columns": [
+   "neutral candidate",
+   "E1' e=0",
+   "E1' pitch-",
+   "E1' pitch+",
+   "E1' crouch"
+  ]
+ },
+ {
+  "file": "e1prime_held_out.mp4",
+  "sha256": "a97d4aec70f87b1b16abe34b830d67e2c39b17746df9cfa9aef78c27bf4e9a29",
+  "columns": [
+   "E1' e=0",
+   "held-out (0.75,0.75)",
+   "held-out (1,1)"
+  ]
+ },
+ {
+  "file": "e1prime_ramp_pitch.mp4",
+  "sha256": "52f117458cdc3d4746a4879f195447e59b90174ceee2a335117966244446e434",
+  "columns": [
+   "ramp pitch"
+  ]
+ },
+ {
+  "file": "e1prime_ramp_crouch.mp4",
+  "sha256": "e83ba2e60ac84ea1624ec147440b30d93f12953a7057d15ae4616323f71e2709",
+  "columns": [
+   "ramp crouch"
+  ]
+ }
+]

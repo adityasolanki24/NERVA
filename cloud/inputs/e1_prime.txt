@@ -1,0 +1,8 @@
+# Inputs for cloud/jobs/e1_prime.sh (docs/expressive_posture_e1prime.md).
+# Starting checkpoint: verified on the VM against results_turn_translation/training_summary.json.
+experiments/cloud_runs/turn_translation-20261011-000711/checkpoints/000059189760
+# Seven hash-verified neutral references (the e = (0, 0) anchor).
+experiments/cloud_runs/neutral-reference-repair
+experiments/cloud_runs/neutral-reference-pivot-retry
+# Styled grid references, hash-verified on the VM against results_e1_references_p1.0_h0.5/trials.json.
+experiments/cloud_runs/e1-styled-references_p1.0_h0.5

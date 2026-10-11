@@ -25,9 +25,13 @@ def velocities(arrays):
     return np.column_stack([linear, yaw])
 
 
-def deployment_metadata(policy_hash):
-    return {"contract": CONTRACT, "observation_size": 101, "period_steps": 27,
+def deployment_metadata(policy_hash, styled=False):
+    """Neutral contract metadata; styled=True is the E1′ 103-input variant (e appended)."""
+    meta = {"contract": CONTRACT, "observation_size": 103 if styled else 101, "period_steps": 27,
             "head_commands_zero": True, "commands": COMMANDS, "policy_sha256": policy_hash}
+    if styled:
+        meta["style"] = "e1_prime_pitch_crouch"
+    return meta
 
 
 def motor_metrics(arrays, command, completed):

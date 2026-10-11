@@ -104,6 +104,7 @@ def to_arrays(log: list[StepLog], start: int = 0) -> dict[str, np.ndarray]:
     return {name: np.array([getattr(r, name) for r in rows]) for name in StepLog.__dataclass_fields__}
 
 
+STYLED_CONTRACT = "e1_prime_pitch_crouch"  # docs/expressive_posture_e1prime.md
 ACTION_DELAY_STEPS = 3  # training: randint(action_min_delay=0, action_max_delay=3) → 0, 1 or 2 steps
 
 
@@ -117,6 +118,7 @@ class OpenDuckSim:
         self.scene = Path(scene)
         self.policy_path = Path(policy_path)
         self._neutral_motor_clock = None
+        self._styled_contract = False
         self.inf = MjInfer(str(self.scene), str(REFERENCE), str(policy_path), standing=False)
         if scene_extender is not None:
             self._extend_scene(scene_extender)
@@ -187,16 +189,31 @@ class OpenDuckSim:
         import hashlib
         from nerva.motor_contract import NeutralPhaseClock
         from nerva.training.neutral_reference import COMMANDS, CONTRACT
-        if (metadata.get("contract") != CONTRACT or metadata.get("observation_size") != 101
+        styled = metadata.get("style") == STYLED_CONTRACT
+        if (metadata.get("contract") != CONTRACT or metadata.get("observation_size") != (103 if styled else 101)
+                or metadata.get("style") not in (None, STYLED_CONTRACT)
                 or metadata.get("period_steps") != 27 or metadata.get("head_commands_zero") is not True
                 or {tuple(c) for c in metadata.get("commands", ())} != set(COMMANDS)
                 or metadata.get("policy_sha256") != hashlib.sha256(self.policy_path.read_bytes()).hexdigest()
                 or self.style_vector is not None or np.any(self.head_offset != 0)):
             raise ValueError("candidate deployment metadata mismatch")
         self._neutral_motor_clock = NeutralPhaseClock(27)
+        if styled:
+            self.style_vector = np.zeros(2)  # e = (0, 0): the neutral anchor until set_neutral_style()
+        self._styled_contract = styled
         self.inf.imitation_i = 0
         self.inf.imitation_phase = self._neutral_motor_clock.reset()
         self.nb_steps_in_period = 27
+
+    def set_neutral_style(self, e_pitch: float, e_crouch: float) -> None:
+        """E1′ styled candidates only: e = (e_pitch ∈ [−1, 1], e_crouch ∈ [0, 1]), appended noise-free after the
+        101 observation values (as in training). The phase clock and period are unchanged."""
+        if self._neutral_motor_clock is None or not self._styled_contract:
+            raise ValueError("style requires a styled neutral contract")
+        e = np.array([e_pitch, e_crouch], dtype=np.float64)
+        if not np.isfinite(e).all() or abs(e[0]) > 1 or not 0 <= e[1] <= 1:
+            raise ValueError("style outside the admitted E1' domain")
+        self.style_vector = e
 
     def _validate_neutral_command(self, command):
         from nerva.motor_contract import canonical_command

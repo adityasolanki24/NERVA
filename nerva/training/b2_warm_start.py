@@ -81,7 +81,7 @@ def conversion_parity(root, make_policy, params):
 
 def balanced_environment(reference, episode_length=256, replicas=1, persistent_command=False,
                          gait_averaged_tracking=False, base_origin_velocity=False,
-                         turn_translation=False):
+                         turn_translation=False, style_conditioning=False):
     """Environment i always uses COMMANDS[i mod 7] (replicas environments per command). Defaults are the
     local pilot's (7 environments, upstream resampling boundary beyond its 256-step episodes);
     persistent_command blocks upstream's step-500 resampling for longer episodes; base_origin_velocity
@@ -91,7 +91,7 @@ def balanced_environment(reference, episode_length=256, replicas=1, persistent_c
     from brax.envs.wrappers import training
     from nerva.training.neutral_joystick import (
         BaseOriginGaitAveragedNeutralJoystick, GaitAveragedTrackingNeutralJoystick, NeutralJoystick,
-        PersistentNeutralJoystick, TurnTranslationNeutralJoystick,
+        PersistentNeutralJoystick, StyledTurnTranslationNeutralJoystick, TurnTranslationNeutralJoystick,
     )
     from nerva.training.neutral_wrapper import NeutralAutoResetWrapper
 
@@ -116,12 +116,19 @@ def balanced_environment(reference, episode_length=256, replicas=1, persistent_c
         raise ValueError("base-origin velocity is defined for the gait-averaged environment")
     if turn_translation and not base_origin_velocity:
         raise ValueError("turn-translation tracking is defined for the base-origin environment")
-    base = (TurnTranslationNeutralJoystick if turn_translation
+    if style_conditioning and not turn_translation:
+        raise ValueError("style conditioning (E1') is defined on the turn-translation environment")
+    base = (StyledTurnTranslationNeutralJoystick if style_conditioning
+            else TurnTranslationNeutralJoystick if turn_translation
             else BaseOriginGaitAveragedNeutralJoystick if base_origin_velocity
             else GaitAveragedTrackingNeutralJoystick if gait_averaged_tracking
             else PersistentNeutralJoystick if persistent_command else NeutralJoystick)
     env = BalancedVmap(base(reference, task="flat_terrain_backlash"))
-    return NeutralAutoResetWrapper(training.EpisodeWrapper(env, episode_length, action_repeat=1))
+    env = NeutralAutoResetWrapper(training.EpisodeWrapper(env, episode_length, action_repeat=1))
+    if style_conditioning:
+        from nerva.training.style_curriculum import StyleCurriculumWrapper
+        env = StyleCurriculumWrapper(env)
+    return env
 
 
 def export_policy(path, params):
@@ -157,8 +164,35 @@ def export_policy(path, params):
         constant(name, np.array(values, dtype=np.int64))
     nodes.extend([helper.make_node("Slice", [previous, "starts", "ends", "axes"], ["loc"]),
                   helper.make_node("Tanh", ["loc"], ["continuous_actions"])])
-    graph = helper.make_graph(nodes, "neutral_frozen_b2", [helper.make_tensor_value_info("obs", TensorProto.FLOAT, [1, 101])],
+    graph = helper.make_graph(nodes, "neutral_frozen_b2", [helper.make_tensor_value_info("obs", TensorProto.FLOAT, [1, int(np.asarray(params[0].mean["state"]).shape[0])])],
                              [helper.make_tensor_value_info("continuous_actions", TensorProto.FLOAT, [1, 14])], constants)
     model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 13)], ir_version=8)
     onnx.checker.check_model(model)
     onnx.save(model, path)
+
+
+def add_style_inputs(params, width):
+    """E1′: append `width` style inputs with zero first-layer weights and fixed (mean 0, std 1) statistics.
+
+    Every policy/value output is unchanged for any style value, and the original statistics are kept bit-exactly
+    for the existing inputs. Summed variance is set to the count (so a recomputed std would also be 1); the
+    statistics are frozen and never updated.
+    """
+    import jax
+    import jax.numpy as jp
+    normalizer, policy, value = params
+
+    def widen(tree):
+        out = jax.tree.map(np.asarray, copy.deepcopy(tree))
+        kernel = out["params"]["hidden_0"]["kernel"]
+        out["params"]["hidden_0"]["kernel"] = np.concatenate([kernel, np.zeros((width, kernel.shape[1]), kernel.dtype)])
+        return out
+
+    def extend(stats, fill):
+        return {k: jp.concatenate([jp.asarray(v), jp.full((width,), fill, dtype=jp.asarray(v).dtype)])
+                for k, v in stats.items()}
+
+    count = float(np.uint64(normalizer.count.hi) * np.uint64(2 ** 32) + np.uint64(normalizer.count.lo))
+    widened = normalizer.replace(mean=extend(normalizer.mean, 0.), std=extend(normalizer.std, 1.),
+                                 summed_variance=extend(normalizer.summed_variance, count))
+    return widened, widen(policy), widen(value)

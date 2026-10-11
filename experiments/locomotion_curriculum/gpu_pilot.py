@@ -22,7 +22,7 @@ import time
 
 import numpy as np
 
-from nerva.training.b2_warm_start import NETWORK, SHAPE, balanced_environment, export_policy
+from nerva.training.b2_warm_start import NETWORK, SHAPE, add_style_inputs, balanced_environment, export_policy
 from nerva.training.motor_artifacts import archive, fingerprint, gaussian_kl, write_json
 from nerva.training.neutral_reference import COMMANDS
 from nerva.training.parameter_checkpoint import checkpoint_hashes, leaf_comparison, save_parameters, tree_finite
@@ -50,7 +50,14 @@ EXPERIMENTS = {
         "start": "experiments/cloud_runs/base_origin_velocity-20261010-201858/checkpoints/000060480000",
         "start_report": "experiments/locomotion_curriculum/results_base_origin_velocity/training_summary.json",
         "gait_averaged_tracking": True, "base_origin_velocity": True, "turn_translation": True},
+    "e1_prime": {  # docs/expressive_posture_e1prime.md
+        "preregistration": "0c221cf",
+        "start": "experiments/cloud_runs/turn_translation-20261011-000711/checkpoints/000059189760",
+        "start_report": "experiments/locomotion_curriculum/results_turn_translation/training_summary.json",
+        "gait_averaged_tracking": True, "base_origin_velocity": True, "turn_translation": True,
+        "style_conditioning": True, "max_steps": 160_000_000},
 }
+STYLE_WIDTH = 2
 STATISTICS_SOURCE = "experiments/locomotion_curriculum/results_neutral_learning_corrected/protocol.json"
 LOSS = {"entropy_cost": .005, "discounting": .97, "reward_scaling": 1., "gae_lambda": .95,
         "clipping_epsilon": .2, "normalize_advantage": True, "vf_coefficient": .5}
@@ -110,18 +117,24 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
     experiment = EXPERIMENTS[name]
     admitted = verify_start(root, experiment)
     params = checkpoint.load(root / experiment["start"])
+    if fingerprint(params[0]) != admitted["statistics_sha256"]:
+        raise ValueError("starting normalizer differs from the pilot's frozen statistics")
+    styled = experiment.get("style_conditioning", False)
+    shape = dict(SHAPE)
+    if styled:  # E1′: zero-weight style inputs; outputs identical to the start for every e
+        params = add_style_inputs(params, STYLE_WIDTH)
+        shape = {k: (v[0] + STYLE_WIDTH,) for k, v in SHAPE.items()}
+        cfg = {**cfg, "max_steps": min(cfg["max_steps"], experiment["max_steps"])} if cfg["max_iterations"] is None else cfg
     normalizer = params[0]
     frozen = fingerprint(normalizer)
-    if frozen != admitted["statistics_sha256"]:
-        raise ValueError("starting normalizer differs from the pilot's frozen statistics")
     factory = functools.partial(networks.make_ppo_networks, **NETWORK)
-    net = factory(SHAPE, 14, preprocess_observations_fn=running_statistics.normalize)
+    net = factory(shape, 14, preprocess_observations_fn=running_statistics.normalize)
     make_policy = networks.make_inference_fn(net)
     weights = losses.PPONetworkParams(policy=params[1], value=params[2])
     optimizer = optax.chain(optax.clip_by_global_norm(1.), optax.adam(cfg["learning_rate"]))
     opt_state = optimizer.init(weights)
     loss_fn = functools.partial(losses.compute_ppo_loss, ppo_network=net, **LOSS)
-    config = checkpoint.network_config(SHAPE, 14, True, factory)
+    config = checkpoint.network_config(shape, 14, True, factory)
     replicas, unroll = cfg["replicas"], cfg["unroll_length"]
     n = 7 * replicas
     per_iteration = n * unroll
@@ -132,7 +145,9 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
         "experiment": name, "preregistration_commit": experiment["preregistration"],
         "gait_averaged_tracking": experiment["gait_averaged_tracking"],
         "base_origin_velocity": experiment.get("base_origin_velocity", False),
-        "turn_translation": experiment.get("turn_translation", False), "config": {k: v for k, v in cfg.items()},
+        "turn_translation": experiment.get("turn_translation", False), "style_conditioning": styled,
+        "observation_shape": shape, "frozen_statistics_sha256": frozen,
+        "config": {k: v for k, v in cfg.items()},
         "loss": LOSS, "network": NETWORK, "devices": devices, "start": admitted,
         "environments": n, "transitions_per_iteration": per_iteration, "reference_manifest": manifest,
         "restoration": "parameters_only; fresh Adam/RNG/environment; snapshots allow parameter+optimizer "
@@ -149,11 +164,18 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
         return folder
 
     os.chdir(OPEN_DUCK_ROOT / "Open_Duck_Playground")
-    env = balanced_environment(NeutralReference(records), episode_length=cfg["episode_length"],
+    if styled:
+        from nerva.training.style_curriculum import curriculum_scale, set_scale
+        from nerva.training.styled_reference import StyledNeutralReference, styled_grid
+        reference = StyledNeutralReference(styled_grid(root))
+    else:
+        reference = NeutralReference(records)
+    env = balanced_environment(reference, episode_length=cfg["episode_length"],
                                replicas=replicas, persistent_command=True,
                                gait_averaged_tracking=experiment["gait_averaged_tracking"],
                                base_origin_velocity=experiment.get("base_origin_velocity", False),
-                               turn_translation=experiment.get("turn_translation", False))
+                               turn_translation=experiment.get("turn_translation", False),
+                               style_conditioning=styled)
     key, reset_key = jax.random.split(jax.random.PRNGKey(cfg["seed"]))
     state = jax.jit(env.reset)(jax.random.split(reset_key, n))
 
@@ -207,6 +229,14 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
             stop = "step_ceiling"
             break
         t0 = time.monotonic()
+        style_row = {}
+        if styled:
+            scale = curriculum_scale(accepted / ceiling if ceiling else 0.)
+            state = set_scale(state, scale)
+            e = np.asarray(state.info["e1_style"])
+            style_row = {"style_scale": scale, "neutral_anchor_fraction": float(np.mean(np.all(e == 0, axis=1))),
+                         "style_abs_pitch_mean": float(np.mean(np.abs(e[:, 0]))), "style_crouch_mean": float(np.mean(e[:, 1])),
+                         "style_held_out_count": int(np.sum((e[:, 0] > .5) & (e[:, 1] > .5)))}
         state, data, key = collect(weights, state, key)
         jax.block_until_ready(data.reward)
         commands = np.asarray(data.extras["state_extras"]["command"])[..., :3]
@@ -245,7 +275,7 @@ def run(root: Path, raw: Path, cfg: dict, name: str = "gpu_neutral_pilot") -> No
                "max_gradient_norm": float(grad_norm),
                "metrics": {name: float(value) for name, value in metrics.items()},
                "iteration_seconds": round(seconds, 3), "remaining_s": round(remaining(), 1),
-               "uptime_s": uptime_s(), "wall_s": round(time.monotonic() - start, 1)}
+               "uptime_s": uptime_s(), "wall_s": round(time.monotonic() - start, 1), **style_row}
         rows.append(row)
         write_json(report / "training.json", rows)
         if kl > cfg["kl_limit"]:
@@ -290,6 +320,8 @@ def main() -> None:
     parser.add_argument("--out", type=Path, help="output directory (cloud: /work/out)")
     parser.add_argument("--smoke", action="store_true", help="tiny CPU check; not a result")
     parser.add_argument("--experiment", choices=sorted(EXPERIMENTS), default="gpu_neutral_pilot")
+    parser.add_argument("--vm-minutes", type=int, choices=(45, 90), default=45,
+                        help="the VM's hard lifetime; the trainer deadline is at uptime 60·L − 480 s")
     args = parser.parse_args()
     root = Path.cwd().resolve()
     if args.smoke:
@@ -302,7 +334,7 @@ def main() -> None:
         if not os.environ.get("NERVA_CODE_SHA") and subprocess.run(
                 ["git", "status", "--porcelain"], capture_output=True, text=True).stdout.strip():
             raise SystemExit("commit before training")
-        raw, cfg = args.out, FULL
+        raw, cfg = args.out, {**FULL, "deadline_uptime_s": 60 * args.vm_minutes - 480}
     if (raw / "report" / "training_summary.json").exists():
         raise FileExistsError("never overwrite pilot artifacts")
     if not args.smoke and EXPERIMENTS[args.experiment]["preregistration"] == "PENDING":

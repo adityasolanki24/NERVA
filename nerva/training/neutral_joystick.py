@@ -66,7 +66,12 @@ class NeutralJoystick(StyleJoystick):
                 "imitation": body_imitation(joints, velocity, linear, angular, contact,
                                              info["current_reference_motion"], command),
                 "stand_still": jp.where(at_rest(command, jp),
-                                       jp.sum(jp.abs(joints - self.neutral_pose)) + jp.sum(jp.abs(velocity)), 0.)}
+                                       jp.sum(jp.abs(joints - self.rest_pose(info))) + jp.sum(jp.abs(velocity)), 0.)}
+
+    def rest_pose(self, info):
+        """Actuator-order rest target of `stand_still` (the static neutral reference)."""
+        del info
+        return self.neutral_pose
 
 
 class PersistentCommand:
@@ -196,3 +201,37 @@ class TurnTranslationTracking:
 
 class TurnTranslationNeutralJoystick(TurnTranslationTracking, BaseOriginGaitAveragedNeutralJoystick):
     """Base-origin gait-averaged tracking with a tighter pure-turn translation width."""
+
+
+STYLE_DIM = 2  # E1′: (e_pitch ∈ [−1, 1], e_crouch ∈ [0, 1]); docs/expressive_posture_e1prime.md
+
+
+class StyleConditioning:
+    """Mixin (E1′): e = info["e1_style"] is appended to the policy and privileged observations, selects the imitation
+    target by bilinear interpolation of the styled grid, and sets the `stand_still` rest pose. Requires a
+    `StyledNeutralReference`; e = (0, 0) reproduces the neutral targets exactly. Sampling and the curriculum live in
+    `nerva.training.style_curriculum.StyleCurriculumWrapper`."""
+
+    def _initialize_reference(self, info):
+        super()._initialize_reference(info)
+        if "e1_style" not in info:
+            info["e1_style"] = jp.zeros(STYLE_DIM)
+
+    def _advance_reference(self, info):
+        super()._advance_reference(info)
+        info["current_reference_motion"] = self.SREF.get_styled_motion(
+            info["command"][0], info["command"][1], info["command"][2], info["imitation_i"], info["e1_style"])
+
+    def rest_pose(self, info):
+        static = self.SREF.get_styled_motion(0., 0., 0., 0, info["e1_style"])
+        return jp.concatenate([static[:9], static[11:16]])
+
+    def _get_obs(self, data, info, contact):
+        obs = super()._get_obs(data, info, contact)
+        style = jp.asarray(info["e1_style"], dtype=obs["state"].dtype)
+        return {"state": jp.concatenate([obs["state"], style]),
+                "privileged_state": jp.concatenate([obs["privileged_state"], style])}
+
+
+class StyledTurnTranslationNeutralJoystick(StyleConditioning, TurnTranslationNeutralJoystick):
+    """E1′ environment: the validated turn-translation reward with continuous posture conditioning."""

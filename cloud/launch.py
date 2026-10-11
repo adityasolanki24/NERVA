@@ -341,6 +341,7 @@ def cmd_launch(a):
             "--metadata=" + ",".join(filter(None, [
                 "install-nvidia-driver=True", f"nerva-job={job}", f"nerva-bucket={BUCKET}",
                 f"nerva-run-id={run_id}", f"nerva-code-sha={sha}", f"nerva-upstream-sha={UPSTREAM_SHA}",
+                f"nerva-max-minutes={a.max_minutes}" if a.max_minutes is not None else "",
                 f"nerva-input-uri={input_uri}" if input_uri else "",
                 "nerva-isaac-eula=Y" if getattr(a, "accept_isaac_eula", False) else "",
             ])),

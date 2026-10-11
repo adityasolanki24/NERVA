@@ -4,7 +4,8 @@ import jax
 import jax.numpy as jp
 from mujoco_playground import wrapper
 
-WRAPPER_INFO = {"first_state", "first_obs", "steps", "truncation", "episode_done", "episode_metrics", "rng"}
+WRAPPER_INFO = {"first_state", "first_obs", "steps", "truncation", "episode_done", "episode_metrics", "rng",
+                "style_rng", "style_scale"}  # the last two belong to StyleCurriculumWrapper and must never be restored
 
 
 class NeutralAutoResetWrapper(wrapper.BraxAutoResetWrapper):

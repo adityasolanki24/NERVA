@@ -3,7 +3,7 @@
 THIS IS A DEMONSTRATION, NOT AN EXPERIMENT. The PAD → behaviour mapping below is
 hand-designed for visualisation and has not been validated; it is NOT the
 research result that decides how affect should drive movement (see
-docs/research_questions.md RQ1c). It exists to show the closed loop running.
+docs/archive/research_questions.md RQ1c). It exists to show the closed loop running.
 
 Loop (all in one process, simulation only):
   events (scripted times)  → nerva.affect.appraisal.appraise → CategoricalAffectModel (affect v0.1)

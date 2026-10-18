@@ -7,7 +7,7 @@
 ## Protocol (`run.py`)
 
 - **Task, identical for all conditions:** walk forward, commanded 0.15 m/s, flat ground, 20 s.
-- **Simulation:** `nerva/sim/open_duck.py`. The control loop is tested to reproduce upstream `mujoco_infer.py` bit for bit (`tests/test_open_duck_sim.py`). Two deliberate differences:
+- **Simulation:** `nerva/sim/open_duck.py`. The control loop is tested to reproduce upstream `mujoco_infer.py` bit for bit (`tests/sim/test_open_duck.py`). Two deliberate differences:
   - **Raw accelerometer.** The +1.3 offset that only upstream sim inference adds is removed, which matches training and hardware.
   - **Training-level observation noise.** The noise from `joystick.py` `noise_config`, resampled every step and seeded. This is the source of trial-to-trial variation: without it, every run converges to the same limit cycle within seconds.
 - **Gait trials:** 10 seeds per style, with the same seeds across styles (paired). Initial joint noise is ±0.02 rad. Metrics are computed over t = 5–20 s (`nerva/analysis/gait_metrics.py`).

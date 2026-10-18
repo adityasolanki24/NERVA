@@ -1,4 +1,4 @@
-"""Deterministic safety supervisor: an independent override path below behaviour (docs/architecture.md §3).
+"""Deterministic safety supervisor: an independent override path below behaviour (docs/archive/architecture_refactor_2026-10-02.md §3).
 
 Applied to every behaviour request before it reaches the locomotion policy. Its inputs are the request
 and the robot's SelfState only. It never reads affect, action tendencies, memory or appraisal, so none of

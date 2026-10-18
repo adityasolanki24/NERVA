@@ -13,7 +13,7 @@ One record per entity (a person identity or an object), found again by appearanc
   episodes      a short list of salient events with this entity (M2 turns this into the episodic store)
 Threat and warmth also relax slowly toward neutral while the entity is absent (DRIFT_S).
 
-Two learning modes (refactor stage D, docs/architecture.md §1.3):
+Two learning modes (refactor stage D, docs/archive/architecture_refactor_2026-10-02.md §1.3):
   "legacy"    the above: associations learned from the emotions Model A elicited. Kept as the baseline.
               Known problem: a remembered threat re-elicits fear, which is learned as more threat.
   "grounded"  associations learned only from measured outcomes (OutcomeSignal, nerva/world/outcomes.py):

@@ -1,7 +1,7 @@
 """Outcome monitor: measurements → `OutcomeSignal`s (what happened) and `RiskEstimate`s (what nearly did).
 
 Memory should learn "what happens with this person / at this place" from consequences the robot can
-measure, not from the emotions its own appraisal produced (docs/architecture.md §1.3, refactor stage D).
+measure, not from the emotions its own appraisal produced (docs/archive/architecture_refactor_2026-10-02.md §1.3, refactor stage D).
 Only kinds the system can measure or estimate are produced:
 
   stability_loss  torso tilt crosses NEAR_FALL_TILT_DEG (IMU orientation). Re-arms below half of it.

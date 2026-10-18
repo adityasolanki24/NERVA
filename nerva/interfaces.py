@@ -1,6 +1,6 @@
 """Typed contracts between NERVA's modules.
 
-The cognitive side is a stateful graph, not a chain (docs/architecture.md):
+The cognitive side is a stateful graph, not a chain (docs/archive/architecture_refactor_2026-10-02.md):
 
     PERCEPTION --PerceptionState (tracks, events)--> APPRAISAL <-- SelfState, GoalState, memory
     APPRAISAL --AppraisalFrame (or the legacy AppraisalState)--> AFFECT
@@ -9,7 +9,7 @@ The cognitive side is a stateful graph, not a chain (docs/architecture.md):
 
 This module holds only containers with documented meanings and range checks, plus the AffectSystem
 protocol. Implementations live in other modules. Which of these contracts the running loop already uses
-is tracked in docs/architecture.md section 2.3 (migration stages).
+is tracked in docs/archive/architecture_refactor_2026-10-02.md section 2.3 (migration stages).
 
 Status of the ideas behind each type:
   - Appraisal variables: from appraisal theory, specifically EMA (Marsella & Gratch). The subset and

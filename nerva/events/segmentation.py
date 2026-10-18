@@ -1,4 +1,4 @@
-"""Event boundaries from prediction error (refactor stage H; RQ9 in docs/research_questions.md).
+"""Event boundaries from prediction error (refactor stage H; RQ9 in docs/archive/research_questions.md).
 
 A small online predictor learns to predict the next world/self feature vector from the current one.
 Moments where the prediction error is unusually high are candidate event boundaries. The idea of

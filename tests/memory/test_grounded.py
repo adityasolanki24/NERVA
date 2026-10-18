@@ -1,4 +1,4 @@
-"""Stage D: outcome-grounded learning (docs/architecture.md section 1.3)."""
+"""Stage D: outcome-grounded learning (docs/archive/architecture_refactor_2026-10-02.md section 1.3)."""
 
 import numpy as np
 

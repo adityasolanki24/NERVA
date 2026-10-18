@@ -1,6 +1,6 @@
 """Affect Model B: appraisal → PAD and action tendencies directly, without discrete emotion categories.
 
-Refactor stage G (docs/architecture.md; RQ8 in docs/research_questions.md: are the categories necessary
+Refactor stage G (docs/archive/architecture_refactor_2026-10-02.md; RQ8 in docs/archive/research_questions.md: are the categories necessary
 for the behaviours we test?). Same external contract as Model A (`AffectSystem`): `add(appraisal)`,
 `step(dt)`, `pad`, `tendencies`.
 

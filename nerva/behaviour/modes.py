@@ -1,7 +1,7 @@
 """Behaviour v1: reactive modes driven by action tendencies, PAD and perception (docs/reactive_behaviour_design.md §3).
 
 Behaviour reads `ActionTendencyState` (nerva/interfaces.py), not emotion labels, so any affect model that
-satisfies the AffectSystem contract can drive it (docs/architecture.md, refactor stage C).
+satisfies the AffectSystem contract can drive it (docs/archive/architecture_refactor_2026-10-02.md, refactor stage C).
 
 WHAT: a mode chosen from the action tendencies, PAD and the perceived tracks, with a minimum dwell
 time (hysteresis); urgent modes (freeze, retreat) pre-empt. Each mode is a small continuous

@@ -1,6 +1,6 @@
 """RQ9: do learned event prototypes predict grounded outcomes as well as the hand-coded event labels?
 
-Refactor stage H (docs/architecture.md; docs/research_questions.md RQ9). Simulation only, light (CPU,
+Refactor stage H (docs/archive/architecture_refactor_2026-10-02.md; docs/archive/research_questions.md RQ9). Simulation only, light (CPU,
 about 2 minutes). Protocol fixed before the first run (development log, 2026-10-02):
 
 Data   the reactive scenarios (default, memory, together) × seeds 0..5, interleaved by seed, policy B2

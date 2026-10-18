@@ -4,7 +4,7 @@ The robot in a scene with people and a ball. It perceives them through its head 
 vision, or a ground-truth "simulated detector"), appraises events in context, updates its affect,
 remembers people, places and episodes, and chooses what to do by emotion-modulated action selection.
 Only the people and the ball follow scripts. Design: `docs/reactive_behaviour_design.md`,
-`docs/memory_design.md`; current vs target architecture: `docs/architecture.md`.
+`docs/memory_design.md`; current vs target architecture: `docs/archive/architecture_refactor_2026-10-02.md`.
 
 - `scenario.py`: the whole closed loop in one function (`run`), plus the scenarios:
   `default_scenario` (ball, friendly approach, lunge, return), `memory_scenario` (two people: A lunges,

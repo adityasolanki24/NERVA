@@ -35,6 +35,20 @@ def test_grounded_positive_affinity_adds_one_stationary_greeting():
     assert d.mode != "greet"
 
 
+def test_greeting_is_a_stationary_coordinated_head_and_body_motion():
+    person = Track("person", 0.1, 1.2, tid="person-0")
+    beh = UtilityBehaviour()
+    beh.notice(5.0, "person_appeared", "person-0")
+    start = beh.step(5.0, 0.1, PADState(), ActionTendencyState(), (person,), {"person-0": 0.0}, {}, None,
+                     "person-0", "familiar", {"person-0": 0.6})
+    middle = beh.step(5.4, 0.1, PADState(), ActionTendencyState(), (person,), {"person-0": 0.0}, {}, None,
+                      "person-0", "familiar", {"person-0": 0.6})
+    assert start.mode == middle.mode == "greet"
+    assert start.command.vx == middle.command.vx == 0.0
+    assert abs(middle.command.yaw_rate - start.command.yaw_rate) > 0.05
+    assert abs(middle.head[0]) > 0.0 and abs(middle.head[3]) > 0.0
+
+
 def test_social_affinity_cannot_override_a_nearby_threat():
     person = Track("person", 0.1, 0.5, tid="person-0")
     d = UtilityBehaviour().step(5.0, 0.1, PADState(), ActionTendencyState(avoid=0.8), (person,),

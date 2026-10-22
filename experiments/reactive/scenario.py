@@ -479,6 +479,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         people = [tr for tr in tracks if tr.kind == "person"]
         nearest = min(people, key=lambda tr: tr.distance).tid if people else ""
         who = appraiser.identity.get(nearest) if use_memory else None
+        target_track = next((tr for tr in tracks if tr.tid == decision.target), None)
+        actual_joints = sim.inf.get_actuator_joints_qpos(d.qpos)
         rows.append({
             "t": round(t + CTRL_DT, 3), "valence": pad.valence, "arousal": pad.arousal, "dominance": pad.dominance,
             **{lbl: sum(e.intensity for e in getattr(affect, "emotions", []) if e.label == lbl)
@@ -491,6 +493,13 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             "cmd_vx": decision.command.vx, "cmd_yaw": decision.command.yaw_rate,
             "e_tempo": decision.command.style_vector.tempo, "e_torso_pitch": decision.command.style_vector.torso_pitch,
             "head_pitch": decision.head[1], "head_yaw": decision.head[2], "head_roll": decision.head[3],
+            # Encoder-state values make the expression reviewable as a
+            # physical MuJoCo motion, rather than only as an intended command.
+            "neck_pitch_actual": float(actual_joints[5]), "head_pitch_actual": float(actual_joints[6]),
+            "head_yaw_actual": float(actual_joints[7]), "head_roll_actual": float(actual_joints[8]),
+            "gaze_target_visible": target_track is not None and target_track.visible,
+            "gaze_command_error_rad": (float(abs((decision.head[2] - target_track.bearing + np.pi) % (2 * np.pi) - np.pi))
+                                       if target_track is not None and target_track.visible else float("nan")),
             "robot_x": float(d.qpos[0]), "robot_y": float(d.qpos[1]),
             "person_x": float(person_xy[0]), "person_y": float(person_xy[1]),
             "dist_person": float(np.linalg.norm(person_xy - d.qpos[0:2])),

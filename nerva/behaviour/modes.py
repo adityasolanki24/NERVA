@@ -254,11 +254,20 @@ class ReactiveBehaviour:
             tilt = CURIOUS_TILT * np.sin(2 * np.pi * 0.25 * age)  # curious head tilt
             return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"inspect {self.target}"
         if m == "greet" and target is not None:
-            # A short stationary acknowledgement after a learned, positive
-            # interaction.  It uses the existing measured head envelope and
-            # does not combine a gesture with walking.
-            tilt = 0.12 * np.sin(np.pi * min(1.0, age / GREET_S))
-            return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"greet {self.target}"
+            # A short, stationary acknowledgement after a learned positive
+            # interaction.  The robot first orients its body toward the
+            # person, then makes a bounded nod, head-turn and tilt.  Keeping
+            # vx at zero means this never compounds a gesture with walking.
+            phase = min(1.0, age / GREET_S)
+            gaze = self._gaze(target, 0.16 * np.sin(np.pi * phase))
+            neck = 0.04 * np.sin(np.pi * phase)
+            nod = 0.09 * np.sin(2 * np.pi * phase)
+            head = (neck,
+                    float(np.clip(gaze[1] + nod, self.head_pitch_down, self.head_pitch_up)),
+                    self._yaw(gaze[2] + 0.10 * np.sin(np.pi * phase)),
+                    gaze[3])
+            body_yaw = 0.8 * target.bearing + 0.18 * np.sin(2 * np.pi * phase)
+            return 0.0, body_yaw, head, f"greet {self.target}"
         if m == "approach" and target is not None:
             stop = self._stop_distance(self.target, pad)
             # full speed or nothing: the policy barely moves for small speed commands (measured)

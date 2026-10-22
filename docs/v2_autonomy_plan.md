@@ -39,7 +39,7 @@ and behaviour layer, then defines a small adapter at the APM boundary only after
 - no falls, collisions or new safety interventions in the short local pilot.
 
 Cloud rendering or Isaac work needs a local runtime estimate, a smallest-machine cost estimate and new spending
-approval.  The earlier v1.0 cap is not assumed to cover this programme.
+approval.  Any approved v2 spend remains within the existing US$500 total cap; this local phase uses no cloud spend.
 
 ## First local pilot (development evidence only)
 
@@ -52,7 +52,8 @@ Seed 62, the existing B2 neutral controller, rendered RGB-D, no GPU or cloud wor
 - Peak torso tilt was 14.85° (curiosity), 11.98° (positive history) and 14.54° (cautious history).  The deterministic
   safety supervisor did not intervene.
 
-The cuts in `experiments/v2_autonomy/results_milestone_videos/` are direct local simulation renders: observer view
-plus robot-eye feed, no retiming, and no history labels in the social comparison.  They are engineering review
-material, not a human-perception study or a confirmatory evaluation.  The social greeting remains subtle; improving
-the observability of its physical expression is the next NERVA task before treating this as a compelling demo.
+The review bundle in `experiments/v2_autonomy/results_review_seed62_close/` is a direct local simulation render:
+observer view plus robot-eye feed, no retiming, and no history labels in the social comparison.  It includes full
+20 ms JSONL traces, settings, seed, scenario schedules and SHA-256 manifest; labelled copies live in `debug/`.
+It is engineering review material, not a human-perception study or a confirmatory evaluation.  The social greeting
+must still be judged visually before treating it as a compelling demo.

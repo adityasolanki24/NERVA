@@ -28,13 +28,14 @@ import numpy as np
 from nerva.behaviour.pad_style import pad_to_style_vector
 from nerva.interfaces import ActionTendencyState, BehaviourCommand, PADState, PolicyCapabilities, StyleVector, Track
 
-MODES = ("explore", "orient", "approach", "inspect", "freeze", "retreat", "watch", "withdraw")
+MODES = ("explore", "orient", "approach", "inspect", "greet", "freeze", "retreat", "watch", "withdraw")
 WARY_FEAR = 0.05
 WARY_DISTANCE = 1.5  # m
 MIN_DWELL_S = 1.0
 FREEZE_S = 0.8
 FREEZE_DISTANCE = 2.0  # m: a startle closer than this freezes before retreating
 BACKSTEP_S = 1.5
+GREET_S = 0.9
 SAFE_DISTANCE = 2.2  # m: retreat until at least this far (and fear has dropped)
 MAX_VX, MAX_YAW = 0.15, 1.0  # trained command range
 # rad. POSITIVE head_pitch tilts the face UP: measured on the robot_eye camera, +0.4 → 35° up,
@@ -88,6 +89,12 @@ class ReactiveBehaviour:
     head_yaw_max: float = HEAD_YAW_MAX
     head_yaw_min: float = -HEAD_YAW_MAX
     head_pitch_up: float = HEAD_PITCH_UP
+    # Selected by AttentionManager from camera tracks.  It is deliberately a
+    # preference, not a safety override: retreat/freeze still pre-empt it.
+    attention_target: str | None = None
+    attention_reason: str = ""
+    affinities: dict[str, float] = field(default_factory=dict)
+    greeted_targets: set[str] = field(default_factory=set)
 
     def apply_capabilities(self, cap: PolicyCapabilities) -> None:
         """Take the head envelope and walking head limit from the policy's measured capabilities
@@ -102,12 +109,16 @@ class ReactiveBehaviour:
     def notice(self, t: float, event_kind: str, source: str = "") -> None:
         """Perception events the behaviour itself cares about (something new to orient to)."""
         if event_kind.endswith("_appeared"):
-            self.appeared_at[source or event_kind.split("_")[0]] = t
+            target = source or event_kind.split("_")[0]
+            self.appeared_at[target] = t
+            self.greeted_targets.discard(target)  # a later, separately observed encounter may be acknowledged
 
     def step(self, t: float, dt: float, pad: PADState, tendencies: ActionTendencyState,
              tracks: tuple[Track, ...], salience: dict[str, float] | None = None,
              threats: dict[str, float] | None = None,
-             directed: dict[str, ActionTendencyState] | None = None) -> ReactiveDecision:
+             directed: dict[str, ActionTendencyState] | None = None,
+             attention_target: str | None = None, attention_reason: str = "",
+             affinities: dict[str, float] | None = None) -> ReactiveDecision:
         """salience: per-track novelty (0..1). threats: per-track remembered threat (memory), used to
         decide WHICH person avoidance is about; without it, the nearest person.
         directed: tendencies split by the track they are about ("" = undirected). When given, the utility
@@ -116,6 +127,9 @@ class ReactiveBehaviour:
         self.threats = threats or {}
         self.directed = directed
         tr = {(x.tid or x.kind): x for x in tracks}
+        self.attention_target = attention_target if attention_target in tr else None
+        self.attention_reason = attention_reason if self.attention_target else ""
+        self.affinities = affinities or {}
         focal = self._focal_person(tr)
         if focal is not None:
             self.threat_bearing = tr[focal].bearing
@@ -198,6 +212,8 @@ class ReactiveBehaviour:
         """The most salient thing: persons before balls, then the most novel, then the nearest."""
         if not tr:
             return None
+        if self.attention_target in tr:
+            return self.attention_target
         return max(tr, key=lambda k: (tr[k].kind == "person", self.salience.get(k, 0.0), -tr[k].distance))
 
     def _stop_distance(self, key, pad):
@@ -237,6 +253,12 @@ class ReactiveBehaviour:
         if m == "inspect" and target is not None:
             tilt = CURIOUS_TILT * np.sin(2 * np.pi * 0.25 * age)  # curious head tilt
             return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"inspect {self.target}"
+        if m == "greet" and target is not None:
+            # A short stationary acknowledgement after a learned, positive
+            # interaction.  It uses the existing measured head envelope and
+            # does not combine a gesture with walking.
+            tilt = 0.12 * np.sin(np.pi * min(1.0, age / GREET_S))
+            return 0.0, 1.2 * target.bearing, self._gaze(target, tilt), f"greet {self.target}"
         if m == "approach" and target is not None:
             stop = self._stop_distance(self.target, pad)
             # full speed or nothing: the policy barely moves for small speed commands (measured)

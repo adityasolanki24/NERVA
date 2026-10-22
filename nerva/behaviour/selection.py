@@ -36,7 +36,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from nerva.behaviour.modes import (BACKSTEP_S, FREEZE_S, SAFE_DISTANCE, ReactiveBehaviour)
+from nerva.behaviour.modes import (BACKSTEP_S, FREEZE_S, GREET_S, SAFE_DISTANCE, ReactiveBehaviour)
 from nerva.interfaces import ActionTendencyState
 
 EXPLORE_BASE = 0.08
@@ -44,6 +44,8 @@ NEW_BONUS = 0.3
 FEAR_BLOCK = 4.0
 W_WATCH, W_RETREAT, W_FREEZE, W_WITHDRAW = 1.0, 3.0, 4.0, 1.0
 PERSISTENCE = 0.05
+AFFINITY_GREETING = 0.25
+AFFINITY_APPROACH_BONUS = 0.35
 
 
 @dataclass
@@ -83,10 +85,21 @@ class UtilityBehaviour(ReactiveBehaviour):
                 c_k, s_k, gate_k = c, s, fear_gate
             # a remembered threat is not approached, even when others are liked
             gate = gate_k * (max(0.0, 1.0 - 4.0 * self.threats.get(key, 0.0)) if person else 1.0)
-            pull = (c_k * novelty + (s_k if person else 0.0)) * gate
+            affinity = max(0.0, self.affinities.get(key, 0.0)) if person else 0.0
+            # Affinity is grounded in attributed benign outcomes.  It cannot be
+            # created by merely seeing somebody calmly, and threat still gates
+            # the resulting approach preference.
+            pull = (c_k * novelty + (s_k if person else 0.0) + AFFINITY_APPROACH_BONUS * affinity) * gate
+            # Attention selects which camera track deserves information-gathering.
+            # It only biases approach/inspection; watch, retreat and freeze below
+            # remain available and safety-independent.
+            if self.attention_target is not None and key != self.attention_target:
+                pull *= 0.25
             stop = self._stop_distance(key, pad)
             margin = 0.3 if (self.mode == "inspect" and self.target == key) else 0.1
             u[("inspect" if track.distance <= stop + margin else "approach", key)] = pull
+            if person and affinity >= AFFINITY_GREETING and key not in self.greeted_targets and new and gate > 0:
+                u[("greet", key)] = 0.18 + affinity
         if focal is not None:
             person = tr[focal]
             proximity = max(0.0, 1.0 - person.distance / SAFE_DISTANCE)
@@ -105,6 +118,11 @@ class UtilityBehaviour(ReactiveBehaviour):
         if (self.mode == "freeze" and age < FREEZE_S) or (self.mode == "retreat" and age < BACKSTEP_S):
             self.utilities = {}
             return  # committed
+        if self.mode == "greet" and age < GREET_S:
+            self.utilities = {}
+            return
+        if self.mode == "greet" and self.target:
+            self.greeted_targets.add(self.target)
         u = self._candidates(t, pad, tend, tr)
         current = (self.mode, self.target)
         if current in u:

@@ -33,6 +33,7 @@ application_default_credentials.json
 # Keep third-party papers as local research material unless redistribution is licensed
 docs/papers/*.pdf
 experiments/reactive/results*/
+experiments/v2_autonomy/results*/
 
 # Demo outputs are regenerated (videos are large); the current demo is rendered in the cloud
 experiments/demo_video/results*/

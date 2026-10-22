@@ -65,6 +65,7 @@ from nerva.perception.tracker import FRAME_HZ, SimulatedPerception
 from nerva.perception.vision import VisionPerception
 from nerva.behaviour.selection import UtilityBehaviour
 from nerva.behaviour.modes import ReactiveBehaviour
+from nerva.behaviour.attention import AttentionManager, AttentionDecision
 from nerva.sim.world import ENTITY_KINDS, World, extend_scene
 
 CTRL_DT = 0.02
@@ -266,7 +267,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
         use_spatial: bool | None = None, backlash_scene: bool = False, neutral_style: bool = False,
         memory_learning: str = "legacy", appraisal_mode: str = "legacy", affect_model: str | None = None,
         safety_supervisor: bool = True, head_pitch_down: float | None = None, head_yaw_max: float | None = None,
-        profile: str = "v2", margin_controllability: bool | None = None, touch_context: bool | None = None):
+        profile: str = "v2", margin_controllability: bool | None = None, touch_context: bool | None = None,
+        attention: bool = False):
     """selector: "utility" (behaviour v2, emotion-modulated action selection) or "rules" (v1).
     perception_mode: "simulated" (ground-truth positions + noise) or "vision" (colour + depth images
     from the robot's head camera, nerva.perception.vision)."""
@@ -292,6 +294,8 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
             world.place(sim.data, name, HIDDEN, 0.0)
     vision = perception_mode == "vision"
     perception = VisionPerception(seed=seed) if vision else SimulatedPerception(seed=seed)
+    attention_manager = AttentionManager() if attention else None
+    attention_decision = AttentionDecision(None, "disabled")
     eye = mujoco.Renderer(sim.model, EYE_H, EYE_W) if vision else None
     grounded = memory_learning == "grounded"
     memory = EntityMemory(learning=memory_learning) if use_memory else None
@@ -443,7 +447,17 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                 if use_memory:  # remembered threat per perceived entity, asked of the world model
                     threats = {n.track_id: memory.records[n.entity_id].threat for n in world_state.perceived()
                                if n.kind == "person" and n.entity_id in memory.records}
-            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats, directed)
+                    affinities = {n.track_id: max(0.0, memory.records[n.entity_id].warmth)
+                                  for n in world_state.perceived()
+                                  if n.kind == "person" and n.entity_id in memory.records}
+                else:
+                    affinities = {}
+            else:
+                affinities = {}
+            if attention_manager is not None:
+                attention_decision = attention_manager.update(t, tracks, events, salience, goals)
+            decision = behaviour.step(t, 1.0 / FRAME_HZ, pad, affect.tendencies, tracks, salience, threats, directed,
+                                      attention_decision.target, attention_decision.reason, affinities)
             command, head, safety_reason = (safety.filter(decision.command, decision.head, self_state)
                                             if safety_supervisor else (decision.command, decision.head, ""))
             sim.set_behaviour(neutralised(command) if neutral_style else command)
@@ -471,6 +485,9 @@ def run(policy: str, seed: int = 0, duration: float = 100.0, agents: dict[str, A
                for lbl in EMOTIONS},  # logging only (Model A); zero for Model B
             **{f"tend_{k}": getattr(affect.tendencies, k) for k in TENDENCIES},
             "mode": decision.mode, "reason": safety_reason or decision.reason, "target": decision.target or "",
+            "attention_target": attention_decision.target or "", "attention_reason": attention_decision.reason,
+            "attention_score": attention_decision.score,
+            "social_affinity": max(affinities.values(), default=0.0),
             "cmd_vx": decision.command.vx, "cmd_yaw": decision.command.yaw_rate,
             "e_tempo": decision.command.style_vector.tempo, "e_torso_pitch": decision.command.style_vector.torso_pitch,
             "head_pitch": decision.head[1], "head_yaw": decision.head[2], "head_roll": decision.head[3],

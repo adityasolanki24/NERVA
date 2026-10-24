@@ -281,7 +281,7 @@ scipy==1.18.1
     #   jaxlib
     #   jaxopt
     #   mujoco-mjx
-setuptools==84.0.0
+setuptools==84.1.0
     # via
     #   tensorboard
     #   tensorflow-cpu
